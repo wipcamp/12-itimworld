@@ -2,9 +2,9 @@ import React from 'react'
 
 const TextField = (props) => {
   return (
-      <label className={props.className}>
+      <label className={props.className} for={props.name}>
         {props.labelInput}
-        <input type={props.type} placeholder={props.placeHolder} name={props.name} required />
+        <input type="text" placeholder={props.placeHolder} id={props.name} name={props.name} required />
       </label>
   )
 }
