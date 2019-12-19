@@ -1,13 +1,16 @@
 import React, { Component } from 'react'
 
-import Major from '../Major/Index'
+import Profile from '../Profile'
+import Major from '../Major'
 
 export default class componentName extends Component {
   render() {
     return (
-      <React.Fragment>
-        <Major />
-      </React.Fragment>
+      <div className="container-fluid">
+        <div className="row justify-content-center">
+          <Major />
+        </div>
+      </div>
     )
   }
 }
