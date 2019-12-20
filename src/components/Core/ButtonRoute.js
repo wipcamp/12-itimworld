@@ -10,7 +10,7 @@ const ButtonRoute = (props) => {
       <ButtonRight href={props.linkBack} displayButtonRight={props.displayButtonLeft}>
         <button> {props.buttonLeft} </button>
       </ButtonRight>
-      <a to={props.linkNext}><button type="submit">{props.buttonRight}</button></a>
+      <a href={props.linkNext}><button>{props.buttonRight}</button></a>
     </div>
   )
 }
