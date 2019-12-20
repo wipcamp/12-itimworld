@@ -44,7 +44,7 @@ export default class LineLoginButton extends Component {
     return (
       <ButtonContainer>
         <Button>
-          <LingImg src = "/img/line_88.png" /> <span>Log in with LINE</span>
+          <a href="/profile"><LingImg src="/img/line_88.png" /> <span>Log in with LINE</span></a>
         </Button>
       </ButtonContainer>
     )
