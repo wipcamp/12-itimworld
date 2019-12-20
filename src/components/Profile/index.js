@@ -177,7 +177,7 @@ export default class Index extends Component {
           <TelNumberField labelName="เบอร์โทรศัพท์" name="parentTel" />
           <TelNumberField labelName="เบอร์ติดต่อฉุกเฉิน" name="emergencyTel" />
 
-          <ButtonRoute displayButtonRight="none" buttonLeft="next" linkNext="/major" />
+          <ButtonRoute displayButtonLeft="none" buttonRight="next" linkNext="/major" />
         </form>
         
       </React.Fragment>

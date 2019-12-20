@@ -42,7 +42,12 @@ export default class Index extends Component {
             {this.state.description[this.state.descriptionNum]}
           </p>
         </div>
-        <ButtonRoute buttonRight="back" buttonLeft="next" />
+        <ButtonRoute 
+          buttonLeft="back" 
+          buttonRight="next" 
+          linkBack ="/"
+          linkNext ="/questions"
+          />
       </React.Fragment>
     )
   }
