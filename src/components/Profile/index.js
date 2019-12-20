@@ -4,7 +4,10 @@ import AddressField from './AddressField'
 import TelNumberField from './TelNumberField'
 import TextField from './TextField'
 import ButtonRoute from '../Core/ButtonRoute'
+import ProfileService from '../../services/ProfileService'
 
+const { apiUrl } = window['runConfig'];
+console.log(apiUrl)
 export default class Index extends Component {
   state = {
     profileData: [
@@ -50,6 +53,15 @@ export default class Index extends Component {
     })
   }
 
+  componentDidMount () {
+    this.getProfileService();
+  }
+
+  getProfileService = async () =>{
+    let data = await ProfileService.getProfile(1);
+    // console.log(data)
+  }
+
   onSelect = (fullAddress) => {
     const { district, province } = fullAddress
     this.setState({
@@ -66,7 +78,6 @@ export default class Index extends Component {
   render() {
     return (
       <React.Fragment>
-        <form>
           <h1 className="col-12">ข้อมูลส่วนตัว</h1>
           {
             this.state.profileData.map((data, i) => (
@@ -178,7 +189,6 @@ export default class Index extends Component {
           <TelNumberField labelName="เบอร์ติดต่อฉุกเฉิน" name="emergencyTel" />
 
           <ButtonRoute displayButtonLeft="none" buttonRight="next" linkNext="/major" />
-        </form>
         
       </React.Fragment>
     )
