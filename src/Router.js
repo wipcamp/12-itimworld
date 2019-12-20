@@ -2,10 +2,10 @@ import React from 'react'
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link,
+  Route
 } from 'react-router-dom'
 
+import Navbar from './components/Core/Navbar'
 import Login from './components/Login'
 import Profile from './components/Profile'
 import Major from './components/Major'
@@ -16,9 +16,7 @@ export default class Index extends React.Component {
   render() {
     return (
       <Router>
-        <Link to="/profile" >1</Link>
-        <Link to="/major" >2</Link>
-        <Link to="/questions" >3</Link>
+        <Navbar />
         <Switch>
           <Route exact path="/" component={Login} />
           <Route exact path="/profile" component={Profile} />
