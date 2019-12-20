@@ -7,7 +7,6 @@ import ButtonRoute from '../Core/ButtonRoute'
 import ProfileService from '../../services/ProfileService'
 
 const { apiUrl } = window['runConfig'];
-console.log(apiUrl)
 export default class Index extends Component {
   state = {
     profileData: [
@@ -43,23 +42,22 @@ export default class Index extends Component {
     ],
     religionData: ['พุทธ', 'คริสต์', 'อิสลาม', 'ฮินดู', 'ซิกส์'],
     booldGroup: ['O', 'A', 'B', 'AB'],
-    religion: false,
     district: '',
     province: ''
-  }
-  onChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
   }
 
   componentDidMount () {
     this.getProfileService();
   }
 
+  onChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
   getProfileService = async () =>{
     let data = await ProfileService.getProfile(1);
-    // console.log(data)
   }
 
   onSelect = (fullAddress) => {
@@ -91,52 +89,52 @@ export default class Index extends Component {
               />
             ))
           }
-          <label className="col-6">
+          <label className="col-6" htmlFor="birthDate">
             วัน / เดือน / ปี เกิด
-            <input type="date" name="birthDate" min="2003-01-01" max="2006-12-31" required />
+            <input type="date" name="birthDate" id="birthDate" min="2003-01-01" max="2006-12-31" required />
           </label>
           <TelNumberField labelName="เบอร์โทรศัพท์" name="telNo" />
-          <label className="col-6">
+          <label className="col-6" htmlFor="gender">
             เพศสภาพ
-            <select name="gender" required>
+            <select name="gender" id="gender" required>
               <option value="ชาย">ชาย</option>
               <option value="หญิง">หญิง</option>
             </select>
           </label>
-          <label className="col-6" required>
+          <label className="col-6" htmlFor="booldGroup">
             กรุ๊ปเลือด
-            <select name="booldGroup">
+            <select name="booldGroup" id="booldGroup">
               {
-                this.state.booldGroup.map((data, i) => <option value={data}>{data}</option>)
+                this.state.booldGroup.map((data, i) => <option value={data} key={i}>{data}</option>)
               }
             </select>
           </label>
-          <label className="col-6" required>
+          <label className="col-6" htmlFor="religion">
             ศาสนา
-            <select name="religion">
+            <select name="religion" id="religion" required>
               {
-                this.state.religionData.map((data, i) => <option value={data}>{data}</option>)
+                this.state.religionData.map((data, i) => <option value={data} key={i}>{data}</option>)
               }
             </select>
           </label>
-          <label className="col-6">
+          <label className="col-6" htmlFor="school">
             โรงเรียน
-            <select name="school" required>
+            <select name="school" id="school" required>
               <option value="ชาย">ชาย</option>
               <option value="หญิง">หญิง</option>
             </select>
           </label>
-          <label className="col-6">
+          <label className="col-6" htmlFor="level">
             ระดับชั้น
-            <select name="level" required>
+            <select name="level" id="level" required>
               <option value="ม.4">ม.4</option>
               <option value="ม.5">ม.5</option>
               <option value="ม.6">ม.6</option>
             </select>
           </label>
-          <label className="col-6">
+          <label className="col-6" htmlFor="gpax">
             GPAX
-            <input type="number" min="1.00" max="4.00" name="GPAX" placeholder="4.00" step="0.01" required />
+            <input type="number" id="gpax" min="1.00" max="4.00" name="GPAX" placeholder="4.00" step="0.01" required />
           </label>
           {
             this.state.congenitalData.map((data, i) => (
@@ -151,7 +149,7 @@ export default class Index extends Component {
             ))
           }
           <div>
-          <label for="district">
+          <label htmlFor="district">
               เขต / อำเภอ
             <AddressField
                 address="district"
@@ -163,7 +161,7 @@ export default class Index extends Component {
                 placeholder="เขต / อำเภอ"
               />
           </label>
-          <label for="province">
+          <label htmlFor="province">
               จังหวัด
               <AddressField
                 address="province"
