@@ -22,6 +22,9 @@ export default class Index extends Component {
       },
       {
         labelInput: 'ชื่อเล่น', placeHolder: 'สมชาย', name: 'nickName'
+      },
+      {
+        labelInput: 'รหัสบัตรประชาชน / Passport Number', placeHolder: '1234567890987', name: 'citizenID'
       }
     ],
     congenitalData: [
@@ -41,13 +44,13 @@ export default class Index extends Component {
     district: '',
     province: ''
   }
-  onChange(e) {
+  onChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value
     })
   }
 
-  onSelect(fullAddress) {
+  onSelect = (fullAddress) => {
     const { district, province } = fullAddress
     this.setState({
       district,
@@ -77,7 +80,6 @@ export default class Index extends Component {
               />
             ))
           }
-          <TextField className="col-6" labelInput="รหัสบัตรประชาชน" placeHolder="00-0000-0000" name="citizenID" />
           <label className="col-6">
             วัน / เดือน / ปี เกิด
             <input type="date" name="birthDate" min="2003-01-01" max="2006-12-31" required />
@@ -175,9 +177,9 @@ export default class Index extends Component {
           <TelNumberField labelName="เบอร์โทรศัพท์" name="parentTel" />
           <TelNumberField labelName="เบอร์ติดต่อฉุกเฉิน" name="emergencyTel" />
 
-          <ButtonRoute buttonLeft="next" linkNext="/major" />
+          <ButtonRoute displayButtonLeft="none" buttonRight="next" linkNext="/major" />
         </form>
-
+        
       </React.Fragment>
     )
   }
