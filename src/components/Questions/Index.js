@@ -13,10 +13,12 @@ export default class Index extends Component {
             <React.Fragment>
                 <div>
                         {arr.map((data,i) => {
-                            return <Question key={i}  questionId={data.questionId}  ans={data.ans}/>
+                            console.log(i)
+                            return <Question questionCount={i+1}  questionId={data.questionId}  ans={data.ans}/>
                         })}
                 </div>
-                <ButtonRoute bgColor="pink" buttonRight="back" buttonLeft="Submit" />
+                <ButtonRoute buttonRight="back" buttonLeft="Submit" />
+                
             </React.Fragment>
         )
     }
