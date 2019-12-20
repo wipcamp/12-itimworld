@@ -1,20 +1,9 @@
 import React, { Component } from 'react'
-import styled from 'styled-components'
-// import InputAddress from 'react-thailand-address-autocomplete'
-// import AddressFormTypeahead from 'react-thailand-address-typeahead';
 
+import AddressField from './AddressField'
 import TelNumberField from './TelNumberField'
 import TextField from './TextField'
 import ButtonRoute from '../Core/ButtonRoute'
-
-// const Div = styled.div`
-//   .typeahead-input-hint{
-//     display: none;
-//   }
-//   .typeahead-address-container{
-//     background-color: red;
-//   }
-// `
 
 export default class Index extends Component {
   state = {
@@ -48,27 +37,23 @@ export default class Index extends Component {
     ],
     religionData: ['พุทธ', 'คริสต์', 'อิสลาม', 'ฮินดู', 'ซิกส์'],
     booldGroup: ['O', 'A', 'B', 'AB'],
-    religion: false
-    //   subdistrict : null,
-    //   district : null,
-    //   province : null,
-    //   zipcode : null
+    religion: false,
+    district: '',
+    province: ''
   }
-  // onChange(e) {
-  //   this.setState({
-  //     [e.target.name]: e.target.value
-  //   })
-  // }
+  onChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
 
-  // onSelect(fullAddress) {
-  //   const { subdistrict, district, province, zipcode } = fullAddress
-  //   this.setState({
-  //     subdistrict,
-  //     district,
-  //     province,
-  //     zipcode
-  //   })
-  // }
+  onSelect(fullAddress) {
+    const { district, province } = fullAddress
+    this.setState({
+      district,
+      province
+    })
+  }
 
   handleClick = () => {
     this.setState({
@@ -88,6 +73,7 @@ export default class Index extends Component {
                 labelInput={data.labelInput}
                 placeHolder={data.placeHolder}
                 name={data.name}
+                required="true"
               />
             ))
           }
@@ -118,13 +104,7 @@ export default class Index extends Component {
               {
                 this.state.religionData.map((data, i) => <option value={data}>{data}</option>)
               }
-              <option value="อื่นๆ" onChange={this.handleClick}>อื่นๆ</option>
             </select>
-            {
-              this.state.religion === true ?
-                "wow" :
-                <TextField className="col-6" labelInput="" type="text" placeHolder="ซิกส์" name="religion" />
-            }
           </label>
           <label className="col-6">
             โรงเรียน
@@ -143,7 +123,7 @@ export default class Index extends Component {
           </label>
           <label className="col-6">
             GPAX
-          <input type="number" min="1.00" max="4.00" name="GPAX" placeholder="4.00" step="0.01" required />
+            <input type="number" min="1.00" max="4.00" name="GPAX" placeholder="4.00" step="0.01" required />
           </label>
           {
             this.state.congenitalData.map((data, i) => (
@@ -157,44 +137,45 @@ export default class Index extends Component {
               />
             ))
           }
-          {/* <Div>
-          <AddressFormTypeahead
-            renderResult={data => <span>{`ตำบล ${data.p} อำเภอ ${data.d}`} <br /> {`จังหวัด ${data.a} รหัสไปรษณีย์ ${data.z}`}</span>}
-          />
-        </Div> */}
-          {/* <div>
-          แขวง / ตำบล
-        <InputAddress
-            address="subdistrict"
-            value={this.state.subdistrict}
-            onChange={this.onChange}
-            onSelect={this.onSelect}
-          />
-          เขต / อำเภอ
-        <InputAddress
-            address="district"
-            value={this.state.district}
-            onChange={this.onChange}
-            onSelect={this.onSelect}
-          />
-          <InputAddress
-            address="province"
-            value={this.state.province}
-            onChange={this.onChange}
-            onSelect={this.onSelect}
-            filter={(items) => items.filter(item => item.province !== 'กรุงเทพมหานคร')}
-          />
-        </div> */}
+          <div>
+          <label for="district">
+              เขต / อำเภอ
+            <AddressField
+                address="district"
+                id="district"
+                name="addr_district"
+                value={this.state.district}
+                onChange={(e) => this.onChange(e)}
+                onSelect={(e) => this.onSelect(e)}
+                placeholder="เขต / อำเภอ"
+              />
+          </label>
+          <label for="province">
+              จังหวัด
+              <AddressField
+                address="province"
+                id="province"
+                name="addr_provice"
+                value={this.state.province}
+                onChange={(e) => this.onChange(e)}
+                onSelect={(e) => this.onSelect(e)}
+                placeholder="จังหวัด"
+              />
+          </label>
+          </div>
+
           <h1>ข้อมูลฉุกเฉิน</h1>
           <TextField
             type="text"
             labelInput="เกี่ยวข้องกับน้องยังไง"
             placeHolder="บิดา"
             name="parentRaltion"
+            required="false"
           />
           <TelNumberField labelName="เบอร์โทรศัพท์" name="parentTel" />
           <TelNumberField labelName="เบอร์ติดต่อฉุกเฉิน" name="emergencyTel" />
-          <ButtonRoute buttonLeft="next" />
+
+          <ButtonRoute buttonLeft="next" linkNext="/major" />
         </form>
 
       </React.Fragment>
