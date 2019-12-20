@@ -7,7 +7,7 @@ const ButtonRight = styled.a`
 const ButtonRoute = (props) => {
   return (
     <div className="d-flex col-12 justify-content-between">
-      <ButtonRight href={props.linkBack} displayButtonRight={props.displayButtonRight}>
+      <ButtonRight href={props.linkBack} displayButtonRight={props.displayButtonLeft}>
         <button> {props.buttonLeft} </button>
       </ButtonRight>
       <a to={props.linkNext}><button type="submit">{props.buttonRight}</button></a>
