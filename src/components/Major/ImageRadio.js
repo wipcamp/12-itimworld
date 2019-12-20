@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import styled from 'styled-components'
 
 const InputRadio = styled.label`
@@ -32,6 +33,11 @@ const ImageRadio = (props) => {
         <ImageMajor src={props.imgPath}  alt="wow" onClick={props.onClick}/>
       </InputRadio>
   )
+}
+
+ImageRadio.propsTypes = {
+  imgPath: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired
 }
 
 export default ImageRadio

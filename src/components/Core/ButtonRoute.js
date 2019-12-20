@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import styled from 'styled-components'
 
 const ButtonRight = styled.a`
@@ -14,5 +15,20 @@ const ButtonRoute = (props) => {
     </div>
   )
 }
+
+ButtonRoute.propTypes = {
+  linkBack: PropTypes.string,
+  displayButtonLeft: PropTypes.string,
+  buttonLeft: PropTypes.string,
+  linkNext: PropTypes.string,
+  buttonRight: PropTypes.string,
+
+};
+
+ButtonRoute.defaultProps = {
+  displayButtonLeft: 'block',
+  buttonLeft: 'กลับ',
+  buttonRight:'ถัดไป'
+};
 
 export default ButtonRoute

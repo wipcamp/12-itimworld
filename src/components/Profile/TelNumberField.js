@@ -1,9 +1,10 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const TelNumberField = (props) => {
   return (
     <label id="telephone">
-      {props.labelName}
+      {props.labelInput}
       <input
         type="tel" 
         id="telphone" 
@@ -15,6 +16,11 @@ const TelNumberField = (props) => {
         /> 
     </label>
   )
+}
+
+TelNumberField.propsTypes = {
+  labelInput: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired
 }
 
 export default TelNumberField
