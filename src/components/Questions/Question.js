@@ -6,12 +6,16 @@ const Pink = styled.p`
 `
 
 export default class Question extends Component {
-    state = {answer:''}
+    state = {questionId: null,answer: '' }
 
     handleAnswer = (event) => {
-        const nam = event.target.name;
+				const nam = event.target.name;
+				console.log(nam);
         const val = event.target.value;
-        this.setState({[nam]:val});
+        this.setState({
+					[nam]:val,
+					questionId:this.props.questionId
+				});
         console.log(this.state);       
 		}
 		
@@ -19,7 +23,7 @@ export default class Question extends Component {
         return (
             <div>
             <Pink>Question {this.props.questionId}</Pink>
-            <textarea name='answer' onChange={this.handleAnswer} row="100" cols="100"> </textarea>
+            <textarea name={"answer"} onChange={this.handleAnswer} row="100" cols="100"> </textarea>
             </div>	
         )
     }
