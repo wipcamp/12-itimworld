@@ -43,9 +43,7 @@ export default class Index extends Component {
           </p>
         </div>
         <ButtonRoute 
-          buttonLeft="back" 
-          buttonRight="next" 
-          linkBack ="/"
+          linkBack ="/profile"
           linkNext ="/questions"
           />
       </React.Fragment>
