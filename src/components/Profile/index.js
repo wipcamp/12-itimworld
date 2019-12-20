@@ -46,7 +46,7 @@ export default class Index extends Component {
     province: ''
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.getProfileService();
   }
 
@@ -56,7 +56,7 @@ export default class Index extends Component {
     })
   }
 
-  getProfileService = async () =>{
+  getProfileService = async () => {
     let data = await ProfileService.getProfile(1);
   }
 
@@ -76,118 +76,114 @@ export default class Index extends Component {
   render() {
     return (
       <React.Fragment>
-          <h1 className="col-12">ข้อมูลส่วนตัว</h1>
-          {
-            this.state.profileData.map((data, i) => (
-              <TextField
-                key={i}
-                className="col-6"
-                labelInput={data.labelInput}
-                placeHolder={data.placeHolder}
-                name={data.name}
-                required="true"
-              />
-            ))
-          }
-          <label className="col-6" htmlFor="birthDate">
-            วัน / เดือน / ปี เกิด
+        <h1 className="col-12">ข้อมูลส่วนตัว</h1>
+        {
+          this.state.profileData.map((data, i) => (
+            <TextField
+              key={i}
+              className="col-6"
+              labelInput={data.labelInput}
+              placeHolder={data.placeHolder}
+              name={data.name}
+              required="true"
+            />
+          ))
+        }
+        <label className="col-6" htmlFor="birthDate">
+          วัน / เดือน / ปี เกิด
             <input type="date" name="birthDate" id="birthDate" min="2003-01-01" max="2006-12-31" required />
-          </label>
-          <TelNumberField labelName="เบอร์โทรศัพท์" name="telNo" />
-          <label className="col-6" htmlFor="gender">
-            เพศสภาพ
+        </label>
+        <TelNumberField labelInput="เบอร์โทรศัพท์" name="telNo" />
+        <label className="col-6" htmlFor="gender">
+          เพศสภาพ
             <select name="gender" id="gender" required>
-              <option value="ชาย">ชาย</option>
-              <option value="หญิง">หญิง</option>
-            </select>
-          </label>
-          <label className="col-6" htmlFor="booldGroup">
-            กรุ๊ปเลือด
+            <option value="ชาย">ชาย</option>
+            <option value="หญิง">หญิง</option>
+          </select>
+        </label>
+        <label className="col-6" htmlFor="booldGroup">
+          กรุ๊ปเลือด
             <select name="booldGroup" id="booldGroup">
-              {
-                this.state.booldGroup.map((data, i) => <option value={data} key={i}>{data}</option>)
-              }
-            </select>
-          </label>
-          <label className="col-6" htmlFor="religion">
-            ศาสนา
+            {
+              this.state.booldGroup.map((data, i) => <option value={data} key={i}>{data}</option>)
+            }
+          </select>
+        </label>
+        <label className="col-6" htmlFor="religion">
+          ศาสนา
             <select name="religion" id="religion" required>
-              {
-                this.state.religionData.map((data, i) => <option value={data} key={i}>{data}</option>)
-              }
-            </select>
-          </label>
-          <label className="col-6" htmlFor="school">
-            โรงเรียน
+            {
+              this.state.religionData.map((data, i) => <option value={data} key={i}>{data}</option>)
+            }
+          </select>
+        </label>
+        <label className="col-6" htmlFor="school">
+          โรงเรียน
             <select name="school" id="school" required>
-              <option value="ชาย">ชาย</option>
-              <option value="หญิง">หญิง</option>
-            </select>
-          </label>
-          <label className="col-6" htmlFor="level">
-            ระดับชั้น
+            <option value="ชาย">ชาย</option>
+            <option value="หญิง">หญิง</option>
+          </select>
+        </label>
+        <label className="col-6" htmlFor="level">
+          ระดับชั้น
             <select name="level" id="level" required>
-              <option value="ม.4">ม.4</option>
-              <option value="ม.5">ม.5</option>
-              <option value="ม.6">ม.6</option>
-            </select>
-          </label>
-          <label className="col-6" htmlFor="gpax">
-            GPAX
+            <option value="ม.4">ม.4</option>
+            <option value="ม.5">ม.5</option>
+            <option value="ม.6">ม.6</option>
+          </select>
+        </label>
+        <label className="col-6" htmlFor="gpax">
+          GPAX
             <input type="number" id="gpax" min="1.00" max="4.00" name="GPAX" placeholder="4.00" step="0.01" required />
-          </label>
-          {
-            this.state.congenitalData.map((data, i) => (
-              <TextField
-                key={i}
-                className="col-6"
-                type="text"
-                labelInput={data.labelInput}
-                placeHolder={data.placeHolder}
-                name={data.name}
-              />
-            ))
-          }
-          <div>
-          <label htmlFor="district">
-              เขต / อำเภอ
-            <AddressField
-                address="district"
-                id="district"
-                name="addr_district"
-                value={this.state.district}
-                onChange={(e) => this.onChange(e)}
-                onSelect={(e) => this.onSelect(e)}
-                placeholder="เขต / อำเภอ"
-              />
-          </label>
-          <label htmlFor="province">
-              จังหวัด
-              <AddressField
-                address="province"
-                id="province"
-                name="addr_provice"
-                value={this.state.province}
-                onChange={(e) => this.onChange(e)}
-                onSelect={(e) => this.onSelect(e)}
-                placeholder="จังหวัด"
-              />
-          </label>
-          </div>
+        </label>
+        {
+          this.state.congenitalData.map((data, i) => (
+            <TextField
+              key={i}
+              className="col-6"
+              type="text"
+              labelInput={data.labelInput}
+              placeHolder={data.placeHolder}
+              name={data.name}
+            />
+          ))
+        }
+        <div>
+        <AddressField
+          labelInput="เขต / อำเภอ"
+          address="district"
+          id="district"
+          name="addr_district"
+          value={this.state.district}
+          onChange={(e) => this.onChange(e)}
+          onSelect={(e) => this.onSelect(e)}
+          placeholder="เขต / อำเภอ"
+        />
+        <AddressField
+          labelInput="จังหวัด"
+          address="province"
+          id="province"
+          name="addr_provice"
+          value={this.state.province}
+          onChange={(e) => this.onChange(e)}
+          onSelect={(e) => this.onSelect(e)}
+          placeholder="จังหวัด"
+        />
+        </div>
 
-          <h1>ข้อมูลฉุกเฉิน</h1>
-          <TextField
-            type="text"
-            labelInput="เกี่ยวข้องกับน้องยังไง"
-            placeHolder="บิดา"
-            name="parentRaltion"
-            required="false"
-          />
-          <TelNumberField labelName="เบอร์โทรศัพท์" name="parentTel" />
-          <TelNumberField labelName="เบอร์ติดต่อฉุกเฉิน" name="emergencyTel" />
+        <h1>ข้อมูลฉุกเฉิน</h1>
+        <TextField
+          type="text"
+          labelInput="เกี่ยวข้องกับน้องยังไง"
+          placeHolder="บิดา"
+          name="parentRaltion"
+          required="false"
+        />
+        <TelNumberField labelInput="เบอร์โทรศัพท์" name="parentTel" />
+        <TelNumberField labelInput="เบอร์ติดต่อฉุกเฉิน" name="emergencyTel" />
 
-          <ButtonRoute displayButtonLeft="none" buttonRight="next" linkNext="/major" />
-        
+        <ButtonRoute displayButtonLeft="none" linkNext="/major" />
+
       </React.Fragment>
     )
   }
