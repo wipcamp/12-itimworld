@@ -1,3 +1,3 @@
 window["runConfig"] = {
-  apiUrl: "test.com/api"
+  apiUrl: "http://localhost:8080/"
 };
