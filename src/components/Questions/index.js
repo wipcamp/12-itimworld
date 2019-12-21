@@ -1,14 +1,9 @@
 import React, { Component } from 'react'
 import ButtonRoute from '../Core/ButtonRoute'
 import Question from './Question'
+import QuestionService from './../../services/QuestionService'
 
-const arr = [
-	{questionId:1,question_content:''},
-	{questionId:2,question_content:''},
-	{questionId:3,question_content:''}
-];
-
-const answer = [];
+let answer = [];
 export default class Index extends Component {
 
   handleAnswer=(event)=> {
@@ -32,12 +27,34 @@ export default class Index extends Component {
     console.log(answer);
   };
 
-    render(){
+
+    questions = [];
+
+    state = { majorId : 1,
+        questions : [
+        {id:1,name:'Mock1',ans:''},
+        {id:2,name:'Mock2',ans:''},
+        {id:3,name:'Mock3',ans:''},
+    ]};
+
+    getQuestionService = async () => {
+        let response = await QuestionService.getQuestion(this.state.majorId);
+        console.log(response);
+        this.setState({questions:response.data});
+    }
+
+    async componentDidMount() {
+        await this.getQuestionService();
+        console.log(this.questions);
+    }
+
+    render() {
         return (
             <React.Fragment>
                 <div>
-                        {arr.map((data,i) => {
-                            return <Question questionCount={i+1}  questionId={data.questionId} handleAnswer={this.handleAnswer}/>
+                        {this.state.questions.map((data,i) => {
+                            console.log(i)
+                            return <Question questionCount={i+1}  questionName={data.name}  questionId={data.id} handleAnswer={this.handleAnswer}/>
                         })}
                 </div>
                 <ButtonRoute 
