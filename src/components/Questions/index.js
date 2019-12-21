@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import ButtonRoute from '../Core/ButtonRoute'
 import Question from './Question'
 import QuestionService from './../../services/QuestionService'
+import AnswerService from './../../services/AnswerService'
 
 let answer = [];
 export default class Index extends Component {
@@ -23,8 +24,6 @@ export default class Index extends Component {
         "answer_content":val
       })
     }
-
-    console.log(answer);
   };
 
 
@@ -39,16 +38,24 @@ export default class Index extends Component {
 
     getQuestionService = async () => {
         let response = await QuestionService.getQuestion(this.state.majorId);
-        console.log(response);
-        if(response.code !== 200){
+        console.log(response.data);
+        if(response.data.code !== 200){
             console.log("Error get Question")
         }else{
-            this.setState({questions:response.data});
+            this.setState({questions:response.data.data});
         }
     }
 
     async componentDidMount() {
         await this.getQuestionService();
+    }
+
+    postAnswerService = async() =>{
+      let response = await AnswerService.postAnswer(1,1,
+        {
+          "answers":answer
+        });
+      console.log(response);
     }
 
     render() {
@@ -60,6 +67,7 @@ export default class Index extends Component {
                             return <Question questionCount={i+1}  questionName={data.name}  questionId={data.id} handleAnswer={this.handleAnswer}/>
                         })}
                 </div>
+                <button onClick={this.postAnswerService}>Submit</button>
                 <ButtonRoute 
                   buttonLeft="กลับ" 
                   buttonRight="ยืนยัน" 
