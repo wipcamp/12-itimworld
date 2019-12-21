@@ -43,11 +43,14 @@ export default class Index extends Component {
     religionData: ['พุทธ', 'คริสต์', 'อิสลาม', 'ฮินดู', 'ซิกส์'],
     booldGroup: ['O', 'A', 'B', 'AB'],
     district: '',
-    province: ''
+    province: '',
+    data: []
   }
 
-  componentDidMount() {
-    this.getProfileService();
+  
+  async componentDidMount() {
+    await this.getProfileService();
+    console.log(this.state.data);
   }
 
   onChange = (e) => {
@@ -57,7 +60,7 @@ export default class Index extends Component {
   }
 
   getProfileService = async () => {
-    let data = await ProfileService.getProfile(1);
+    this.setState({data:await ProfileService.getProfile(1)});
   }
 
   onSelect = (fullAddress) => {
