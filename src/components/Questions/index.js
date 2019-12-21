@@ -11,7 +11,7 @@ export default class Index extends Component {
     let doneEdit = false;
     
     for(var i = 0;i<answer.length;i++){
-      if(answer[i].question_id == event.target.name){
+      if(answer[i].question_id === event.target.name){
         answer[i].answer_content = val;
         doneEdit = true;
       }
@@ -40,12 +40,15 @@ export default class Index extends Component {
     getQuestionService = async () => {
         let response = await QuestionService.getQuestion(this.state.majorId);
         console.log(response);
-        this.setState({questions:response.data});
+        if(response.code !== 200){
+            console.log("Error get Question")
+        }else{
+            this.setState({questions:response.data});
+        }
     }
 
     async componentDidMount() {
         await this.getQuestionService();
-        console.log(this.questions);
     }
 
     render() {
