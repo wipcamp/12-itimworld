@@ -24,7 +24,7 @@ export default class Index extends Component {
     }
     if(!doneEdit){
       answer.push({
-        "question_id":1,
+        "question_id":event.target.name,
         "answer_content":val
       })
     }
