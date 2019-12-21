@@ -8,17 +8,20 @@ const arr = [
 	{questionId:3,ans:''},
 ];
 export default class Index extends Component {
-    render() {
+    render(){
         return (
             <React.Fragment>
                 <div>
                         {arr.map((data,i) => {
-                            console.log(i)
                             return <Question questionCount={i+1}  questionId={data.questionId}  ans={data.ans}/>
                         })}
                 </div>
-                <ButtonRoute buttonRight="back" buttonLeft="Submit" />
-                
+                <ButtonRoute 
+                  buttonLeft="กลับ" 
+                  buttonRight="ยืนยัน" 
+                  linkBack ="/major"
+                  linkNext ="/"
+                />
             </React.Fragment>
         )
     }
