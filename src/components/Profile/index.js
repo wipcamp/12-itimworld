@@ -95,11 +95,11 @@ export default class Index extends Component {
     // console.log(data)
   }
 
-  putProFileService = async (data , e) => {
-    e.preventDefault()
+  putProFileService = async (data) => {
+    // e.preventDefault()
     let data1 = await ProfileService.putProfile(data)
-    console.log(data)
-    console.log(data1)
+    // console.log(data)
+    // console.log(data1)
   }
 
   onChange(e) {
@@ -294,7 +294,7 @@ export default class Index extends Component {
         <TelNumberField labelInput="เบอร์โทรศัพท์" name="parentTel" onChange={(e) => this.handleChange(e)} />
         <TelNumberField labelInput="เบอร์ติดต่อฉุกเฉิน" name="telEmergency" onChange={(e) => this.handleChange(e)} />
 
-        <ButtonRoute displayButtonLeft="none" linkNext="/major" onClick={(e) => this.putProFileService(this.state.data, e)} />
+        <ButtonRoute displayButtonLeft="none" linkNext="/major" onClick={(e) => this.putProFileService(this.state.data)} />
       </React.Fragment>
     )
   }
