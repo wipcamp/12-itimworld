@@ -15,6 +15,7 @@ const Navbar = () => {
       <Link to="/profile" >1</Link>
       <Link to="/major" >2</Link>
       <Link to="/questions" >3</Link>
+      <Link to="/preview" >4</Link>
     </Div>
   )
 }
