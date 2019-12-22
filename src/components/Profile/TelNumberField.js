@@ -7,7 +7,7 @@ const TelNumberField = (props) => {
       {props.labelInput}
       <input
         type="tel" 
-        id="telphone" 
+        id={props.name} 
         name={props.name} 
         placeholder="0800000000" 
         pattern="[0-9]{10}" 
