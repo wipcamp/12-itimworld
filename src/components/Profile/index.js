@@ -7,6 +7,7 @@ import ButtonRoute from '../Core/ButtonRoute'
 import ProfileService from '../../services/ProfileService'
 
 const { apiUrl } = window['runConfig'];
+
 export default class Index extends Component {
   state = {
     profileData: [
@@ -27,6 +28,9 @@ export default class Index extends Component {
       },
       {
         labelInput: 'รหัสบัตรประชาชน / Passport Number', placeHolder: '1234567890987', name: 'citizenID'
+      },
+      {
+        labelInput: 'สายการเรียน', placeHolder: 'วิทย์-ตณิต', name: 'major'
       }
     ],
     congenitalData: [
@@ -40,32 +44,94 @@ export default class Index extends Component {
         labelInput: 'ยาที่แพ้', placeHolder: 'ยาแก้แพ้', name: 'congenitalDrug'
       }
     ],
-    religionData: ['พุทธ', 'คริสต์', 'อิสลาม', 'ฮินดู', 'ซิกส์'],
-    booldGroup: ['O', 'A', 'B', 'AB'],
+    religionData: ['เลือกศาสนา', 'พุทธ', 'คริสต์', 'อิสลาม', 'ฮินดู', 'ซิกส์'],
+    booldGroupData: ['เลือกกรู๊ปเลือด', 'O', 'A', 'B', 'AB'],
     district: '',
-    province: ''
+    province: '',
+    data: {
+      firstName: null,
+      firstNameEN: null,
+      lastName: null,
+      lastNameEN: null,
+      nickName: null,
+      citizenID: null,
+      major: null,
+      telNo: null,
+      gender: null,
+      birthDate: null,
+      booldGroup: null,
+      religion: null,
+      school: null,
+      level: null,
+      gpax: null,
+      email:null,
+      allegicFood: null,
+      congenitalDisease: null,
+      congenitalDrug: null,
+      addrDistrict: null,
+      addrProvice: null,
+      parent: {
+        relation: null,
+        tel: null
+      },
+      emergencyTel: null,
+      address: {
+        province: null,
+        district: null
+      }
+    }
   }
 
   componentDidMount() {
     this.getProfileService();
   }
 
-  onChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
+  componentDidUpdate() {
+
   }
 
   getProfileService = async () => {
     let data = await ProfileService.getProfile(1);
+    // console.log(data)
   }
 
+  putProFileService = async (data , e) => {
+    e.preventDefault()
+    let data1 = await ProfileService.putProfile(data)
+    console.log(data1)
+  }
+
+  onChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+  
   onSelect = (fullAddress) => {
     const { district, province } = fullAddress
     this.setState({
       district,
       province
     })
+    this.arrayToObj(fullAddress);
+  }
+
+  arrayToObj = (fullAddress) => {
+    const dataEntries = Object.entries(fullAddress)
+    for (const [dataArray, dataFromEntity] of dataEntries) {
+      if (dataArray === "district" || dataArray === "province") {
+        this.setState((prevState) => ({
+          data: {
+            ...prevState.data,
+            address: {
+              ...prevState.data.address,
+              [dataArray]:dataFromEntity
+            }
+          }
+        })
+        )
+      } 
+    }
   }
 
   handleClick = () => {
@@ -73,6 +139,20 @@ export default class Index extends Component {
       religion: true
     })
   }
+
+  handleChange = (event) => {
+    // console.log(2)
+    const { name, value } = event.target
+    this.setState((prevState) => ({
+      data: {
+        ...prevState.data,
+        [name]: value,
+     
+      }
+    })
+    )
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -86,47 +166,60 @@ export default class Index extends Component {
               placeHolder={data.placeHolder}
               name={data.name}
               required="true"
+              onChange={(e) => this.handleChange(e)}
             />
           ))
         }
         <label className="col-6" htmlFor="birthDate">
           วัน / เดือน / ปี เกิด
-            <input type="date" name="birthDate" id="birthDate" min="2003-01-01" max="2006-12-31" required />
+          <input
+            type="date"
+            name="birthDate"
+            id="birthDate"
+            min="1995-01-01"
+            max="20010-12-31"
+            value={this.state.birthDate}
+            onChange={(e) => this.handleChange(e)}
+            required
+          />
         </label>
-        <TelNumberField labelInput="เบอร์โทรศัพท์" name="telNo" />
+        <TelNumberField labelInput="เบอร์โทรศัพท์" name="telNo" onChange={(e) => this.handleChange(e)} />
         <label className="col-6" htmlFor="gender">
           เพศสภาพ
-            <select name="gender" id="gender" required>
+            <select name="gender" id="gender" required onChange={(e) => this.handleChange(e)}>
+            <option value="">เลือกเพศ</option>
             <option value="ชาย">ชาย</option>
             <option value="หญิง">หญิง</option>
           </select>
         </label>
         <label className="col-6" htmlFor="booldGroup">
           กรุ๊ปเลือด
-            <select name="booldGroup" id="booldGroup">
+            <select name="booldGroup" id="booldGroup" onChange={(e) => this.handleChange(e)}>
             {
-              this.state.booldGroup.map((data, i) => <option value={data} key={i}>{data}</option>)
+              this.state.booldGroupData.map((data, i) => <option value={data} key={i}>{data}</option>)
             }
           </select>
         </label>
         <label className="col-6" htmlFor="religion">
           ศาสนา
-            <select name="religion" id="religion" required>
+            <select name="religion" id="religion" required onChange={(e) => this.handleChange(e)}>
             {
               this.state.religionData.map((data, i) => <option value={data} key={i}>{data}</option>)
             }
           </select>
         </label>
-        <label className="col-6" htmlFor="school">
-          โรงเรียน
-            <select name="school" id="school" required>
-            <option value="ชาย">ชาย</option>
-            <option value="หญิง">หญิง</option>
-          </select>
-        </label>
+        <TextField
+          className="col-6"
+          labelInput="โรงเรียน"
+          placeHolder="ส่วนบุญโญปภัมภ์ ลำพูน"
+          name="school"
+          required="true"
+          onChange={(e) => this.handleChange(e)}
+            />
         <label className="col-6" htmlFor="level">
           ระดับชั้น
-            <select name="level" id="level" required>
+            <select name="level" id="level" required onChange={(e) => this.handleChange(e)}>
+            <option value="">เลือกระดับชั้น</option>
             <option value="ม.4">ม.4</option>
             <option value="ม.5">ม.5</option>
             <option value="ม.6">ม.6</option>
@@ -134,7 +227,11 @@ export default class Index extends Component {
         </label>
         <label className="col-6" htmlFor="gpax">
           GPAX
-            <input type="number" id="gpax" min="1.00" max="4.00" name="GPAX" placeholder="4.00" step="0.01" required />
+            <input type="number" id="gpax" min="1.00" max="4.00" name="GPAX" placeholder="4.00" step="0.01" onChange={(e) => this.handleChange(e)} required />
+        </label>
+        <label className="col-6" htmlFor="email">
+          e-mail
+            <input type="email" id="email" name="email" placeholder="wipccamp@wip.camp" onChange={(e) => this.handleChange(e)} required />
         </label>
         {
           this.state.congenitalData.map((data, i) => (
@@ -145,30 +242,31 @@ export default class Index extends Component {
               labelInput={data.labelInput}
               placeHolder={data.placeHolder}
               name={data.name}
+              onChange={(e) => this.handleChange(e)}
             />
           ))
         }
         <div>
-        <AddressField
-          labelInput="เขต / อำเภอ"
-          address="district"
-          id="district"
-          name="addr_district"
-          value={this.state.district}
-          onChange={(e) => this.onChange(e)}
-          onSelect={(e) => this.onSelect(e)}
-          placeholder="เขต / อำเภอ"
-        />
-        <AddressField
-          labelInput="จังหวัด"
-          address="province"
-          id="province"
-          name="addr_provice"
-          value={this.state.province}
-          onChange={(e) => this.onChange(e)}
-          onSelect={(e) => this.onSelect(e)}
-          placeholder="จังหวัด"
-        />
+          <AddressField
+            labelInput="เขต / อำเภอ"
+            address="district"
+            id="district"
+            name="addrDistrict"
+            value={this.state.district}
+            onChange={(e) => this.onChange(e)}
+            onSelect={(e) => this.onSelect(e)}
+            placeholder="เขต / อำเภอ"
+          />
+          <AddressField
+            labelInput="จังหวัด"
+            address="province"
+            id="province"
+            name="addrProvice"
+            value={this.state.province}
+            onChange={(e) => this.onChange(e)}
+            onSelect={(e) => this.onSelect(e)}
+            placeholder="จังหวัด"
+          />
         </div>
 
         <h1>ข้อมูลฉุกเฉิน</h1>
@@ -176,14 +274,14 @@ export default class Index extends Component {
           type="text"
           labelInput="เกี่ยวข้องกับน้องยังไง"
           placeHolder="บิดา"
-          name="parentRaltion"
+          name="parentRelation"
           required="false"
+          onChange={(e) => this.handleChange(e)}
         />
-        <TelNumberField labelInput="เบอร์โทรศัพท์" name="parentTel" />
-        <TelNumberField labelInput="เบอร์ติดต่อฉุกเฉิน" name="emergencyTel" />
+        <TelNumberField labelInput="เบอร์โทรศัพท์" name="parentTel" onChange={(e) => this.handleChange(e)} />
+        <TelNumberField labelInput="เบอร์ติดต่อฉุกเฉิน" name="emergencyTel" onChange={(e) => this.handleChange(e)} />
 
-        <ButtonRoute displayButtonLeft="none" linkNext="/major" />
-
+        <ButtonRoute displayButtonLeft="none" linkNext="/major" onClick={(e) => this.putProFileService(this.state.data, e)} />
       </React.Fragment>
     )
   }
