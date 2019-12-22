@@ -10,7 +10,10 @@ const TextField = (props) => {
           placeholder={props.placeHolder} 
           id={props.name} 
           name={props.name} 
-          required={props.required ? "required" : "" } />
+          value={props.value}
+          required={props.required ? "required" : "" }
+          onChange={props.onChange}
+        />
       </label>
   )
 }
@@ -21,6 +24,7 @@ TextField.propsType = {
   labelInput: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   required: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired
 }
 
 export default TextField
