@@ -12,6 +12,7 @@ const TelNumberField = (props) => {
         placeholder="0800000000" 
         pattern="[0-9]{10}" 
         maxLength="10" 
+        onChange={props.onChange}
         required 
         /> 
     </label>
@@ -20,7 +21,8 @@ const TelNumberField = (props) => {
 
 TelNumberField.propsTypes = {
   labelInput: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired
 }
 
 export default TelNumberField
