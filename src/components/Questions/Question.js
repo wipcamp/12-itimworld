@@ -9,7 +9,7 @@ export default class Question extends Component {
     render() {
         return (
             <div>
-            <Pink>Question {this.props.questionId}</Pink>
+            <Pink>{this.props.questionName}</Pink>
             <textarea name={this.props.questionId} onChange={this.props.handleAnswer} row="100" cols="100"></textarea>
             </div>
         )

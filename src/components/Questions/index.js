@@ -1,14 +1,10 @@
 import React, { Component } from 'react'
 import ButtonRoute from '../Core/ButtonRoute'
 import Question from './Question'
+import QuestionService from './../../services/QuestionService'
+import AnswerService from './../../services/AnswerService'
 
-const arr = [
-	{questionId:1,question_content:''},
-	{questionId:2,question_content:''},
-	{questionId:3,question_content:''}
-];
-
-const answer = [];
+let answer = [];
 export default class Index extends Component {
 
   handleAnswer=(event)=> {
@@ -16,7 +12,7 @@ export default class Index extends Component {
     let doneEdit = false;
     
     for(var i = 0;i<answer.length;i++){
-      if(answer[i].question_id == event.target.name){
+      if(answer[i].question_id === event.target.name){
         answer[i].answer_content = val;
         doneEdit = true;
       }
@@ -28,18 +24,50 @@ export default class Index extends Component {
         "answer_content":val
       })
     }
-
-    console.log(answer);
   };
 
-    render(){
+
+    questions = [];
+
+    state = { majorId : 1,
+        questions : [
+        {id:1,name:'Mock1',ans:''},
+        {id:2,name:'Mock2',ans:''},
+        {id:3,name:'Mock3',ans:''},
+    ]};
+
+    getQuestionService = async () => {
+        let response = await QuestionService.getQuestion(this.state.majorId);
+        console.log(response.data);
+        if(response.data.code !== 200){
+            console.log("Error get Question")
+        }else{
+            this.setState({questions:response.data.data});
+        }
+    }
+
+    async componentDidMount() {
+        await this.getQuestionService();
+    }
+
+    postAnswerService = async() =>{
+      let response = await AnswerService.postAnswer(1,1,
+        {
+          "answers":answer
+        });
+      console.log(response);
+    }
+
+    render() {
         return (
             <React.Fragment>
                 <div>
-                        {arr.map((data,i) => {
-                            return <Question questionCount={i+1}  questionId={data.questionId} handleAnswer={this.handleAnswer}/>
+                        {this.state.questions.map((data,i) => {
+                            console.log(i)
+                            return <Question questionCount={i+1}  questionName={data.name}  questionId={data.id} handleAnswer={this.handleAnswer}/>
                         })}
                 </div>
+                <button onClick={this.postAnswerService}>Submit</button>
                 <ButtonRoute 
                   buttonLeft="กลับ" 
                   buttonRight="ยืนยัน" 
