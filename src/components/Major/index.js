@@ -28,9 +28,14 @@ export default class Index extends Component {
 
   changeDescription = (i) => {
     console.log(i)
-    this.setState({
-      descriptionNum: i
+    this.setState((prevState) => ({
+      descriptionNum: i,
+      selectedMajor: {
+        ...prevState.selectedMajor,
+        id: i+1
+      }
     })
+    )
   }
 
   render() {
@@ -49,7 +54,7 @@ export default class Index extends Component {
         </div>
         <ButtonRoute 
           linkBack ="/profile"
-          linkNext ="/questions"
+          linkNext ={`/questions?${this.state.selectedMajor.id}`}
           />
       </React.Fragment>
     )
