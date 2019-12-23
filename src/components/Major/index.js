@@ -18,7 +18,12 @@ export default class Index extends Component {
       'Anim reprehenderit occaecat cupidatat pariatur fugiat eiusmod cupidatat fugiat in ut.',
       'Esse adipisicing amet irure dolor ullamco nisi eu magna cupidatat.'
     ],
-    descriptionNum: 0
+    descriptionNum: 0,
+    selectedMajor:{
+      id: null,
+      description: null,
+      name: null
+    }
   }
 
   changeDescription = (i) => {
