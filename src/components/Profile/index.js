@@ -4,7 +4,7 @@ import AddressField from './AddressField'
 import TelNumberField from './TelNumberField'
 import TextField from './TextField'
 import ButtonRoute from '../Core/ButtonRoute'
-import ProfileService from '../../services/ProfileService'
+import UserService from '../../services/UserService'
 
 const { apiUrl } = window['runConfig'];
 
@@ -30,7 +30,7 @@ export default class Index extends Component {
         labelInput: 'รหัสบัตรประชาชน / Passport Number', placeHolder: '1234567890987', name: 'citizenId'
       },
       {
-        labelInput: 'สายการเรียน', placeHolder: 'วิทย์-ตณิต', name: 'major'
+        labelInput: 'สายการเรียน', placeHolder: 'วิทย์-ตณิต', name: 'schoolMajor'
       }
     ],
     congenitalData: [
@@ -61,7 +61,7 @@ export default class Index extends Component {
       birthDate: null,
       bloodGroup: null,
       religion: null,
-      school: null,
+      schoolMajor: null,
       level: null,
       gpax: null,
       email:null,
@@ -82,7 +82,7 @@ export default class Index extends Component {
 
   
   async componentDidMount() {
-    await this.getProfileService();
+    await this.getUserService();
     // console.log(this.state.data);
   }
 
@@ -90,14 +90,14 @@ export default class Index extends Component {
     console.log(this.state.data)
   }
 
-  getProfileService = async () => {
-    let data = await ProfileService.getProfile(1);
+  getUserService = async () => {
+    let data = await UserService.getUser(1);
     // console.log(data)
   }
 
-  putProFileService = async (data) => {
+  putUserService = async (data) => {
     // e.preventDefault()
-    let data1 = await ProfileService.putProfile(data)
+    let data1 = await UserService.putUser(data)
     // console.log(data)
     // console.log(data1)
   }
@@ -145,7 +145,7 @@ export default class Index extends Component {
     // console.log(2)
     const { name, value } = event.target;
     if (name === "parentRelation" || name === "parentTel"){
-      const newName = name === "parentRelation" ? "relation" : "tel"
+      const newName = name === "parentRelation" ? "relation" : "telNo"
       this.setState((prevState) => ({
         data: {
           ...prevState.data,
