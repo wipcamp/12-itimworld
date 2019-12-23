@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import MajorService from './../../services/MajorService'
 
 import ImageRadio from './ImageRadio'
 import ButtonRoute from '../Core/ButtonRoute'
@@ -23,7 +24,45 @@ export default class Index extends Component {
       id: null,
       description: null,
       name: null
+    },
+    majors:[
+      {
+        "id": 1,
+        "name": "Science",
+        "description": "What to learn",
+        "questionList": [
+          {
+            "id": 1,
+            "name": "What is my name"
+          },
+          {
+            "id": 2,
+            "name": "What time is it"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Math",
+        "description": "When to sleep",
+        "questionList": []
+      }
+    ]
+  }
+
+  GetMajors = async () => {
+    let promise = await MajorService.getAllMajors();
+    let response = promise.data;
+    if(response.code === 200){
+      this.setState({majors:response.data});
+      console.log(this.state.majors);
+    }else{
+      console.log("Error getting all majors data")
     }
+  }
+
+  async componentDidMount(){
+    await this.GetMajors();
   }
 
   changeDescription = (i) => {
