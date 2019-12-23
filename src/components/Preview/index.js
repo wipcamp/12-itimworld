@@ -73,7 +73,7 @@ export default class Index extends Component {
     }
   }
 
-  GetUserData = async () => {
+  GetUser = async () => {
     let promise = await UserService.getUser(1);
     let response = promise.data;
     if(response.code === 200){
@@ -85,7 +85,7 @@ export default class Index extends Component {
   }
 
   async componentDidMount(){
-    await this.GetUserData();
+    await this.GetUser();
   }
 
   render() {
