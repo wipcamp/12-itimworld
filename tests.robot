@@ -15,6 +15,7 @@ ${schoolMajor}        วิทย์ คณิต
 ${telNo}              0999999999
 ${gender}             ชาย
 ${school}             ส่วนบุญโญปภัมภ์ ลำพูน
+${birthDate}          10-10-1996
 ${email}              SomChai@gmail.com
 ${gpax}               3.78
 ${allergicFood}       แพ้ KFC กินทีไรหมดทุกที
@@ -28,6 +29,10 @@ ${telEmergency}       0888888888
 ${religion}           พุทธ
 ${bloodGroup}         O
 ${level}              ม.4
+${answerOne}          Qui anim consequat enim sint fugiat esse magna minim.
+${answerTwo}          Exercitation in minim qui do adipisicing laboris excepteur est.
+${answerThree}        Dolore reprehenderit laboris elit do adipisicing consectetur elit aliquip. 
+${answerFour}         Occaecat enim esse mollit consectetur in officia culpa quis ea fugiat voluptate.
 
 *** Keywords ***
 เปิดเว็บ 
@@ -36,7 +41,7 @@ ${level}              ม.4
 กด Login 
     Click Element   //*[@id="root"]/div[2]/div/div[2]/button/a
 
-กรอกรายละเอียด
+กรอก Profile
     Input Text                    //*[@id="firstName"]                                  ${firstName}
     Input Text                    //*[@id="lastName"]                                   ${lastName}
     Input Text                    //*[@id="firstNameEn"]                                ${firstNameEn}
@@ -50,6 +55,7 @@ ${level}              ม.4
     Select From List By Value     //*[@id="bloodGroup"]                                 ${bloodGroup}     
     Select From List By Value     //*[@id="level"]                                      ${level}                              
     Input Text                    //*[@id="school"]                                     ${school}   
+    Input Text                    //*[@id="birthDate"]                                  ${birthDate}
     Input Text                    //*[@id="email"]                                      ${email}   
     Input Text                    //*[@id="gpax"]                                       ${gpax}   
     Input Text                    //*[@id="allergicFood"]                               ${allergicFood}   
@@ -61,12 +67,31 @@ ${level}              ม.4
     Input Text                    //*[@id="parentTel"]                                  ${parentTel}   
     Input Text                    //*[@id="telEmergency"]                               ${telEmergency}   
 
-กด ถัดไป
+กด ถัดไป หน้า Major
     Click Element   //*[@id="root"]/div[3]/a[2]/button
 
+กดเลือก Major
+    Click Element   //*[@id="root"]/div[2]/label[1]/img                
+
+กด ถัดไป หน้า Question
+    Click Element     //*[@id="root"]/div[3]/a[2]
+
+ตอบคำถาม
+    Input Text                    //*[@id="root"]/div[2]/div[1]/textarea                 ${answerOne}   
+    Input Text                    //*[@id="root"]/div[2]/div[2]/textarea                 ${answerTwo}   
+    Input Text                    //*[@id="root"]/div[2]/div[3]/textarea                 ${answerThree}   
+    Input Text                    //*[@id="root"]/div[2]/div[4]/textarea                 ${answerFour}   
+
+# กด ถัดไป หน้า Preview
+#     Click Element     //*[@id="root"]/div[3]/a[2]
+
 *** Test Cases ***
-Search case
+Search case 
     เปิดเว็บ
     กด Login 
-    กรอกรายละเอียด
-    กด ถัดไป
+    กรอก Profile
+    กด ถัดไป หน้า Major
+    กดเลือก Major
+    กด ถัดไป หน้า Question
+    ตอบคำถาม
+    # กด ถัดไป หน้า Preview
