@@ -29,7 +29,7 @@ const ImageMajor = styled.img`
 const ImageRadio = (props) => {
   return (
       <InputRadio>
-        <input type="radio" name="major" value="big" />
+        <input type="radio" name="major" value={props.value} />
         <ImageMajor src={props.imgPath}  alt="wow" onClick={props.onClick}/>
       </InputRadio>
   )
@@ -37,7 +37,8 @@ const ImageRadio = (props) => {
 
 ImageRadio.propsTypes = {
   imgPath: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired
 }
 
 export default ImageRadio

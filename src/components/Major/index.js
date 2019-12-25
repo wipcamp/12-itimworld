@@ -7,11 +7,23 @@ import ButtonRoute from '../Core/ButtonRoute'
 export default class Index extends Component {
 
   state = {
-    imgPath: [
-      'https://icatcare.org/app/uploads/2018/07/Thinking-of-getting-a-cat.png',
-      'https://miro.medium.com/max/11400/1*lS9ZqdEGZrRiTcL1JUgt9w.jpeg',
-      'https://icatcare.org/app/uploads/2018/07/Thinking-of-getting-a-cat.png',
-      'https://miro.medium.com/max/11400/1*lS9ZqdEGZrRiTcL1JUgt9w.jpeg'
+    majorData: [
+      {
+        imgPath: 'https://icatcare.org/app/uploads/2018/07/Thinking-of-getting-a-cat.png',
+        id: 1
+      },
+      {
+        imgPath: 'https://miro.medium.com/max/11400/1*lS9ZqdEGZrRiTcL1JUgt9w.jpeg',
+        id: 2
+      },
+      {
+        imgPath: 'https://icatcare.org/app/uploads/2018/07/Thinking-of-getting-a-cat.png',
+        id: 3
+      },
+      {
+        imgPath: 'https://miro.medium.com/max/11400/1*lS9ZqdEGZrRiTcL1JUgt9w.jpeg',
+        id: 4
+      }
     ],
     description: [
       'Commodo voluptate in adipisicing commodo irure ex incididunt.',
@@ -82,8 +94,14 @@ export default class Index extends Component {
       <React.Fragment>
         <div className="row justify-content-center">
             {
-              this.state.imgPath.map((data, key) => (
-                <ImageRadio className="col-3" key={key} imgPath={data} onClick={() => this.changeDescription(key)} />
+              this.state.majorData.map((data, key) => (
+                <ImageRadio 
+                  className="col-3" 
+                  key={key} 
+                  imgPath={data.imgPath} 
+                  value={data.id}
+                  onClick={() => this.changeDescription(key)} 
+                  />
               )
               )
             }
