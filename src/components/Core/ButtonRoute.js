@@ -22,7 +22,7 @@ ButtonRoute.propTypes = {
   buttonLeft: PropTypes.string,
   linkNext: PropTypes.string,
   buttonRight: PropTypes.string,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func
 }
 
 ButtonRoute.defaultProps = {
