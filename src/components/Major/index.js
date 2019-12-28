@@ -111,7 +111,7 @@ export default class Index extends Component {
         </div>
         <ButtonRoute 
           linkBack ="/profile"
-          linkNext ={`/questions?${this.state.selectedMajor.id}`}
+          linkNext ={`/questions?majors=${this.state.selectedMajor.id}`}
           />
       </React.Fragment>
     )
