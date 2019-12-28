@@ -5,8 +5,9 @@ import QuestionService from './../../services/QuestionService'
 import AnswerService from './../../services/AnswerService'
 
 let answer = [];
-export default class Index extends Component {
 
+export default class Index extends Component {
+  
   handleAnswer=(event)=> {
     const val = event.target.value;
     let doneEdit = false;
@@ -16,7 +17,7 @@ export default class Index extends Component {
         answer[i].answer_content = val;
         doneEdit = true;
       }
-
+      
     }
     if(!doneEdit){
       answer.push({
@@ -25,54 +26,77 @@ export default class Index extends Component {
       })
     }
   };
+  
 
+  questions = [];
+  
+    state = { 
+        majorId : 1,
+        questions : 
+          [
+            { 
+              id:1,
+              name:'Mock1',
+              ans:''
+            },
+            {
+              id:2,
+              name:'Mock2',
+              ans:''
+            },
+            {
+              id:3,
+              name:'Mock3',
+              ans:''
+            },
+          ]
+        }
 
-    questions = [];
-
-    state = { majorId : 1,
-        questions : [
-        {id:1,name:'Mock1',ans:''},
-        {id:2,name:'Mock2',ans:''},
-        {id:3,name:'Mock3',ans:''},
-    ]};
-
-    getQuestionService = async () => {
+      getQuestionService = async () => {
         let response = await QuestionService.getQuestion(this.state.majorId);
         console.log(response.data);
+        
+
         if(response.data.code !== 200){
-            console.log("Error get Question")
+          console.log("Error get Question")
         }else{
-            this.setState({questions:response.data.data});
+          this.setState({questions:response.data.data});
         }
-    }
-
+      }
+      
     async componentDidMount() {
-        await this.getQuestionService();
+      const location = this.props.location.search
+      this.setState({
+        majorId: location.substring(location.length - 1, location.length)
+      })
+      // console.log('Update : '+this.state.majorId) Check at componentDidUpdate
+      await this.getQuestionService();
     }
-
+    
     postAnswerService = async() =>{
       let response = await AnswerService.postAnswer(1,1,
         {
           "answers":answer
         });
-      console.log(response);
+        console.log(response);
     }
-
+    
     render() {
-        return (
+      return (
             <React.Fragment>
                 <div>
                         {this.state.questions.map((data,i) => {
-                            console.log(i)
+                          console.log(i)
                             return <Question questionCount={i+1}  questionName={data.name}  questionId={data.id} handleAnswer={this.handleAnswer}/>
                         })}
                 </div>
-                <button onClick={this.postAnswerService}>Submit</button>
+                {/* <button onClick={this.postAnswerService}>Submit</button> */}
                 <ButtonRoute 
                   buttonLeft="กลับ" 
                   buttonRight="ยืนยัน" 
                   linkBack ="/major"
-                  linkNext ="/"
+                  linkNext ="/preview"
+                  onClick={this.postAnswerService}
                 />
             </React.Fragment>
         )
