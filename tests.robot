@@ -80,7 +80,7 @@ ${answerFour}         Occaecat enim esse mollit consectetur in officia culpa qui
     Input Text                    //*[@id="root"]/div[2]/div[1]/textarea                 ${answerOne}   
     Input Text                    //*[@id="root"]/div[2]/div[2]/textarea                 ${answerTwo}   
     Input Text                    //*[@id="root"]/div[2]/div[3]/textarea                 ${answerThree}   
-    Input Text                    //*[@id="root"]/div[2]/div[4]/textarea                 ${answerFour}   
+    # Input Text                    //*[@id="root"]/div[2]/div[4]/textarea                 ${answerFour}   
 
 กด ถัดไป หน้า Preview
     Click Element    //*[@id="root"]/div[3]/a[2]
