@@ -7,31 +7,10 @@ import ButtonRoute from '../Core/ButtonRoute'
 export default class Index extends Component {
 
   state = {
-    majorData: [
-      {
-        imgPath: 'https://icatcare.org/app/uploads/2018/07/Thinking-of-getting-a-cat.png',
-        id: 1
-      },
-      {
-        imgPath: 'https://miro.medium.com/max/11400/1*lS9ZqdEGZrRiTcL1JUgt9w.jpeg',
-        id: 2
-      },
-      {
-        imgPath: 'https://icatcare.org/app/uploads/2018/07/Thinking-of-getting-a-cat.png',
-        id: 3
-      },
-      {
-        imgPath: 'https://miro.medium.com/max/11400/1*lS9ZqdEGZrRiTcL1JUgt9w.jpeg',
-        id: 4
-      }
-    ],
-    description: [
-      'Commodo voluptate in adipisicing commodo irure ex incididunt.',
-      'Commodo cupidatat quis enim minim excepteur eiusmod ipsum est.',
-      'Anim reprehenderit occaecat cupidatat pariatur fugiat eiusmod cupidatat fugiat in ut.',
-      'Esse adipisicing amet irure dolor ullamco nisi eu magna cupidatat.'
-    ],
-    descriptionNum: 0,
+    pictures: {
+      default:'https://icatcare.org/app/uploads/2018/07/Thinking-of-getting-a-cat.png',
+      selected:'https://miro.medium.com/max/11400/1*lS9ZqdEGZrRiTcL1JUgt9w.jpeg'
+    },
     selectedMajor:{
       id: null,
       description: null,
@@ -63,12 +42,19 @@ export default class Index extends Component {
   }
 
   GetMajors = async () => {
-    let promise = await MajorService.getAllMajors();
-    let response = promise.data;
-    if(response.code === 200){
-      this.setState({majors:response.data});
-      console.log(this.state.majors);
-    }else{
+    let promise;
+    try{
+      promise = await MajorService.getAllMajors();
+      let response = promise.data;
+      if (response.success) {
+        this.setState({
+          majors: response.data
+        });
+        console.log(this.state.majors);
+      } else {
+        console.log("Error getting all majors data")
+      }
+    }catch(e){
       console.log("Error getting all majors data")
     }
   }
@@ -79,12 +65,11 @@ export default class Index extends Component {
 
   changeDescription = (i) => {
     console.log(i)
+    let major = this.state.majors[i]
+    console.log(major);
     this.setState((prevState) => ({
-      descriptionNum: i,
-      selectedMajor: {
-        ...prevState.selectedMajor,
-        id: i+1
-      }
+      descriptionNum: major.description,
+      selectedMajor: major
     })
     )
   }
@@ -94,11 +79,11 @@ export default class Index extends Component {
       <React.Fragment>
         <div className="row justify-content-center">
             {
-              this.state.majorData.map((data, key) => (
+              this.state.majors.map((data, key) => (
                 <ImageRadio 
                   className="col-3" 
                   key={key} 
-                  imgPath={data.imgPath} 
+                  imgPath={this.state.selectedMajor===data?this.state.pictures.selected:this.state.pictures.default} 
                   value={data.id}
                   onClick={() => this.changeDescription(key)} 
                   />
@@ -106,7 +91,7 @@ export default class Index extends Component {
               )
             }
           <p className="d-flex col-12 justify-content-center">
-            {this.state.description[this.state.descriptionNum]}
+            {this.state.selectedMajor.description}
           </p>
         </div>
         <ButtonRoute 
