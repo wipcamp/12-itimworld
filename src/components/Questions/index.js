@@ -5,6 +5,8 @@ import MajorService from './../../services/MajorService'
 import AnswerService from './../../services/AnswerService'
 
 let answer = [];
+let majorId = 1;
+let userId = 1;
 
 export default class Index extends Component {
   
@@ -73,13 +75,15 @@ export default class Index extends Component {
     async componentDidMount() {
       let search = window.location.search;
       let params = new URLSearchParams(search);
-      let majorId = params.get('major');
+      majorId = params.get('major');
       
       await this.getQuestionService(majorId);
     }
     
     postAnswerService = async() =>{
-      let response = await AnswerService.postAnswer(1,1,
+      let response = await AnswerService.postAnswer(
+        userId,
+        majorId,
         {
           "answers":answer
         });
@@ -95,7 +99,7 @@ export default class Index extends Component {
                             return <Question questionCount={i+1}  questionName={data.name}  questionId={data.id} handleAnswer={this.handleAnswer}/>
                         })}
                 </div>
-                {/* <button onClick={this.postAnswerService}>Submit</button> */}
+                <button onClick={this.postAnswerService}>Submit</button>
                 <ButtonRoute 
                   buttonLeft="กลับ" 
                   buttonRight="ยืนยัน" 
