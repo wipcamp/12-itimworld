@@ -65,11 +65,13 @@ export default class Index extends Component {
       }
       
     async componentDidMount() {
-      const location = this.props.location.search
+      let search = window.location.search;
+      let params = new URLSearchParams(search);
+      let majorId = params.get('major');
+
       this.setState({
-        majorId: location.substring(location.length - 1, location.length)
+        majorId: majorId
       })
-      // console.log('Update : '+this.state.majorId) Check at componentDidUpdate
       await this.getQuestionService();
     }
     
@@ -82,11 +84,12 @@ export default class Index extends Component {
     }
     
     render() {
+      console.log(this.state.majorId);
       return (
             <React.Fragment>
                 <div>
                         {this.state.questions.map((data,i) => {
-                          console.log(i)
+                          // console.log(i)
                             return <Question questionCount={i+1}  questionName={data.name}  questionId={data.id} handleAnswer={this.handleAnswer}/>
                         })}
                 </div>
