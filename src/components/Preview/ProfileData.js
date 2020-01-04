@@ -2,9 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import StyledComponent from 'styled-components'
 
-const Topic = StyledComponent.h3`
+const Topic = StyledComponent.h4`
     display: inline;
-    font-weight: bold;
 `
 
 const Data = StyledComponent.p`
@@ -13,15 +12,14 @@ const Data = StyledComponent.p`
 const ProfileData = props => {
     return (
         <React.Fragment>
-            <Topic>{props.topic}</Topic>
+            <Topic>{props.topic} :</Topic>
             <Data>{props.data}</Data>
         </React.Fragment>
     )
 }
 
 ProfileData.propTypes = {
-    topic: PropTypes.string.isRequired,
-    data: PropTypes.string.isRequired 
+    topic: PropTypes.string.isRequired
 }
 
 export default ProfileData
