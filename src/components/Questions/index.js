@@ -99,7 +99,6 @@ export default class Index extends Component {
                             return <Question questionCount={i+1}  questionName={data.name}  questionId={data.id} handleAnswer={this.handleAnswer}/>
                         })}
                 </div>
-                <button onClick={this.postAnswerService}>Submit</button>
                 <ButtonRoute 
                   buttonLeft="กลับ" 
                   buttonRight="ยืนยัน" 
