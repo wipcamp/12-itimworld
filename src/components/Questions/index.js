@@ -50,6 +50,14 @@ export default class Index extends Component {
           ]
         }
 
+    async componentDidMount() {
+      let search = window.location.search;
+      let params = new URLSearchParams(search);
+      majorId = params.get('major');
+      
+      await this.getQuestionService(majorId);
+    }
+
       getQuestionService = async (majorId) => {
         let promise;
         try {
@@ -71,14 +79,6 @@ export default class Index extends Component {
           console.log("Error get Major")
         }
       }
-      
-    async componentDidMount() {
-      let search = window.location.search;
-      let params = new URLSearchParams(search);
-      majorId = params.get('major');
-      
-      await this.getQuestionService(majorId);
-    }
     
     postAnswerService = async() =>{
       let response = await AnswerService.postAnswer(
