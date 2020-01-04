@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import UserService from './../../services/UserService'
+import ProfileData from './ProfileData';
 
+let profile = [];
+let mappedProfileData = [];
+let questionAndAnswer = [];
 export default class Index extends Component {
 
   state = {
@@ -79,6 +83,7 @@ export default class Index extends Component {
     if(response.code === 200){
       this.setState({user:response.data[0]});
       console.log(this.state.user);
+      
     }else{
       console.log("Error getting user data")
     }
@@ -91,7 +96,12 @@ export default class Index extends Component {
   render() {
     return (
       <React.Fragment>
-        This is preview page
+        <div>
+          <h2>ข้อมูลส่วนตัว</h2>
+          <div>
+            {JSON.stringify(this.state.user)}
+          </div>
+        </div>
       </React.Fragment>
     )
   }
