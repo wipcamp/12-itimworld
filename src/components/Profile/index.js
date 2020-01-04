@@ -55,7 +55,6 @@ export default class Index extends Component {
       lastNameEn: null,
       nickName: null,
       citizenId: null,
-      major: null,
       telNo: null,
       gender: null,
       birthDate: null,
@@ -95,8 +94,21 @@ export default class Index extends Component {
     // console.log(data)
   }
 
-  putUserService = async (data) => {
+  putUser = async (data) => {
     // e.preventDefault()
+    const nonRequireKey = [
+      "allergicFood",
+      "congenitalDisease",
+      "congenitalDrug"
+    ];
+    Object.keys(data).map((keyData)=>{
+      if(!nonRequireKey.includes(keyData,0)){
+        if(data[keyData] == null){
+          alert(keyData + " cannot be empty")
+        }
+      }
+    })
+
     let data1 = await UserService.putUser(data)
     // console.log(data)
     // console.log(data1)
@@ -178,8 +190,8 @@ export default class Index extends Component {
               labelInput={data.labelInput}
               placeHolder={data.placeHolder}
               name={data.name}
-              required="true"
               onChange={(e) => this.handleChange(e)}
+              required
             />
           ))
         }
@@ -196,10 +208,10 @@ export default class Index extends Component {
             required
           />
         </label>
-        <TelNumberField labelInput="เบอร์โทรศัพท์" name="telNo" onChange={(e) => this.handleChange(e)} />
+        <TelNumberField labelInput="เบอร์โทรศัพท์" name="telNo" onChange={(e) => this.handleChange(e)} required/>
         <label className="col-6" htmlFor="gender">
           เพศสภาพ
-            <select name="gender" id="gender" required onChange={(e) => this.handleChange(e)}>
+            <select name="gender" id="gender" onChange={(e) => this.handleChange(e)} required>
             <option value="">เลือกเพศ</option>
             <option value="ชาย">ชาย</option>
             <option value="หญิง">หญิง</option>
@@ -207,7 +219,7 @@ export default class Index extends Component {
         </label>
         <label className="col-6" htmlFor="bloodGroup">
           กรุ๊ปเลือด
-            <select name="bloodGroup" id="bloodGroup" onChange={(e) => this.handleChange(e)}>
+            <select name="bloodGroup" id="bloodGroup" onChange={(e) => this.handleChange(e)} required>
             {
               this.state.booldGroupData.map((data, i) => <option value={data} key={i}>{data}</option>)
             }
@@ -215,7 +227,7 @@ export default class Index extends Component {
         </label>
         <label className="col-6" htmlFor="religion">
           ศาสนา
-            <select name="religion" id="religion" required onChange={(e) => this.handleChange(e)}>
+            <select name="religion" id="religion" onChange={(e) => this.handleChange(e)} required>
             {
               this.state.religionData.map((data, i) => <option value={data} key={i}>{data}</option>)
             }
@@ -226,12 +238,12 @@ export default class Index extends Component {
           labelInput="โรงเรียน"
           placeHolder="ส่วนบุญโญปภัมภ์ ลำพูน"
           name="school"
-          required="true"
           onChange={(e) => this.handleChange(e)}
+          required
             />
         <label className="col-6" htmlFor="level">
           ระดับชั้น
-            <select name="level" id="level" required onChange={(e) => this.handleChange(e)}>
+            <select name="level" id="level" onChange={(e) => this.handleChange(e)}  required>
             <option value="">เลือกระดับชั้น</option>
             <option value="ม.4">ม.4</option>
             <option value="ม.5">ม.5</option>
@@ -269,6 +281,7 @@ export default class Index extends Component {
             onChange={(e) => this.onChange(e)}
             onSelect={(e) => this.onSelect(e)}
             placeholder="เขต / อำเภอ"
+            required
           />
           <AddressField
             labelInput="จังหวัด"
@@ -279,6 +292,7 @@ export default class Index extends Component {
             onChange={(e) => this.onChange(e)}
             onSelect={(e) => this.onSelect(e)}
             placeholder="จังหวัด"
+            required
           />
         </div>
 
@@ -288,13 +302,13 @@ export default class Index extends Component {
           labelInput="เกี่ยวข้องกับน้องยังไง"
           placeHolder="บิดา"
           name="parentRelation"
-          required="false"
           onChange={(e) => this.handleChange(e)}
+          required
         />
-        <TelNumberField labelInput="เบอร์โทรศัพท์" name="parentTel" onChange={(e) => this.handleChange(e)} />
-        <TelNumberField labelInput="เบอร์ติดต่อฉุกเฉิน" name="telEmergency" onChange={(e) => this.handleChange(e)} />
+        <TelNumberField labelInput="เบอร์โทรศัพท์" name="parentTel" onChange={(e) => this.handleChange(e)} required/>
+        <TelNumberField labelInput="เบอร์ติดต่อฉุกเฉิน" name="telEmergency" onChange={(e) => this.handleChange(e)} required/>
 
-        <ButtonRoute displayButtonLeft="none" linkNext="/major" onClick={(e) => this.putProFileService(this.state.data)} />
+        <ButtonRoute displayButtonLeft="none" linkNext="/major" onClick={(e) => this.putUser(this.state.data)} />
       </React.Fragment>
     )
   }

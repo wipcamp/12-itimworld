@@ -13,6 +13,7 @@ class ButtonRoute extends React.Component{
       await this.props.onClick()
       window.location.href = this.props.linkNext;
     }
+    window.location.href = this.props.linkNext
 
   }
 
