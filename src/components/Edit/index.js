@@ -46,6 +46,7 @@ export default class Index extends Component {
     booldGroupData: ['เลือกกรู๊ปเลือด', 'O', 'A', 'B', 'AB'],
     district: '',
     province: '',
+    newUser: null,
     data: {
       firstName: null,
       firstNameEn: null,
@@ -74,17 +75,25 @@ export default class Index extends Component {
         province: null,
         district: null
       }
-    }
+    },
+    value: true
   }
 
 
-  async componentDidMount() {
-    await this.getUserService();
-    // console.log(this.state.data);
+   componentDidMount() {
+    // await this.getUserService();
+    console.log("Hello");
   }
 
   componentDidUpdate() {
     console.log(this.state.data)
+    // if(this.state.newUser != null){
+      if (this.state.value) {
+        this.setState({
+          value: false
+        })
+      // }
+    }
   }
 
   getUserService = async () => {
@@ -114,8 +123,11 @@ export default class Index extends Component {
 
   onChange(e) {
     this.setState({
-      [e.target.name]: e.target.value
+      newUser:{
+        [e.target.name]: e.target.value
+      }
     })
+  
   }
 
   onSelect = (fullAddress) => {
@@ -308,7 +320,7 @@ export default class Index extends Component {
         <br />
         <div className="d-flex justify-content-around ml-4 mr-5">
         <ButtonRoute buttonLeft="ยกเลิก" linkBack="/success" displayButtonRight="none" />
-        <button disabled>บันทึก</button>
+          <button disabled={this.state.value}>บันทึก</button>
         </div>
       </React.Fragment>
     )
