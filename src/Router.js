@@ -11,6 +11,7 @@ import Profile from './components/Profile'
 import Major from './components/Major'
 import Questions from "./components/Questions"
 import Preview from "./components/Preview"
+import Success from './components/Success'
 
 export default class Index extends React.Component {
 
@@ -24,6 +25,7 @@ export default class Index extends React.Component {
           <Route exact path="/major" component={Major} />
           <Route exact path="/questions" component={Questions} />
           <Route exact path="/preview" component={Preview} />
+          <Route exact path="/success" component={Success} />
         </Switch>
       </Router>
     )
