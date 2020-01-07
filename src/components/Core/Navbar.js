@@ -5,7 +5,9 @@ import { Link } from 'react-router-dom'
 const location = window.location.pathname
 
 const Div = styled.div`
-  display: ${props => props.location === '/' ? 'none' : 'block'};
+  display: ${props => props.location === '/profile' || 
+              props.location === '/major' || 
+              props.location === '/question' ? 'block' : 'none'};
 
 `
 
