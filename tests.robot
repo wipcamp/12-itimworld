@@ -68,7 +68,7 @@ ${answerFour}         Occaecat enim esse mollit consectetur in officia culpa qui
     Input Text                    //*[@id="telEmergency"]                               ${telEmergency}   
 
 กด ถัดไป หน้า Major
-    Click Element   //*[@id="root"]/div[3]/a[2]/button
+    Click Element   //*[@id="root"]/div[3]/button
 
 กดเลือก Major
     Click Element   //*[@id="root"]/div[2]/label[1]/img                
