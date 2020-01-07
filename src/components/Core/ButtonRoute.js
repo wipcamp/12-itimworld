@@ -6,6 +6,10 @@ const ButtonRight = styled.a`
   display: ${props => props.displayButtonRight};
 `
 
+const ButtonLeft = styled.a`
+  display: ${props => props.displayButtonLeft};
+`
+
 class ButtonRoute extends React.Component{
 
   async handleGoToNextPage(){
@@ -20,10 +24,12 @@ class ButtonRoute extends React.Component{
   render(){
     return (
       <div className="d-flex col-12 justify-content-between">
-        <ButtonRight href={this.props.linkBack} displayButtonRight={this.props.displayButtonLeft}>
+        <ButtonLeft href={this.props.linkBack} displayButtonLeft={this.props.displayButtonLeft}>
           <button> {this.props.buttonLeft} </button>
+        </ButtonLeft>
+        <ButtonRight displayButtonRight={this.props.displayButtonRight}>
+          <button onClick={()=>this.handleGoToNextPage()}>{this.props.buttonRight}</button>
         </ButtonRight>
-        <button onClick={()=>this.handleGoToNextPage()}>{this.props.buttonRight}</button>
       </div>
     )
   }
@@ -43,6 +49,7 @@ class ButtonRoute extends React.Component{
 ButtonRoute.propTypes = {
   linkBack: PropTypes.string,
   displayButtonLeft: PropTypes.string,
+  displayButtonRight: PropTypes.string,
   buttonLeft: PropTypes.string,
   linkNext: PropTypes.string,
   buttonRight: PropTypes.string,
@@ -51,6 +58,7 @@ ButtonRoute.propTypes = {
 
 ButtonRoute.defaultProps = {
   displayButtonLeft: 'block',
+  displayButtonRight: 'block',
   buttonLeft: 'กลับ',
   buttonRight:'ถัดไป'
 }
