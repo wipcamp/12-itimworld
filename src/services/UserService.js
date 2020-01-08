@@ -5,8 +5,16 @@ const userService = {
     let res = await apiUserService.get(`/user/${id}`)
     return res;
   },
-  putUser: async (data) => {
-    let res = await apiUserService.put(`/user/120001`,data)
+  putUser: async (id,data) => {
+    let res = await apiUserService.put(`/user/${id}`,data)
+    return res
+  },
+  getMe: async () => {
+    let res = await apiUserService.get(`/me`)
+    return res;
+  },
+  putMe: async (data) => {
+    let res = await apiUserService.put(`/me`,data)
     return res
   }
 }

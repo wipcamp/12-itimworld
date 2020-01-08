@@ -6,6 +6,7 @@ import TextField from '../Profile/TextField'
 import ButtonRoute from '../Core/ButtonRoute'
 import UserService from '../../services/UserService'
 
+const userId = 120001;
 export default class Index extends Component {
   state = {
     profileData: [
@@ -46,26 +47,26 @@ export default class Index extends Component {
     booldGroupData: ['เลือกกรู๊ปเลือด', 'O', 'A', 'B', 'AB'],
     district: '',
     province: '',
-    newUser: '',
-    data: {
-      firstName: '',
-      firstNameEn: '',
-      lastName: '',
-      lastNameEn: '',
-      nickName: '',
-      citizenId: '',
-      telNo: '',
-      gender: '',
-      birthDate: '',
-      bloodGroup: '',
-      religion: '',
-      schoolMajor: '',
-      level: '',
-      gpax: '',
-      email: '',
-      allergicFood: '',
-      congenitalDisease: '',
-      congenitalDrug: '',
+    newUser: null,
+    oldUser: {
+      firstName: null,
+      firstNameEn: null,
+      lastName: null,
+      lastNameEn: null,
+      nickName: null,
+      citizenId: null,
+      telNo: null,
+      gender: null,
+      birthDate: null,
+      bloodGroup: null,
+      religion: null,
+      schoolMajor: null,
+      level: null,
+      gpax: null,
+      email: null,
+      allergicFood: null,
+      congenitalDisease: null,
+      congenitalDrug: null,
       parent: {
         relation: '',
         telNo: ''
@@ -80,9 +81,24 @@ export default class Index extends Component {
   }
 
 
-  async componentDidMount() {
-    console.log(this.state.data)
-    await this.getUserService()
+   async componentDidMount() {
+    let promise;
+        try {
+          promise = await this.getUserService();
+          let response = promise.data;
+          
+          if (response.success) {
+            this.setState({
+              oldUser: response.data[0]
+            });
+            
+            console.log(this.state.oldUser);
+          } else {
+            console.log("Error get User request")
+          }
+        } catch (e) {
+          console.log("Error get User promise")
+        }
   }
 
   componentDidUpdate() {
@@ -97,32 +113,7 @@ export default class Index extends Component {
   }
 
   getUserService = async () => {
-    let data = await UserService.getUser(120001)
-    const dataFormJSON = data.data.data[0]
-    this.setState({
-      data: dataFormJSON
-    })
-    // console.log(data)
-    this.setValue(dataFormJSON)
-  }
-
-  setValue = (data) => {
-    for (const [dataArrayFromData, dataFromData] of data) {
-      for (const [dataArrayFromState, dataFromState] of this.state.profileData) {
-        if (dataArrayFromData === dataArrayFromState) {
-          console.log(dataArrayFromState+"="+dataFromData)
-          this.setState((prevState) => ({
-            profileData: [
-              ...prevState.profileData,
-              {
-                ...prevState.this,
-                value: dataFromData
-              }
-            ]
-          })
-          )}
-      }
-    }
+    return await UserService.getUser(userId);
   }
 
   putUser = async (data) => {
@@ -140,7 +131,7 @@ export default class Index extends Component {
       }
     })
 
-    let data1 = await UserService.putUser(data)
+    let data1 = await UserService.putUser(userId,data)
     // console.log(data)
     // console.log(data1)
   }
@@ -226,6 +217,7 @@ export default class Index extends Component {
               value={data.value}
               name={data.name}
               onChange={(e) => this.handleChange(e)}
+              value={this.state.oldUser[data.name]}
               required
             />
           ))
@@ -238,15 +230,15 @@ export default class Index extends Component {
             id="birthDate"
             min="1995-01-01"
             max="20010-12-31"
-            value={this.state.data.birthDate}
+            value={this.state.oldUser.birthDate}
             onChange={(e) => this.handleChange(e)}
             required
           />
         </label>
-        <TelNumberField labelInput="เบอร์โทรศัพท์" name="telNo" value={this.state.data.telNo} onChange={(e) => this.handleChange(e)} required />
+        <TelNumberField labelInput="เบอร์โทรศัพท์" name="telNo" value={this.state.oldUser.telNo} onChange={(e) => this.handleChange(e)} required />
         <label className="col-6" htmlFor="gender">
           เพศสภาพ
-            <select name="gender" id="gender" onChange={(e) => this.handleChange(e)} required>
+            <select name="gender" id="gender" value={this.state.oldUser.gender} onChange={(e) => this.handleChange(e)} required>
             <option value="">เลือกเพศ</option>
             <option value="ชาย">ชาย</option>
             <option value="หญิง">หญิง</option>
@@ -254,7 +246,7 @@ export default class Index extends Component {
         </label>
         <label className="col-6" htmlFor="bloodGroup">
           กรุ๊ปเลือด
-            <select name="bloodGroup" id="bloodGroup" onChange={(e) => this.handleChange(e)} required>
+            <select name="bloodGroup" id="bloodGroup" value={this.state.oldUser.bloodGroup} onChange={(e) => this.handleChange(e)} required>
             {
               this.state.booldGroupData.map((data, i) => <option value={data} key={i}>{data}</option>)
             }
@@ -262,7 +254,7 @@ export default class Index extends Component {
         </label>
         <label className="col-6" htmlFor="religion">
           ศาสนา
-            <select name="religion" id="religion" onChange={(e) => this.handleChange(e)} required>
+            <select name="religion" id="religion" value={this.state.oldUser.religion} onChange={(e) => this.handleChange(e)} required>
             {
               this.state.religionData.map((data, i) => <option value={data} key={i}>{data}</option>)
             }
@@ -273,12 +265,13 @@ export default class Index extends Component {
           labelInput="โรงเรียน"
           placeHolder="ส่วนบุญโญปภัมภ์ ลำพูน"
           name="school"
+          value={this.state.oldUser.school}
           onChange={(e) => this.handleChange(e)}
           required
         />
         <label className="col-6" htmlFor="level">
           ระดับชั้น
-            <select name="level" id="level" onChange={(e) => this.handleChange(e)} required>
+            <select name="level" id="level" value={this.state.oldUser.level} onChange={(e) => this.handleChange(e)} required>
             <option value="">เลือกระดับชั้น</option>
             <option value="ม.4">ม.4</option>
             <option value="ม.5">ม.5</option>
@@ -287,11 +280,11 @@ export default class Index extends Component {
         </label>
         <label className="col-6" htmlFor="gpax">
           GPAX
-            <input type="number" id="gpax" min="1.00" max="4.00" name="gpax" placeholder="4.00" step="0.01" onChange={(e) => this.handleChange(e)} required />
+            <input type="number" id="gpax" min="1.00" max="4.00" name="gpax" placeholder="4.00" step="0.01" value={this.state.oldUser.gpax} onChange={(e) => this.handleChange(e)} required />
         </label>
         <label className="col-6" htmlFor="email">
           e-mail
-            <input type="email" id="email" name="email" placeholder="wipccamp@wip.camp" onChange={(e) => this.handleChange(e)} required />
+            <input type="email" id="email" name="email" placeholder="wipccamp@wip.camp" value={this.state.oldUser.email} onChange={(e) => this.handleChange(e)} required />
         </label>
         {
           this.state.congenitalData.map((data, i) => (
@@ -302,6 +295,7 @@ export default class Index extends Component {
               labelInput={data.labelInput}
               placeHolder={data.placeHolder}
               name={data.name}
+              value={this.state.oldUser[data.name]}
               onChange={(e) => this.handleChange(e)}
             />
           ))
@@ -312,7 +306,6 @@ export default class Index extends Component {
             address="district"
             id="district"
             name="addrDistrict"
-            value={this.state.district}
             onChange={(e) => this.onChange(e)}
             onSelect={(e) => this.onSelect(e)}
             placeholder="เขต / อำเภอ"
@@ -323,7 +316,6 @@ export default class Index extends Component {
             address="province"
             id="province"
             name="addrProvice"
-            value={this.state.province}
             onChange={(e) => this.onChange(e)}
             onSelect={(e) => this.onSelect(e)}
             placeholder="จังหวัด"
@@ -337,11 +329,12 @@ export default class Index extends Component {
           labelInput="เกี่ยวข้องกับน้องยังไง"
           placeHolder="บิดา"
           name="parentRelation"
+          value={this.state.oldUser.parent.relation}
           onChange={(e) => this.handleChange(e)}
           required
         />
-        <TelNumberField labelInput="เบอร์โทรศัพท์" name="parentTel" onChange={(e) => this.handleChange(e)} required />
-        <TelNumberField labelInput="เบอร์ติดต่อฉุกเฉิน" name="telEmergency" onChange={(e) => this.handleChange(e)} required />
+        <TelNumberField labelInput="เบอร์โทรศัพท์" name="parentTel" value={this.state.oldUser.parent.telNo} onChange={(e) => this.handleChange(e)} required />
+        <TelNumberField labelInput="เบอร์ติดต่อฉุกเฉิน" name="telEmergency" value={this.state.oldUser.telEmergency} onChange={(e) => this.handleChange(e)} required />
         <br />
         <div className="d-flex justify-content-around ml-4 mr-5">
           <ButtonRoute buttonLeft="ยกเลิก" linkBack="/success" displayButtonRight="none" />
