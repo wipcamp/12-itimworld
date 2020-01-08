@@ -8,6 +8,7 @@ import UserService from '../../services/UserService'
 
 const { apiUrl } = window['runConfig'];
 
+const userId = 120001;
 export default class Index extends Component {
   state = {
     profileData: [
@@ -81,7 +82,7 @@ export default class Index extends Component {
 
   
   async componentDidMount() {
-    await this.getUserService();
+    // await this.getUserService();
     // console.log(this.state.data);
   }
 
@@ -90,7 +91,7 @@ export default class Index extends Component {
   }
 
   getUserService = async () => {
-    let data = await UserService.getUser(1);
+    let data = await UserService.getUser(userId);
     // console.log(data)
   }
 
@@ -109,7 +110,7 @@ export default class Index extends Component {
       }
     })
 
-    let data1 = await UserService.putUser(data)
+    let data1 = await UserService.putUser(userId,data)
     // console.log(data)
     // console.log(data1)
   }
