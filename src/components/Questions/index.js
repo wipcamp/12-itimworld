@@ -6,7 +6,7 @@ import AnswerService from './../../services/AnswerService'
 
 let answer = [];
 let majorId = 1;
-let userId = 1;
+let userId = 120001;
 
 export default class Index extends Component {
   
