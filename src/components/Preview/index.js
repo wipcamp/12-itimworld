@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import UserService from './../../services/UserService'
 import ProfileData from './ProfileData';
 import QuestionAnswer from './QuestionAnswer';
+import ButtonRoute from '../Core/ButtonRoute'
 
 const topicList = [
   {
@@ -122,7 +123,7 @@ export default class Index extends Component {
   GetUser = async () => {
     let promise;
     try {
-      promise = await UserService.getUser(1);
+      promise = await UserService.getUser(120001);
       let response = promise.data;
       if (response.success) {
         this.setState({
@@ -178,6 +179,7 @@ export default class Index extends Component {
             }
           </div>
         </div>
+        <ButtonRoute displayButtonLeft="/question" linkNext="/success" />
       </React.Fragment>
     )
   }
