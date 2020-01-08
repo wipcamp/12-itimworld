@@ -10,25 +10,25 @@ export default class Index extends Component {
   state = {
     profileData: [
       {
-        labelInput: 'ชื่อ', placeHolder: 'สมชาย', name: 'firstName'
+        labelInput: 'ชื่อ', placeHolder: 'สมชาย', name: 'firstName', value: ''
       },
       {
-        labelInput: 'นามสกุล', placeHolder: 'ยอดชาย', name: 'lastName'
+        labelInput: 'นามสกุล', placeHolder: 'ยอดชาย', name: 'lastName', value: ''
       },
       {
-        labelInput: 'ชื่อ (ภาษาอังกฤษ)', placeHolder: 'Somchai', name: 'firstNameEn'
+        labelInput: 'ชื่อ (ภาษาอังกฤษ)', placeHolder: 'Somchai', name: 'firstNameEn', value: ''
       },
       {
-        labelInput: 'นามสกุล (ภาษาอังกฤษ)', placeHolder: 'Yodchai', name: 'lastNameEn'
+        labelInput: 'นามสกุล (ภาษาอังกฤษ)', placeHolder: 'Yodchai', name: 'lastNameEn', value: ''
       },
       {
-        labelInput: 'ชื่อเล่น', placeHolder: 'สมชาย', name: 'nickName'
+        labelInput: 'ชื่อเล่น', placeHolder: 'สมชาย', name: 'nickName', value: ''
       },
       {
-        labelInput: 'รหัสบัตรประชาชน / Passport Number', placeHolder: '1234567890987', name: 'citizenId'
+        labelInput: 'รหัสบัตรประชาชน / Passport Number', placeHolder: '1234567890987', name: 'citizenId', value: ''
       },
       {
-        labelInput: 'สายการเรียน', placeHolder: 'วิทย์-ตณิต', name: 'schoolMajor'
+        labelInput: 'สายการเรียน', placeHolder: 'วิทย์-ตณิต', name: 'schoolMajor', value: ''
       }
     ],
     congenitalData: [
@@ -46,59 +46,83 @@ export default class Index extends Component {
     booldGroupData: ['เลือกกรู๊ปเลือด', 'O', 'A', 'B', 'AB'],
     district: '',
     province: '',
-    newUser: null,
+    newUser: '',
     data: {
-      firstName: null,
-      firstNameEn: null,
-      lastName: null,
-      lastNameEn: null,
-      nickName: null,
-      citizenId: null,
-      telNo: null,
-      gender: null,
-      birthDate: null,
-      bloodGroup: null,
-      religion: null,
-      schoolMajor: null,
-      level: null,
-      gpax: null,
-      email: null,
-      allergicFood: null,
-      congenitalDisease: null,
-      congenitalDrug: null,
+      firstName: '',
+      firstNameEn: '',
+      lastName: '',
+      lastNameEn: '',
+      nickName: '',
+      citizenId: '',
+      telNo: '',
+      gender: '',
+      birthDate: '',
+      bloodGroup: '',
+      religion: '',
+      schoolMajor: '',
+      level: '',
+      gpax: '',
+      email: '',
+      allergicFood: '',
+      congenitalDisease: '',
+      congenitalDrug: '',
       parent: {
-        relation: null,
-        telNo: null
+        relation: '',
+        telNo: ''
       },
-      telEmergency: null,
+      telEmergency: '',
       address: {
-        province: null,
-        district: null
+        province: '',
+        district: ''
       }
     },
-    value: true
+    buttonValue: true
   }
 
 
-   componentDidMount() {
-    // await this.getUserService();
-    console.log("Hello");
+  async componentDidMount() {
+    console.log(this.state.data)
+    await this.getUserService()
   }
 
   componentDidUpdate() {
     console.log(this.state.data)
-    // if(this.state.newUser != null){
+    if (this.state.newUser != null) {
       if (this.state.value) {
         this.setState({
-          value: false
+          buttonValue: false
         })
-      // }
+      }
     }
   }
 
   getUserService = async () => {
-    let data = await UserService.getUser(1);
+    let data = await UserService.getUser(120001)
+    const dataFormJSON = data.data.data[0]
+    this.setState({
+      data: dataFormJSON
+    })
     // console.log(data)
+    this.setValue(dataFormJSON)
+  }
+
+  setValue = (data) => {
+    for (const [dataArrayFromData, dataFromData] of data) {
+      for (const [dataArrayFromState, dataFromState] of this.state.profileData) {
+        if (dataArrayFromData === dataArrayFromState) {
+          console.log(dataArrayFromState+"="+dataFromData)
+          this.setState((prevState) => ({
+            profileData: [
+              ...prevState.profileData,
+              {
+                ...prevState.this,
+                value: dataFromData
+              }
+            ]
+          })
+          )}
+      }
+    }
   }
 
   putUser = async (data) => {
@@ -121,13 +145,13 @@ export default class Index extends Component {
     // console.log(data1)
   }
 
-  onChange(e) {
+  onChange = (e) => {
     this.setState({
-      newUser:{
+      newUser: {
         [e.target.name]: e.target.value
       }
     })
-  
+
   }
 
   onSelect = (fullAddress) => {
@@ -199,6 +223,7 @@ export default class Index extends Component {
               className="col-6"
               labelInput={data.labelInput}
               placeHolder={data.placeHolder}
+              value={data.value}
               name={data.name}
               onChange={(e) => this.handleChange(e)}
               required
@@ -213,12 +238,12 @@ export default class Index extends Component {
             id="birthDate"
             min="1995-01-01"
             max="20010-12-31"
-            value={this.state.birthDate}
+            value={this.state.data.birthDate}
             onChange={(e) => this.handleChange(e)}
             required
           />
         </label>
-        <TelNumberField labelInput="เบอร์โทรศัพท์" name="telNo" onChange={(e) => this.handleChange(e)} required />
+        <TelNumberField labelInput="เบอร์โทรศัพท์" name="telNo" value={this.state.data.telNo} onChange={(e) => this.handleChange(e)} required />
         <label className="col-6" htmlFor="gender">
           เพศสภาพ
             <select name="gender" id="gender" onChange={(e) => this.handleChange(e)} required>
@@ -319,8 +344,8 @@ export default class Index extends Component {
         <TelNumberField labelInput="เบอร์ติดต่อฉุกเฉิน" name="telEmergency" onChange={(e) => this.handleChange(e)} required />
         <br />
         <div className="d-flex justify-content-around ml-4 mr-5">
-        <ButtonRoute buttonLeft="ยกเลิก" linkBack="/success" displayButtonRight="none" />
-          <button disabled={this.state.value}>บันทึก</button>
+          <ButtonRoute buttonLeft="ยกเลิก" linkBack="/success" displayButtonRight="none" />
+          <button disabled={this.state.buttonValue}>บันทึก</button>
         </div>
       </React.Fragment>
     )

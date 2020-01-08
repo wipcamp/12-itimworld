@@ -10,6 +10,7 @@ const TelNumberField = (props) => {
         id={props.name} 
         name={props.name} 
         placeholder="0800000000" 
+        value={props.value}
         pattern="[0-9]{10}" 
         maxLength="10" 
         onChange={props.onChange}
@@ -22,7 +23,8 @@ const TelNumberField = (props) => {
 TelNumberField.propsTypes = {
   labelInput: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string
 }
 
 export default TelNumberField
