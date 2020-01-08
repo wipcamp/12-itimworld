@@ -6,7 +6,7 @@ const userService = {
     return res;
   },
   putUser: async (data) => {
-    let res = await apiUserService.put(`/user/1`,data)
+    let res = await apiUserService.put(`/user/120001`,data)
     return res
   }
 }

@@ -90,7 +90,7 @@ export default class Index extends Component {
   }
 
   getUserService = async () => {
-    let data = await UserService.getUser(1);
+    let data = await UserService.getUser(120001);
     // console.log(data)
   }
 
@@ -111,10 +111,10 @@ export default class Index extends Component {
 
     let data1 = await UserService.putUser(data)
     // console.log(data)
-    // console.log(data1)
+    console.log(data1)
   }
 
-  onChange(e) {
+  onChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value
     })
@@ -126,7 +126,7 @@ export default class Index extends Component {
       district,
       province
     })
-    this.arrayToObj(fullAddress);
+    this.arrayToObj(fullAddress)
   }
 
   arrayToObj = (fullAddress) => {
