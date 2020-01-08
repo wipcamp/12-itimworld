@@ -4,7 +4,7 @@ Library    Selenium2Library
 
 *** Variables ***
 ${browser}            chrome
-${url}                http://localhost:3000/
+${url}                http://localhost:3211/
 ${firstName}          สมชาย
 ${lastName}           ยอดชาย
 ${firstNameEn}        SomChai
@@ -68,18 +68,19 @@ ${answerFour}         Occaecat enim esse mollit consectetur in officia culpa qui
     Input Text                    //*[@id="telEmergency"]                               ${telEmergency}   
 
 กด ถัดไป หน้า Major
-    Click Element   //*[@id="root"]/div[3]/button
+    Click Element   //*[@id="root"]/div[3]/a[2]
 
 กดเลือก Major
-    Click Element   //*[@id="root"]/div[2]/label[1]/img                
+    Wait Until Element Is Enabled   //*[@id="root"]/div[2]/label[1]/img
+    Click Element   //*[@id="root"]/div[2]/label[1]/img
 
 กด ถัดไป หน้า Question
     Click Element     //*[@id="root"]/div[3]/a[2]
 
 ตอบคำถาม
     Input Text                    //*[@id="root"]/div[2]/div[1]/textarea                 ${answerOne}   
-    Input Text                    //*[@id="root"]/div[2]/div[2]/textarea                 ${answerTwo}   
-    Input Text                    //*[@id="root"]/div[2]/div[3]/textarea                 ${answerThree}   
+    # Input Text                    //*[@id="root"]/div[2]/div[2]/textarea                 ${answerTwo}   
+    # Input Text                    //*[@id="root"]/div[2]/div[3]/textarea                 ${answerThree}   
     # Input Text                    //*[@id="root"]/div[2]/div[4]/textarea                 ${answerFour}   
 
 กด ถัดไป หน้า Preview
