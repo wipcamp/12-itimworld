@@ -8,6 +8,14 @@ const userService = {
   putUser: async (data) => {
     let res = await apiUserService.put(`/user/1`,data)
     return res
+  },
+  getMe: async () => {
+    let res = await apiUserService.get(`/me`)
+    return res;
+  },
+  putMe: async (data) => {
+    let res = await apiUserService.put(`/me`,data)
+    return res
   }
 }
 
