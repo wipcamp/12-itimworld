@@ -47,7 +47,7 @@ export default class Index extends Component {
     booldGroupData: ['เลือกกรู๊ปเลือด', 'O', 'A', 'B', 'AB'],
     district: '',
     province: '',
-    newUser: null,
+    newUser: '',
     oldUser: {
       firstName: '',
       firstNameEn: '',
@@ -104,13 +104,19 @@ export default class Index extends Component {
   }
 
   componentDidUpdate() {
-    console.log(this.state.newUser)
-    if (this.state.newUser != null) {
-      if (this.state.value) {
+    // console.log(this.state.newUser)
+    if (this.state.newUser != '') {
+      if (this.state.buttonValue) {
         this.setState({
           buttonValue: false
         })
       }
+    }
+    if (this.state.newUser === this.state.oldData) {
+      console.log(2)
+      this.setState({
+        newUser: ''
+      })
     }
   }
 
@@ -167,9 +173,6 @@ export default class Index extends Component {
 
   handleChange = (event) => {
     const { name, value } = event.target;
-    this.setState({
-      newUser: ''
-    })
     if (name === "district" || name === "province") {
       this.setState((prevState) => ({
         [name]: value,
