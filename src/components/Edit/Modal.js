@@ -1,6 +1,40 @@
 import React, { Component } from 'react'
 
 export default class Modal extends Component {
+  state = {
+    something: null,
+    newUser: []
+  }
+
+  componentDidUpdate(prevProps){
+    console.log(this.state.newUser)
+    if(this.props.newUser !== prevProps.newUser){
+      const dataEntries = Object.entries(this.props.newUser)
+      // for (const [dataArray, dataFromEntity] of dataEntries) {
+      //   // console.log(dataArray + dataFromEntity)
+      //   if (dataArray === "parentRelation" || dataArray === "parentTel" || dataArray === "district" || dataArray === "province"){
+      //     this.setState((state) => ({
+      //       newUser:[
+      //         ...state.newUser,
+      //         dataArray + dataFromEntity
+      //       ]
+      //     }))
+      //   }
+      //   else if(dataArray === "parent" || dataFromEntity === "address"){
+      //     this.setState({
+      //       something : dataFromEntity
+      //     })
+      //   }
+      //   else{
+          this.setState(state => ({
+            newUser: dataEntries
+          }))
+      //   }
+      // }
+    }
+  }
+    
+  
   render() {
     return (
       <React.Fragment>
@@ -16,7 +50,13 @@ export default class Modal extends Component {
                 </button>
               </div>
               <div class="modal-body">
-                ...
+                {
+                  this.state.newUser.map((data, i) =>(
+                    <React.Fragment key={i}>
+                      <span key={i}>{this.state.newUser}</span><br key={i} />
+                    </React.Fragment>
+                  ))
+                }
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

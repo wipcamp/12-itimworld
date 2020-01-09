@@ -94,8 +94,6 @@ export default class Index extends Component {
           oldUser: response.data[0],
           oldData: response.data[0]
         });
-
-        console.log(this.state.oldUser);
       } else {
         console.log("Error get User request")
       }
@@ -159,6 +157,13 @@ export default class Index extends Component {
               ...prevState.oldUser.address,
               [dataArray]: dataFromEntity
             }
+          },
+          newUser: {
+            ...prevState.newUser,
+            address: {
+              ...prevState.newUser.address,
+              [dataArray]: dataFromEntity
+            }
           }
         })
         )
@@ -180,10 +185,7 @@ export default class Index extends Component {
         },
         newUser:{
           ...prevState.newUser,
-          address: {
-            ...prevState.newUser.address,
             [name]: value
-          }
         }
       })
       )
@@ -200,12 +202,9 @@ export default class Index extends Component {
         },
         newUser: {
           ...prevState.newUser,
-          parent: {
-            ...prevState.newUser.parent,
-            [name]: value
+          [name]: value
           }
         }
-      }
       ))
     }
     this.setState((prevState) => ({
@@ -357,7 +356,7 @@ export default class Index extends Component {
         <br />
         <div className="d-flex justify-content-around ml-4 mr-5">
           <ButtonRoute buttonLeft="ยกเลิก" linkBack="/success" displayButtonRight="none" />
-          <Modal disable={this.state.buttonValue} />
+          <Modal disabled={this.state.buttonValue} newUser={this.state.newUser}/>
         </div>
       </React.Fragment>
     )
