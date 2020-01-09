@@ -5,6 +5,7 @@ import TelNumberField from '../Core/TelNumberField'
 import TextField from '../Core/TextField'
 import ButtonRoute from '../Core/ButtonRoute'
 import UserService from '../../services/UserService'
+import Modal from './Modal'
 
 const userId = 120001;
 export default class Index extends Component {
@@ -356,7 +357,7 @@ export default class Index extends Component {
         <br />
         <div className="d-flex justify-content-around ml-4 mr-5">
           <ButtonRoute buttonLeft="ยกเลิก" linkBack="/success" displayButtonRight="none" />
-          <button disabled={this.state.buttonValue}>บันทึก</button>
+          <Modal disable={this.state.buttonValue} />
         </div>
       </React.Fragment>
     )
