@@ -49,24 +49,24 @@ export default class Index extends Component {
     province: '',
     newUser: null,
     oldUser: {
-      firstName: null,
-      firstNameEn: null,
-      lastName: null,
-      lastNameEn: null,
-      nickName: null,
-      citizenId: null,
-      telNo: null,
-      gender: null,
-      birthDate: null,
-      bloodGroup: null,
-      religion: null,
-      schoolMajor: null,
-      level: null,
-      gpax: null,
-      email: null,
-      allergicFood: null,
-      congenitalDisease: null,
-      congenitalDrug: null,
+      firstName: '',
+      firstNameEn: '',
+      lastName: '',
+      lastNameEn: '',
+      nickName: '',
+      citizenId: '',
+      telNo: '',
+      gender: '',
+      birthDate: '',
+      bloodGroup: '',
+      religion: '',
+      schoolMajor: '',
+      level: '',
+      gpax: '',
+      email: '',
+      allergicFood: '',
+      congenitalDisease: '',
+      congenitalDrug: '',
       parent: {
         relation: '',
         telNo: ''
@@ -77,32 +77,34 @@ export default class Index extends Component {
         district: ''
       }
     },
+    oldData: null,
     buttonValue: true
   }
 
 
-   async componentDidMount() {
+  async componentDidMount() {
     let promise;
-        try {
-          promise = await this.getUserService();
-          let response = promise.data;
-          
-          if (response.success) {
-            this.setState({
-              oldUser: response.data[0]
-            });
-            
-            console.log(this.state.oldUser);
-          } else {
-            console.log("Error get User request")
-          }
-        } catch (e) {
-          console.log("Error get User promise")
-        }
+    try {
+      promise = await this.getUserService();
+      let response = promise.data;
+
+      if (response.success) {
+        this.setState({
+          oldUser: response.data[0],
+          oldData: response.data[0]
+        });
+
+        console.log(this.state.oldUser);
+      } else {
+        console.log("Error get User request")
+      }
+    } catch (e) {
+      console.log("Error get User promise")
+    }
   }
 
   componentDidUpdate() {
-    console.log(this.state.data)
+    console.log(this.state.newUser)
     if (this.state.newUser != null) {
       if (this.state.value) {
         this.setState({
@@ -131,18 +133,9 @@ export default class Index extends Component {
       }
     })
 
-    let data1 = await UserService.putUser(userId,data)
+    let data1 = await UserService.putUser(userId, data)
     // console.log(data)
     // console.log(data1)
-  }
-
-  onChange = (e) => {
-    this.setState({
-      newUser: {
-        [e.target.name]: e.target.value
-      }
-    })
-
   }
 
   onSelect = (fullAddress) => {
@@ -159,10 +152,10 @@ export default class Index extends Component {
     for (const [dataArray, dataFromEntity] of dataEntries) {
       if (dataArray === "district" || dataArray === "province") {
         this.setState((prevState) => ({
-          data: {
-            ...prevState.data,
+          oldUser: {
+            ...prevState.oldUser,
             address: {
-              ...prevState.data.address,
+              ...prevState.oldUser.address,
               [dataArray]: dataFromEntity
             }
           }
@@ -172,34 +165,61 @@ export default class Index extends Component {
     }
   }
 
-  handleClick = () => {
-    this.setState({
-      religion: true
-    })
-  }
-
   handleChange = (event) => {
-    // console.log(2)
     const { name, value } = event.target;
+    this.setState({
+      newUser: ''
+    })
+    if (name === "district" || name === "province") {
+      this.setState((prevState) => ({
+        [name]: value,
+        oldUser: {
+          ...prevState.oldUser,
+          address: {
+            ...prevState.oldUser.address,
+            [name]: value
+          }
+        },
+        newUser:{
+          ...prevState.newUser,
+          address: {
+            ...prevState.newUser.address,
+            [name]: value
+          }
+        }
+      })
+      )
+    }
     if (name === "parentRelation" || name === "parentTel") {
       const newName = name === "parentRelation" ? "relation" : "telNo"
       this.setState((prevState) => ({
-        data: {
-          ...prevState.data,
+        oldUser: {
+          ...prevState.oldUser,
           parent: {
-            ...prevState.data.parent,
+            ...prevState.oldUser.parent,
             [newName]: value
+          }
+        },
+        newUser: {
+          ...prevState.newUser,
+          parent: {
+            ...prevState.newUser.parent,
+            [name]: value
           }
         }
       }
       ))
     }
     this.setState((prevState) => ({
-      data: {
-        ...prevState.data,
+      oldUser: {
+        ...prevState.oldUser,
         [name]: value
+      },
+      newUser: {
+        ...prevState.newUser,
+        [name]: value
+        }
       }
-    }
     ))
   }
 
@@ -306,8 +326,9 @@ export default class Index extends Component {
             address="district"
             id="district"
             name="addrDistrict"
-            onChange={(e) => this.onChange(e)}
+            onChange={(e) => this.handleChange(e)}
             onSelect={(e) => this.onSelect(e)}
+            value={this.state.oldUser.address.district}
             placeholder="เขต / อำเภอ"
             required
           />
@@ -316,8 +337,9 @@ export default class Index extends Component {
             address="province"
             id="province"
             name="addrProvice"
-            onChange={(e) => this.onChange(e)}
+            onChange={(e) => this.handleChange(e)}
             onSelect={(e) => this.onSelect(e)}
+            value={this.state.oldUser.address.province}
             placeholder="จังหวัด"
             required
           />
