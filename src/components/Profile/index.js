@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 
-import AddressField from './AddressField'
-import TelNumberField from './TelNumberField'
-import TextField from './TextField'
+import AddressField from '../Core/AddressField'
+import TelNumberField from '../Core/TelNumberField'
+import TextField from '../Core/TextField'
 import ButtonRoute from '../Core/ButtonRoute'
 import UserService from '../../services/UserService'
 

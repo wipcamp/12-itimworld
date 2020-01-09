@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 
-import AddressField from '../Profile/AddressField'
-import TelNumberField from '../Profile/TelNumberField'
-import TextField from '../Profile/TextField'
+import AddressField from '../Core/AddressField'
+import TelNumberField from '../Core/TelNumberField'
+import TextField from '../Core/TextField'
 import ButtonRoute from '../Core/ButtonRoute'
 import UserService from '../../services/UserService'
 
@@ -111,12 +111,6 @@ export default class Index extends Component {
           buttonValue: false
         })
       }
-    }
-    if (this.state.newUser === this.state.oldData) {
-      console.log(2)
-      this.setState({
-        newUser: ''
-      })
     }
   }
 
