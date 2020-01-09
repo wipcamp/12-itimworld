@@ -14,7 +14,6 @@ const TelNumberField = (props) => {
         pattern="[0-9]{10}" 
         maxLength="10" 
         onChange={props.onChange}
-        value={props.value}
         required 
         /> 
     </label>

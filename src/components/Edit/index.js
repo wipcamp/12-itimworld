@@ -11,25 +11,25 @@ export default class Index extends Component {
   state = {
     profileData: [
       {
-        labelInput: 'ชื่อ', placeHolder: 'สมชาย', name: 'firstName', value: ''
+        labelInput: 'ชื่อ', placeHolder: 'สมชาย', name: 'firstName'
       },
       {
-        labelInput: 'นามสกุล', placeHolder: 'ยอดชาย', name: 'lastName', value: ''
+        labelInput: 'นามสกุล', placeHolder: 'ยอดชาย', name: 'lastName'
       },
       {
-        labelInput: 'ชื่อ (ภาษาอังกฤษ)', placeHolder: 'Somchai', name: 'firstNameEn', value: ''
+        labelInput: 'ชื่อ (ภาษาอังกฤษ)', placeHolder: 'Somchai', name: 'firstNameEn'
       },
       {
-        labelInput: 'นามสกุล (ภาษาอังกฤษ)', placeHolder: 'Yodchai', name: 'lastNameEn', value: ''
+        labelInput: 'นามสกุล (ภาษาอังกฤษ)', placeHolder: 'Yodchai', name: 'lastNameEn'
       },
       {
-        labelInput: 'ชื่อเล่น', placeHolder: 'สมชาย', name: 'nickName', value: ''
+        labelInput: 'ชื่อเล่น', placeHolder: 'สมชาย', name: 'nickName'
       },
       {
-        labelInput: 'รหัสบัตรประชาชน / Passport Number', placeHolder: '1234567890987', name: 'citizenId', value: ''
+        labelInput: 'รหัสบัตรประชาชน / Passport Number', placeHolder: '1234567890987', name: 'citizenId'
       },
       {
-        labelInput: 'สายการเรียน', placeHolder: 'วิทย์-ตณิต', name: 'schoolMajor', value: ''
+        labelInput: 'สายการเรียน', placeHolder: 'วิทย์-ตณิต', name: 'schoolMajor'
       }
     ],
     congenitalData: [
@@ -105,7 +105,7 @@ export default class Index extends Component {
 
   componentDidUpdate() {
     // console.log(this.state.newUser)
-    if (this.state.newUser != '') {
+    if (this.state.newUser !== '') {
       if (this.state.buttonValue) {
         this.setState({
           buttonValue: false
@@ -231,7 +231,6 @@ export default class Index extends Component {
               className="col-6"
               labelInput={data.labelInput}
               placeHolder={data.placeHolder}
-              value={data.value}
               name={data.name}
               onChange={(e) => this.handleChange(e)}
               value={this.state.oldUser[data.name]}
