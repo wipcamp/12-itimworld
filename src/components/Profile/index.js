@@ -114,12 +114,6 @@ export default class Index extends Component {
     // console.log(data)
     console.log(data1)
   }
-
-  onChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
-  }
   
   onSelect = (fullAddress) => {
     const { district, province } = fullAddress
@@ -157,6 +151,19 @@ export default class Index extends Component {
   handleChange = (event) => {
     // console.log(2)
     const { name, value } = event.target;
+    if (name === "district" || name === "province") {
+      this.setState((prevState) => ({
+        [name]: value,
+        data: {
+          ...prevState.data,
+          address: {
+            ...prevState.data.address,
+            [name]: value
+          }
+        }
+      })
+      )
+    }
     if (name === "parentRelation" || name === "parentTel"){
       const newName = name === "parentRelation" ? "relation" : "telNo"
       this.setState((prevState) => ({
@@ -279,7 +286,7 @@ export default class Index extends Component {
             id="district"
             name="addrDistrict"
             value={this.state.district}
-            onChange={(e) => this.onChange(e)}
+            onChange={(e) => this.handleChange(e)}
             onSelect={(e) => this.onSelect(e)}
             placeholder="เขต / อำเภอ"
             required
@@ -290,7 +297,7 @@ export default class Index extends Component {
             id="province"
             name="addrProvice"
             value={this.state.province}
-            onChange={(e) => this.onChange(e)}
+            onChange={(e) => this.handleChange(e)}
             onSelect={(e) => this.onSelect(e)}
             placeholder="จังหวัด"
             required
