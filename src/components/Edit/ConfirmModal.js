@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 
 const ConfirmModal = (props) => {
-  const {
+  const { 
+    newUser,
     className
   } = props;
 
@@ -15,6 +16,7 @@ const ConfirmModal = (props) => {
     setModal(!modal)
     props.onClick()
   }
+  console.log(newUser)
   return (
     <div>
       <Button color="primary" onClick={toggle} disabled={props.disabled} >บันทึก</Button>
@@ -22,10 +24,10 @@ const ConfirmModal = (props) => {
         <ModalHeader toggle={toggle}>Modal title</ModalHeader>
         <ModalBody>
           {
-            props.newUser.map((data, i) => (
+            Object.values(newUser).map((data, i) => (
               <React.Fragment key={i}>
                 <span key={i}>{data}</span><br key={i} />
-              </React.Fragment>
+              </React.Fragment> 
             ))
           }
         </ModalBody>

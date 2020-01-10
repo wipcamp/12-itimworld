@@ -105,7 +105,6 @@ export default class Index extends Component {
   }
 
   componentDidUpdate() {
-    console.log(this.state.oldUser)
     if (this.state.newUser !== '') {
       if (this.state.buttonValue) {
         this.setState({

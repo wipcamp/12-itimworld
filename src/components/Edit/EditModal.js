@@ -9,15 +9,50 @@ const userId = 120001;
 export default class EditModal extends Component {
   
   state = {
-    newUser: [],
+    newUser: {},
+    newUserObj: {},
     data:{}
   }
   componentDidUpdate(prevProps){
-    // console.log(this.state.backdrop)
     if(this.props.newUser !== prevProps.newUser){
       const dataEntries = Object.entries(this.props.newUser)
+      for (const [dataArray, dataFromEntity] of dataEntries) {
+        const newName = dataArray === "firstName" ? "ชื่อ" 
+                          : dataArray === "firstNameEn" ? "ชื่อ (ภาษาอังกฤษ)" 
+                          : dataArray === "lastName" ? "นามสกุล"
+                          : dataArray === "lastNameEn" ? "นามสกุล (ภาษอังกฤษ)"
+                          : dataArray === "nickName" ? "ชื่อเล่น"
+                          : dataArray === "email" ? "E-mail"
+                          : dataArray === "brithDate" ? "วัน / เดือน / ปี เกิด"
+                          : dataArray === "citizenId" ? "รหัสบัตรประชาชน / Passport Number"
+                          : dataArray === "gender" ? "เพศสภาพ"
+                          : dataArray === "bloodGroup" ? "กรุ๊ปเลือด"
+                          : dataArray === "telNo" ? "เบอร์โทรศัพท์"
+                          : dataArray === "religion" ? "ศาสนา"
+                          : dataArray === "school" ? "โรงเรียน"
+                          : dataArray === "schoolMajor" ? "สายการเรียน"
+                          : dataArray === "level" ? "ระดับชั้น"
+                          : dataArray === "telEmergency" ? "เบอร์ติดต่อฉุกเฉิน"
+                          : dataArray === "relation" ? "เกี่ยวข้องกับน้องยังไง"
+                          : dataArray === "parentTel" ? "เบอร์โทรศัพท์ของผู้ปกครอง"
+                          : dataArray === "congenitalDrug" ? "ยาที่แพ้"
+                          : dataArray === "congenitalDisease" ? "โรคประจำตัว"
+                          : dataArray === "allergicFood" ? "อาหารที่แพ้"
+                          : dataArray === "congenitalDrug" ? "อาหารที่แพ้"
+                          : dataArray === "congenitalDrug" ? "อาหารที่แพ้"
+                          : dataArray === "province" ? "เขต / อำเภอ"
+                          : dataArray === "district" ? "จังหวัด"
+                          : dataArray 
+        const data = newName + "   " + dataFromEntity
+          this.setState((prevState) => ({
+            newUser: {
+              ...prevState.newUser,
+              [newName] : data
+            }
+          }))
+        }
       this.setState(state => ({
-        newUser: dataEntries,
+
         data: this.props.data
       }))
     }
@@ -38,7 +73,7 @@ export default class EditModal extends Component {
     })
 
     let data1 = await UserService.putUser(userId, data)
-    console.log(data1)
+    // console.log(data1)
   }
 
   render() {
