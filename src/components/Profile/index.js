@@ -28,7 +28,7 @@ export default class Index extends Component {
         labelInput: 'ชื่อเล่น', placeHolder: 'สมชาย', name: 'nickName'
       },
       {
-        labelInput: 'รหัสบัตรประชาชน / Passport Number', placeHolder: '1234567890987', name: 'citizenId'
+        labelInput: 'รหัสบัตรประชาชน', placeHolder: '1234567890987', name: 'citizenId'
       },
       {
         labelInput: 'สายการเรียน', placeHolder: 'วิทย์-ตณิต', name: 'schoolMajor'
@@ -195,13 +195,14 @@ export default class Index extends Component {
             this.state.profileData.map((data, i) => (
               <TextField
                 key={i}
-                className="col-6"
-                leftSide="col-3"
+                className="col-6 form-group"
+                leftSide="col-3 col-form-label"
                 rightSide="col-9"
                 labelInput={data.labelInput}
                 placeHolder={data.placeHolder}
                 name={data.name}
                 onChange={(e) => this.handleChange(e)}
+                additional="form-text text-muted"
                 additionalText={data.additionalText}
                 required
               />
