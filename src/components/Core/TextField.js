@@ -2,17 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-const LabelInputText = styled.div`
-  text-align: right;
-`
 
 const TextField = (props) => {
   return (
       <label className={props.className} htmlFor={props.name} >
         <div className="row">
-          <LabelInputText className={props.leftSide} >
+          <div className={props.leftSide} >
             {props.labelInput}
-          </LabelInputText>
+          </div>
           <div className={props.rightSide}>
             <input 
               type="text" 
