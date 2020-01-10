@@ -5,9 +5,11 @@ import TelNumberField from '../Core/TelNumberField'
 import TextField from '../Core/TextField'
 import ButtonRoute from '../Core/ButtonRoute'
 import UserService from '../../services/UserService'
-import Modal from './Modal'
+
+import EditModal from './EditModal'
 
 const userId = 120001;
+
 export default class Index extends Component {
   state = {
     profileData: [
@@ -103,7 +105,7 @@ export default class Index extends Component {
   }
 
   componentDidUpdate() {
-    // console.log(this.state.newUser)
+    console.log(this.state.oldUser)
     if (this.state.newUser !== '') {
       if (this.state.buttonValue) {
         this.setState({
@@ -117,26 +119,7 @@ export default class Index extends Component {
     return await UserService.getUser(userId);
   }
 
-  putUser = async (data) => {
-    // e.preventDefault()
-    const nonRequireKey = [
-      "allergicFood",
-      "congenitalDisease",
-      "congenitalDrug"
-    ];
-    Object.keys(data).map((keyData) => {
-      if (!nonRequireKey.includes(keyData, 0)) {
-        if (data[keyData] == null) {
-          alert(keyData + " cannot be empty")
-        }
-      }
-    })
-
-    let data1 = await UserService.putUser(userId, data)
-    // console.log(data)
-    // console.log(data1)
-  }
-
+  
   onSelect = (fullAddress) => {
     const { district, province } = fullAddress
     this.setState({
@@ -356,7 +339,7 @@ export default class Index extends Component {
         <br />
         <div className="d-flex justify-content-around ml-4 mr-5">
           <ButtonRoute buttonLeft="ยกเลิก" linkBack="/success" displayButtonRight="none" />
-          <Modal disabled={this.state.buttonValue} newUser={this.state.newUser}/>
+          <EditModal disabled={this.state.buttonValue} newUser={this.state.newUser} data={this.state.oldUser}/>
         </div>
       </React.Fragment>
     )
