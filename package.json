@@ -13,11 +13,12 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.0",
     "react-thailand-address-autocomplete": "^0.0.6",
+    "reactstrap": "^8.2.0",
     "styled-components": "^4.4.1"
   },
   "scripts": {
     "start": "set PORT=3211 && react-scripts start",
-    "@comment dev": "PORT=3211 react-scripts start on Mac Os and Linux if use windows use follow below ",
+    "@comment dev": "PORT=3006 react-scripts start on Mac Os and Linux if use windows use follow below ",
     "dev": "set PORT=3211 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
