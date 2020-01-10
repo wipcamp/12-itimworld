@@ -6,9 +6,6 @@ const LabelInputText = styled.div`
   text-align: right;
 `
 
-const AdditionalText = styled.div`
-  font-size: 0.8em;
-`
 const TextField = (props) => {
   return (
       <label className={props.className} htmlFor={props.name} >
@@ -27,8 +24,7 @@ const TextField = (props) => {
               required={props.required ? "required" : "" }
               onChange={props.onChange}
             />
-
-          <AdditionalText>{props.additionalText}</AdditionalText>
+            <small className={props.additional}>{props.additionalText}</small>
           </div>
         </div>
       </label>
