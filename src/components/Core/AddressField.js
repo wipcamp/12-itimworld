@@ -5,17 +5,23 @@ import InputAddress from 'react-thailand-address-autocomplete'
 
 const AddressField = (props) => {
   return (
-    <label htmlFor={props.name}>
-      {props.labelInput}
-      <InputAddress
-        address={props.address}
-        id={props.name}
-        value={props.value}
-        onChange={props.onChange}
-        onSelect={props.onSelect}
-        placeholder={props.placeholder}
-        name={props.name}
-      />
+
+    <label className={props.className} htmlFor={props.name} >
+      <div className="row">
+        <div className={props.leftSide}>{props.labelInput}</div>
+        <div className={props.rightSide}>
+          <InputAddress
+            className="form-control"
+            address={props.address}
+            id={props.name}
+            value={props.value}
+            onChange={props.onChange}
+            onSelect={props.onSelect}
+            placeholder={props.placeholder}
+            name={props.name}
+          />
+        </div>
+      </div>
     </label>
   )
 }
