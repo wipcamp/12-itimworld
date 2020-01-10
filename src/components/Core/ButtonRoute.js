@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-import styled from 'styled-components'
+import styled from 'styled-components'  
 
 const ButtonRight = styled.a`
   display: ${props => props.displayButtonRight};
@@ -8,6 +8,25 @@ const ButtonRight = styled.a`
 
 const ButtonLeft = styled.a`
   display: ${props => props.displayButtonLeft};
+`
+
+
+const ButtonStyle = styled.button`
+  width: 218.65px;
+  height: 59px;
+
+  background: #304151;
+  border-radius: 4px;
+
+  font-family: Sarabun;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 21px;
+  align-items: center;
+  text-align: center;
+
+  color: #FFFFFF;
 `
 
 class ButtonRoute extends React.Component{
@@ -24,11 +43,16 @@ class ButtonRoute extends React.Component{
   render(){
     return (
       <div className="d-flex col-12 justify-content-between">
-        <ButtonLeft href={this.props.linkBack} displayButtonLeft={this.props.displayButtonLeft}>
-          <button> {this.props.buttonLeft} </button>
+        <ButtonLeft 
+          href={this.props.linkBack} 
+          displayButtonLeft={this.props.displayButtonLeft} 
+        >
+          <ButtonStyle> {this.props.buttonLeft} </ButtonStyle>
         </ButtonLeft>
-        <ButtonRight displayButtonRight={this.props.displayButtonRight}>
-          <button onClick={()=>this.handleGoToNextPage()}>{this.props.buttonRight}</button>
+        <ButtonRight 
+          displayButtonRight={this.props.displayButtonRight}
+        >
+          <ButtonStyle onClick={()=>this.handleGoToNextPage()}>{this.props.buttonRight}</ButtonStyle>
         </ButtonRight>
       </div>
     )
