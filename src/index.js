@@ -5,9 +5,11 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
 import '../node_modules/bootstrap/dist/css/bootstrap.css';
+import GlobalStyle from './components/Core/GlobalStyle'
 
 const AppWithRoute = () => (
   <BrowserRouter>
+    <GlobalStyle />
     <App />
   </BrowserRouter>
 )
