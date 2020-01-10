@@ -11,7 +11,7 @@ const { apiUrl } = window['runConfig'];
 const userId = 120001;
 export default class Index extends Component {
   state = {
-    profileData: [
+    profileDataFirstSection: [
       {
         labelInput: 'ชื่อ', placeHolder: 'สมชาย', name: 'firstName', additionalText:'ไม่ต้องใส่คำนำหน้าชื่อ'
       },
@@ -26,7 +26,10 @@ export default class Index extends Component {
       },
       {
         labelInput: 'ชื่อเล่น', placeHolder: 'สมชาย', name: 'nickName'
-      },
+      }
+    ],
+
+    profileDataSecondSection: [
       {
         labelInput: 'รหัสบัตรประชาชน', placeHolder: '1234567890987', name: 'citizenId'
       },
@@ -192,7 +195,56 @@ export default class Index extends Component {
         <div className ="container">
           <h1 className="col-12">ข้อมูลส่วนตัว</h1>
           {
-            this.state.profileData.map((data, i) => (
+            this.state.profileDataFirstSection.map((data, i) => (
+              <TextField
+                key={i}
+                className="col-6 form-group"
+                leftSide="col-3 col-form-label text-right"
+                rightSide="col-9"
+                labelInput={data.labelInput}
+                placeHolder={data.placeHolder}
+                name={data.name}
+                onChange={(e) => this.handleChange(e)}
+                additional="form-text text-muted"
+                additionalText={data.additionalText}
+                required
+              />
+            ))
+          }
+
+          <label className="col-6 form-group" htmlFor="gender">
+            <div className="row">
+              <div className="col-3 col-form-label text-right">เพศ </div>
+              <div className="col-9">
+                <select className="form-control" name="gender" id="gender" onChange={(e) => this.handleChange(e)} required>
+                  <option value="">เลือกเพศ</option>
+                  <option value="ชาย">ชาย</option>
+                  <option value="หญิง">หญิง</option>
+                </select>
+              </div>
+            </div>
+          </label>
+          <label className="col-6 form-group" htmlFor="birthDate">
+            <div className="row">
+              <div className="col-3 col-form-label text-right">วันเกิด</div>
+              <div className="col-9">
+                <input
+                  className="form-control" 
+                  type="date"
+                  name="birthDate"
+                  id="birthDate"
+                  min="1995-01-01"
+                  max="20010-12-31"
+                  value={this.state.birthDate}
+                  onChange={(e) => this.handleChange(e)}
+                  required
+                />
+              </div>
+            </div>
+          </label>
+
+          {
+            this.state.profileDataSecondSection.map((data, i) => (
               <TextField
                 key={i}
                 className="col-6 form-group"
@@ -208,74 +260,54 @@ export default class Index extends Component {
               />
             ))
           }
-          <label className="col-6" htmlFor="birthDate">
-            วัน / เดือน / ปี เกิด
-            <input
-              type="date"
-              name="birthDate"
-              id="birthDate"
-              min="1995-01-01"
-              max="20010-12-31"
-              value={this.state.birthDate}
-              onChange={(e) => this.handleChange(e)}
-              required
-            />
-          </label>
           <TelNumberField labelInput="เบอร์โทรศัพท์" name="telNo" onChange={(e) => this.handleChange(e)} required/>
-          <label className="col-6" htmlFor="gender">
-            เพศ
-              <select name="gender" id="gender" onChange={(e) => this.handleChange(e)} required>
-              <option value="">เลือกเพศ</option>
-              <option value="ชาย">ชาย</option>
-              <option value="หญิง">หญิง</option>
-            </select>
-          </label>
-          <label className="col-6" htmlFor="bloodGroup">
+          
+          <label className="col-6 form-group" htmlFor="bloodGroup">
             กรุ๊ปเลือด
-              <select name="bloodGroup" id="bloodGroup" onChange={(e) => this.handleChange(e)} required>
+              <select className="form-control" name="bloodGroup" id="bloodGroup" onChange={(e) => this.handleChange(e)} required>
               {
                 this.state.booldGroupData.map((data, i) => <option value={data} key={i}>{data}</option>)
               }
             </select>
           </label>
-          <label className="col-6" htmlFor="religion">
+          <label className="col-6 form-group" htmlFor="religion">
             ศาสนา
-              <select name="religion" id="religion" onChange={(e) => this.handleChange(e)} required>
+              <select className="form-control" name="religion" id="religion" onChange={(e) => this.handleChange(e)} required>
               {
                 this.state.religionData.map((data, i) => <option value={data} key={i}>{data}</option>)
               }
             </select>
           </label>
           <TextField
-            className="col-6"
+            className="col-6 form-group"
             labelInput="โรงเรียน"
             placeHolder="ส่วนบุญโญปภัมภ์ ลำพูน"
             name="school"
             onChange={(e) => this.handleChange(e)}
             required
               />
-          <label className="col-6" htmlFor="level">
+          <label className="col-6 form-group" htmlFor="level">
             ระดับชั้น
-              <select name="level" id="level" onChange={(e) => this.handleChange(e)}  required>
+              <select className="form-control" name="level" id="level" onChange={(e) => this.handleChange(e)}  required>
               <option value="">เลือกระดับชั้น</option>
               <option value="ม.4">ม.4</option>
               <option value="ม.5">ม.5</option>
               <option value="ม.6">ม.6</option>
             </select>
           </label>
-          <label className="col-6" htmlFor="gpax">
+          <label className="col-6 form-group" htmlFor="gpax">
             GPAX
-              <input type="number" id="gpax" min="1.00" max="4.00" name="gpax" placeholder="4.00" step="0.01" onChange={(e) => this.handleChange(e)} required />
+              <input className="form-control" type="number" id="gpax" min="1.00" max="4.00" name="gpax" placeholder="4.00" step="0.01" onChange={(e) => this.handleChange(e)} required />
           </label>
-          <label className="col-6" htmlFor="email">
+          <label className="col-6 form-group" htmlFor="email">
             e-mail
-              <input type="email" id="email" name="email" placeholder="wipccamp@wip.camp" onChange={(e) => this.handleChange(e)} required />
+              <input className="form-control" type="email" id="email" name="email" placeholder="wipccamp@wip.camp" onChange={(e) => this.handleChange(e)} required />
           </label>
           {
             this.state.congenitalData.map((data, i) => (
               <TextField
                 key={i}
-                className="col-6"
+                className="col-6 form-group"
                 type="text"
                 labelInput={data.labelInput}
                 placeHolder={data.placeHolder}
@@ -286,6 +318,7 @@ export default class Index extends Component {
           }
           <div>
             <AddressField
+              className="form-control" 
               labelInput="เขต / อำเภอ"
               address="district"
               id="district"
@@ -297,6 +330,7 @@ export default class Index extends Component {
               required
             />
             <AddressField
+              className="form-control" 
               labelInput="จังหวัด"
               address="province"
               id="province"
@@ -311,6 +345,8 @@ export default class Index extends Component {
 
           <h1>ข้อมูลฉุกเฉิน</h1>
           <TextField
+
+            className="form-control" 
             type="text"
             labelInput="เกี่ยวข้องกับน้องยังไง"
             placeHolder="บิดา"
