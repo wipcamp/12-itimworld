@@ -14,40 +14,40 @@ export default class Index extends Component {
   state = {
     profileDataFirstSection: [
       {
-        labelInput: 'ชื่อ', placeHolder: 'สมชาย', name: 'firstName', additionalText:'ไม่ต้องใส่คำนำหน้าชื่อ'
+        labelInput: 'ชื่อ', placeHolder: 'วิปโป้', name: 'firstName', additionalText:'ไม่ต้องใส่คำนำหน้าชื่อ'
       },
       {
-        labelInput: 'นามสกุล', placeHolder: 'ยอดชาย', name: 'lastName'
+        labelInput: 'นามสกุล', placeHolder: 'ใจดี', name: 'lastName'
       },
       {
-        labelInput: 'Firstname', placeHolder: 'Somchai', name: 'firstNameEn', additionalText:'ไม่ต้องใส่คำนำหน้าชื่อ'
+        labelInput: 'Firstname', placeHolder: '', name: 'firstNameEn', additionalText:'ไม่ต้องใส่คำนำหน้าชื่อ'
       },
       {
-        labelInput: 'Lastname', placeHolder: 'Yodchai', name: 'lastNameEn'
+        labelInput: 'Lastname', placeHolder: '', name: 'lastNameEn'
       },
       {
-        labelInput: 'ชื่อเล่น', placeHolder: 'สมชาย', name: 'nickName'
+        labelInput: 'ชื่อเล่น', placeHolder: '', name: 'nickName'
       }
     ],
 
     profileDataSecondSection: [
       {
-        labelInput: 'รหัสบัตรประชาชน', placeHolder: '1234567890987', name: 'citizenId'
+        labelInput: 'รหัสบัตรประชาชน', placeHolder: '', name: 'citizenId'
       }
     ],
     congenitalData: [
       {
-        labelInput: 'โรคประจำตัว', placeHolder: 'ขาดข้าวไม่ได้', name: 'congenitalDisease'
+        labelInput: 'โรคประจำตัว', placeHolder: 'หากไม่มีให้ใส่ -', name: 'congenitalDisease'
       },
       {
-        labelInput: 'อาหารที่แพ้', placeHolder: 'ข้าว', name: 'allergicFood'
+        labelInput: 'อาหารที่แพ้', placeHolder: 'หากไม่มีให้ใส่ -', name: 'allergicFood'
       },
       {
-        labelInput: 'ยาที่แพ้', placeHolder: 'ยาแก้แพ้', name: 'congenitalDrug'
+        labelInput: 'ยาที่แพ้', placeHolder: 'หากไม่มีให้ใส่ -', name: 'congenitalDrug'
       }
     ],
-    religionData: ['เลือกศาสนา', 'พุทธ', 'คริสต์', 'อิสลาม', 'ฮินดู', 'ซิกส์'],
-    booldGroupData: ['เลือกกรู๊ปเลือด', 'O', 'A', 'B', 'AB'],
+    religionData: ['เลือก', 'พุทธ', 'คริสต์', 'อิสลาม', 'ฮินดู', 'ซิกส์','ไม่มี'],
+    booldGroupData: ['เลือก', 'A', 'B', 'O', 'AB'],
     district: '',
     province: '',
     data: {
@@ -313,7 +313,7 @@ export default class Index extends Component {
             value={this.state.province}
             onChange={(e) => this.handleChange(e)}
             onSelect={(e) => this.onSelect(e)}
-            placeholder="จังหวัด"
+            placeholder="เลือก"
             required
           />
 
@@ -328,7 +328,7 @@ export default class Index extends Component {
             value={this.state.district}
             onChange={(e) => this.handleChange(e)}
             onSelect={(e) => this.onSelect(e)}
-            placeholder="เขต / อำเภอ"
+            placeholder="เลือก"
             required
           />
 
@@ -338,7 +338,7 @@ export default class Index extends Component {
             name="email"
             type="email"
             labelInput="E-Mail"
-            placeHolder="wipccamp@wip.camp"
+            placeHolder=""
             onChange={(e) => this.handleChange(e)} 
             required="required" />
           <TelNumberField labelInput="เบอร์โทรผู้ปกครอง" name="parentTel" onChange={(e) => this.handleChange(e)} required/>
@@ -348,7 +348,7 @@ export default class Index extends Component {
             rightSide="col-12 col-md-8"
             type="text"
             labelInput="ผู้ปกครองเกี่ยวข้องเป็น"
-            placeHolder="บิดา"
+            placeHolder=""
             name="parentRelation"
             onChange={(e) => this.handleChange(e)}
             required
@@ -362,7 +362,7 @@ export default class Index extends Component {
             leftSide="col-12 col-md-4 col-form-label text-md-right"
             rightSide="col-12 col-md-8"
             labelInput="โรงเรียน"
-            placeHolder="ส่วนบุญโญปภัมภ์ ลำพูน"
+            placeHolder="เลือก"
             name="school"
             onChange={(e) => this.handleChange(e)}
             required
@@ -372,10 +372,10 @@ export default class Index extends Component {
               <div className="col-12 col-md-4 col-form-label text-md-right">ระดับชั้น</div>
               <div className="col-12 col-md-8">
                 <select className="form-control" name="level" id="level" onChange={(e) => this.handleChange(e)}  required>
-                  <option value="">เลือกระดับชั้น</option>
-                  <option value="ม.4">ม.4</option>
-                  <option value="ม.5">ม.5</option>
-                  <option value="ม.6">ม.6</option>
+                  <option value="">เลือก</option>
+                  <option value="ม.4">ม.3 ขึ้น ม.4</option>
+                  <option value="ม.5">ม.4 ขึ้น ม.5</option>
+                  <option value="ม.6">ม.5 ขึ้น ม.6</option>
                 </select>
               </div>
             </div>
@@ -385,7 +385,7 @@ export default class Index extends Component {
             leftSide="col-12 col-md-4 col-form-label text-md-right"
             rightSide="col-12 col-md-8"
             labelInput="สายการเรียน"
-            placeHolder="วิทย์-คณิต"
+            placeHolder="เลือก"
             name="schoolMajor"
             onChange={(e) => this.handleChange(e)}
             required
@@ -395,7 +395,7 @@ export default class Index extends Component {
             name="gpax"
             type="number"
             labelInput="เกรดเฉลี่ย"
-            placeHolder="4.00"
+            placeHolder=""
             step="0.01"
             min="1.00"
             max="4.00"

@@ -12,7 +12,7 @@ const TelNumberField = (props) => {
             type="tel" 
             id={props.name} 
             name={props.name} 
-            placeholder="0800000000" 
+            placeholder="" 
             value={props.value}
             pattern="[0-9]{10}" 
             maxLength="10" 
