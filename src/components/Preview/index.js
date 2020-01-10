@@ -2,6 +2,42 @@ import React, { Component } from 'react'
 import UserService from './../../services/UserService'
 import ProfileData from './ProfileData';
 import QuestionAnswer from './QuestionAnswer';
+import StyledComponent from 'styled-components';
+import ButtonRoute from '../Core/ButtonRoute';
+
+const Header = StyledComponent.h2`
+  position: relative;
+  top: -20px;
+
+  font-family: Sarabun;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 47px;
+
+  display: flex;
+  align-items: flex-end;
+
+  color: #000000;
+`
+const Rectangle = StyledComponent.div`
+
+  background: #FFFFFF;
+  opacity: 0.75;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+`
+
+const WarningList = StyledComponent.li`
+  font-family: Sarabun;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 21px;
+
+  /* red */
+  color: #F5222D;
+`
 
 const topicList = [
   {
@@ -141,17 +177,15 @@ export default class Index extends Component {
     await console.log(this.state.user.gender);
     
   }
-
+ 
   render() {
     return (
-      <React.Fragment>
-        <div>
-          <h2>ข้อมูลส่วนตัว</h2>
-          <div>
-            <div>
+        <Rectangle className="container justify-content-center mt-5 mb-5 pb-5">
+          <div className="container-fluid mb-5 justify-content-center">
+          <Header>ข้อมูลส่วนตัว</Header>
               {
                 topicList.map((groupObject)=>{
-                  return <div>
+                  return <div className="row container-fluid">
                     {
                     Object.keys(groupObject).map((keyName,i) => {
                       if(keyName === "parent"){
@@ -167,18 +201,32 @@ export default class Index extends Component {
                   </div>
                 })
               }
-            </div>
           </div>
-          <h2>ตอบคำถาม</h2>
-          <div>
+          <div className="container-fluid justify-content-center">
+            <Header>คำถามทั่วไป</Header>
+          </div>
+          <div className="container-fluid justify-content-center">
+            <Header>คำถามสาขา: {this.state.user.major.name}</Header>
             {
-              this.state.user.answerList.map((answer)=>{
-                return <QuestionAnswer topic={answer.question.name} data={answer.answerContent} />
+              this.state.user.answerList.map((answer,index)=>{
+                return <QuestionAnswer topic={answer.question.name} data={answer.answerContent} count={index} key={index} />
               })
             }
           </div>
-        </div>
-      </React.Fragment>
+          <div className="container-fluid justify-content-center">
+            <ul>
+              <WarningList>โปรดตรวจสอบรายละเอียดให้เรียบร้อย หากข้อมูลที่กรอกมาเป็นเท็จทางค่ายจะตัดสิทธิ์ทันที</WarningList>
+              <WarningList>หากกดยืนยันจะไม่สามารถกลับมาแก้ไขข้อมูลได้อีก</WarningList>
+            </ul>
+          </div>
+          <div className="container-fluid justify-content-center">
+            <ButtonRoute 
+              linkBack ="/question"
+              linkNext ="/success"
+
+            />
+          </div>
+        </Rectangle>
     )
   }
 }
