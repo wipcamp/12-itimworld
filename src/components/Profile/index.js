@@ -5,6 +5,7 @@ import TelNumberField from '../Core/TelNumberField'
 import TextField from '../Core/TextField'
 import ButtonRoute from '../Core/ButtonRoute'
 import UserService from '../../services/UserService'
+import Field from '../Core/Field'
 
 const { apiUrl } = window['runConfig'];
 
@@ -32,17 +33,14 @@ export default class Index extends Component {
     profileDataSecondSection: [
       {
         labelInput: 'รหัสบัตรประชาชน', placeHolder: '1234567890987', name: 'citizenId'
-      },
-      {
-        labelInput: 'สายการเรียน', placeHolder: 'วิทย์-ตณิต', name: 'schoolMajor'
       }
     ],
     congenitalData: [
       {
-        labelInput: 'อาหารที่แพ้', placeHolder: 'ข้าว', name: 'allergicFood'
+        labelInput: 'โรคประจำตัว', placeHolder: 'ขาดข้าวไม่ได้', name: 'congenitalDisease'
       },
       {
-        labelInput: 'โรคประจำตัว', placeHolder: 'ขาดข้าวไม่ได้', name: 'congenitalDisease'
+        labelInput: 'อาหารที่แพ้', placeHolder: 'ข้าว', name: 'allergicFood'
       },
       {
         labelInput: 'ยาที่แพ้', placeHolder: 'ยาแก้แพ้', name: 'congenitalDrug'
@@ -191,16 +189,16 @@ export default class Index extends Component {
 
   render() {
     return (
-      <React.Fragment>
         <div className ="container">
-          <h1 className="col-12">ข้อมูลส่วนตัว</h1>
+          <section>
+          <h3 className="col-12">ข้อมูลส่วนตัว</h3>
           {
             this.state.profileDataFirstSection.map((data, i) => (
               <TextField
                 key={i}
-                className="col-6 form-group"
-                leftSide="col-3 col-form-label text-right"
-                rightSide="col-9"
+                className="col-12 col-md-6 form-group"
+                leftSide="col-12 col-md-4 col-form-label text-md-right"
+                rightSide="col-12 col-md-8"
                 labelInput={data.labelInput}
                 placeHolder={data.placeHolder}
                 name={data.name}
@@ -212,10 +210,10 @@ export default class Index extends Component {
             ))
           }
 
-          <label className="col-6 form-group" htmlFor="gender">
+          <label className="col-12 col-md-6 form-group" htmlFor="gender">
             <div className="row">
-              <div className="col-3 col-form-label text-right">เพศ </div>
-              <div className="col-9">
+              <div className="col-12 col-md-4 col-form-label text-md-right">เพศ </div>
+              <div className="col-12 col-md-8">
                 <select className="form-control" name="gender" id="gender" onChange={(e) => this.handleChange(e)} required>
                   <option value="">เลือกเพศ</option>
                   <option value="ชาย">ชาย</option>
@@ -224,10 +222,10 @@ export default class Index extends Component {
               </div>
             </div>
           </label>
-          <label className="col-6 form-group" htmlFor="birthDate">
+          <label className="col-12 col-md-6 form-group" htmlFor="birthDate">
             <div className="row">
-              <div className="col-3 col-form-label text-right">วันเกิด</div>
-              <div className="col-9">
+              <div className="col-12 col-md-4 col-form-label text-md-right">วันเกิด</div>
+              <div className="col-12 col-md-8">
                 <input
                   className="form-control" 
                   type="date"
@@ -243,13 +241,24 @@ export default class Index extends Component {
             </div>
           </label>
 
+          <label className="col-12 col-md-6 form-group" htmlFor="religion">
+            <div className="row">
+              <div className="col-12 col-md-4 col-form-label text-md-right">ศาสนา</div>
+              <div className="col-12 col-md-8">
+                <select className="form-control" name="religion" id="religion" onChange={(e) => this.handleChange(e)} required>
+                {this.state.religionData.map((data, i) => <option value={data} key={i}>{data}</option>)}
+                </select>
+              </div>
+            </div>
+          </label>
+
           {
             this.state.profileDataSecondSection.map((data, i) => (
               <TextField
                 key={i}
-                className="col-6 form-group"
-                leftSide="col-3 col-form-label"
-                rightSide="col-9"
+                className="col-12 col-md-6 form-group"
+                leftSide="col-12 col-md-4 col-form-label text-md-right"
+                rightSide="col-12 col-md-8"
                 labelInput={data.labelInput}
                 placeHolder={data.placeHolder}
                 name={data.name}
@@ -260,54 +269,26 @@ export default class Index extends Component {
               />
             ))
           }
-          <TelNumberField labelInput="เบอร์โทรศัพท์" name="telNo" onChange={(e) => this.handleChange(e)} required/>
           
-          <label className="col-6 form-group" htmlFor="bloodGroup">
-            กรุ๊ปเลือด
-              <select className="form-control" name="bloodGroup" id="bloodGroup" onChange={(e) => this.handleChange(e)} required>
-              {
-                this.state.booldGroupData.map((data, i) => <option value={data} key={i}>{data}</option>)
-              }
-            </select>
+          <label className="col-12 col-md-6 form-group" htmlFor="bloodGroup">
+            <div className="row">
+              <div className="col-12 col-md-4 col-form-label text-md-right">กรุ๊ปเลือด</div>
+              <div className="col-12 col-md-8">
+                <select className="form-control" name="bloodGroup" id="bloodGroup" onChange={(e) => this.handleChange(e)} required>
+                {this.state.booldGroupData.map((data, i) => <option value={data} key={i}>{data}</option>)}
+                </select>
+              </div>
+            </div>
           </label>
-          <label className="col-6 form-group" htmlFor="religion">
-            ศาสนา
-              <select className="form-control" name="religion" id="religion" onChange={(e) => this.handleChange(e)} required>
-              {
-                this.state.religionData.map((data, i) => <option value={data} key={i}>{data}</option>)
-              }
-            </select>
-          </label>
-          <TextField
-            className="col-6 form-group"
-            labelInput="โรงเรียน"
-            placeHolder="ส่วนบุญโญปภัมภ์ ลำพูน"
-            name="school"
-            onChange={(e) => this.handleChange(e)}
-            required
-              />
-          <label className="col-6 form-group" htmlFor="level">
-            ระดับชั้น
-              <select className="form-control" name="level" id="level" onChange={(e) => this.handleChange(e)}  required>
-              <option value="">เลือกระดับชั้น</option>
-              <option value="ม.4">ม.4</option>
-              <option value="ม.5">ม.5</option>
-              <option value="ม.6">ม.6</option>
-            </select>
-          </label>
-          <label className="col-6 form-group" htmlFor="gpax">
-            GPAX
-              <input className="form-control" type="number" id="gpax" min="1.00" max="4.00" name="gpax" placeholder="4.00" step="0.01" onChange={(e) => this.handleChange(e)} required />
-          </label>
-          <label className="col-6 form-group" htmlFor="email">
-            e-mail
-              <input className="form-control" type="email" id="email" name="email" placeholder="wipccamp@wip.camp" onChange={(e) => this.handleChange(e)} required />
-          </label>
+
+          
           {
             this.state.congenitalData.map((data, i) => (
               <TextField
                 key={i}
-                className="col-6 form-group"
+                className="col-12 col-md-6 form-group"
+                leftSide="col-12 col-md-4 col-form-label text-md-right"
+                rightSide="col-12 col-md-8"
                 type="text"
                 labelInput={data.labelInput}
                 placeHolder={data.placeHolder}
@@ -316,50 +297,116 @@ export default class Index extends Component {
               />
             ))
           }
-          <div>
-            <AddressField
-              className="form-control" 
-              labelInput="เขต / อำเภอ"
-              address="district"
-              id="district"
-              name="addrDistrict"
-              value={this.state.district}
-              onChange={(e) => this.handleChange(e)}
-              onSelect={(e) => this.onSelect(e)}
-              placeholder="เขต / อำเภอ"
-              required
-            />
-            <AddressField
-              className="form-control" 
-              labelInput="จังหวัด"
-              address="province"
-              id="province"
-              name="addrProvice"
-              value={this.state.province}
-              onChange={(e) => this.handleChange(e)}
-              onSelect={(e) => this.onSelect(e)}
-              placeholder="จังหวัด"
-              required
-            />
-          </div>
+          </section>
 
-          <h1>ข้อมูลฉุกเฉิน</h1>
+          <section>
+          <h3 className="col-12">ข้อมูลการติดต่อ</h3>
+
+          <AddressField
+            className="col-12 col-md-6 form-group"
+            leftSide="col-12 col-md-4 col-form-label text-md-right"
+            rightSide="col-12 col-md-8"
+            labelInput="จังหวัด"
+            address="province"
+            id="province"
+            name="addrProvice"
+            value={this.state.province}
+            onChange={(e) => this.handleChange(e)}
+            onSelect={(e) => this.onSelect(e)}
+            placeholder="จังหวัด"
+            required
+          />
+
+          <AddressField
+            className="col-12 col-md-6 form-group"
+            leftSide="col-12 col-md-4 col-form-label text-md-right"
+            rightSide="col-12 col-md-8"
+            labelInput="เขต / อำเภอ"
+            address="district"
+            id="district"
+            name="addrDistrict"
+            value={this.state.district}
+            onChange={(e) => this.handleChange(e)}
+            onSelect={(e) => this.onSelect(e)}
+            placeholder="เขต / อำเภอ"
+            required
+          />
+
+          <TelNumberField labelInput="เบอร์โทรศัพท์" name="telNo" onChange={(e) => this.handleChange(e)} required/>  
+          <Field
+            className="col-12 col-md-6 form-group"
+            name="email"
+            type="email"
+            labelInput="E-Mail"
+            placeHolder="wipccamp@wip.camp"
+            onChange={(e) => this.handleChange(e)} 
+            required="required" />
+          <TelNumberField labelInput="เบอร์โทรผู้ปกครอง" name="parentTel" onChange={(e) => this.handleChange(e)} required/>
           <TextField
-
-            className="form-control" 
+            className="col-12 col-md-6 form-group"
+            leftSide="col-12 col-md-4 col-form-label text-md-right"
+            rightSide="col-12 col-md-8"
             type="text"
-            labelInput="เกี่ยวข้องกับน้องยังไง"
+            labelInput="ผู้ปกครองเกี่ยวข้องเป็น"
             placeHolder="บิดา"
             name="parentRelation"
             onChange={(e) => this.handleChange(e)}
             required
           />
-          <TelNumberField labelInput="เบอร์โทรศัพท์" name="parentTel" onChange={(e) => this.handleChange(e)} required/>
-          <TelNumberField labelInput="เบอร์ติดต่อฉุกเฉิน" name="telEmergency" onChange={(e) => this.handleChange(e)} required/>
+          <TelNumberField labelInput="เบอร์โทรฉุกเฉิน" name="telEmergency" onChange={(e) => this.handleChange(e)} required/>
+          </section>
+          <section>
+          <h3 className="col-12">ข้อมูลการศึกษา</h3>
+          <TextField
+            className="col-12 col-md-6 form-group"
+            leftSide="col-12 col-md-4 col-form-label text-md-right"
+            rightSide="col-12 col-md-8"
+            labelInput="โรงเรียน"
+            placeHolder="ส่วนบุญโญปภัมภ์ ลำพูน"
+            name="school"
+            onChange={(e) => this.handleChange(e)}
+            required
+            />
+          <label className="col-12 col-md-6 form-group" htmlFor="level">
+            <div className="row">
+              <div className="col-12 col-md-4 col-form-label text-md-right">ระดับชั้น</div>
+              <div className="col-12 col-md-8">
+                <select className="form-control" name="level" id="level" onChange={(e) => this.handleChange(e)}  required>
+                  <option value="">เลือกระดับชั้น</option>
+                  <option value="ม.4">ม.4</option>
+                  <option value="ม.5">ม.5</option>
+                  <option value="ม.6">ม.6</option>
+                </select>
+              </div>
+            </div>
+          </label>
+          <TextField
+            className="col-12 col-md-6 form-group"
+            leftSide="col-12 col-md-4 col-form-label text-md-right"
+            rightSide="col-12 col-md-8"
+            labelInput="สายการเรียน"
+            placeHolder="วิทย์-คณิต"
+            name="schoolMajor"
+            onChange={(e) => this.handleChange(e)}
+            required
+            />
+          <Field
+            className="col-12 col-md-6 form-group"
+            name="gpax"
+            type="number"
+            labelInput="เกรดเฉลี่ย"
+            placeHolder="4.00"
+            step="0.01"
+            min="1.00"
+            max="4.00"
+            onChange={(e) => this.handleChange(e)} 
+            required="required" />
+          </section>
+          <h3 className="col-12">ผลงานและทักษะทางด้านคอมพิวเตอร์</h3>
+          <textarea class="form-control" placeholder="ผลงาน" rows="4"></textarea>
 
           <ButtonRoute displayButtonLeft="none" linkNext="/major" onClick={(e) => this.putUser(this.state.data)} />
         </div>
-      </React.Fragment>
     )
   }
 }
