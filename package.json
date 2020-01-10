@@ -22,7 +22,8 @@
     "dev": "set PORT=3211 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "clean": "yarn cache clean"
   },
   "eslintConfig": {
     "extends": "react-app"
