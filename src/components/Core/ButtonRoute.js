@@ -25,7 +25,7 @@ class ButtonRoute extends React.Component{
 
   render(){
     return (
-      <div className="d-flex col-12 justify-content-between">
+      <div className={`${this.props.className} ${this.props.displayButtonLeft === "none" || this.props.displayButtonRight === "none"? "" : "justify-content-between"}`}>
         <ButtonLeft 
           href={this.props.linkBack} 
           displayButtonLeft={this.props.displayButtonLeft} 
@@ -42,17 +42,6 @@ class ButtonRoute extends React.Component{
   }
 }
 
-// const ButtonRoute = (props) => {
-//   return (
-//     <div className="d-flex col-12 justify-content-between">
-//       <ButtonRight href={props.linkBack} displayButtonRight={props.displayButtonLeft}>
-//         <button> {props.buttonLeft} </button>
-//       </ButtonRight>
-//       <a href={props.linkNext}><button onClick={props.onClick}>{props.buttonRight}</button></a>
-//     </div>
-//   )
-// }
-
 ButtonRoute.propTypes = {
   linkBack: PropTypes.string,
   displayButtonLeft: PropTypes.string,
@@ -60,14 +49,16 @@ ButtonRoute.propTypes = {
   buttonLeft: PropTypes.string,
   linkNext: PropTypes.string,
   buttonRight: PropTypes.string,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  className: PropTypes.string
 }
 
 ButtonRoute.defaultProps = {
   displayButtonLeft: 'block',
   displayButtonRight: 'block',
   buttonLeft: 'กลับ',
-  buttonRight:'ถัดไป'
+  buttonRight:'ถัดไป',
+  className: 'd-flex col-12'
 }
 
 export default ButtonRoute
