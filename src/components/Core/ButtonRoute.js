@@ -42,7 +42,7 @@ class ButtonRoute extends React.Component{
 
   render(){
     return (
-      <div className="d-flex col-12 justify-content-between">
+      <div className="d-flex col-12 justify-content-around">
         <ButtonLeft 
           href={this.props.linkBack} 
           displayButtonLeft={this.props.displayButtonLeft} 
