@@ -4,6 +4,7 @@ import MajorService from './../../services/MajorService'
 
 import ImageRadio from './ImageRadio'
 import ButtonRoute from '../Core/ButtonRoute'
+import ConfirmModal from './ConfirmModal'
 
 const Header = styled.div`
   font-style: normal;
@@ -25,9 +26,19 @@ export default class Index extends Component {
       selected: 'https://miro.medium.com/max/11400/1*lS9ZqdEGZrRiTcL1JUgt9w.jpeg'
     },
     selectedMajor: {
-      id: null,
-      description: null,
-      name: null
+      "id": 1,
+      "name": "Science",
+      "description": "What to learn",
+      "questionList": [
+        {
+          "id": 1,
+          "name": "What is my name"
+        },
+        {
+          "id": 2,
+          "name": "What time is it"
+        }
+      ]
     },
     majors: [
       {
@@ -122,10 +133,15 @@ export default class Index extends Component {
               {this.state.selectedMajor.description}
           </Title>
         </div>
-        <ButtonRoute
-          linkBack="/profile"
-          linkNext={`/questions?major=${this.state.selectedMajor.id}`}
-        />
+        <div className="d-inline justify-content-around">
+          <ButtonRoute
+            className="col-6 d-inline-flex"
+            linkBack="/profile"
+            // linkNext={`/questions?major=${this.state.selectedMajor.id}`}
+            displayButtonRight="none"
+            />
+          <ConfirmModal majorId={this.state.selectedMajor.id} selectedMajor={this.state.selectedMajor} />
+        </div>
       </React.Fragment>
     )
   }
