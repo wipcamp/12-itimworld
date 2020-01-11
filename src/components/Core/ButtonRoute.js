@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-import styled from 'styled-components'  
+import styled from 'styled-components' 
+
+import { ButtonStyle } from './ButtonStyle'
 
 const ButtonRight = styled.a`
   display: ${props => props.displayButtonRight};
@@ -8,25 +10,6 @@ const ButtonRight = styled.a`
 
 const ButtonLeft = styled.a`
   display: ${props => props.displayButtonLeft};
-`
-
-
-const ButtonStyle = styled.button`
-  width: 218.65px;
-  height: 59px;
-
-  background: #304151;
-  border-radius: 4px;
-
-  font-family: Sarabun;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 16px;
-  line-height: 21px;
-  align-items: center;
-  text-align: center;
-
-  color: #FFFFFF;
 `
 
 class ButtonRoute extends React.Component{
