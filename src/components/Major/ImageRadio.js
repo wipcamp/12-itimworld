@@ -22,13 +22,15 @@ const InputRadio = styled.label`
 `
 
 const ImageMajor = styled.img`
-  width:300px;
-  height:auto ;
+  width: 270px;
+  height: 413px;
+  background: #C4C4C4;
+  border-radius: 30px;
 `
 
 const ImageRadio = (props) => {
   return (
-      <InputRadio>
+      <InputRadio className={props.className}>
         <input type="radio" name="major" value={props.value} />
         <ImageMajor src={props.imgPath}  alt="wow" onClick={props.onClick}/>
       </InputRadio>

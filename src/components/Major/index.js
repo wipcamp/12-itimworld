@@ -1,22 +1,35 @@
 import React, { Component } from 'react'
+import styled from 'styled-components'
 import MajorService from './../../services/MajorService'
 
 import ImageRadio from './ImageRadio'
 import ButtonRoute from '../Core/ButtonRoute'
 
+const Header = styled.div`
+  font-style: normal;
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 47px;
+  text-align: center;
+`
+
+const Title = styled.p`
+  visibility:${props => props.visible};
+`
+
 export default class Index extends Component {
 
   state = {
     pictures: {
-      default:'https://icatcare.org/app/uploads/2018/07/Thinking-of-getting-a-cat.png',
-      selected:'https://miro.medium.com/max/11400/1*lS9ZqdEGZrRiTcL1JUgt9w.jpeg'
+      default: 'https://icatcare.org/app/uploads/2018/07/Thinking-of-getting-a-cat.png',
+      selected: 'https://miro.medium.com/max/11400/1*lS9ZqdEGZrRiTcL1JUgt9w.jpeg'
     },
-    selectedMajor:{
+    selectedMajor: {
       id: null,
       description: null,
       name: null
     },
-    majors:[
+    majors: [
       {
         "id": 1,
         "name": "Science",
@@ -37,13 +50,25 @@ export default class Index extends Component {
         "name": "Math",
         "description": "When to sleep",
         "questionList": []
+      },
+      {
+        "id": 3,
+        "name": "Math1",
+        "description": "When to sleep",
+        "questionList": []
+      },
+      {
+        "id": 4,
+        "name": "Math2",
+        "description": "When to sleep",
+        "questionList": []
       }
     ]
   }
 
   GetMajors = async () => {
     let promise;
-    try{
+    try {
       promise = await MajorService.getAllMajors();
       let response = promise.data;
       if (response.success) {
@@ -54,12 +79,12 @@ export default class Index extends Component {
       } else {
         console.log("Error getting all majors data")
       }
-    }catch(e){
+    } catch (e) {
       console.log("Error getting all majors data")
     }
   }
 
-  async componentDidMount(){
+  async componentDidMount() {
     await this.GetMajors();
   }
 
@@ -78,26 +103,29 @@ export default class Index extends Component {
     return (
       <React.Fragment>
         <div className="row justify-content-center">
-            {
-              this.state.majors.map((data, key) => (
-                <ImageRadio 
-                  className="col-3" 
-                  key={key} 
-                  imgPath={this.state.selectedMajor===data?this.state.pictures.selected:this.state.pictures.default} 
-                  value={data.id}
-                  onClick={() => this.changeDescription(key)} 
-                  />
-              )
-              )
-            }
-          <p className="d-flex col-12 justify-content-center">
-            {this.state.selectedMajor.description}
-          </p>
+          {
+            this.state.majors.map((data, key) => (
+              <ImageRadio
+                className="col-2 mr-5"
+                key={key}
+                imgPath={this.state.selectedMajor === data ? this.state.pictures.selected : this.state.pictures.default}
+                value={data.id}
+                onClick={() => this.changeDescription(key)}
+              />
+            )
+            )
+          }
+          <Title className="d-flex col-12 justify-content-center" visible={this.state.selectedMajor.description ? "visible" : "hidden"}>
+              <Header>ชื่อสาขาที่เลือก</Header>
+          </Title>
+          <Title className={`d-flex col-12 justify-content-center ${this.state.selectedMajor.description ? "mb-4" : "mb-5"} `} visible={this.state.selectedMajor.description ? "visible" : "hidden"}>
+              {this.state.selectedMajor.description}
+          </Title>
         </div>
-        <ButtonRoute 
-          linkBack ="/profile"
-          linkNext ={`/questions?major=${this.state.selectedMajor.id}`}
-          />
+        <ButtonRoute
+          linkBack="/profile"
+          linkNext={`/questions?major=${this.state.selectedMajor.id}`}
+        />
       </React.Fragment>
     )
   }
