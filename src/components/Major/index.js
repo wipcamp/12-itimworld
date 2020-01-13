@@ -26,19 +26,13 @@ export default class Index extends Component {
       selected: 'https://miro.medium.com/max/11400/1*lS9ZqdEGZrRiTcL1JUgt9w.jpeg'
     },
     selectedMajor: {
-      "id": 1,
-      "name": "Science",
-      "description": "What to learn",
-      "questionList": [
-        {
-          "id": 1,
-          "name": "What is my name"
-        },
-        {
-          "id": 2,
-          "name": "What time is it"
-        }
-      ]
+      id: null,
+      description: null,
+      name: null
+    },
+    showMajor:{
+      name: null,
+      description: null
     },
     majors: [
       {
@@ -74,7 +68,8 @@ export default class Index extends Component {
         "description": "When to sleep",
         "questionList": []
       }
-    ]
+    ],
+    buttonValue: true
   }
 
   GetMajors = async () => {
@@ -102,10 +97,32 @@ export default class Index extends Component {
   changeDescription = (i) => {
     console.log(i)
     let major = this.state.majors[i]
+    const dataEntries = Object.entries(major)
+    for (const [dataArray, dataFromEntity] of dataEntries) {
+      if (dataArray === "name" ){
+        this.setState((prevState) => ({
+          showMajor: {
+            ...prevState.showMajor,
+            name: dataFromEntity
+          }
+        })
+        )
+      }
+      else if (dataArray === "description") {
+        this.setState((prevState) => ({
+          showMajor: {
+            ...prevState.showMajor,
+            description: dataFromEntity
+          }
+        })
+        )
+      }
+    }
     console.log(major);
     this.setState((prevState) => ({
       descriptionNum: major.description,
-      selectedMajor: major
+      selectedMajor: major,
+      buttonValue: false
     })
     )
   }
@@ -133,14 +150,18 @@ export default class Index extends Component {
               {this.state.selectedMajor.description}
           </Title>
         </div>
-        <div className="d-inline justify-content-around">
+        <div className="d-inline justify-content-between">
           <ButtonRoute
             className="col-6 d-inline-flex"
             linkBack="/profile"
-            // linkNext={`/questions?major=${this.state.selectedMajor.id}`}
             displayButtonRight="none"
             />
-          <ConfirmModal majorId={this.state.selectedMajor.id} selectedMajor={this.state.selectedMajor} />
+          <ConfirmModal 
+            majorId={this.state.selectedMajor.id} 
+            selectedMajor={this.state.selectedMajor} 
+            showMajor={this.state.showMajor}
+            disabled={this.state.buttonValue}
+          />
         </div>
       </React.Fragment>
     )
