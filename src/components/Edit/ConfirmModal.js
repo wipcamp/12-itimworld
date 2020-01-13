@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 
+import { ButtonStyle } from '../Core/ButtonStyle'
+
 const ConfirmModal = (props) => {
   const { 
     newUser,
@@ -19,7 +21,7 @@ const ConfirmModal = (props) => {
   console.log(newUser)
   return (
     <div>
-      <Button color="primary" onClick={toggle} disabled={props.disabled} >บันทึก</Button>
+      <ButtonStyle color="primary" onClick={toggle} disabled={props.disabled} >บันทึก</ButtonStyle>
       <Modal isOpen={modal} toggle={toggle} className={className}>
         <ModalHeader toggle={toggle}>Modal title</ModalHeader>
         <ModalBody>
