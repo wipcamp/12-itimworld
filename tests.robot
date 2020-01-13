@@ -33,6 +33,7 @@ ${answerOne}          Qui anim consequat enim sint fugiat esse magna minim.
 ${answerTwo}          Exercitation in minim qui do adipisicing laboris excepteur est.
 ${answerThree}        Dolore reprehenderit laboris elit do adipisicing consectetur elit aliquip. 
 ${answerFour}         Occaecat enim esse mollit consectetur in officia culpa quis ea fugiat voluptate.
+${textarea}         Occaecat enim esse mollit consectetur in officia culpa quis ea fugiat voluptate.
 
 *** Keywords ***
 เปิดเว็บ 
@@ -61,11 +62,12 @@ ${answerFour}         Occaecat enim esse mollit consectetur in officia culpa qui
     Input Text                    //*[@id="allergicFood"]                               ${allergicFood}   
     Input Text                    //*[@id="congenitalDisease"]                          ${congenitalDisease}   
     Input Text                    //*[@id="congenitalDrug"]                             ${congenitalDrug}  
-    Input Text                    //*[@id="root"]/div[2]/label[1]/div/div/input         ${district}   
-    Input Text                    //*[@id="root"]/div[2]/label[2]/div/div/input         ${province}   
+    Input Text                    //*[@id="root"]/div[2]/section[2]/label[2]/div/div[2]/div/div/input         ${district}   
+    Input Text                    //*[@id="root"]/div[2]/section[2]/label[1]/div/div[2]/div/div/input         ${province}   
     Input Text                    //*[@id="parentRelation"]                             ${parentRelation}   
     Input Text                    //*[@id="parentTel"]                                  ${parentTel}   
     Input Text                    //*[@id="telEmergency"]                               ${telEmergency}   
+    Input Text                    //*[@id="root"]/div[2]/textarea                       ${textarea}   
 
 กด ถัดไป หน้า Major
     Click Element   //*[@id="root"]/div[3]/a[2]
