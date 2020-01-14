@@ -1,21 +1,21 @@
 import styled from 'styled-components'
+import font from '../../../config/fonts'
 
 export const HeaderText = styled.h1`
   font-style: normal;
   font-weight: 500;
-  font-size: 36px;
+  font-size: ${font.Headline};
   line-height: 47px;
   text-align: center!important;
 `
 
-export const Subtitle = styled.div`
+export const Paragrph = styled.div`
   font-style: normal;
   font-weight: 300;
-  font-size: 16px;
+  font-size: ${font.Paragraph};
   line-height: 21px;
   display: flex;
   align-items: center;
   text-align: center;
-  color: #000000;
   margin-bottom: 3em;
 `
