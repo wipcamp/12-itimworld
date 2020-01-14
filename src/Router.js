@@ -13,6 +13,7 @@ import Questions from "./components/Questions"
 import Preview from "./components/Preview"
 import Success from './components/Success'
 import Edit from './components/Edit'
+import General from './components/General'
 
 export default class Index extends React.Component {
 
@@ -23,6 +24,7 @@ export default class Index extends React.Component {
         <Switch>
           <Route exact path="/" component={Login} />
           <Route exact path="/profile" component={Profile} />
+          <Route exact path="/general" component={General} />
           <Route exact path="/major" component={Major} />
           <Route exact path="/questions" component={Questions} />
           <Route exact path="/preview" component={Preview} />
