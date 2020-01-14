@@ -16,6 +16,10 @@ const userService = {
   putMe: async (data) => {
     let res = await apiUserService.put(`/me`,data)
     return res
+  },
+  postGeneralAnswer: async (id,data) => {
+    let res = await apiUserService.post(`/user/${id}/general`,data)
+    return res
   }
 }
 
