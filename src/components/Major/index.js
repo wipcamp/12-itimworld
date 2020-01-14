@@ -136,7 +136,7 @@ export default class Index extends Component {
         <div className="d-inline justify-content-around">
           <ButtonRoute
             className="col-6 d-inline-flex"
-            linkBack="/profile"
+            linkBack="/general"
             // linkNext={`/questions?major=${this.state.selectedMajor.id}`}
             displayButtonRight="none"
             />
