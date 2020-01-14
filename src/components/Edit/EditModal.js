@@ -42,6 +42,7 @@ export default class EditModal extends Component {
                           : dataArray === "congenitalDrug" ? "อาหารที่แพ้"
                           : dataArray === "province" ? "เขต / อำเภอ"
                           : dataArray === "district" ? "จังหวัด"
+                          : dataArray === "skill" ? "ผลงานและทักษะทางด้านคอมพิวเตอร์"
                           : dataArray 
         const data = newName + "   " + dataFromEntity
           this.setState((prevState) => ({
@@ -79,9 +80,9 @@ export default class EditModal extends Component {
   render() {
 
     return (
-      <React.Fragment>
+      <div className={this.props.className}>
         <ConfirmModal disabled={this.props.disabled} newUser={this.state.newUser} onClick={() => this.putUser(this.state.data)}/>
-      </React.Fragment>
+      </div>
     )
   }
 }

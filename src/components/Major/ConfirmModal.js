@@ -5,26 +5,8 @@ import { Modal, ModalBody } from 'reactstrap';
 
 import ButtonRoute from '../Core/ButtonRoute'
 import { ButtonStyle } from '../Core/ButtonStyle'
+import { HeaderText, Subtitle } from '../Core/Text'
 
-const Header = styled.h1`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 36px;
-  line-height: 47px;
-  text-align: center!important;
-`
-
-const Subtitle = styled.div`
-  font-style: normal;
-  font-weight: 300;
-  font-size: 16px;
-  line-height: 21px;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  color: #000000;
-  margin-bottom: 3em;
-`
 const Hr = styled.hr`
   width: 557px;
   background-color:#3C3C3C;
@@ -58,15 +40,15 @@ const ConfirmModal = (props) => {
   return (
     <React.Fragment>
       <div className={props.className}>
-        <ButtonStyle onClick={toggle}>ถัดไป</ButtonStyle>
+        <ButtonStyle onClick={toggle} disabled={props.disabled}>ถัดไป</ButtonStyle>
       </div>
       <Modal isOpen={modal} toggle={toggle} className="d-flex justify-content-center">
         <Body>
-          <Header className="mt-3">ยืนยันที่จะเลือกสาขา</Header>
+          <HeaderText className="mt-3">ยืนยันที่จะเลือกสาขา</HeaderText>
           <Hr/>
           <Subtitle className="row justify-content-center">
           {
-            Object.values(props.selectedMajor).map((data,i) => (
+            Object.values(props.showMajor).map((data,i) => (
               <React.Fragment key={i}>
                 <span className="col-12" key={i}>{data}</span> 
                 <br />
