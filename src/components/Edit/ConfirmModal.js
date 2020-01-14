@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
+import { Modal, ModalBody } from 'reactstrap'
 
-import { HeaderText , Subtitle } from '../Core/Text'
+import { HeaderText, Paragrph } from '../Core/Text'
 import { ButtonStyle, ButtonStyleLink } from '../Core/ButtonStyle'
 
 const SubHeader = styled(HeaderText)`
@@ -43,11 +43,11 @@ const ConfirmModal = (props) => {
         <Body>
           <HeaderText className="col-12">ยืนยันที่จะแก้ไขข้อมูล</HeaderText>
           <div className="row justify-content-center mb-5">
-            <Subtitle className="col-8 ">
+            <Paragrph className="col-8 ">
               Lorem Ipsum is simply dummy text of the printing and
               typesetting industry. Lorem Ipsum has been the industry's
               standard dummy text ever since the 1500s,
-          </Subtitle>
+          </Paragrph>
             <SubHeader className="d-flex justify-content-start col-8"> ข้อมูลที่ท่านแก้ไขมีดังนี้ </SubHeader>
             <EditData className="col-8">
               {
