@@ -8,6 +8,11 @@ const GlobalStyle = createGlobalStyle`
   font-family: 'Sarabun', sans-serif;
   text-transform: uppercase;
  }
+ h2{
+  font-family: 'Sarabun', sans-serif;
+  font-style: normal;
+  font-weight: bold;
+ }
 
  @font-face{
     font-family: 'Sarabun';
