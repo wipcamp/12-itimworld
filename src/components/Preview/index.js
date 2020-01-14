@@ -83,6 +83,8 @@ const topicList = [
     gpax:"เกรด"
   }
   ];
+
+const userId = 120001;
 export default class Index extends Component {
 
   state = {
@@ -158,7 +160,7 @@ export default class Index extends Component {
   GetUser = async () => {
     let promise;
     try {
-      promise = await UserService.getUser(1);
+      promise = await UserService.getUser(userId);
       let response = promise.data;
       if (response.success) {
         this.setState({
@@ -174,8 +176,6 @@ export default class Index extends Component {
 
   async componentDidMount(){
     await this.GetUser();
-    await console.log(this.state.user.gender);
-    
   }
  
   render() {

@@ -153,7 +153,7 @@ export default class Index extends Component {
         <div className="d-inline justify-content-between">
           <ButtonRoute
             className="col-6 d-inline-flex"
-            linkBack="/profile"
+            linkBack="/general"
             displayButtonRight="none"
             />
           <ConfirmModal 

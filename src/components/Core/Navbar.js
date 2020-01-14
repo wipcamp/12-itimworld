@@ -15,9 +15,10 @@ const Navbar = () => {
   return (
     <Div location={location}>
       <Link to="/profile" >1</Link>
-      <Link to="/major" >2</Link>
-      <Link to="/questions" >3</Link>
-      <Link to="/preview" >4</Link>
+      <Link to="/general" >2</Link>
+      <Link to="/major" >3</Link>
+      <Link to="/questions" >4</Link>
+      <Link to="/preview" >5</Link>
     </Div>
   )
 }
