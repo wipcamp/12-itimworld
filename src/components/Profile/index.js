@@ -405,7 +405,7 @@ export default class Index extends Component {
           <h3 className="col-12">ผลงานและทักษะทางด้านคอมพิวเตอร์</h3>
           <textarea class="form-control" placeholder="ผลงาน" rows="4"></textarea>
 
-          <ButtonRoute displayButtonLeft="none" linkNext="/major" onClick={(e) => this.putUser(this.state.data)} />
+          <ButtonRoute displayButtonLeft="none" linkNext="/general" onClick={(e) => this.putUser(this.state.data)} />
         </div>
     )
   }
