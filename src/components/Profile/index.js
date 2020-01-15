@@ -6,6 +6,7 @@ import TextField from '../Core/TextField'
 import ButtonRoute from '../Core/ButtonRoute'
 import UserService from '../../services/UserService'
 import Field from '../Core/Field'
+import AlertModal from './AlertModal'
 
 const { apiUrl } = window['runConfig'];
 
@@ -78,17 +79,17 @@ export default class Index extends Component {
         province: null,
         district: null
       }
-    }
+    },
+    errorMsg: []
   }
 
   
   async componentDidMount() {
-    // await this.getUserService();
-    // console.log(this.state.data);
+    this.validateField(this.state.data);
   }
 
   componentDidUpdate() {
-    console.log(this.state.data)
+    
   }
 
   getUserService = async () => {
@@ -96,8 +97,8 @@ export default class Index extends Component {
     // console.log(data)
   }
 
-  putUser = async (data) => {
-    // e.preventDefault()
+  validateField = (data) => {
+    let requiredField = [];
     const nonRequireKey = [
       "allergicFood",
       "congenitalDisease",
@@ -106,14 +107,15 @@ export default class Index extends Component {
     Object.keys(data).map((keyData)=>{
       if(!nonRequireKey.includes(keyData,0)){
         if(data[keyData] == null){
-          alert(keyData + " cannot be empty")
+          requiredField.push(keyData)
         }
       }
     })
-
-    let data1 = await UserService.putUser(userId,data)
-    // console.log(data)
-    console.log(data1)
+    this.setState({errorMsg:requiredField})
+    console.log("done validate");
+  }
+  putUser = async (data) => {
+    await UserService.putUser(userId, data);
   }
   
   onSelect = (fullAddress) => {
@@ -185,6 +187,17 @@ export default class Index extends Component {
       }
     }
     ))
+    this.validateField(this.state.data);
+    console.log(this.state.data);
+    
+  }
+
+  displayNextButton = () => {
+    if(this.state.errorMsg.length === 0 || this.state.errorMsg == null){
+      return <ButtonRoute displayButtonLeft="none" linkNext="/general" onClick={(e) => this.putUser(this.state.data)} />
+    }else{
+      return <AlertModal errorMsg={this.state.errorMsg} />
+    }
   }
 
   render() {
@@ -405,7 +418,9 @@ export default class Index extends Component {
           <h3 className="col-12">ผลงานและทักษะทางด้านคอมพิวเตอร์</h3>
           <textarea class="form-control" placeholder="ผลงาน" rows="4"></textarea>
 
-          <ButtonRoute displayButtonLeft="none" linkNext="/general" onClick={(e) => this.putUser(this.state.data)} />
+          {
+            this.displayNextButton()
+          }
         </div>
     )
   }
