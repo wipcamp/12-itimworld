@@ -28,8 +28,9 @@ export default class Question extends Component {
                 name={this.props.questionId} 
                 onChange={this.props.handleAnswer}
                 onBlur={this.props.blur} 
-                value={this.props.value}
-                />
+                >
+                    {this.props.value}
+                </TextArea>
             </div>
         )
     }
