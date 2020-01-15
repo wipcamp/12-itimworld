@@ -4,6 +4,7 @@ import ProfileData from './ProfileData';
 import QuestionAnswer from './QuestionAnswer';
 import StyledComponent from 'styled-components';
 import ButtonRoute from '../Core/ButtonRoute';
+import ConfirmModal from './ConfirmModal'
 
 const generalQuestion = [
   "Mock general question 1",
@@ -238,10 +239,11 @@ export default class Index extends Component {
           </div>
           <div className="container-fluid justify-content-center">
             <ButtonRoute 
-              linkBack ="/question"
-              linkNext ="/success"
-
+              className="col-6 d-inline-flex"
+              linkBack ={"/questions?major="+this.state.user.major.id}
+              displayButtonRight="none"
             />
+            <ConfirmModal />
           </div>
         </Rectangle>
     )
