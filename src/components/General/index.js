@@ -14,6 +14,7 @@ let answer = {
   firstAnswer: "",
   secondAnswer: ""
 };
+
 let userId = 120001;
 
 export default class Index extends Component {
@@ -59,6 +60,8 @@ export default class Index extends Component {
           gettedUserGeneralAnswer[1].oldValue = response.data[0].generalAnswer.secondAnswer
 
           this.setState({ questions : gettedUserGeneralAnswer});
+          answer.firstAnswer = response.data[0].generalAnswer.firstAnswer===null?"":response.data[0].generalAnswer.firstAnswer;
+          answer.secondAnswer = response.data[0].generalAnswer.secondAnswer===null?"":response.data[0].generalAnswer.secondAnswer;
           console.log("GET general answer success")
         }else{
           console.log("success fail GET general answer")
@@ -100,7 +103,7 @@ export default class Index extends Component {
                             questionId={data.id} 
                             handleAnswer={this.handleAnswer} 
                             blur={this.postGeneralAnswerService}
-                            value={this.state.questions[i].oldValue}
+                            oldValue={this.state.questions[i].oldValue}
                             />
                         })}
                 </div>

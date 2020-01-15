@@ -18,7 +18,26 @@ const TextArea = styled.textarea`
     border-radius: 4px;
 `
 export default class Question extends Component {
-		
+    state = {
+        oldValue: ''
+    }
+
+    componentDidUpdate(prevProps){
+        if(this.props.oldValue !== prevProps.oldValue){
+            this.setState({
+                oldValue: this.props.oldValue
+            })
+        }
+    }
+
+    handleChange = (e) => {
+        this.props.handleAnswer(e);
+        this.setState({
+            oldValue: e.target.value
+        })
+    }
+
+
     render() {
         return (
             <div className="form-group">
@@ -26,10 +45,10 @@ export default class Question extends Component {
                 <TextArea 
                 className="col-12"
                 name={this.props.questionId} 
-                onChange={this.props.handleAnswer}
-                onBlur={this.props.blur} 
+                onChange={(e) => this.handleChange(e)}
+                onBlur={this.props.blur}
+                value={this.state.oldValue}
                 >
-                    {this.props.value}
                 </TextArea>
             </div>
         )
