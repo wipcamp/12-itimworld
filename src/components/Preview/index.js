@@ -5,6 +5,11 @@ import QuestionAnswer from './QuestionAnswer';
 import StyledComponent from 'styled-components';
 import ButtonRoute from '../Core/ButtonRoute';
 
+const generalQuestion = [
+  "Mock general question 1",
+  "Mock general question 2"
+];
+
 const Header = StyledComponent.h2`
   position: relative;
   top: -20px;
@@ -153,7 +158,12 @@ export default class Index extends Component {
           },
           "answerContent": "Its 4.20"
         }
-      ]
+      ],
+      "generalAnswer": {
+        "id": 39,
+        "firstAnswer": "",
+        "secondAnswer": "asdfasdfasdf"
+      }
     }
   }
 
@@ -191,7 +201,7 @@ export default class Index extends Component {
                       if(keyName === "parent"){
                         return (
                           Object.keys(groupObject[keyName]).map((innerObjectKeyName,j)=>{
-                          return <ProfileData topic={groupObject[keyName][innerObjectKeyName]} data={this.state.user[keyName][innerObjectKeyName]} key={j} />
+                            return <ProfileData topic={groupObject[keyName][innerObjectKeyName]} data={this.state.user[keyName][innerObjectKeyName]} key={j} />
                         }))
                       }else{
                         return <ProfileData topic={groupObject[keyName]} data={this.state.user[keyName]} key={i} />
@@ -204,6 +214,13 @@ export default class Index extends Component {
           </div>
           <div className="container-fluid justify-content-center">
             <Header>คำถามทั่วไป</Header>
+            {
+              Object.keys(this.state.user.generalAnswer).map((keyName,i) => {
+                if(keyName !== "id"){
+                  return <QuestionAnswer topic={generalQuestion[i-1]} data={this.state.user.generalAnswer[keyName]} count={i-1} key={i} />
+                }
+              })
+            }
           </div>
           <div className="container-fluid justify-content-center">
             <Header>คำถามสาขา: {this.state.user.major.name}</Header>
