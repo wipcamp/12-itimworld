@@ -3,10 +3,21 @@ import ButtonRoute from '../Core/ButtonRoute'
 import Question from './Question'
 import MajorService from './../../services/MajorService'
 import AnswerService from './../../services/AnswerService'
+import StyledComponent from 'styled-components'
 
 let answer = [];
 let majorId = 1;
 let userId = 120001;
+
+const Header = StyledComponent.h2`
+font-family: Sarabun;
+font-style: normal;
+font-weight: bold;
+font-size: 36px;
+line-height: 47px;
+text-align: center;
+`
+
 
 export default class Index extends Component {
   
@@ -93,10 +104,16 @@ export default class Index extends Component {
     render() {
       console.log(this.state.majorId);
       return (
-            <React.Fragment>
+            <div className="container">
+              <Header classname="col-12 mb-5 mt-5 ">คำถามสาขา</Header>
                 <div>
                         {this.state.questions.map((data,i) => {
-                            return <Question questionCount={i+1}  questionName={data.name}  questionId={data.id} handleAnswer={this.handleAnswer}/>
+                          return <Question
+                          questionCount={i+1}
+                          questionName={data.name}
+                          questionId={data.id}
+                          handleAnswer={this.handleAnswer}
+                          />
                         })}
                 </div>
                 <ButtonRoute 
@@ -106,7 +123,7 @@ export default class Index extends Component {
                   linkNext ="/preview"
                   onClick={this.postAnswerService}
                 />
-            </React.Fragment>
+            </div>
         )
     }
 }
