@@ -22,7 +22,7 @@ export default class Question extends Component {
     render() {
         return (
             <div className="form-group">
-            <QuestionName className="col-12 justify-content-center">คำถามที่ 1 : {this.props.questionName}</QuestionName>
+            <QuestionName className="col-12 justify-content-center">คำถามที่ {this.props.questionCount} : {this.props.questionName}</QuestionName>
                 <TextArea 
                 className="col-12"
                 name={this.props.questionId} 
