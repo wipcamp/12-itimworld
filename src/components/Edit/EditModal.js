@@ -33,7 +33,7 @@ export default class EditModal extends Component {
                           : dataArray === "schoolMajor" ? "สายการเรียน"
                           : dataArray === "level" ? "ระดับชั้น"
                           : dataArray === "telEmergency" ? "เบอร์ติดต่อฉุกเฉิน"
-                          : dataArray === "relation" ? "เกี่ยวข้องกับน้องยังไง"
+                          : dataArray === "parentRelation" ? "เกี่ยวข้องกับน้องยังไง"
                           : dataArray === "parentTel" ? "เบอร์โทรศัพท์ของผู้ปกครอง"
                           : dataArray === "congenitalDrug" ? "ยาที่แพ้"
                           : dataArray === "congenitalDisease" ? "โรคประจำตัว"
