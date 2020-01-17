@@ -1,4 +1,8 @@
 import React, { Component } from 'react'
+import {
+  Radio
+} from 'antd';
+import 'antd/dist/antd.css';
 
 import AddressField from '../Core/AddressField'
 import TelNumberField from '../Core/TelNumberField'
@@ -222,13 +226,12 @@ export default class Index extends Component {
 
           <label className="col-12 col-md-6 form-group" htmlFor="gender">
             <div className="row">
-              <div className="col-12 col-md-4 col-form-label text-md-right">เพศ </div>
+              <div className="col-12 col-md-4 col-form-label text-md-right">เพศสภาพ</div>
               <div className="col-12 col-md-8">
-                <select className="form-control" name="gender" id="gender" onChange={(e) => this.handleChange(e)} required>
-                  <option value="">เลือกเพศ</option>
-                  <option value="ชาย">ชาย</option>
-                  <option value="หญิง">หญิง</option>
-                </select>
+                <Radio.Group onChange={(e) => this.handleChange(e)} name="gender">
+                    <Radio.Button value="ชาย">ชาย</Radio.Button>
+                    <Radio.Button value="หญิง">หญิง</Radio.Button>
+                </Radio.Group>
               </div>
             </div>
           </label>
