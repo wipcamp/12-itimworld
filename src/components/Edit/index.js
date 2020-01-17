@@ -56,8 +56,8 @@ export default class Index extends Component {
     ],
     religionData: ['เลือกศาสนา', 'พุทธ', 'คริสต์', 'อิสลาม', 'ฮินดู', 'ซิกส์'],
     booldGroupData: ['เลือกกรู๊ปเลือด', 'O', 'A', 'B', 'AB'],
-    district: '',
-    province: '',
+    // district: '',
+    // province: '',
     newUser: '',
     oldUser: {
       firstName: '',
@@ -113,7 +113,7 @@ export default class Index extends Component {
   }
 
   componentDidUpdate() {
-    console.log(this.state.oldUser)
+    // console.log(this.state.newUser)
 
     if (this.state.newUser !== '') {
       if (this.state.buttonValue) {
@@ -152,10 +152,7 @@ export default class Index extends Component {
           },
           newUser: {
             ...prevState.newUser,
-            address: {
-              ...prevState.newUser.address,
               [dataArray]: dataFromEntity
-            }
           }
         })
         )
@@ -167,7 +164,6 @@ export default class Index extends Component {
     const { name, value } = event.target;
     if (name === "district" || name === "province") {
       this.setState((prevState) => ({
-        [name]: value,
         oldUser: {
           ...prevState.oldUser,
           address: {
@@ -182,7 +178,7 @@ export default class Index extends Component {
       })
       )
     }
-    if (name === "parentRelation" || name === "parentTel") {
+   else if (name === "parentRelation" || name === "parentTel") {
       const newName = name === "parentRelation" ? "relation" : "telNo"
       this.setState((prevState) => ({
         oldUser: {
@@ -199,6 +195,7 @@ export default class Index extends Component {
         }
       ))
     }
+    else{
     this.setState((prevState) => ({
       oldUser: {
         ...prevState.oldUser,
@@ -210,6 +207,7 @@ export default class Index extends Component {
         }
       }
     ))
+    }
   }
 
   render() {

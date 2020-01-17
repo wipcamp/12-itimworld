@@ -89,7 +89,7 @@ export default class Index extends Component {
   }
 
   componentDidUpdate() {
-    
+    console.log(this.state.data)
   }
 
   getUserService = async () => {
@@ -152,11 +152,9 @@ export default class Index extends Component {
   }
 
   handleChange = (event) => {
-    // console.log(2)
     const { name, value } = event.target;
     if (name === "district" || name === "province") {
       this.setState((prevState) => ({
-        [name]: value,
         data: {
           ...prevState.data,
           address: {
@@ -167,7 +165,7 @@ export default class Index extends Component {
       })
       )
     }
-    if (name === "parentRelation" || name === "parentTel"){
+   else if (name === "parentRelation" || name === "parentTel"){
       const newName = name === "parentRelation" ? "relation" : "telNo"
       this.setState((prevState) => ({
         data: {
@@ -179,7 +177,7 @@ export default class Index extends Component {
         }
       }
       ))
-    }
+    }else{
     this.setState((prevState) => ({
       data: {
         ...prevState.data,
@@ -187,9 +185,8 @@ export default class Index extends Component {
       }
     }
     ))
+    }
     this.validateField(this.state.data);
-    console.log(this.state.data);
-    
   }
 
   displayNextButton = () => {
@@ -323,7 +320,7 @@ export default class Index extends Component {
             address="province"
             id="province"
             name="addrProvice"
-            value={this.state.province}
+            value={this.state.data.address.province}
             onChange={(e) => this.handleChange(e)}
             onSelect={(e) => this.onSelect(e)}
             placeholder="เลือก"
@@ -338,7 +335,7 @@ export default class Index extends Component {
             address="district"
             id="district"
             name="addrDistrict"
-            value={this.state.district}
+            value={this.state.data.address.district}
             onChange={(e) => this.handleChange(e)}
             onSelect={(e) => this.onSelect(e)}
             placeholder="เลือก"
