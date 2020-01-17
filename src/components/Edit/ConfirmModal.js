@@ -11,7 +11,8 @@ const SubHeader = styled(HeaderText)`
 const Body = styled(ModalBody)`
   margin-left: -19.5em;;
   width: 1125px;
-  height: 580px;  
+  min-height: 580px;  
+  height: auto;  
   background: #EFEFEF;
 `
 const Div = styled.div`
@@ -19,7 +20,8 @@ const Div = styled.div`
 `
 const EditData = styled.div`
   width: 775px;
-  height: 189.33px;
+  min-height: 189.33px;
+  height: auto;
   background: #FFFFFF;
 `
 const ConfirmModal = (props) => {
