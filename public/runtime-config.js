@@ -1,4 +1,4 @@
 window["runConfig"] = {
-  apiUrl: "http://localhost:8080/",
+  // apiUrl: process.env.API_URL,
   apiLineUrl: "line.service.freezer.wip.camp"
 };
