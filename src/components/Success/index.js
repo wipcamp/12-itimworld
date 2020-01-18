@@ -2,6 +2,10 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
+import UserService from '../../services/UserService'
+
+const userId = 120001 
+
 const Box = styled.div`
   width: 1125px;
   height: 790px;  
@@ -42,13 +46,36 @@ const WhiteBox = styled.div`
 `
 
 export default class Index extends Component {
+
+  state = {
+    name: 'wip camp',
+  }
+
+  async componentDidMount() {
+    let promise;
+    try {
+      promise = await this.getUserService();
+      let response = promise.data;
+
+      if (response.success) {
+        this.setState({
+          name: response.data[0].firstName + " " + response.data[0].lastName,
+        });
+      } else {
+        console.log("Error get User request")
+      }
+    } catch (e) {
+      console.log("Error get User promise")
+    }
+  }
+
+  getUserService = async () => {
+    return await UserService.getUser(userId);
+  }
+
   render() {
     return (
       <React.Fragment>
-      <div className="d-flex justify-content-end">
-        WIP ID : 110001 <br /> 
-        น้องไอติม
-      </div>
       <div className="d-flex justify-content-center">
       <Box className="text-center">
         <div className="d-flex justify-content-end">
@@ -56,7 +83,7 @@ export default class Index extends Component {
         </div>
         <Header className="col-12">ส่งใบสมัครค่ายสำเร็จ</Header>
         <Subtitle className="col-12" fontWeight="300">
-            น้องกฤษณา ตันยากุล ได้ส่งใบสมัครค่ายสำเร็จเรียบร้อยแล้ว <br />
+            น้อง{this.state.name} ได้ส่งใบสมัครค่ายสำเร็จเรียบร้อยแล้ว <br />
             โปรดรอฟังผลการประกาศค่ายในวันที่ xx มีนาคม 2562 ผ่านทาง Facebook Live นะครับ
         </Subtitle>
         <div className="d-flex justify-content-center ">
