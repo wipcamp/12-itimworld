@@ -18,9 +18,8 @@
     "styled-components": "^4.4.1"
   },
   "scripts": {
-    "start": "set PORT=3211 && react-scripts start",
-    "@comment dev": "PORT=3211 react-scripts start on Mac Os and Linux if use windows use follow below ",
-    "dev": "set PORT=3211 && react-scripts start",
+    "start": "cross-env PORT=3211 && react-scripts start",
+    "dev": "cross-env PORT=3211 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
