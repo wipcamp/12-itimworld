@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+
+import LineService from '../../services/LineService'
 import LineLoginButton from './LineLoginButton'
 
 const Background = styled.div`
@@ -46,14 +48,52 @@ const HeadText = styled.div`
   width: 100%;
   justify-self: center;
 `
+// form line api
+// const nonce & const state send href
+// const state = state // vurify its real data 
+// const nonce && const code send to lineService 
+// const nonce = nonce // vurify its real user
+// reqeust json send lineService 
 
 export default class LoginBox extends Component {
+
+  state = {
+    itimUrl: 'http://localhost:3211/',
+    nonce: 'ABCDEFG',
+    state: 'HIJKLMN',
+    // scope: '',
+    // access_token: '',
+    // token_type: '',
+    // expires_in: '',
+    // id_token: '',
+    userId:''
+  }
+
+  componentDidMount(){
+
+  }
+
+  getGenerateCode = () => {
+    let nonce = LineService.getGenerateCode();
+    let state = LineService.getGenerateCode();
+    this.setState({
+      nonce: nonce,
+      state : state
+    })
+  }
+
+  handleClick = () => {
+    window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1653703435
+                              &redirect_uri=${this.state.itimUrl}&state=${this.state.state}
+                              &scope=openid%20email%20profile&nonce=${this.state.nonce}`
+  }
+
   render() {
     return (
       <Background>
         <WhiteLoginBox>
           <HeadText>WIP CAMP #12</HeadText>
-          <LineLoginButton />
+          <LineLoginButton onClick={() => this.handleClick()} />
         </WhiteLoginBox>
       </Background>
     )
