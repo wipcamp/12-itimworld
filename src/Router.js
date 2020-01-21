@@ -127,6 +127,7 @@ export default class Index extends React.Component {
           <PrivateRoute path="/edit" isAuthenticated={this.state.isAuthenticated}>
             <Edit />
           </PrivateRoute>
+          <PrivateRoute path="*" isAuthenticated={this.state.isAuthenticated} />
         </Switch>
       </Router>
     )
