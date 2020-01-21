@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 const ButtonContainer = styled.div`
   width: 100%;
@@ -8,7 +9,6 @@ const ButtonContainer = styled.div`
   justify-content: center;
   padding-top: 20px;
   max-width: 400px;
-}
 `
 const Button = styled.button`
   background: #00C300;
@@ -33,18 +33,26 @@ const Button = styled.button`
   }
 `
 
-const LingImg = styled.img`
+const LineImg = styled.img`
   height: 50px;
   width: 50px;
   margin-right: 10px;
 `
 
 export default class LineLoginButton extends Component {
+  
+  handleClick = () => {
+    this.props.callbackFromRouter(true)
+  }
   render() {
     return (
       <ButtonContainer>
         <Button>
-          <a href="/profile"><LingImg src="/img/line_88.png" /> <span>Log in with LINE</span></a>
+          {/* <button className="btn" onClick={this.handleClick()} > */}
+            <Link to="/profile" onClick={() => this.handleClick()}   >
+              <LineImg src="/img/line_88.png" /> <span>Log in with LINE</span>
+            </Link>
+            {/* </button> */}
         </Button>
       </ButtonContainer>
     )
