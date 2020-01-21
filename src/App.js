@@ -1,13 +1,13 @@
 import React from 'react';
 // import logo from './logo.svg';
 import './App.css';
-
+import { withRouter } from 'react-router-dom';
 import Index from './components/Core'
 
-function App() {
+const App = () => {
   return (
     <Index />
   );
 }
 
-export default App;
+export default withRouter(App)
