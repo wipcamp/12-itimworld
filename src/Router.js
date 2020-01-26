@@ -103,31 +103,31 @@ export default class Index extends React.Component {
             <Route exact path="/preview" component={Preview} />
             <Route exact path="/success" component={Success} />
             <Route exact path="/edit" component={Edit} /> */}
-          <Route path="/login" >
+          <Route exact path="/login" >
             <LoginPage />
           </Route>
-          <PrivateRoute path="/profile" isAuthenticated={this.state.isAuthenticated}>
+          <PrivateRoute exact path="/profile" isAuthenticated={this.state.isAuthenticated}>
             <Profile />
           </PrivateRoute>
-          <PrivateRoute path="/general" isAuthenticated={this.state.isAuthenticated}>
+          <PrivateRoute exact path="/general" isAuthenticated={this.state.isAuthenticated}>
             <General />
           </PrivateRoute>
-          <PrivateRoute path="/major" isAuthenticated={this.state.isAuthenticated}>
+          <PrivateRoute exact path="/major" isAuthenticated={this.state.isAuthenticated}>
             <Major />
           </PrivateRoute>
-          <PrivateRoute path="/questions" isAuthenticated={this.state.isAuthenticated}>
+          <PrivateRoute exact path="/questions" isAuthenticated={this.state.isAuthenticated}>
             <Questions />
           </PrivateRoute>
-          <PrivateRoute path="/preview" isAuthenticated={this.state.isAuthenticated}>
+          <PrivateRoute exact path="/preview" isAuthenticated={this.state.isAuthenticated}>
             <Preview />
           </PrivateRoute>
-          <PrivateRoute path="/success" isAuthenticated={this.state.isAuthenticated}>
+          <PrivateRoute exact path="/success" isAuthenticated={this.state.isAuthenticated}>
             <Success />
           </PrivateRoute>
-          <PrivateRoute path="/edit" isAuthenticated={this.state.isAuthenticated}>
+          <PrivateRoute exact path="/edit" isAuthenticated={this.state.isAuthenticated}>
             <Edit />
           </PrivateRoute>
-          <PrivateRoute path="*" isAuthenticated={this.state.isAuthenticated} />
+          <PrivateRoute exact path="*" isAuthenticated={this.state.isAuthenticated} />
         </Switch>
       </Router>
     )
