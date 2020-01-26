@@ -59,7 +59,7 @@ const HeadText = styled.div`
 export default class LoginBox extends Component {
 
   state = {
-    itimUrl: 'http://localhost:3211/',
+    itimUrl: 'https://12-itim.freezer.wip.camp/login',
     nonce: 'ABCDEFG',
     state: 'HIJKLMN',
     // scope: '',
