@@ -72,20 +72,26 @@ export default class LoginBox extends Component {
     userId: ''
   }
 
- 
+  componentDidMount(){
+    // this.getGenerateCode()
+  }
 
+  componentDidUpdate(){
+    // console.log(this.state.nonce)
+    // console.log(this.state.state)
+  }
   myCallback = (isAuthenticated) => {
     this.props.callbackFromRouter(isAuthenticated)
   }
 
-  // getGenerateCode = () => {
-  //   let nonce = LineService.getGenerateCode();
-  //   let state = LineService.getGenerateCode();
-  //   this.setState({
-  //     nonce: nonce,
-  //     state: state
-  //   })
-  // }
+  getGenerateCode = () => {
+    let nonce = LineService.getGenerateCode();
+    let state = LineService.getGenerateCode();
+    this.setState({
+      nonce: nonce,
+      state: state
+    })
+  }
 
   async lineLogin() {
     const stateGenerate = await LineService.getGenerateCode()
@@ -115,10 +121,10 @@ export default class LoginBox extends Component {
   handleClick = () => {
     this.props.login()
     // console.log(2)
-    this.lineLogin()
-    // window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1653703435
-    //                           &redirect_uri=${this.state.itimUrl}&state=${this.state.state}
-    //                           &scope=openid%20email%20profile&nonce=${this.state.nonce}`
+    // this.lineLogin()
+    window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1653703435
+                              &redirect_uri=${this.state.itimUrl}&state=${this.state.state}
+                              &scope=openid%20email%20profile&nonce=${this.state.nonce}`
   }
 
   
