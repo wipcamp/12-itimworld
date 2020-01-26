@@ -8,6 +8,7 @@ import {
   useLocation
 } from "react-router-dom";
 
+import { Authentication, isAuthenticated } from './context/Authentication-Context'
 import Navbar from './components/Core/Navbar'
 import Login from './components/Login'
 import Profile from './components/Profile'
@@ -18,7 +19,7 @@ import Success from './components/Success'
 import Edit from './components/Edit'
 import General from './components/General'
 
-const fakeAuth =  {
+const fakeAuth = {
   isAuthenticated: false,
   authenticate(cb) {
     fakeAuth.isAuthenticated = true;
@@ -30,23 +31,32 @@ const fakeAuth =  {
   }
 }
 
-const PrivateRoute = ({ children, ...rest },props) => {
+const PrivateRoute = ({ children, ...rest }, props) => {
   return (
-    <Route
-      {...rest}
-      render={({ location }) =>
-        fakeAuth.isAuthenticated ? (
-          children
-        ) : (
-            <Redirect
-              to={{
-                pathname: "/login",
-                state: { from: location }
-              }}
+    <Authentication.Consumer>
+      {
+        ({ user, changeAuthen }) => (
+          <React.Fragment>
+            <Route
+              {...rest}
+              render={({ location }) =>
+                user ? (
+                  children
+                ) : (
+                    <Redirect
+                      to={{
+                        pathname: "/login",
+                        state: { from: location }
+                      }}
+                    />
+                  )
+              }
             />
-          )
+            {console.log(fakeAuth.isAuthenticated + " " + user)}
+          </React.Fragment>
+        )
       }
-    />
+    </Authentication.Consumer>
   );
 }
 
@@ -62,6 +72,7 @@ const LoginPage = (props) => {
   }
 
   let myCallback = (isAuthenticated) => {
+    // callbackFromRouter(isAuthenticated)
     fakeAuth.isAuthenticated = isAuthenticated
   }
   return (
@@ -72,15 +83,19 @@ const LoginPage = (props) => {
 export default class Index extends React.Component {
 
   state = {
-    wipId: null
-
+    wipId: null,
+    user: false,
   }
   componentDidMount() {
-    // console.log(this.state.isAuthenticated)
+    if (!fakeAuth.isAuthenticated ) {
+      this.changeAuthen()
+    }
+    // console.log(fakeAuth.isAuthenticated)
   }
 
-  componentDidUpdate(){
-    // console.log(this.state.wipId + "555")
+  componentDidUpdate() {
+   
+    // console.log(fakeAuth.isAuthenticated)
   }
 
   myCall = (wipId) => {
@@ -89,12 +104,23 @@ export default class Index extends React.Component {
     })
   }
 
+  changeAuthen = () => {
+    console.log(2)
+    this.setState({
+      user: fakeAuth.isAuthenticated
+    })
+  }
+
   render() {
-    
+    const { user } = this.state
     return (
-      <Router>
-        <Switch>
-          {/* <Navbar callbackFromRouter={this.myCall} /> */}
+      <Authentication.Provider value={{
+        user,
+        changeAuthen: this.changeAuthen
+      }}>
+        <Router>
+          <Switch>
+            {/* <Navbar callbackFromRouter={this.myCall} /> */}
             {/* <Route exact path="/" component={Login} />
             <Route exact path="/profile" component={Profile} />
             <Route exact path="/general" component={General} />
@@ -103,33 +129,35 @@ export default class Index extends React.Component {
             <Route exact path="/preview" component={Preview} />
             <Route exact path="/success" component={Success} />
             <Route exact path="/edit" component={Edit} /> */}
-          <Route path="/login" >
-            <LoginPage />
-          </Route>
-          <PrivateRoute path="/profile" isAuthenticated={this.state.isAuthenticated}>
-            <Profile />
-          </PrivateRoute>
-          <PrivateRoute path="/general" isAuthenticated={this.state.isAuthenticated}>
-            <General />
-          </PrivateRoute>
-          <PrivateRoute path="/major" isAuthenticated={this.state.isAuthenticated}>
-            <Major />
-          </PrivateRoute>
-          <PrivateRoute path="/questions" isAuthenticated={this.state.isAuthenticated}>
-            <Questions />
-          </PrivateRoute>
-          <PrivateRoute path="/preview" isAuthenticated={this.state.isAuthenticated}>
-            <Preview />
-          </PrivateRoute>
-          <PrivateRoute path="/success" isAuthenticated={this.state.isAuthenticated}>
-            <Success />
-          </PrivateRoute>
-          <PrivateRoute path="/edit" isAuthenticated={this.state.isAuthenticated}>
-            <Edit />
-          </PrivateRoute>
-          <PrivateRoute path="*" isAuthenticated={this.state.isAuthenticated} />
-        </Switch>
-      </Router>
+            <Route path="/login" >
+              {/* <LoginPage /> */}
+              <LoginPage onFocus={this.changeAuthen} />
+            </Route>
+            <PrivateRoute path="/profile">
+              <Profile />
+            </PrivateRoute>
+            <PrivateRoute path="/general">
+              <General />
+            </PrivateRoute>
+            <PrivateRoute path="/major">
+              <Major />
+            </PrivateRoute>
+            <PrivateRoute path="/questions">
+              <Questions />
+            </PrivateRoute>
+            <PrivateRoute path="/preview">
+              <Preview />
+            </PrivateRoute>
+            <PrivateRoute path="/success">
+              <Success />
+            </PrivateRoute>
+            <PrivateRoute path="/edit">
+              <Edit />
+            </PrivateRoute>
+            <PrivateRoute path="*" />
+          </Switch>
+        </Router>
+      </Authentication.Provider>
     )
   }
 }
