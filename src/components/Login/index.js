@@ -55,6 +55,9 @@ const HeadText = styled.div`
 // const nonce = nonce // vurify its real user
 // reqeust json send lineService 
 
+const loginGameUrl = 'https://game.freezer.wip.camp/login'
+const gameUrl = 'https://game.freezer.wip.camp'
+const clientId = '1653724802'
 
 export default class LoginBox extends Component {
 
@@ -85,11 +88,36 @@ export default class LoginBox extends Component {
     })
   }
 
+  async lineLogin() {
+    const stateGenerate = await LineService.getGenerateCode()
+    const nonceGenerate = await LineService.getGenerateCode()
+    // Cookies.set('state', stateGenerate.data, { domain: 'game.freezer.wip.camp', path: '/login' })
+    // Cookies.set('nonce', nonceGenerate.data, { domain: 'game.freezer.wip.camp', path: '/login' })
+    // Cookies.set('state',nonceGenerate.data,{domain:})
+    // Cookies.set('nonce',nonceGenerate.data,{path: '/login'})
+    // let stateInCookies = Cookies.get('state')
+    // console.log('from cookies : ' + Cookies.get('state'))
+    // console.log('init stateInCookies : ' + stateInCookies)
+    // if (stateGenerate.data == Cookies.get('state')) {
+
+    // } else {
+    //     stateInCookies = "someThing"
+    // }
+    // const nonceInCookies = Cookies.get('nonce')
+    // console.log(stateInCookies)
+    // console.log(nonceInCookies)
+    window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${clientId}
+                              &redirect_uri=${loginGameUrl}&state=${stateGenerate}&scope=openid%20email%
+                              20profile&nonce=${nonceGenerate}`
+
+  }
+
   handleClick = () => {
     this.props.login()
-    window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1653703435
-                              &redirect_uri=${this.state.itimUrl}&state=${this.state.state}
-                              &scope=openid%20email%20profile&nonce=${this.state.nonce}`
+    this.lineLogin()
+    // window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1653703435
+    //                           &redirect_uri=${this.state.itimUrl}&state=${this.state.state}
+    //                           &scope=openid%20email%20profile&nonce=${this.state.nonce}`
   }
 
   
