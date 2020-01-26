@@ -55,14 +55,13 @@ const HeadText = styled.div`
 // const nonce = nonce // vurify its real user
 // reqeust json send lineService 
 
-const loginGameUrl = 'https://game.freezer.wip.camp/login'
-const gameUrl = 'https://game.freezer.wip.camp'
+const loginGameUrl = 'http://localhost:3211/'
 const clientId = '1653724802'
 
 export default class LoginBox extends Component {
 
   state = {
-    itimUrl: 'https://12-itim.freezer.wip.camp/login',
+    itimUrl: 'https://12-itim.freezer.wip.camp/',
     nonce: 'ABCDEFG',
     state: 'HIJKLMN',
     // scope: '',
@@ -79,18 +78,19 @@ export default class LoginBox extends Component {
     this.props.callbackFromRouter(isAuthenticated)
   }
 
-  getGenerateCode = () => {
-    let nonce = LineService.getGenerateCode();
-    let state = LineService.getGenerateCode();
-    this.setState({
-      nonce: nonce,
-      state: state
-    })
-  }
+  // getGenerateCode = () => {
+  //   let nonce = LineService.getGenerateCode();
+  //   let state = LineService.getGenerateCode();
+  //   this.setState({
+  //     nonce: nonce,
+  //     state: state
+  //   })
+  // }
 
   async lineLogin() {
     const stateGenerate = await LineService.getGenerateCode()
     const nonceGenerate = await LineService.getGenerateCode()
+    console.log(2)
     // Cookies.set('state', stateGenerate.data, { domain: 'game.freezer.wip.camp', path: '/login' })
     // Cookies.set('nonce', nonceGenerate.data, { domain: 'game.freezer.wip.camp', path: '/login' })
     // Cookies.set('state',nonceGenerate.data,{domain:})
@@ -107,13 +107,14 @@ export default class LoginBox extends Component {
     // console.log(stateInCookies)
     // console.log(nonceInCookies)
     window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${clientId}
-                              &redirect_uri=${loginGameUrl}&state=${stateGenerate}&scope=openid%20email%
+                              &redirect_uri=${this.state.itimUrl}&state=${stateGenerate}&scope=openid%20email%
                               20profile&nonce=${nonceGenerate}`
 
   }
 
   handleClick = () => {
     this.props.login()
+    // console.log(2)
     this.lineLogin()
     // window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1653703435
     //                           &redirect_uri=${this.state.itimUrl}&state=${this.state.state}

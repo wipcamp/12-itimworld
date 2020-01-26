@@ -19,7 +19,7 @@ import Edit from './components/Edit'
 import General from './components/General'
 
 const fakeAuth =  {
-  isAuthenticated: true,
+  isAuthenticated: false,
   authenticate(cb) {
     fakeAuth.isAuthenticated = true;
     setTimeout(cb, 100); // fake async
@@ -103,31 +103,31 @@ export default class Index extends React.Component {
             <Route exact path="/preview" component={Preview} />
             <Route exact path="/success" component={Success} />
             <Route exact path="/edit" component={Edit} /> */}
-          <Route exact path="/login" >
+          <Route path="/login" >
             <LoginPage />
           </Route>
-          <PrivateRoute exact path="/profile" isAuthenticated={this.state.isAuthenticated}>
+          <PrivateRoute path="/profile" isAuthenticated={this.state.isAuthenticated}>
             <Profile />
           </PrivateRoute>
-          <PrivateRoute exact path="/general" isAuthenticated={this.state.isAuthenticated}>
+          <PrivateRoute path="/general" isAuthenticated={this.state.isAuthenticated}>
             <General />
           </PrivateRoute>
-          <PrivateRoute exact path="/major" isAuthenticated={this.state.isAuthenticated}>
+          <PrivateRoute path="/major" isAuthenticated={this.state.isAuthenticated}>
             <Major />
           </PrivateRoute>
-          <PrivateRoute exact path="/questions" isAuthenticated={this.state.isAuthenticated}>
+          <PrivateRoute path="/questions" isAuthenticated={this.state.isAuthenticated}>
             <Questions />
           </PrivateRoute>
-          <PrivateRoute exact path="/preview" isAuthenticated={this.state.isAuthenticated}>
+          <PrivateRoute path="/preview" isAuthenticated={this.state.isAuthenticated}>
             <Preview />
           </PrivateRoute>
-          <PrivateRoute exact path="/success" isAuthenticated={this.state.isAuthenticated}>
+          <PrivateRoute path="/success" isAuthenticated={this.state.isAuthenticated}>
             <Success />
           </PrivateRoute>
-          <PrivateRoute exact path="/edit" isAuthenticated={this.state.isAuthenticated}>
+          <PrivateRoute path="/edit" isAuthenticated={this.state.isAuthenticated}>
             <Edit />
           </PrivateRoute>
-          <PrivateRoute exact path="*" isAuthenticated={this.state.isAuthenticated} />
+          <PrivateRoute path="*" isAuthenticated={this.state.isAuthenticated} />
         </Switch>
       </Router>
     )
