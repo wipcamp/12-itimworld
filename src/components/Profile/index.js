@@ -416,7 +416,13 @@ export default class Index extends Component {
             required="required" />
           </section>
           <h3 className="col-12">ผลงานและทักษะทางด้านคอมพิวเตอร์</h3>
-          <textarea class="form-control" placeholder="ผลงาน" rows="4"></textarea>
+          <textarea 
+          class="form-control" 
+          placeholder="ผลงาน" 
+          rows="4" 
+          name="computerWorks"
+          onChange={(e) => this.handleChange(e)} 
+          ></textarea>
 
           <ButtonRoute displayButtonLeft="none" linkNext="/general" onClick={(e) => this.putUser(this.state.data)} />
         </div>
