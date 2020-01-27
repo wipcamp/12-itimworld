@@ -95,15 +95,15 @@ export default class Index extends React.Component {
       <Router>
         <Switch>
           {/* <Navbar callbackFromRouter={this.myCall} /> */}
-            {/* <Route exact path="/" component={Login} />
+            <Route exact path="/" component={Login} />
             <Route exact path="/profile" component={Profile} />
             <Route exact path="/general" component={General} />
             <Route exact path="/major" component={Major} />
             <Route exact path="/questions" component={Questions} />
             <Route exact path="/preview" component={Preview} />
             <Route exact path="/success" component={Success} />
-            <Route exact path="/edit" component={Edit} /> */}
-          <Route path="/login" >
+            <Route exact path="/edit" component={Edit} />
+          {/* <Route path="/login" >
             <LoginPage />
           </Route>
           <PrivateRoute path="/profile" isAuthenticated={this.state.isAuthenticated}>
@@ -127,7 +127,7 @@ export default class Index extends React.Component {
           <PrivateRoute path="/edit" isAuthenticated={this.state.isAuthenticated}>
             <Edit />
           </PrivateRoute>
-          <PrivateRoute path="*" isAuthenticated={this.state.isAuthenticated} />
+          <PrivateRoute path="*" isAuthenticated={this.state.isAuthenticated} /> */}
         </Switch>
       </Router>
     )
