@@ -164,7 +164,8 @@ export default class Index extends Component {
         "id": 39,
         "firstAnswer": "",
         "secondAnswer": "asdfasdfasdf"
-      }
+      },
+      "computerWorks":"abcdefghijklmnopqrstuvwxyz"
     }
   }
 
@@ -230,6 +231,10 @@ export default class Index extends Component {
                 return <QuestionAnswer topic={answer.question.name} data={answer.answerContent} count={index} key={index} />
               })
             }
+          </div>
+          <div className="container-fluid justify-content-center">
+            <Header>ผลงานด้านคอมพิวเตอร์</Header>
+            <p> {this.state.user.computerWorks} </p> 
           </div>
           <div className="container-fluid justify-content-center">
             <ul>
