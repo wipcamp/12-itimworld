@@ -112,9 +112,9 @@ export default class LoginBox extends Component {
     // const nonceInCookies = Cookies.get('nonce')
     // console.log(stateInCookies)
     // console.log(nonceInCookies)
-    window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${clientId}
-                              &redirect_uri=${this.state.itimUrl}&state=${stateGenerate}&scope=openid%20email%
-                              20profile&nonce=${nonceGenerate}`
+    // window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${clientId}
+    //                           &redirect_uri=${this.state.itimUrl}&state=${stateGenerate}&scope=openid%20email%
+    //                           20profile&nonce=${nonceGenerate}`
 
   }
 
