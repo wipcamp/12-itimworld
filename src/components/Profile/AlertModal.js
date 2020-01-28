@@ -64,7 +64,8 @@ const AlertModal = (props) => {
 }
 
 AlertModal.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
+  disabled: PropTypes.bool
 }
 
 AlertModal.defaultProps = {

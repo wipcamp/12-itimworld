@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import ButtonRoute from '../Core/ButtonRoute'
 import Question from './Question'
 import UserServuce from './../../services/UserService'
-import StyledComponent from 'styled-components'
+import Styled from 'styled-components'
 
-const Header = StyledComponent.h2`
+const Header = Styled.h2`
   font-size: 36px;
   line-height: 47px;
   text-align: center;
@@ -91,7 +91,6 @@ export default class Index extends Component {
     }
 
     render() {
-      console.log(this.state.majorId);
       return (
             <div className="container">
                 <Header className="col-12 mb-5 mt-5">This is General Question page</Header>
