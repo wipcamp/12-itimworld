@@ -22,7 +22,9 @@ class ButtonRoute extends React.Component{
 
   render(){
     return (
-      <div className={`${this.props.className} ${this.props.displayButtonLeft === "none" || this.props.displayButtonRight === "none"? "" : "justify-content-between"}`}>
+      <div className={`${this.props.className} 
+                ${this.props.displayButtonLeft === "none" || this.props.displayButtonRight === "none" ? "" 
+                : "justify-content-between"}`}>
         <ButtonLeft 
           to={this.props.linkBack} 
           displayButtonLeft={this.props.displayButtonLeft} 
@@ -41,14 +43,14 @@ class ButtonRoute extends React.Component{
 }
 
 ButtonRoute.propTypes = {
-  linkBack: PropTypes.string,
+  onClick: PropTypes.func,
+  linkNext: PropTypes.string,
+  className: PropTypes.string,
   displayButtonLeft: PropTypes.string,
   displayButtonRight: PropTypes.string,
   buttonLeft: PropTypes.string,
-  linkNext: PropTypes.string,
-  buttonRight: PropTypes.string,
-  onClick: PropTypes.func,
-  className: PropTypes.string
+  linkBack: PropTypes.string,
+  buttonRight: PropTypes.string
 }
 
 ButtonRoute.defaultProps = {

@@ -27,14 +27,16 @@ const AddressField = (props) => {
 }
 
 AddressField.propsType = {
-  labelInput: PropTypes.string.isRequired,
-  address: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
-  placeholder: PropTypes.string.isRequired,
+  className: PropTypes.string,
   name: PropTypes.string.isRequired,
+  leftSide: PropTypes.string,
+  labelInput: PropTypes.string.isRequired,
+  rightSide: PropTypes.string,
+  address: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
   onSelect: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired
+  placeholder: PropTypes.string.isRequired
 }
 
 export default AddressField

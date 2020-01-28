@@ -42,7 +42,10 @@ const LineImg = styled.img`
 export default class LineLoginButton extends Component {
   
   handleClick = () => {
-    this.props.callbackFromRouter(true)
+    // if(this.props.onClick()){
+      this.props.callbackFromRouter(true)
+      this.props.onClick()
+    // }
   }
   render() {
     return (
@@ -50,7 +53,8 @@ export default class LineLoginButton extends Component {
         <Button>
           {/* <button className="btn" onClick={this.handleClick()} > */}
             <Link to="/major" onClick={() => this.handleClick()}   >
-              <LineImg src="/img/line_88.png" /> <span>Log in with LINE</span>
+              <LineImg src="/img/line_88.png" /> 
+              <span>Log in with LINE</span>
             </Link>
             {/* </button> */}
         </Button>

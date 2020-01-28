@@ -18,7 +18,7 @@ const Field = (props) => {
             min={props.min}
             max={props.max}
             onChange={props.onChange}
-            required={props.required ? "required" : "" } />
+            required={props.required} />
         </div>
       </div>
     </label>
@@ -26,10 +26,21 @@ const Field = (props) => {
 }
 
 Field.propsTypes = {
-  labelInput: PropTypes.string.isRequired,
+  className: PropTypes.string,
   name: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.string
+  labelInput: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  placeHolder: PropTypes.string,
+  value: PropTypes.string,
+  step: PropTypes.string,
+  min: PropTypes.string,
+  max: PropTypes.string,
+  required: PropTypes.string,
+  onChange: PropTypes.func.isRequired
+}
+
+Field.defaultProps = {
+  required: 'required'
 }
 
 export default Field

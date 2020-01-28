@@ -79,15 +79,6 @@ export default class Index extends React.Component {
       }}>
         <Router>
           <Switch>
-            {/* <Navbar callbackFromRouter={this.myCall} /> */}
-            {/* <Route exact path="/" component={Login} />
-            <Route exact path="/profile" component={Profile} />
-            <Route exact path="/general" component={General} />
-            <Route exact path="/major" component={Major} />
-            <Route exact path="/questions" component={Questions} />
-            <Route exact path="/preview" component={Preview} />
-            <Route exact path="/success" component={Success} />
-            <Route exact path="/edit" component={Edit} /> */}
             <Route path="/login" >
               <Login callbackFromRouter={this.myCallback} />
             </Route>

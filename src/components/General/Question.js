@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 const QuestionName = styled.p`
@@ -53,4 +54,13 @@ export default class Question extends Component {
             </div>
         )
     }
+}
+
+Question.propType = {
+    oldValue: PropTypes.object,
+    questionId: PropTypes.any,
+    questionName: PropTypes.string,
+    questionCount: PropTypes.number,
+    handleAnswer: PropTypes.func,
+    blur: PropTypes.func,
 }
