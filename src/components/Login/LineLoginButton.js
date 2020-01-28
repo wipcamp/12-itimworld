@@ -33,11 +33,11 @@ const Button = styled.button`
   }
 `
 
-const LineImg = styled.img`
-  height: 50px;
-  width: 50px;
-  margin-right: 10px;
-`
+// const LineImg = styled.img`
+//   height: 50px;
+//   width: 50px;
+//   margin-right: 10px;
+// `
 
 export default class LineLoginButton extends Component {
   

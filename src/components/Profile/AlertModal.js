@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components'
 import { Modal, ModalBody } from 'reactstrap';
 
-import ButtonRoute from '../Core/ButtonRoute'
 import { ButtonStyle } from '../Core/ButtonStyle'
 import { HeaderText, Paragrph } from '../Core/Text'
 
@@ -21,15 +20,15 @@ const Body = styled(ModalBody)`
   height: 401px;
   background: #EFEFEF;
 `
-const Alret = styled.div`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 23px;
-  text-align: center;
-  color: #FF0000;
-  margin-bottom: 3em;
-`
+// const Alret = styled.div`
+//   font-style: normal;
+//   font-weight: 500;
+//   font-size: 18px;
+//   line-height: 23px;
+//   text-align: center;
+//   color: #FF0000;
+//   margin-bottom: 3em;
+// `
 
 const AlertModal = (props) => {
 

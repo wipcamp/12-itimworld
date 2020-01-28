@@ -217,11 +217,20 @@ export default class Index extends Component {
           <div className="container-fluid justify-content-center">
             <Header>คำถามทั่วไป</Header>
             {
-              Object.keys(this.state.user.generalAnswer).map((keyName,i) => {
-                if(keyName !== "id"){
-                  return <QuestionAnswer topic={generalQuestion[i-1]} data={this.state.user.generalAnswer[keyName]} count={i-1} key={i} />
+              Object.keys(this.state.user.generalAnswer).map((keyName,i) => (
+                <React.Fragment>
+                {
+                  keyName !== "id" ?
+                    <QuestionAnswer 
+                      topic={generalQuestion[i-1]} 
+                      data={this.state.user.generalAnswer[keyName]} 
+                      count={i-1} key={i} 
+                    />
+                  : 
+                  ''
                 }
-              })
+                </React.Fragment>
+              ))
             }
           </div>
           <div className="container-fluid justify-content-center">
