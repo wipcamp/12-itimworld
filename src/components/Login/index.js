@@ -98,7 +98,7 @@ export default class LoginBox extends Component {
       <Background>
         <WhiteLoginBox>
           <HeadText>WIP CAMP #12</HeadText>
-          <LineLoginButton onClick={() => this.handleClick()} callbackFromRouter={this.myCallback} />
+          <LineLoginButton onClick={() => this.handleClick()} callbackFromRouter={this.props.callbackFromRouter} />
         </WhiteLoginBox>
       </Background>
     )

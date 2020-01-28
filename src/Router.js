@@ -4,11 +4,9 @@ import {
   Switch,
   Route,
   Redirect,
-  useHistory,
-  useLocation
 } from "react-router-dom";
 
-import { Authentication, isAuthenticated } from './context/Authentication-Context'
+import { Authentication } from './context/Authentication-Context'
 import Navbar from './components/Core/Navbar'
 import Login from './components/Login'
 import Profile from './components/Profile'
@@ -19,28 +17,16 @@ import Success from './components/Success'
 import Edit from './components/Edit'
 import General from './components/General'
 
-const fakeAuth = {
-  isAuthenticated: false,
-  authenticate(cb) {
-    fakeAuth.isAuthenticated = true;
-    setTimeout(cb, 100); // fake async
-  },
-  signout(cb) {
-    fakeAuth.isAuthenticated = false;
-    setTimeout(cb, 100);
-  }
-}
-
-const PrivateRoute = ({ children, ...rest }, props) => {
+const PrivateRoute = ({ children, ...rest }) => {
   return (
     <Authentication.Consumer>
       {
-        ({ user, changeAuthen }) => (
+        ({ isAuthenticated }) => (
           <React.Fragment>
             <Route
               {...rest}
               render={({ location }) =>
-                user ? (
+                isAuthenticated ? (
                   children
                 ) : (
                     <Redirect
@@ -52,31 +38,10 @@ const PrivateRoute = ({ children, ...rest }, props) => {
                   )
               }
             />
-            {console.log(fakeAuth.isAuthenticated + " " + user)}
           </React.Fragment>
         )
       }
     </Authentication.Consumer>
-  );
-}
-
-const LoginPage = (props) => {
-  let history = useHistory();
-  let location = useLocation();
-
-  let { from } = location.state || { from: { pathname: "/" } };
-  let login = () => {
-    fakeAuth.authenticate(() => {
-      history.replace(from);
-    });
-  }
-
-  let myCallback = (isAuthenticated) => {
-    // callbackFromRouter(isAuthenticated)
-    fakeAuth.isAuthenticated = isAuthenticated
-  }
-  return (
-    <Login callbackFromRouter={myCallback} login={login} />
   );
 }
 
@@ -85,17 +50,13 @@ export default class Index extends React.Component {
   state = {
     wipId: null,
     user: false,
-  }
-  componentDidMount() {
-    if (!fakeAuth.isAuthenticated ) {
-      this.changeAuthen()
-    }
-    // console.log(fakeAuth.isAuthenticated)
+    isAuthenticated: false
   }
 
-  componentDidUpdate() {
-   
-    // console.log(fakeAuth.isAuthenticated)
+  componentDidMount() {
+    if (!this.state.isAuthenticated) {
+      this.myCallback()
+    }
   }
 
   myCall = (wipId) => {
@@ -104,19 +65,17 @@ export default class Index extends React.Component {
     })
   }
 
-  changeAuthen = () => {
-    console.log(2)
+  myCallback = (isAuthenticated) => {
     this.setState({
-      user: fakeAuth.isAuthenticated
+      isAuthenticated: isAuthenticated
     })
   }
 
   render() {
-    const { user } = this.state
     return (
       <Authentication.Provider value={{
-        user,
-        changeAuthen: this.changeAuthen
+        isAuthenticated : this.state.isAuthenticated,
+        changeAuthen: this.myCallback
       }}>
         <Router>
           <Switch>
@@ -130,8 +89,7 @@ export default class Index extends React.Component {
             <Route exact path="/success" component={Success} />
             <Route exact path="/edit" component={Edit} /> */}
             <Route path="/login" >
-              {/* <LoginPage /> */}
-              <LoginPage onFocus={this.changeAuthen} />
+              <Login callbackFromRouter={this.myCallback} />
             </Route>
             <PrivateRoute path="/profile">
               <Profile />
