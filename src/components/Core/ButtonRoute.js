@@ -1,41 +1,39 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 import styled from 'styled-components' 
+import { Link } from 'react-router-dom'
+import { ButtonStyle, ButtonStyleLink } from './ButtonStyle'
 
-import { ButtonStyle } from './ButtonStyle'
-
-const ButtonRight = styled.a`
+const ButtonRight = styled(Link)`
   display: ${props => props.displayButtonRight};
 `
 
-const ButtonLeft = styled.a`
+const ButtonLeft = styled(Link)`
   display: ${props => props.displayButtonLeft};
 `
 
 class ButtonRoute extends React.Component{
 
-  async handleGoToNextPage(){
+  async handleGoToNextPage (){
     if(this.props.onClick){
       await this.props.onClick()
-      window.location.href = this.props.linkNext;
     }
-    window.location.href = this.props.linkNext
-
   }
 
   render(){
     return (
       <div className={`${this.props.className} ${this.props.displayButtonLeft === "none" || this.props.displayButtonRight === "none"? "" : "justify-content-between"}`}>
         <ButtonLeft 
-          href={this.props.linkBack} 
+          to={this.props.linkBack} 
           displayButtonLeft={this.props.displayButtonLeft} 
         >
           <ButtonStyle> {this.props.buttonLeft} </ButtonStyle>
-        </ButtonLeft>
+        </ButtonLeft >
         <ButtonRight 
+          to={this.props.linkNext}
           displayButtonRight={this.props.displayButtonRight}
-        >
-          <ButtonStyle onClick={()=>this.handleGoToNextPage()}>{this.props.buttonRight}</ButtonStyle>
+          onClick={()=>this.handleGoToNextPage()}>
+            <ButtonStyle> {this.props.buttonRight}</ButtonStyle>
         </ButtonRight>
       </div>
     )
