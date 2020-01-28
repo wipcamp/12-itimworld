@@ -47,7 +47,6 @@ export default class Question extends Component {
                 className="col-12"
                 name={this.props.questionId} 
                 onChange={(e) => this.handleChange(e)}
-                onBlur={this.props.blur}
                 value={this.state.oldValue}
                 >
                 </TextArea>
@@ -62,5 +61,4 @@ Question.propType = {
     questionName: PropTypes.string,
     questionCount: PropTypes.number,
     handleAnswer: PropTypes.func,
-    blur: PropTypes.func,
 }
