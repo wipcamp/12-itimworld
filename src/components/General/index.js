@@ -130,8 +130,8 @@ export default class Index extends Component {
                 <ButtonRoute 
                   buttonLeft="กลับ" 
                   buttonRight="ยืนยัน" 
-                  linkBack ="/profile"
-                  linkNext ="/major"
+                  linkBack ="/menu"
+                  linkNext ="/menu"
                   onClick={this.postAnswerService}
                 />
             </div>

@@ -120,7 +120,7 @@ export default class Index extends Component {
                   buttonLeft="กลับ" 
                   buttonRight="ยืนยัน" 
                   linkBack ="/major"
-                  linkNext ="/preview"
+                  linkNext ="/menu"
                   onClick={this.postAnswerService}
                 />
             </div>

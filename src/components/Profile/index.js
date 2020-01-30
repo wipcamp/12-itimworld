@@ -441,7 +441,7 @@ export default class Index extends Component {
               {this.renderInputButton()}
             </div>
           </div>
-          <ButtonRoute className="mt-5" displayButtonLeft="none" linkNext="/general" onClick={(e) => this.putUser(this.state.data)} />
+          <ButtonRoute className="mt-5" linkBack="/menu" linkNext="/menu" onClick={(e) => this.putUser(this.state.data)} />
         </div>
     )
   }
