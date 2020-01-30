@@ -9,6 +9,7 @@ import {
 import { Authentication } from './context/Authentication-Context'
 import Navbar from './components/Core/Navbar'
 import Login from './components/Login'
+import Menu from './components/Menu'
 import Profile from './components/Profile'
 import Major from './components/Major'
 import Questions from "./components/Questions"
@@ -91,6 +92,12 @@ export default class Index extends React.Component {
             </PrivateRoute>
             <PrivateRoute path="/major">
               <Major />
+            </PrivateRoute>
+            <PrivateRoute path="/menu">
+              <Menu />
+            </PrivateRoute>
+            <PrivateRoute path="/document">
+              {/* <Menu /> */}
             </PrivateRoute>
             <PrivateRoute path="/questions">
               <Questions />
