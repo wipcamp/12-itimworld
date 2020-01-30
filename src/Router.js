@@ -78,6 +78,7 @@ export default class Index extends React.Component {
         changeAuthen: this.myCallback
       }}>
         <Router>
+          <Navbar />
           <Switch>
             <Route path="/login" >
               <Login callbackFromRouter={this.myCallback} />
