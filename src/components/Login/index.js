@@ -61,7 +61,7 @@ const HeadText = styled.div`
 export default class LoginBox extends Component {
 
   state = {
-    itimUrl: 'https://12-itim.freezer.wip.camp/menu',
+    itimUrl: 'https://12-itim.freezer.wip.camp/login',
     nonce: '',
     state: '',
     newState: '',
