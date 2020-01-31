@@ -56,7 +56,7 @@ export default class Index extends React.Component {
 
   componentDidMount() {
     if (!this.state.isAuthenticated) {
-      this.myCallback()
+      // this.myCallback()
     }
   }
 
