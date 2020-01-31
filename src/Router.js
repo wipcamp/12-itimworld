@@ -55,23 +55,20 @@ export default class Index extends React.Component {
     loginObj:null
   }
 
-  changeAuthen = () => {
-    if(this.state.loginObj !== null){
+  changeAuthen = (auth) => {
       console.log('changeAuthen')
       this.setState({
-        isAuthenticated: true
+        isAuthenticated: auth
       })
-    }
   }
 
-  changeLineStatus = (loginObj) => {
-    if (!this.state.isAuthenticated) {
-      console.log("login" + loginObj)
+  changeLineStatus = (loginObj , auth) => {
+      console.log("login")
+      console.log(loginObj)
       this.setState({
         loginObj: loginObj
       })
-      this.changeAuthen()
-    }
+      this.changeAuthen(auth)
   }
 
   render() {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { Redirect } from 'react-router-dom'
 
 import { LineCheck } from '../../context/Authentication-Context'
 import LineService from '../../services/LineService'
@@ -96,15 +97,6 @@ export default class LoginBox extends Component {
     }
   }
 
-  getGenerateCode = () => {
-    let nonce = LineService.getGenerateCode();
-    let state = LineService.getGenerateCode();
-    this.setState({
-      nonce: nonce,
-      state: state
-    })
-  }
-
   changeLineStatus = (newState) => {
     // console.log(newState)
     this.setState({
@@ -126,11 +118,11 @@ export default class LoginBox extends Component {
       id_token: objectResponse.data.id_token,
       userId: objectResponse.data.userId
     }
-    this.setState({
-      tokenObject: tokenObject
-    })
-    this.props.changeLineStatusFromRouter(tokenObject)
-    window.location.href = 'https://12-itim.freezer.wip.camp/menu'
+    this.props.changeLineStatusFromRouter(tokenObject , true)
+    // window.location.href = 'https://12-itim.freezer.wip.camp/menu'
+    return(
+      <Redirect to="/menu" />
+    )
   }
 
 
