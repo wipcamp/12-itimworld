@@ -61,7 +61,7 @@ const clientId = '1653724802'
 export default class LoginBox extends Component {
 
   state = {
-    itimUrl: 'https://12-itim.freezer.wip.camp/',
+    itimUrl: 'https://12-itim.freezer.wip.camp/login',
     nonce: 'ABCDEFG',
     state: 'HIJKLMN',
     // scope: '',
