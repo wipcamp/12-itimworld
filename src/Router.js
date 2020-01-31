@@ -89,7 +89,7 @@ export default class Index extends React.Component {
             <Navbar />
             <Switch>
               <Route path="/login" >
-                <Login callbackFromRouter={this.myCallback} />
+                <Login changeLineStatusFromRouter={this.changeLineStatus} />
               </Route>
               <PrivateRoute path="/profile">
                 <Profile />

@@ -78,15 +78,13 @@ export default class LoginBox extends Component {
     const search = window.location.search.substring(1);
     console.log(search)
     if (search) {
-      console.log('search')
       this.setState({
         isLoad: true
       })
       const resFromLineApi = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}', function (key, value) { return key === "" ? value : decodeURIComponent(value) })
-      console.log('get state from response from line api : ' + resFromLineApi.state)
+      // console.log('get state from response from line api : ' + resFromLineApi.state)
       const localState = localStorage.getItem('state');
       if (resFromLineApi.state === localState) {
-        console.log('state true')
         this.getTokenFromLineApi(resFromLineApi.code)
         this.changeLineStatus(resFromLineApi.state)
       }
@@ -94,7 +92,7 @@ export default class LoginBox extends Component {
       this.setState({
         isLoad: false
       })
-      console.log('fail from line api')
+      // console.log('fail from line api')
     }
   }
 
@@ -108,21 +106,18 @@ export default class LoginBox extends Component {
   }
 
   changeLineStatus = (newState) => {
-    console.log(newState)
+    // console.log(newState)
     this.setState({
       newState: newState
     })
   }
 
   async getTokenFromLineApi(code) {
-    console.log('getToken Method')
     const localNonce = localStorage.getItem('nonce');
     const objectResponse = await LineService.lineLogin(code, localNonce)
     if (objectResponse == null) {
-      console.log('obj res false')
       window.location.href = this.state.itimUrl
     }
-    console.log('obj res true')
     const tokenObject = {
       scope: objectResponse.data.scope,
       access_token: objectResponse.data.access_token,
@@ -131,11 +126,10 @@ export default class LoginBox extends Component {
       id_token: objectResponse.data.id_token,
       userId: objectResponse.data.userId
     }
-    console.log(tokenObject)
     this.setState({
       tokenObject: tokenObject
     })
-    this.props.callbackFromRouter(this.state.tokenObject)
+    this.props.changeLineStatusFromRouter(tokenObject)
     window.location.href = 'https://12-itim.freezer.wip.camp/menu'
   }
 
