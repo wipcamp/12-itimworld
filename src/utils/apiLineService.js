@@ -5,10 +5,10 @@ const { apiLineUrl } = window['runConfig'];
 const createInstance = (headers) => {
   return axios.create({
     baseURL: apiLineUrl,
-    headers: {
+    // headers: {
       // 'Authorization': `Bearer ${CookiesService.gettokenJWTCookie()}`,
-      'Content-Type': 'application/json'
-    }
+      // 'Content-Type': 'application/json'
+    // }
   })
 }
 
