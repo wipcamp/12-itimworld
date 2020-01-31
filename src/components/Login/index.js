@@ -158,17 +158,17 @@ export default class LoginBox extends Component {
             ({ state }) => (
               <React.Fragment>
                 {console.log(state)}
+                <Background>
+                  <WhiteLoginBox>
+                    <HeadText>WIP CAMP #12</HeadText>
+                    <LineLoginButton onClick={() => this.handleClick()}
+                    // callbackFromRouter={this.myCallBack} 
+                    />
+                  </WhiteLoginBox>
+                </Background>
               </React.Fragment>
             )
           }
-        <Background>
-          <WhiteLoginBox>
-            <HeadText>WIP CAMP #12</HeadText>
-            <LineLoginButton onClick={() => this.handleClick()} 
-            // callbackFromRouter={this.myCallBack} 
-            />
-          </WhiteLoginBox>
-        </Background>
       </LineCheck.Consumer>
     )
   }
