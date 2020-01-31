@@ -148,11 +148,14 @@ export default class LoginBox extends Component {
 
   
   
-  handleClick = () => {
-    // this.props.login()
-    // console.log(2)
-    // this.lineLogin()
-    window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1653703435&redirect_uri=${this.state.itimUrl}&state=${this.state.state}&scope=openid%20email%20profile&nonce=${this.state.nonce}`
+  handleClick = async() => {
+    const stateGenerate = await  LineService.getGenerateCode()
+    const nonceGenerate = await LineService.getGenerateCode()
+    this.setState({
+      state:stateGenerate.data,
+      nonce: nonceGenerate.data
+    })
+    window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1653703435&redirect_uri=${this.state.itimUrl}&state=${stateGenerate.data}&scope=openid%20email%20profile&nonce=${nonceGenerate.data}`
   }
 
   
