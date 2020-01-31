@@ -89,14 +89,6 @@ export default class LoginBox extends Component {
         console.log('state true')
         this.getTokenFromLineApi(resFromLineApi.code)
         this.changeLineStatus(resFromLineApi.state)
-      //   this.getTokenFromLineApi(resFromLineApi.code, Cookies.get('nonce'))
-      // Cookies.remove('state', { path: loginGameUrl });
-      // Cookies.remove('nonce', { path: loginGameUrl });
-      // } else {
-      // Cookies.remove('state', { path: loginGameUrl });
-      // Cookies.remove('nonce', { path: loginGameUrl });
-      //   window.location.href = loginGameUrl
-      //   console.log('check state fail')
       }
     } else {
       this.setState({
@@ -153,16 +145,8 @@ export default class LoginBox extends Component {
   handleClick = async() => {
     const stateGenerate =await  LineService.getGenerateCode()
     const nonceGenerate =await LineService.getGenerateCode()
-    // setter
     localStorage.setItem('state',stateGenerate.data);
     localStorage.setItem('nonce', nonceGenerate.data);
-    // getter
-    
-    // // remove
-    // localStorage.removeItem('myData');
-    // // remove all
-    // localStorage.clear();
-    // this.props.keepLineState(stateGenerate.data)
     window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1653703435&redirect_uri=${this.state.itimUrl}&state=${stateGenerate.data}&scope=openid%20email%20profile&nonce=${nonceGenerate.data}`
   }
 
@@ -171,10 +155,11 @@ export default class LoginBox extends Component {
     return (
       <LineCheck.Consumer>
           {
-            ({ state, stateLine }) => (
+            ({ loginObj }) => (
               <React.Fragment>
                 {
-                 
+                  console.log("Customer"),
+                  console.log(loginObj)
                 }
                 <Background>
                   <WhiteLoginBox>

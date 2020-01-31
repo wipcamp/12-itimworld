@@ -52,26 +52,26 @@ export default class Index extends React.Component {
     wipId: null,
     user: false,
     isAuthenticated: false,
-    loginObj: { }
+    loginObj:null
   }
 
   componentDidMount() {
     if (!this.state.isAuthenticated) {
-      this.myCallback()
+      if(this.state.loginObj !== null){
+        this.changeAuthen()
+      }
     }
   }
 
-  myCall = (wipId) => {
+  changeAuthen = () => {
     this.setState({
-      wipId: wipId
+      isAuthenticated: true
     })
   }
 
-  myCallback = (state) => {
-    console.log(state)
+  changeLineStatus = (loginObj) => {
     this.setState({
-      loginObj: state
-      // isAuthenticated: isAuthenticated
+      loginObj: loginObj
     })
   }
 
@@ -79,10 +79,10 @@ export default class Index extends React.Component {
     return (
       <Authentication.Provider value={{
         isAuthenticated: this.state.isAuthenticated,
-        changeAuthen: this.myCallback
+        changeAuthen: this.changeAuthen
       }}>
         <LineCheck.Provider value={{
-          state: this.state,
+          loginObj: this.state.loginObj,
           changeLineStatus: this.changeLineStatus
         }}>
           <Router>

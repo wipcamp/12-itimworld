@@ -6,6 +6,6 @@ export const Authentication = React.createContext({
 })
 
 export const LineCheck = React.createContext({
-  state: '',
+  loginObj: null,
   changeLineStatus: () => { }
 })
