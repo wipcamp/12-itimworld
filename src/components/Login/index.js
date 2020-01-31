@@ -61,17 +61,12 @@ const HeadText = styled.div`
 export default class LoginBox extends Component {
 
   state = {
-    itimUrl: 'https://12-itim.freezer.wip.camp/login',
-    nonce: 'ABCDEFG',
-    state: 'HIJKLMN',
+    itimUrl: 'https://12-itim.freezer.wip.camp/menu',
+    nonce: '',
+    state: '',
     newState: '',
     newNonce: '',
     isLoad: false,
-    // scope: '',
-    // access_token: '',
-    // token_type: '',
-    // expires_in: '',
-    // id_token: '',
     tokenObject: { }
   }
 
@@ -119,10 +114,6 @@ export default class LoginBox extends Component {
       userId: objectResponse.data.userId
     }
     this.props.changeLineStatusFromRouter(tokenObject , true)
-    // window.location.href = 'https://12-itim.freezer.wip.camp/menu'
-    return(
-      <Redirect from='/login' to='/menu' />
-    )
   }
 
 
