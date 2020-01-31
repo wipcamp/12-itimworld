@@ -6,9 +6,6 @@ export const Authentication = React.createContext({
 })
 
 export const LineCheck = React.createContext({
-  nonce: '',
   state: '',
-  newNonce: '',
-  newState: '',
   changeLineStatus: () => { }
 })

@@ -6,7 +6,7 @@ import {
   Redirect,
 } from "react-router-dom";
 
-import { Authentication } from './context/Authentication-Context'
+import { Authentication, LineCheck } from './context/Authentication-Context'
 import Navbar from './components/Core/Navbar'
 import Login from './components/Login'
 import Menu from './components/Menu'
@@ -51,12 +51,13 @@ export default class Index extends React.Component {
   state = {
     wipId: null,
     user: false,
-    isAuthenticated: false
+    isAuthenticated: false,
+    loginObj: { }
   }
 
   componentDidMount() {
     if (!this.state.isAuthenticated) {
-      // this.myCallback()
+      this.myCallback()
     }
   }
 
@@ -66,54 +67,61 @@ export default class Index extends React.Component {
     })
   }
 
-  myCallback = (isAuthenticated) => {
+  myCallback = (state) => {
+    console.log(state)
     this.setState({
-      isAuthenticated: isAuthenticated
+      loginObj: state
+      // isAuthenticated: isAuthenticated
     })
   }
 
   render() {
     return (
       <Authentication.Provider value={{
-        isAuthenticated : this.state.isAuthenticated,
+        isAuthenticated: this.state.isAuthenticated,
         changeAuthen: this.myCallback
       }}>
-        <Router>
-          <Navbar />
-          <Switch>
-            <Route path="/login" >
-              <Login callbackFromRouter={this.myCallback} />
-            </Route>
-            <PrivateRoute path="/profile">
-              <Profile />
-            </PrivateRoute>
-            <PrivateRoute path="/general">
-              <General />
-            </PrivateRoute>
-            <PrivateRoute path="/major">
-              <Major />
-            </PrivateRoute>
-            <PrivateRoute path="/menu">
-              <Menu />
-            </PrivateRoute>
-            <PrivateRoute path="/document">
-              {/* <Menu /> */}
-            </PrivateRoute>
-            <PrivateRoute path="/questions">
-              <Questions />
-            </PrivateRoute>
-            <PrivateRoute path="/preview">
-              <Preview />
-            </PrivateRoute>
-            <PrivateRoute path="/success">
-              <Success />
-            </PrivateRoute>
-            <PrivateRoute path="/edit">
-              <Edit />
-            </PrivateRoute>
-            <PrivateRoute path="*" />
-          </Switch>
-        </Router>
+        <LineCheck.Provider value={{
+          state: this.state,
+          changeLineStatus: this.changeLineStatus
+        }}>
+          <Router>
+            <Navbar />
+            <Switch>
+              <Route path="/login" >
+                <Login callbackFromRouter={this.myCallback} />
+              </Route>
+              <PrivateRoute path="/profile">
+                <Profile />
+              </PrivateRoute>
+              <PrivateRoute path="/general">
+                <General />
+              </PrivateRoute>
+              <PrivateRoute path="/major">
+                <Major />
+              </PrivateRoute>
+              <PrivateRoute path="/menu">
+                <Menu />
+              </PrivateRoute>
+              <PrivateRoute path="/document">
+                {/* <Menu /> */}
+              </PrivateRoute>
+              <PrivateRoute path="/questions">
+                <Questions />
+              </PrivateRoute>
+              <PrivateRoute path="/preview">
+                <Preview />
+              </PrivateRoute>
+              <PrivateRoute path="/success">
+                <Success />
+              </PrivateRoute>
+              <PrivateRoute path="/edit">
+                <Edit />
+              </PrivateRoute>
+              <PrivateRoute path="*" />
+            </Switch>
+          </Router>
+        </LineCheck.Provider>
       </Authentication.Provider>
     )
   }

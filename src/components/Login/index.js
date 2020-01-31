@@ -71,7 +71,7 @@ export default class LoginBox extends Component {
     // token_type: '',
     // expires_in: '',
     // id_token: '',
-    userId: ''
+    tokenObject: { }
   }
 
   componentDidMount() {
@@ -84,7 +84,7 @@ export default class LoginBox extends Component {
       const resFromLineApi = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}', function (key, value) { return key === "" ? value : decodeURIComponent(value) })
       console.log('get state from response from line api : ' + resFromLineApi.state)
       if (resFromLineApi.state === this.state.state) {
-        console.log(resFromLineApi.state)
+        this.getTokenFromLineApi(resFromLineApi.code)
         this.changeLineStatus(resFromLineApi.state)
       //   this.getTokenFromLineApi(resFromLineApi.code, Cookies.get('nonce'))
       // Cookies.remove('state', { path: loginGameUrl });
@@ -112,55 +112,55 @@ export default class LoginBox extends Component {
     })
   }
 
-  // async lineLogin() {
-  //   const stateGenerate = await LineService.getGenerateCode()
-  //   const nonceGenerate = await LineService.getGenerateCode()
-  //   console.log(2)
-    // Cookies.set('state', stateGenerate.data, { domain: 'game.freezer.wip.camp', path: '/login' })
-    // Cookies.set('nonce', nonceGenerate.data, { domain: 'game.freezer.wip.camp', path: '/login' })
-    // Cookies.set('state',nonceGenerate.data,{domain:})
-    // Cookies.set('nonce',nonceGenerate.data,{path: '/login'})
-    // let stateInCookies = Cookies.get('state')
-    // console.log('from cookies : ' + Cookies.get('state'))
-    // console.log('init stateInCookies : ' + stateInCookies)
-    // if (stateGenerate.data == Cookies.get('state')) {
-
-    // } else {
-    //     stateInCookies = "someThing"
-    // }
-    // const nonceInCookies = Cookies.get('nonce')
-    // console.log(stateInCookies)
-    // console.log(nonceInCookies)
-    // window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${clientId}
-    //                           &redirect_uri=${this.state.itimUrl}&state=${stateGenerate}&scope=openid%20email%
-    //                           20profile&nonce=${nonceGenerate}`
-
-  // }
-
   changeLineStatus = (newState) => {
     this.setState({
       newState: newState
     })
   }
+
+  async getTokenFromLineApi(code) {
+    const objectResponse = await LineService.lineLogin(code, this.state.nonce)
+    if (objectResponse == null) {
+      window.location.href = this.state.itimUrl
+    }
+    const tokenObject = {
+      scope: objectResponse.data.scope,
+      access_token: objectResponse.data.access_token,
+      token_type: objectResponse.data.token_type,
+      expires_in: objectResponse.data.expires_in,
+      id_token: objectResponse.data.id_token,
+      userId: objectResponse.data.userId
+    }
+
+    this.setState({
+      tokenObject: tokenObject
+    })
+
+    window.location.href = 'https://12-itim.freezer.wip.camp/menu'
+  }
+
+
+  
   
   handleClick = () => {
     // this.props.login()
     // console.log(2)
     // this.lineLogin()
-    this.props.callbackFromRouter(this.state.state, this.state.nonce)
+    this.props.callbackFromRouter(this.state)
     window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1653703435&redirect_uri=${this.state.itimUrl}&state=${this.state.state}&scope=openid%20email%20profile&nonce=${this.state.nonce}`
   }
 
   
   render() {
     return (
-      <LineCheck.Provider value={{
-        nonce: this.state.nonce,
-        state: this.state.state,
-        newState: this.state.newState,
-        newNonce: this.state.newNonce,
-        changeLineStatus:this.changeLineStatus
-      }}>
+      <LineCheck.Consumer>
+          {
+            ({ state }) => (
+              <React.Fragment>
+                {console.log(state)}
+              </React.Fragment>
+            )
+          }
         <Background>
           <WhiteLoginBox>
             <HeadText>WIP CAMP #12</HeadText>
@@ -169,7 +169,7 @@ export default class LoginBox extends Component {
             />
           </WhiteLoginBox>
         </Background>
-      </LineCheck.Provider>
+      </LineCheck.Consumer>
     )
   }
 }
