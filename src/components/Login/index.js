@@ -78,12 +78,14 @@ export default class LoginBox extends Component {
     const search = window.location.search.substring(1);
     console.log(search)
     if (search) {
+      console.log('search')
       this.setState({
         isLoad: true
       })
       const resFromLineApi = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}', function (key, value) { return key === "" ? value : decodeURIComponent(value) })
       console.log('get state from response from line api : ' + resFromLineApi.state)
       if (resFromLineApi.state === this.state.state) {
+        console.log('state true')
         this.getTokenFromLineApi(resFromLineApi.code)
         this.changeLineStatus(resFromLineApi.state)
       //   this.getTokenFromLineApi(resFromLineApi.code, Cookies.get('nonce'))
@@ -113,17 +115,20 @@ export default class LoginBox extends Component {
   }
 
   changeLineStatus = (newState) => {
+    console.log(newState)
     this.setState({
       newState: newState
     })
   }
 
   async getTokenFromLineApi(code) {
+    console.log('getToken Method')
     const objectResponse = await LineService.lineLogin(code, this.state.nonce)
     if (objectResponse == null) {
+      console.log('obj res false')
       window.location.href = this.state.itimUrl
     }
-
+    console.log('obj res true')
     const tokenObject = {
       scope: objectResponse.data.scope,
       access_token: objectResponse.data.access_token,
@@ -132,11 +137,11 @@ export default class LoginBox extends Component {
       id_token: objectResponse.data.id_token,
       userId: objectResponse.data.userId
     }
-
+    console.log(tokenObject)
     this.setState({
       tokenObject: tokenObject
     })
-
+    this.props.callbackFromRouter(this.state.tokenObject)
     window.location.href = 'https://12-itim.freezer.wip.camp/menu'
   }
 
@@ -147,7 +152,6 @@ export default class LoginBox extends Component {
     // this.props.login()
     // console.log(2)
     // this.lineLogin()
-    this.props.callbackFromRouter(this.state.tokenObject)
     window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1653703435&redirect_uri=${this.state.itimUrl}&state=${this.state.state}&scope=openid%20email%20profile&nonce=${this.state.nonce}`
   }
 
