@@ -56,9 +56,9 @@ export default class Index extends React.Component {
   }
 
   componentDidMount() {
-    if (!this.state.isAuthenticated) {
-        this.changeAuthen()
-    }
+    // if (!this.state.isAuthenticated) {
+    //     this.changeAuthen()
+    // }
   }
 
   changeAuthen = () => {
@@ -75,6 +75,7 @@ export default class Index extends React.Component {
     this.setState({
       loginObj: loginObj
     })
+    this.changeAuthen()
   }
 
   render() {
