@@ -123,6 +123,7 @@ export default class LoginBox extends Component {
     if (objectResponse == null) {
       window.location.href = this.state.itimUrl
     }
+
     const tokenObject = {
       scope: objectResponse.data.scope,
       access_token: objectResponse.data.access_token,
@@ -146,7 +147,7 @@ export default class LoginBox extends Component {
     // this.props.login()
     // console.log(2)
     // this.lineLogin()
-    this.props.callbackFromRouter(this.state)
+    this.props.callbackFromRouter(this.state.tokenObject)
     window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1653703435&redirect_uri=${this.state.itimUrl}&state=${this.state.state}&scope=openid%20email%20profile&nonce=${this.state.nonce}`
   }
 
