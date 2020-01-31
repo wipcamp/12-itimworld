@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import StyledComponent from 'styled-components'
+import Styled from 'styled-components'
 
-const Topic = StyledComponent.h3`
+const Topic = Styled.h3`
     display: block;
 
     font-family: Sarabun;
@@ -14,7 +14,7 @@ const Topic = StyledComponent.h3`
     color: #000000;
 `
 
-const Data = StyledComponent.p`
+const Data = Styled.p`
     display: block;
 
     font-family: Sarabun;
@@ -35,7 +35,9 @@ const QuestionAnswer = props => {
 }
 
 QuestionAnswer.propTypes = {
-    topic: PropTypes.string.isRequired
+    topic: PropTypes.string.isRequired,
+    count: PropTypes.number,
+    data: PropTypes.any
 }
 
 export default QuestionAnswer

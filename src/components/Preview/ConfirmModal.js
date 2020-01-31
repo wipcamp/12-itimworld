@@ -61,7 +61,8 @@ const ConfirmModal = (props) => {
 }
 
 ConfirmModal.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
+  disabled: PropTypes.bool
 }
 
 ConfirmModal.defaultProps = {

@@ -38,6 +38,7 @@ const ImageRadio = (props) => {
 }
 
 ImageRadio.propsTypes = {
+  className: PropTypes.string,
   imgPath: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired

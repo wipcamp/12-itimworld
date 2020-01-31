@@ -1,5 +1,3 @@
-import React from 'react'
-
 const fonts = {
   Headline: '36px',
   ResHeadline: '30px',

@@ -28,8 +28,8 @@ const TelNumberField = (props) => {
 TelNumberField.propsTypes = {
   labelInput: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.string
+  value: PropTypes.string,
+  onChange: PropTypes.func.isRequired
 }
 
 export default TelNumberField

@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import StyledComponent from 'styled-components'
+import Styled from 'styled-components'
 
-const Topic = StyledComponent.h3`
+const Topic = Styled.h3`
     display: inline;
 
     font-family: Sarabun;
@@ -15,7 +15,7 @@ const Topic = StyledComponent.h3`
     text-align: right;
 `
 
-const Data = StyledComponent.p`
+const Data = Styled.p`
     font-family: Sarabun;
     font-style: normal;
     font-weight: 300;
@@ -38,7 +38,8 @@ const ProfileData = props => {
 }
 
 ProfileData.propTypes = {
-    topic: PropTypes.string.isRequired
+    topic: PropTypes.string.isRequired,
+    data: PropTypes.any
 }
 
 export default ProfileData

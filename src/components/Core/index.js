@@ -8,6 +8,13 @@ const dateNow = dayjs().format('YYYY-MM-DDTHH:mm')
 const dateEnd = dayjs('2020-03-13T00:00')
 
 export default class Index extends Component {
+  componentDidUpdate() {
+    // if (fakeAuth.isAuthenticated) {
+    //   this.changeAuthen()
+    // }
+    console.log(2)
+    // console.log(fakeAuth.isAuthenticated)
+  }
   render() {
     return (
       <React.Fragment>
