@@ -12,8 +12,8 @@ const Background = styled.div`
   justify-content: center;
   align-items: center;
   padding: 15px;
-  background: #9053c7;
-  background: linear-gradient(-135deg, #ffce00, #9053c7);
+  /* background: #9053c7;
+  background: linear-gradient(-135deg, #ffce00, #9053c7); */
 `
 const WhiteLoginBox = styled.div`
   width: 960px;
