@@ -3,6 +3,7 @@ import ButtonRoute from '../Core/ButtonRoute'
 import Question from './Question'
 import MajorService from './../../services/MajorService'
 import AnswerService from './../../services/AnswerService'
+import UserService from './../../services/UserService'
 import Styled from 'styled-components'
 
 let answer = [];
@@ -92,12 +93,7 @@ export default class Index extends Component {
       }
     
     postAnswerService = async() =>{
-      let response = await AnswerService.postAnswer(
-        userId,
-        majorId,
-        {
-          "answers":answer
-        });
+      let response = await AnswerService.postAnswer(userId,majorId,{"answers":answer}).then(() => {UserService.postStatus(userId,{"status":"major"})});
         console.log(response);
     }
     

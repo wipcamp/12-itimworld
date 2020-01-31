@@ -118,7 +118,8 @@ export default class Index extends Component {
     console.log("done validate");
   }
   putUser = async (data) => {
-    await UserService.putUser(userId, data);
+    await UserService.putUser(userId, data).then(() => {UserService.postStatus(userId,{"status":"register"})});
+
   }
   
   onSelect = (fullAddress) => {
