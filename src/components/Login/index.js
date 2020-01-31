@@ -121,7 +121,7 @@ export default class LoginBox extends Component {
     this.props.changeLineStatusFromRouter(tokenObject , true)
     // window.location.href = 'https://12-itim.freezer.wip.camp/menu'
     return(
-      <Redirect to="/menu" />
+      <Redirect from='/login' to='/menu' />
     )
   }
 

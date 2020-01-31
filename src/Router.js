@@ -39,6 +39,7 @@ const PrivateRoute = ({ children, ...rest }) => {
                   )
               }
             />
+            {console.log(isAuthenticated)}
           </React.Fragment>
         )
       }
