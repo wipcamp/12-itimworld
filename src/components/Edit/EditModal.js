@@ -1,4 +1,5 @@
-import React, { Component , useState } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 import UserService from '../../services/UserService'
 
@@ -86,3 +87,11 @@ export default class EditModal extends Component {
     )
   }
 }
+
+EditModal.propType = {
+  className: PropTypes.string,
+  disabled: PropTypes.bool,
+  newUser: PropTypes.object, 
+  data: PropTypes.object
+}
+

@@ -53,8 +53,6 @@ export default class Index extends Component {
     ],
     religionData: ['เลือก', 'พุทธ', 'คริสต์', 'อิสลาม', 'ฮินดู', 'ซิกส์','ไม่มี'],
     booldGroupData: ['เลือก', 'A', 'B', 'O', 'AB'],
-    district: '',
-    province: '',
     data: {
       firstName: null,
       firstNameEn: null,
@@ -67,9 +65,6 @@ export default class Index extends Component {
       birthDate: null,
       bloodGroup: null,
       religion: null,
-      schoolMajor: null,
-      level: null,
-      gpax: null,
       email:null,
       allergicFood: null,
       congenitalDisease: null,
@@ -78,13 +73,17 @@ export default class Index extends Component {
         relation: null,
         telNo: null
       },
+      school: {
+        name: null,
+        level: null,
+        major: null,
+        gpax: null
+      },
       telEmergency: null,
-      address: {
-        province: null,
-        district: null
-      }
+      province: null
     },
-    errorMsg: []
+    errorMsg: [],
+    etcInput:false
   }
 
   
@@ -123,30 +122,16 @@ export default class Index extends Component {
   }
   
   onSelect = (fullAddress) => {
-    const { district, province } = fullAddress
-    this.setState({
-      district,
-      province
-    })
-    this.arrayToObj(fullAddress)
-  }
-
-  arrayToObj = (fullAddress) => {
-    const dataEntries = Object.entries(fullAddress)
-    for (const [dataArray, dataFromEntity] of dataEntries) {
-      if (dataArray === "district" || dataArray === "province") {
-        this.setState((prevState) => ({
-          data: {
-            ...prevState.data,
-            address: {
-              ...prevState.data.address,
-              [dataArray]:dataFromEntity
-            }
-          }
-        })
-        )
-      } 
+    console.log(fullAddress);
+    
+    const { province } = fullAddress
+    const updateData = {
+      ...this.state.data,
+      province:province
     }
+    this.setState({
+      data:updateData
+    })
   }
 
   handleClick = () => {
@@ -157,19 +142,7 @@ export default class Index extends Component {
 
   handleChange = (event) => {
     const { name, value } = event.target;
-    if (name === "district" || name === "province") {
-      this.setState((prevState) => ({
-        data: {
-          ...prevState.data,
-          address: {
-            ...prevState.data.address,
-            [name]: value
-          }
-        }
-      })
-      )
-    }
-   else if (name === "parentRelation" || name === "parentTel"){
+    if (name === "parentRelation" || name === "parentTel"){
       const newName = name === "parentRelation" ? "relation" : "telNo"
       this.setState((prevState) => ({
         data: {
@@ -181,7 +154,21 @@ export default class Index extends Component {
         }
       }
       ))
-    }else{
+    }
+    else if(name.match("school") !== null){
+      const keyName = name.replace("school","").toLowerCase();
+      this.setState((prevState) => ({
+        data: {
+          ...prevState.data,
+          school:{
+            ...prevState.data.school,
+            [keyName]:value
+          }
+        }
+      })
+      )
+    }
+    else{
     this.setState((prevState) => ({
       data: {
         ...prevState.data,
@@ -190,7 +177,6 @@ export default class Index extends Component {
     }
     ))
     }
-    this.validateField(this.state.data);
   }
 
   displayNextButton = () => {
@@ -199,6 +185,27 @@ export default class Index extends Component {
     }else{
       return <AlertModal errorMsg={this.state.errorMsg} />
     }
+  }
+
+  renderInputButton = ()=>{
+    if(this.state.etcInput){
+      return <input class="form-control ml-2" type="text" name="knowWhence" onChange={e => this.handleChange(e)} />
+    }
+  }
+
+  setEtcInput = (e,boolean) => {
+    this.setState({etcInput:boolean})
+    if(boolean){
+      this.setState((prevState)=>({
+        data:{
+          ...prevState.data,
+          knowWhence:null
+        }
+      }))
+    }else{
+      this.handleChange(e);
+    }
+    
   }
 
   render() {
@@ -322,23 +329,8 @@ export default class Index extends Component {
             labelInput="จังหวัด"
             address="province"
             id="province"
-            name="addrProvice"
-            value={this.state.data.address.province}
-            onChange={(e) => this.handleChange(e)}
-            onSelect={(e) => this.onSelect(e)}
-            placeholder="เลือก"
-            required
-          />
-
-          <AddressField
-            className="col-12 col-md-6 form-group"
-            leftSide="col-12 col-md-4 col-form-label text-md-right"
-            rightSide="col-12 col-md-8"
-            labelInput="เขต / อำเภอ"
-            address="district"
-            id="district"
-            name="addrDistrict"
-            value={this.state.data.address.district}
+            name="provice"
+            value={this.state.data.province}
             onChange={(e) => this.handleChange(e)}
             onSelect={(e) => this.onSelect(e)}
             placeholder="เลือก"
@@ -376,7 +368,7 @@ export default class Index extends Component {
             rightSide="col-12 col-md-8"
             labelInput="โรงเรียน"
             placeHolder="เลือก"
-            name="school"
+            name="schoolName"
             onChange={(e) => this.handleChange(e)}
             required
             />
@@ -384,7 +376,7 @@ export default class Index extends Component {
             <div className="row">
               <div className="col-12 col-md-4 col-form-label text-md-right">ระดับชั้น</div>
               <div className="col-12 col-md-8">
-                <select className="form-control" name="level" id="level" onChange={(e) => this.handleChange(e)}  required>
+                <select className="form-control" name="schoolLevel" id="level" onChange={(e) => this.handleChange(e)}  required>
                   <option value="">เลือก</option>
                   <option value="ม.4">ม.3 ขึ้น ม.4</option>
                   <option value="ม.5">ม.4 ขึ้น ม.5</option>
@@ -405,7 +397,7 @@ export default class Index extends Component {
             />
           <Field
             className="col-12 col-md-6 form-group"
-            name="gpax"
+            name="schoolGpax"
             type="number"
             labelInput="เกรดเฉลี่ย"
             placeHolder=""
@@ -416,9 +408,40 @@ export default class Index extends Component {
             required="required" />
           </section>
           <h3 className="col-12">ผลงานและทักษะทางด้านคอมพิวเตอร์</h3>
-          <textarea class="form-control" placeholder="ผลงาน" rows="4"></textarea>
+          <textarea 
+          class="form-control" 
+          placeholder="ผลงาน" 
+          rows="4" 
+          name="computerWorks"
+          onChange={(e) => this.handleChange(e)} 
+          ></textarea>
 
-          <ButtonRoute displayButtonLeft="none" linkNext="/general" onClick={(e) => this.putUser(this.state.data)} />
+          <h3 className="col-12 mt-5">ช่องทางที่รู้จักค่าย</h3>
+          <div className="row">
+            <div className="col-1"></div>
+            <div class="form-check form-check-inline col">
+              <input class="form-check-input" type="radio" name="knowWhence"  value="Facebook" onClick={e=>this.setEtcInput(e,false)} />
+              <label class="form-check-label" for="inlineRadio1">Facebook</label>
+            </div>
+            <div class="form-check form-check-inline col">
+              <input class="form-check-input" type="radio" name="knowWhence"  value="Camphub" onClick={e=>this.setEtcInput(e,false)} />
+              <label class="form-check-label" for="inlineRadio2">Camphub</label>
+            </div>
+            <div class="form-check form-check-inline col">
+              <input class="form-check-input" type="radio" name="knowWhence"  value="Dek-D" onClick={e=>this.setEtcInput(e,false)} />
+              <label class="form-check-label" for="inlineRadio2">Dek-D</label>
+            </div>
+            <div class="form-check form-check-inline col">
+              <input class="form-check-input" type="radio" name="knowWhence" value="SIT" onClick={e=>this.setEtcInput(e,false)} />
+              <label class="form-check-label" for="inlineRadio2">SIT</label>
+            </div>
+            <div class="form-check form-check-inline col">
+              <input class="form-check-input" type="radio" name="knowWhence" value={null} onClick={e=>this.setEtcInput(e,true)}/>
+              <label class="form-check-label" for="inlineRadio2">อื่นๆ</label>
+              {this.renderInputButton()}
+            </div>
+          </div>
+          <ButtonRoute className="mt-5" linkBack="/menu" linkNext="/menu" onClick={(e) => this.putUser(this.state.data)} />
         </div>
     )
   }

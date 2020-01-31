@@ -429,7 +429,7 @@ export default class Index extends Component {
         </section>
 
         <h3 className="col-12">ผลงานและทักษะทางด้านคอมพิวเตอร์</h3>
-        <textarea class="form-control" placeholder="ผลงาน" rows="4" name="skill" value={this.state.oldUser.skill} onChange={(e) => this.handleChange(e)}></textarea>
+        <textarea class="form-control" placeholder="ผลงาน" rows="4" name="computerWorks" value={this.state.oldUser.computerWorks} onChange={(e) => this.handleChange(e)}></textarea>
 
         <div className="d-flex justify-content-between ml-4 mr-5">
           <ButtonRoute className="my-5" buttonLeft="ยกเลิก" linkBack="/success" displayButtonRight="none" />

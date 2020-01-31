@@ -3,13 +3,13 @@ import ButtonRoute from '../Core/ButtonRoute'
 import Question from './Question'
 import MajorService from './../../services/MajorService'
 import AnswerService from './../../services/AnswerService'
-import StyledComponent from 'styled-components'
+import Styled from 'styled-components'
 
 let answer = [];
 let majorId = 1;
 let userId = 120001;
 
-const Header = StyledComponent.h2`
+const Header = Styled.h2`
 font-family: Sarabun;
 font-style: normal;
 font-weight: bold;
@@ -120,7 +120,7 @@ export default class Index extends Component {
                   buttonLeft="กลับ" 
                   buttonRight="ยืนยัน" 
                   linkBack ="/major"
-                  linkNext ="/preview"
+                  linkNext ="/menu"
                   onClick={this.postAnswerService}
                 />
             </div>

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import UserService from './../../services/UserService'
 import ProfileData from './ProfileData';
 import QuestionAnswer from './QuestionAnswer';
-import StyledComponent from 'styled-components';
+import Styled from 'styled-components';
 import ButtonRoute from '../Core/ButtonRoute';
 import ConfirmModal from './ConfirmModal'
 
@@ -11,7 +11,7 @@ const generalQuestion = [
   "Mock general question 2"
 ];
 
-const Header = StyledComponent.h2`
+const Header = Styled.h2`
   position: relative;
   top: -20px;
 
@@ -26,7 +26,7 @@ const Header = StyledComponent.h2`
 
   color: #000000;
 `
-const Rectangle = StyledComponent.div`
+const Rectangle = Styled.div`
 
   background: #FFFFFF;
   opacity: 0.75;
@@ -34,7 +34,7 @@ const Rectangle = StyledComponent.div`
   border-radius: 4px;
 `
 
-const WarningList = StyledComponent.li`
+const WarningList = Styled.li`
   font-family: Sarabun;
   font-style: normal;
   font-weight: 300;
@@ -164,7 +164,8 @@ export default class Index extends Component {
         "id": 39,
         "firstAnswer": "",
         "secondAnswer": "asdfasdfasdf"
-      }
+      },
+      "computerWorks":"abcdefghijklmnopqrstuvwxyz"
     }
   }
 
@@ -216,11 +217,20 @@ export default class Index extends Component {
           <div className="container-fluid justify-content-center">
             <Header>คำถามทั่วไป</Header>
             {
-              Object.keys(this.state.user.generalAnswer).map((keyName,i) => {
-                if(keyName !== "id"){
-                  return <QuestionAnswer topic={generalQuestion[i-1]} data={this.state.user.generalAnswer[keyName]} count={i-1} key={i} />
+              Object.keys(this.state.user.generalAnswer).map((keyName,i) => (
+                <React.Fragment>
+                {
+                  keyName !== "id" ?
+                    <QuestionAnswer 
+                      topic={generalQuestion[i-1]} 
+                      data={this.state.user.generalAnswer[keyName]} 
+                      count={i-1} key={i} 
+                    />
+                  : 
+                  ''
                 }
-              })
+                </React.Fragment>
+              ))
             }
           </div>
           <div className="container-fluid justify-content-center">
@@ -230,6 +240,10 @@ export default class Index extends Component {
                 return <QuestionAnswer topic={answer.question.name} data={answer.answerContent} count={index} key={index} />
               })
             }
+          </div>
+          <div className="container-fluid justify-content-center">
+            <Header>ผลงานด้านคอมพิวเตอร์</Header>
+            <p> {this.state.user.computerWorks} </p> 
           </div>
           <div className="container-fluid justify-content-center">
             <ul>

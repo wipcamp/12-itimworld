@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import { Modal, ModalBody } from 'reactstrap'
 
 import { HeaderText, Paragrph } from '../Core/Text'
@@ -68,7 +69,11 @@ const ConfirmModal = (props) => {
         </Body>
       </Modal>
     </div>
-  );
+  )
+}
+
+ConfirmModal.propsType = {
+  disabled: PropTypes.bool
 }
 
 export default ConfirmModal;

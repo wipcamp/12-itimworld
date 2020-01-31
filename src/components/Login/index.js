@@ -55,8 +55,6 @@ const HeadText = styled.div`
 // const nonce = nonce // vurify its real user
 // reqeust json send lineService 
 
-const loginGameUrl = 'http://localhost:3211/'
-const clientId = '1653724802'
 
 export default class LoginBox extends Component {
 
@@ -70,18 +68,6 @@ export default class LoginBox extends Component {
     // expires_in: '',
     // id_token: '',
     userId: ''
-  }
-
-  componentDidMount(){
-    // this.getGenerateCode()
-  }
-
-  componentDidUpdate(){
-    // console.log(this.state.nonce)
-    // console.log(this.state.state)
-  }
-  myCallback = (isAuthenticated) => {
-    this.props.callbackFromRouter(isAuthenticated)
   }
 
   getGenerateCode = () => {
@@ -131,7 +117,7 @@ export default class LoginBox extends Component {
       <Background>
         <WhiteLoginBox>
           <HeadText>WIP CAMP #12</HeadText>
-          <LineLoginButton onClick={() => this.handleClick()} callbackFromRouter={this.myCallback} />
+          <LineLoginButton onClick={() => this.handleClick()} callbackFromRouter={this.props.callbackFromRouter} />
         </WhiteLoginBox>
       </Background>
     )
