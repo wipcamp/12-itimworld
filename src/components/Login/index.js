@@ -84,7 +84,8 @@ export default class LoginBox extends Component {
       })
       const resFromLineApi = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}', function (key, value) { return key === "" ? value : decodeURIComponent(value) })
       console.log('get state from response from line api : ' + resFromLineApi.state)
-      if (resFromLineApi.state === this.state.state) {
+      const localState = localStorage.getItem('state');
+      if (resFromLineApi.state === localState) {
         console.log('state true')
         this.getTokenFromLineApi(resFromLineApi.code)
         this.changeLineStatus(resFromLineApi.state)
@@ -123,7 +124,8 @@ export default class LoginBox extends Component {
 
   async getTokenFromLineApi(code) {
     console.log('getToken Method')
-    const objectResponse = await LineService.lineLogin(code, this.state.nonce)
+    const localNonce = localStorage.getItem('nonce');
+    const objectResponse = await LineService.lineLogin(code, localNonce)
     if (objectResponse == null) {
       console.log('obj res false')
       window.location.href = this.state.itimUrl
@@ -149,12 +151,18 @@ export default class LoginBox extends Component {
   
   
   handleClick = async() => {
-    const stateGenerate = await  LineService.getGenerateCode()
-    const nonceGenerate = await LineService.getGenerateCode()
-    this.setState({
-      state:stateGenerate.data,
-      nonce: nonceGenerate.data
-    })
+    const stateGenerate =await  LineService.getGenerateCode()
+    const nonceGenerate =await LineService.getGenerateCode()
+    // setter
+    localStorage.setItem('state',stateGenerate.data);
+    localStorage.setItem('nonce', nonceGenerate.data);
+    // getter
+    
+    // // remove
+    // localStorage.removeItem('myData');
+    // // remove all
+    // localStorage.clear();
+    // this.props.keepLineState(stateGenerate.data)
     window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1653703435&redirect_uri=${this.state.itimUrl}&state=${stateGenerate.data}&scope=openid%20email%20profile&nonce=${nonceGenerate.data}`
   }
 
@@ -163,9 +171,11 @@ export default class LoginBox extends Component {
     return (
       <LineCheck.Consumer>
           {
-            ({ state }) => (
+            ({ state, stateLine }) => (
               <React.Fragment>
-                {console.log(state)}
+                {
+                 
+                }
                 <Background>
                   <WhiteLoginBox>
                     <HeadText>WIP CAMP #12</HeadText>
