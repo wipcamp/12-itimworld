@@ -73,7 +73,7 @@ class Login extends Component {
   componentDidMount() {
     const search = window.location.search.substring(1);
     const { match, location, history } = this.props;
-    console.log("match")
+    console.log("match1")
     console.log(match)
     console.log("location")
     console.log(location)
