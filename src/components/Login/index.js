@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { Redirect } from 'react-router-dom'
+import { withRouter } from "react-router";
 
 import { LineCheck } from '../../context/Authentication-Context'
 import LineService from '../../services/LineService'
@@ -58,7 +58,7 @@ const HeadText = styled.div`
 // reqeust json send lineService 
 
 
-export default class LoginBox extends Component {
+class Login extends Component {
 
   state = {
     itimUrl: 'https://12-itim.freezer.wip.camp/login',
@@ -72,7 +72,15 @@ export default class LoginBox extends Component {
 
   componentDidMount() {
     const search = window.location.search.substring(1);
-    console.log(search)
+    const { match, location, history } = this.props;
+    console.log("match")
+    console.log(match)
+    console.log("location")
+    console.log(location)
+    console.log("history")
+    console.log(history)
+    console.log("End")
+    // console.log(search)
     if (search) {
       this.setState({
         isLoad: true
@@ -153,3 +161,5 @@ export default class LoginBox extends Component {
     )
   }
 }
+
+export default withRouter(Login)
