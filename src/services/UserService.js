@@ -20,6 +20,10 @@ const userService = {
   postGeneralAnswer: async (id,data) => {
     let res = await apiUserService.post(`/user/${id}/general`,data)
     return res
+  },
+  postStatus: async (id,data) =>{
+    let res = await apiUserService.post(`/user/${id}/status`,data);
+    return res
   }
 }
 
