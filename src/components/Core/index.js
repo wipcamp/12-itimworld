@@ -17,9 +17,6 @@ export default class Index extends Component {
   }
   render() {
     return (
-<<<<<<< HEAD
-        <Routing />
-=======
       <React.Fragment>
         {
           dateEnd.isAfter(dateNow)
@@ -29,7 +26,6 @@ export default class Index extends Component {
           'ปิดรับสมัครแล้วจ้า'
         }
       </React.Fragment>
->>>>>>> master
     )
   }
 }
