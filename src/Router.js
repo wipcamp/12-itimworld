@@ -5,6 +5,8 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
+import { instanceOf } from 'prop-types';
+import { withCookies, Cookies } from 'react-cookie';
 
 import { Authentication, LineCheck } from './context/Authentication-Context'
 import Navbar from './components/Core/Navbar'
@@ -17,6 +19,8 @@ import Preview from "./components/Preview"
 import Success from './components/Success'
 import Edit from './components/Edit'
 import General from './components/General'
+
+const { cookies } = this.props;
 
 const PrivateRoute = ({ children, ...rest }) => {
   return (
@@ -47,13 +51,18 @@ const PrivateRoute = ({ children, ...rest }) => {
   );
 }
 
-export default class Index extends React.Component {
+class Index extends React.Component {
+
+  static propTypes = {
+    cookies: instanceOf(Cookies).isRequired
+  }
 
   state = {
     wipId: null,
     user: false,
     isAuthenticated: false,
-    loginObj:null
+    loginObj:null,
+    name: cookies.get('Auth')
   }
   
   componentDidMount(){
@@ -69,14 +78,15 @@ export default class Index extends React.Component {
       })
   }
 
-  changeLineStatus = (loginObj , auth) => {
-      console.log("login")
-      console.log(loginObj)
-      this.setState({
-        loginObj: loginObj
-      })
-      this.changeAuthen(auth)
-  }
+  // changeLineStatus = (loginObj , auth) => {
+  //     console.log("login")
+  //     console.log(loginObj)
+  //     this.setState({
+  //       loginObj: loginObj
+  //     })
+     
+  //     this.changeAuthen(auth)
+  // }
 
   render() {
     return (
@@ -84,15 +94,11 @@ export default class Index extends React.Component {
         isAuthenticated: this.state.isAuthenticated,
         changeAuthen: this.changeAuthen
       }}>
-        <LineCheck.Provider value={{
-          loginObj: this.state.loginObj,
-          changeLineStatus: this.changeLineStatus
-        }}>
           <Router>
             <Navbar />
             <Switch>
               <Route path="/login" >
-                <Login changeLineStatusFromRouter={this.changeLineStatus} />
+                <Login />
               </Route>
               <PrivateRoute path="/profile">
                 <Profile />
@@ -124,9 +130,10 @@ export default class Index extends React.Component {
               <PrivateRoute path="*" />
             </Switch>
           </Router>
-        </LineCheck.Provider>
       </Authentication.Provider>
     )
   }
 }
+
+export default withCookies(Index)
 
