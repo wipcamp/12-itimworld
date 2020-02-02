@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { withRouter } from "react-router";
+import { instanceOf } from 'prop-types';
+import { withCookies, Cookies } from 'react-cookie';
 
 import { LineCheck } from '../../context/Authentication-Context'
 import LineService from '../../services/LineService'
@@ -60,14 +62,17 @@ const HeadText = styled.div`
 
 class Login extends Component {
 
+  static propTypes = {
+    cookies: instanceOf(Cookies).isRequired
+  }
+
   state = {
-    itimUrl: 'https://12-itim.freezer.wip.camp/login',
+    itimUrl: 'https://master.itim.wip.camp/login',
     nonce: '',
     state: '',
     newState: '',
     newNonce: '',
     isLoad: false,
-    tokenObject: { }
   }
 
   componentDidMount() {
@@ -110,6 +115,7 @@ class Login extends Component {
   async getTokenFromLineApi(code) {
     const localNonce = localStorage.getItem('nonce');
     const objectResponse = await LineService.lineLogin(code, localNonce)
+    const { cookies } = this.props;
     if (objectResponse == null) {
       window.location.href = this.state.itimUrl
     }
@@ -121,7 +127,7 @@ class Login extends Component {
       id_token: objectResponse.data.id_token,
       userId: objectResponse.data.userId
     }
-    this.props.changeLineStatusFromRouter(tokenObject , true)
+    cookies.set('loginObj', tokenObject, { path: '/' });
   }
 
 
@@ -162,4 +168,4 @@ class Login extends Component {
   }
 }
 
-export default withRouter(Login)
+export default withCookies(Login)
