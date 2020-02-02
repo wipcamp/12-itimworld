@@ -113,12 +113,14 @@ class Login extends Component {
   }
 
   async getTokenFromLineApi(code) {
+    console.log('success')
     const localNonce = localStorage.getItem('nonce');
     const objectResponse = await LineService.lineLogin(code, localNonce)
     const { cookies } = this.props;
     if (objectResponse == null) {
       window.location.href = this.state.itimUrl
     }
+    console.log('token')
     const tokenObject = {
       scope: objectResponse.data.scope,
       access_token: objectResponse.data.access_token,
@@ -128,6 +130,7 @@ class Login extends Component {
       userId: objectResponse.data.userId
     }
     cookies.set('loginObj', tokenObject, { path: '/' });
+    console.log(cookies.get('loginObj') ? cookies.get('loginObj') : 'cookie not found')
   }
 
 
