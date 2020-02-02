@@ -12,13 +12,13 @@
     "cross-env": "^6.0.3",
     "dayjs": "^1.8.19",
     "react": "^16.12.0",
-    "react-cookie": "^4.0.3",
     "react-dom": "^16.12.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.0",
     "react-thailand-address-autocomplete": "^0.0.6",
     "reactstrap": "^8.2.0",
-    "styled-components": "^4.4.1"
+    "styled-components": "^4.4.1",
+    "universal-cookie": "^4.0.3"
   },
   "scripts": {
     "start": "cross-env PORT=3211 react-scripts start",
