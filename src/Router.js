@@ -5,10 +5,11 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import { instanceOf } from 'prop-types';
-import { withCookies, Cookies } from 'react-cookie';
+import Cookies from 'universal-cookie';
 
-import { Authentication, LineCheck } from './context/Authentication-Context'
+import UserService from './services/UserService'
+
+import { Authentication } from './context/Authentication-Context'
 import Navbar from './components/Core/Navbar'
 import Login from './components/Login'
 import Menu from './components/Menu'
@@ -20,120 +21,88 @@ import Success from './components/Success'
 import Edit from './components/Edit'
 import General from './components/General'
 
-// const { cookies } = this.props;
+const cookies = new Cookies()
 
-const PrivateRoute = ({ children, ...rest }) => {
+const PrivateRoute = ({ children, ...rest }, props) => {
   return (
-    <Authentication.Consumer>
-      {
-        ({ isAuthenticated }) => (
-          <React.Fragment>
-            <Route
-              {...rest}
-              render={({ location }) =>
-                isAuthenticated ? (
-                  children
-                ) : (
-                    <Redirect
-                      to={{
-                        pathname: "/login",
-                        state: { from: location }
-                      }}
-                    />
-                  )
-              }
-            />
-            {console.log(isAuthenticated)}
-          </React.Fragment>
-        )
-      }
-    </Authentication.Consumer>
-  );
+    <React.Fragment>
+      <Route
+        {...rest}
+        render={({ location }) =>
+          props.isAuthenticated ? (
+            children
+          ) : (
+              <Redirect
+                to={{
+                  pathname: "/login",
+                  state: { from: location }
+                }}
+              />
+            )
+        }
+      />
+      {console.log(props.isAuthenticated)}
+    </React.Fragment>
+  )
 }
 
-class Index extends React.Component {
-
-  static propTypes = {
-    cookies: instanceOf(Cookies).isRequired
-  }
+export default class Index extends React.Component {
 
   state = {
     wipId: null,
     user: false,
-    isAuthenticated: false,
-    loginObj:null,
-    // name: cookies.get('Auth')
+    isAuthenticated: false
   }
   
   componentDidMount(){
-    if(this.state.loginObj !== null){
-      this.changeLineStatus()
+    if (cookies.get('token') !== undefined && cookies.get('token') !== null && !this.state.isAuthenticated ){
+      console.log('changeAuth')
+      this.setState({
+        isAuthenticated: true
+      })
     }
   }
 
-  changeAuthen = (auth) => {
-      console.log('changeAuthen')
-      this.setState({
-        isAuthenticated: auth
-      })
-  }
-
-  // changeLineStatus = (loginObj , auth) => {
-  //     console.log("login")
-  //     console.log(loginObj)
-  //     this.setState({
-  //       loginObj: loginObj
-  //     })
-     
-  //     this.changeAuthen(auth)
-  // }
-
   render() {
     return (
-      <Authentication.Provider value={{
-        isAuthenticated: this.state.isAuthenticated,
-        changeAuthen: this.changeAuthen
-      }}>
-          <Router>
-            <Navbar />
-            <Switch>
-              <Route path="/login" >
-                <Login />
-              </Route>
-              <PrivateRoute path="/profile">
-                <Profile />
-              </PrivateRoute>
-              <PrivateRoute path="/general">
-                <General />
-              </PrivateRoute>
-              <PrivateRoute path="/major">
-                <Major />
-              </PrivateRoute>
-              <PrivateRoute path="/menu">
-                <Menu />
-              </PrivateRoute>
-              <PrivateRoute path="/document">
-                {/* <Menu /> */}
-              </PrivateRoute>
-              <PrivateRoute path="/questions">
-                <Questions />
-              </PrivateRoute>
-              <PrivateRoute path="/preview">
-                <Preview />
-              </PrivateRoute>
-              <PrivateRoute path="/success">
-                <Success />
-              </PrivateRoute>
-              <PrivateRoute path="/edit">
-                <Edit />
-              </PrivateRoute>
-              <PrivateRoute path="*" />
-            </Switch>
-          </Router>
-      </Authentication.Provider>
+      <Router>
+        <Navbar isAuthenticated={this.state.isAuthenticated} />
+        <Switch>
+          <Route path="/login" >
+            <Login />
+          </Route>
+          <PrivateRoute path="/profile" isAuthenticated={this.state.isAuthenticated}>
+            <Profile />
+          </PrivateRoute>
+          <PrivateRoute path="/general" isAuthenticated={this.state.isAuthenticated}>
+            <General />
+          </PrivateRoute>
+          <PrivateRoute path="/major" isAuthenticated={this.state.isAuthenticated}>
+            <Major />
+          </PrivateRoute>
+          <PrivateRoute path="/menu" isAuthenticated={this.state.isAuthenticated}>
+            <Menu />
+          </PrivateRoute>
+          <PrivateRoute path="/document" isAuthenticated={this.state.isAuthenticated}>
+            {/* <Menu /> */}
+          </PrivateRoute>
+          <PrivateRoute path="/questions" isAuthenticated={this.state.isAuthenticated}>
+            <Questions />
+          </PrivateRoute>
+          <PrivateRoute path="/preview" isAuthenticated={this.state.isAuthenticated}>
+            <Preview />
+          </PrivateRoute>
+          <PrivateRoute path="/success" isAuthenticated={this.state.isAuthenticated}>
+            <Success />
+          </PrivateRoute>
+          <PrivateRoute path="/edit" isAuthenticated={this.state.isAuthenticated}>
+            <Edit />
+          </PrivateRoute>
+        <PrivateRoute path="*" isAuthenticated={this.state.isAuthenticated} />
+        </Switch>
+      </Router>
     )
   }
 }
 
-export default withCookies(Index)
 
