@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import { CookiesProvider } from 'react-cookie';
 
 import './index.css';
 import App from './App';
@@ -12,12 +11,10 @@ import '../node_modules/bootstrap/dist/css/bootstrap.css';
 import GlobalStyle from './components/Core/GlobalStyle'
 
 const AppWithRoute = () => (
-  <CookiesProvider>
-    <BrowserRouter>
-      <GlobalStyle />
-      <App />
-    </BrowserRouter>
-  </CookiesProvider>
+  <BrowserRouter>
+    <GlobalStyle />
+    <App />
+  </BrowserRouter>
 )
 
 ReactDOM.render(<AppWithRoute />, document.getElementById('root'));
