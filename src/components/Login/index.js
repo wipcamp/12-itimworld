@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { withRouter } from "react-router";
-import { instanceOf } from 'prop-types';
-import { withCookies, Cookies } from 'react-cookie';
+import Cookies from 'universal-cookie';
 
-import { LineCheck } from '../../context/Authentication-Context'
+import UserService from '../../services/UserService'
 import LineService from '../../services/LineService'
 import LineLoginButton from './LineLoginButton'
+
+const cookies = new Cookies()
 
 const Background = styled.div`
   width: 100%;  
@@ -52,19 +52,8 @@ const HeadText = styled.div`
   width: 100%;
   justify-self: center;
 `
-// form line api
-// const nonce & const state send href
-// const state = state // vurify its real data 
-// const nonce && const code send to lineService 
-// const nonce = nonce // vurify its real user
-// reqeust json send lineService 
-
 
 class Login extends Component {
-
-  static propTypes = {
-    cookies: instanceOf(Cookies).isRequired
-  }
 
   state = {
     itimUrl: 'https://master.itim.wip.camp/login',
@@ -77,14 +66,6 @@ class Login extends Component {
 
   componentDidMount() {
     const search = window.location.search.substring(1);
-    const { match, location, history } = this.props;
-    console.log("match1")
-    console.log(match)
-    console.log("location")
-    console.log(location)
-    console.log("history")
-    console.log(history)
-    console.log("End")
     // console.log(search)
     if (search) {
       this.setState({
@@ -92,10 +73,9 @@ class Login extends Component {
       })
       const resFromLineApi = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}', function (key, value) { return key === "" ? value : decodeURIComponent(value) })
       // console.log('get state from response from line api : ' + resFromLineApi.state)
-      const localState = localStorage.getItem('state');
-      if (resFromLineApi.state === localState) {
+      const cookieState = cookies.get('state');
+      if (resFromLineApi.state === cookieState) {
         this.getTokenFromLineApi(resFromLineApi.code)
-        this.changeLineStatus(resFromLineApi.state)
       }
     } else {
       this.setState({
@@ -105,18 +85,14 @@ class Login extends Component {
     }
   }
 
-  changeLineStatus = (newState) => {
-    // console.log(newState)
-    this.setState({
-      newState: newState
-    })
+  postUserService = async (data) => {
+    return await UserService.postUser(data)
   }
 
   async getTokenFromLineApi(code) {
     console.log('success')
-    const localNonce = localStorage.getItem('nonce');
-    const objectResponse = await LineService.lineLogin(code, localNonce)
-    const { cookies } = this.props;
+    const cookieNonce = cookies.get('nonce')
+    const objectResponse = await LineService.lineLogin(code, cookieNonce)
     if (objectResponse == null) {
       window.location.href = this.state.itimUrl
     }
@@ -129,8 +105,30 @@ class Login extends Component {
       id_token: objectResponse.data.id_token,
       userId: objectResponse.data.userId
     }
-    cookies.set('loginObj', tokenObject, { path: '/' });
-    console.log(cookies.get('loginObj') ? cookies.get('loginObj') : 'cookie not found')
+    this.postUserService(tokenObject.userId)
+
+    try {
+      let promise = await this.postUserService(tokenObject.userId)
+      let response = promise.data;
+      console.log(response.data[0].knowWhence);
+
+      if (response.success) {
+        const token = response.data[0].token
+        cookies.set('token', token, { path: '/' })
+        // this.setState({
+        //   oldUser: response.data[0],
+        //   oldData: response.data[0]
+        // });
+        // this.setState({ knowWhence: response.data[0].knowWhence });
+
+      } else {
+        console.log("Error get User request")
+      }
+    } catch (e) {
+      console.log("Error get User promise")
+    }
+    cookies.set('loginObj', tokenObject, { path: '/' })
+    window.location.href = 'https://master.itim.wip.camp/manu'
   }
 
 
@@ -139,22 +137,17 @@ class Login extends Component {
   handleClick = async() => {
     const stateGenerate =await  LineService.getGenerateCode()
     const nonceGenerate =await LineService.getGenerateCode()
-    localStorage.setItem('state',stateGenerate.data);
-    localStorage.setItem('nonce', nonceGenerate.data);
+    // localStorage.setItem('state',stateGenerate.data);
+    // localStorage.setItem('nonce', nonceGenerate.data);
+    cookies.set('state', stateGenerate.data, { path: '/' });
+    cookies.set('nonce', nonceGenerate.data, { path: '/' });
     window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1653703435&redirect_uri=${this.state.itimUrl}&state=${stateGenerate.data}&scope=openid%20email%20profile&nonce=${nonceGenerate.data}`
   }
 
   
   render() {
     return (
-      <LineCheck.Consumer>
-          {
-            ({ loginObj }) => (
               <React.Fragment>
-                {
-                  console.log("Customer"),
-                  console.log(loginObj)
-                }
                 <Background>
                   <WhiteLoginBox>
                     <HeadText>WIP CAMP #12</HeadText>
@@ -164,11 +157,8 @@ class Login extends Component {
                   </WhiteLoginBox>
                 </Background>
               </React.Fragment>
-            )
-          }
-      </LineCheck.Consumer>
     )
   }
 }
 
-export default withCookies(Login)
+export default Login
