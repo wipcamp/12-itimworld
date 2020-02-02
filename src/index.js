@@ -1,17 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
+import { CookiesProvider } from 'react-cookie';
+
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { BrowserRouter } from 'react-router-dom';
+
 import '../node_modules/bootstrap/dist/css/bootstrap.css';
+
 import GlobalStyle from './components/Core/GlobalStyle'
 
 const AppWithRoute = () => (
-  <BrowserRouter>
-    <GlobalStyle />
-    <App />
-  </BrowserRouter>
+  <CookiesProvider>
+    <BrowserRouter>
+      <GlobalStyle />
+      <App />
+    </BrowserRouter>
+  </CookiesProvider>
 )
 
 ReactDOM.render(<AppWithRoute />, document.getElementById('root'));
