@@ -40,13 +40,7 @@ const LineImg = styled.img`
 `
 
 export default class LineLoginButton extends Component {
-  
-  handleClick = () => {
-    // if(this.props.onClick()){
-      // this.props.callbackFromRouter(true)
-      this.props.onClick()
-    // }
-  }
+
   render() {
     return (
       <ButtonContainer>
@@ -54,7 +48,7 @@ export default class LineLoginButton extends Component {
           {/* <button className="btn" onClick={this.handleClick()} > */}
             <Link 
             // to="/menu" 
-            onClick={() => this.handleClick()}   
+            onClick={this.props.onClick}   
             >
               <LineImg src="/img/line_88.png" /> 
               <span>Log in with LINE</span>
