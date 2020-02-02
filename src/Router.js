@@ -20,7 +20,7 @@ import Success from './components/Success'
 import Edit from './components/Edit'
 import General from './components/General'
 
-const { cookies } = this.props;
+// const { cookies } = this.props;
 
 const PrivateRoute = ({ children, ...rest }) => {
   return (
@@ -62,7 +62,7 @@ class Index extends React.Component {
     user: false,
     isAuthenticated: false,
     loginObj:null,
-    name: cookies.get('Auth')
+    // name: cookies.get('Auth')
   }
   
   componentDidMount(){
