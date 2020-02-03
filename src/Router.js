@@ -5,6 +5,7 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
+import styled from 'styled-components'
 
 import { Authentication } from './context/Authentication-Context'
 import Navbar from './components/Core/Navbar'
@@ -17,6 +18,15 @@ import Preview from "./components/Preview"
 import Success from './components/Success'
 import Edit from './components/Edit'
 import General from './components/General'
+
+const Mountain = styled.div`
+  background-image:url('/img/mountain.png');
+  background-repeat: no-repeat;
+  background-position-y: bottom;
+  background-size:contain;
+  min-height: 100vh;
+  width: 100%;
+`
 
 const PrivateRoute = ({ children, ...rest }) => {
   return (
@@ -82,13 +92,19 @@ export default class Index extends React.Component {
           <Navbar />
           <Switch>
             <Route path="/login" >
-              <Login callbackFromRouter={this.myCallback} />
+              <Mountain>
+                <Login callbackFromRouter={this.myCallback} />
+              </Mountain>
             </Route>
             <PrivateRoute path="/profile">
-              <Profile />
+              <Mountain>
+                <Profile />
+              </Mountain>
             </PrivateRoute>
             <PrivateRoute path="/general">
-              <General />
+              <Mountain> 
+                <General />
+              </Mountain>
             </PrivateRoute>
             <PrivateRoute path="/major">
               <Major />
@@ -100,7 +116,9 @@ export default class Index extends React.Component {
               {/* <Menu /> */}
             </PrivateRoute>
             <PrivateRoute path="/questions">
-              <Questions />
+              <Mountain>
+                <Questions />
+              </Mountain>
             </PrivateRoute>
             <PrivateRoute path="/preview">
               <Preview />
