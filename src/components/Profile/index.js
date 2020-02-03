@@ -211,8 +211,8 @@ export default class Index extends Component {
 
   render() {
     return (
-        <div className ="container">
-          <div className="card p-5">
+        <div className ="container pb-5">
+          <div className="card p-5" style={{boxShadow: `0px 4px 4px rgba(0, 0, 0, 0.25)`,borderRadius: `4px`,opacity:`0.9`}}>
             <section>
             <h1 className="text-center">ข้อมูลส่วนตัว</h1>
             <h3 className="col-12">ข้อมูลทั่วไป</h3>
