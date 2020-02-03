@@ -38,9 +38,9 @@ export default class Index extends Component {
           dateEnd.isAfter(dateNow)
           ?
             <ThisIsBackground>
-              <Mountain>
-              <Routing />
-              </Mountain>
+              {/* <Mountain> */}
+                <Routing />
+              {/* </Mountain> */}
             </ThisIsBackground>
           :
           'ปิดรับสมัครแล้วจ้า'
