@@ -14,15 +14,6 @@ const ThisIsBackground = styled.div`
   background: linear-gradient(180deg, #0F0C29 0%, rgba(2, 19, 91, 0.552083) 75%, #FFFFFF 100%);
   z-index:-2;
 `
-
-const Mountain = styled.div`
-  background-image:url('/img/mountain.png');
-  background-repeat: no-repeat;
-  background-position-y: bottom;
-  background-size:contain;
-  min-height: 100vh;
-  width: 100%;
-`
 export default class Index extends Component {
   componentDidUpdate() {
     // if (fakeAuth.isAuthenticated) {
@@ -38,9 +29,7 @@ export default class Index extends Component {
           dateEnd.isAfter(dateNow)
           ?
             <ThisIsBackground>
-              {/* <Mountain> */}
-                <Routing />
-              {/* </Mountain> */}
+              <Routing />
             </ThisIsBackground>
           :
           'ปิดรับสมัครแล้วจ้า'
