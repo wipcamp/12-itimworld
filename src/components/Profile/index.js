@@ -10,6 +10,7 @@ import { ButtonStyle } from '../Core/ButtonStyle'
 import SelectField from '../Core/SelectField'
 import { MinHeightRow } from '../Core/FieldStyle'
 import { Redirect } from 'react-router-dom'
+import ButtonRoute from './../Core/ButtonRoute'
 
 const userId = 120001;
 
@@ -553,13 +554,13 @@ export default class Index extends Component {
               <NotDisplayButton ref={this.setProfileFormRef}> asd</NotDisplayButton>
             </div>
           </form>
-          <div className="d-flex flex-row-reverse">
-            <ButtonStyle
-              className="align-items-center mt-5 mb-5" 
-              onClick={(e) => this.clickSubmit(e)}
-            >
-              ยืนยัน
-            </ButtonStyle>
+          <div className="d-flex justify-content-between mt-3">
+            <ButtonRoute 
+              displayButtonRight="none"
+              linkBack="menu"
+              className=""
+            />
+            <ButtonStyle onClick={(e) => this.clickSubmit(e)}>ยืนยัน</ButtonStyle>
           </div>
         </ContainerDiv>
     )
