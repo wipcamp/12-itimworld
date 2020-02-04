@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Table } from 'reactstrap';
 import { Button } from 'reactstrap';
 import styled from 'styled-components'
-import {Subtitle,Small} from '../Core/Text'
+import {Subtitle,SmallText} from '../Core/Text'
 import {ButtonStyle} from '../Core/ButtonStyle'
 import fonts from '../../config/fonts'
 
@@ -26,7 +26,7 @@ height:70vh;
 const ButttonText = styled.div`
 color: white;
 `
-const SmallConText = styled(Small)`
+const SmallConText = styled(SmallText)`
 height: 100%;
 `
 
