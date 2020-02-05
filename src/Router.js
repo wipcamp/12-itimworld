@@ -56,7 +56,8 @@ export default class Index extends React.Component {
   
   componentDidMount(){
     if (cookies.get('token') !== undefined && cookies.get('token') !== null && !this.state.isAuthenticated ){
-      console.log('changeAuth')
+      console.log('token')
+      console.log(cookies.get('token'))
       this.setState({
         isAuthenticated: true
       })

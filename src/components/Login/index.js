@@ -75,6 +75,7 @@ class Login extends Component {
       // console.log('get state from response from line api : ' + resFromLineApi.state)
       const cookieState = cookies.get('state');
       if (resFromLineApi.state === cookieState) {
+        console.log("resapi")
         this.getTokenFromLineApi(resFromLineApi.code)
       }
     } else {
@@ -86,6 +87,7 @@ class Login extends Component {
   }
 
   postUserService = async (data) => {
+    console.log("post")
     return await UserService.postUser(data)
   }
 
@@ -113,6 +115,7 @@ class Login extends Component {
       console.log(response.data[0].knowWhence);
 
       if (response.success) {
+        console.log("success")
         const token = response.data[0].token
         cookies.set('token', token, { path: '/' })
         // this.setState({
