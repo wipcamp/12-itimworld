@@ -49,11 +49,11 @@ export default class Index extends Component {
     ],
     genderData: [
       {
-        value:"male",
+        value:"ชาย",
         text:"ชาย"
       },
       {
-        value:"female",
+        value:"หญิง",
         text:"หญิง"
       }
     ],
@@ -303,6 +303,13 @@ export default class Index extends Component {
   }
 
   clickSubmit = (e) => {
+    
+    this.validateCheckboxField();
+    
+    profileFormRef.click();
+  }
+
+  validateCheckboxField= () => {
     let countNotSelect = 0;
 
     Object.keys(this.state.data.knowWhence).forEach((keyName)=>{
@@ -322,8 +329,6 @@ export default class Index extends Component {
     }else{
       checkBoxRef.required = true;
     }
-    
-    profileFormRef.click();
   }
 
   render() {
@@ -360,6 +365,7 @@ export default class Index extends Component {
                   dataOptions={this.state.genderData}
                   onClickFunc={this.handleChange}
                   selectId="gender"
+                  selectName="gender"
                   labelName="เพศสภาพ"
                 />
                 <label className="col-12 col-md-6 form-group" htmlFor="birthDate">
