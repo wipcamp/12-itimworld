@@ -94,7 +94,7 @@ class Login extends Component {
   async getTokenFromLineApi(code) {
     console.log('success')
     const cookieNonce = cookies.get('nonce')
-    const objectResponse = await LineService.lineLogin(code, cookieNonce)
+    const objectResponse = await LineService.lineLogin(code, cookieNonce, this.state.itimUrl)
     if (objectResponse == null) {
       window.location.href = this.state.itimUrl
     }
