@@ -9,7 +9,7 @@ const SelectField = (props) => {
                 <div className={props.leftSide}>{props.labelName}</div>
                 <div className={props.rightSide}>
                   <div className="form-group">
-                    <select className="form-control" name={props.selectName} id={props.selectId} onChange={(e) => props.onClickFunc(e)} required>
+                    <select className="form-control" name={props.selectName} id={props.selectId} value={props.selectValue} onChange={(e) => props.onClickFunc(e)} required>
                       <option value="">เลือก</option>
                       {props.dataOptions.map((data,i) => <option value={data.value} key={i}> {data.text} </option>)}
                     </select>
@@ -23,6 +23,7 @@ const SelectField = (props) => {
 SelectField.propTypes = {
     selectId: PropTypes.string.isRequired,
     selectName: PropTypes.string.isRequired,
+    selectValue: PropTypes.string,
     labelName: PropTypes.string.isRequired,
     labelClassName: PropTypes.string,
     leftSide: PropTypes.string,
