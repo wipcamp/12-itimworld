@@ -4,16 +4,24 @@ import styled from 'styled-components'
 import LineService from '../../services/LineService'
 import LineLoginButton from './LineLoginButton'
 
-const Background = styled.div`
+const UpperBackground = styled.div`
+  min-height: 40vh;
   width: 100%;  
-  min-height: 100vh;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   padding: 15px;
-  /* background: #9053c7;
-  background: linear-gradient(-135deg, #ffce00, #9053c7); */
+`
+
+const LowerBackground = styled.div`
+  min-height: 40vh;
+  width: 100%;  
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: unset;
+  padding: 15px;
 `
 const WhiteLoginBox = styled.div`
   width: 960px;
@@ -31,7 +39,7 @@ const WhiteLoginBox = styled.div`
 
   @media (max-width: 992px) {
     padding: 77px 90px 33px 85px;
-  font-size: 20px;
+    font-size: 20px;
   }
 
   @media (max-width: 768px) {
@@ -47,6 +55,22 @@ const WhiteLoginBox = styled.div`
 const HeadText = styled.div`
   width: 100%;
   justify-self: center;
+`
+
+const Logo = styled.img`
+  width: 40%;
+
+  @media (max-width: 992px) {
+    width:50%;
+  }
+
+  @media (max-width: 768px) {
+    width:60%;
+  }
+
+  @media (max-width: 576px) {
+    width:90%;
+  }
 `
 // form line api
 // const nonce & const state send href
@@ -114,12 +138,14 @@ export default class LoginBox extends Component {
   
   render() {
     return (
-      <Background>
-        <WhiteLoginBox>
-          <HeadText>WIP CAMP #12</HeadText>
+      <div>
+        <UpperBackground>
+          <Logo src="/img/Logo.png"/>
+        </UpperBackground>
+        <LowerBackground className="mt-3">
           <LineLoginButton onClick={() => this.handleClick()} callbackFromRouter={this.props.callbackFromRouter} />
-        </WhiteLoginBox>
-      </Background>
+        </LowerBackground>
+      </div>
     )
   }
 }

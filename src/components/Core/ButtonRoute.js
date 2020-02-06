@@ -31,10 +31,12 @@ class ButtonRoute extends React.Component{
         >
           <ButtonStyle> {this.props.buttonLeft} </ButtonStyle>
         </ButtonLeft >
+        
         <ButtonRight 
           to={this.props.linkNext}
           displayButtonRight={this.props.displayButtonRight}
-          onClick={()=>this.handleGoToNextPage()}>
+          onClick={()=>this.handleGoToNextPage()}
+        >
             <ButtonStyle> {this.props.buttonRight}</ButtonStyle>
         </ButtonRight>
       </div>

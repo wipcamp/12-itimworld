@@ -10,7 +10,9 @@ const dateEnd = dayjs('2020-03-13T00:00')
 
 const ThisIsBackground = styled.div`
   min-height: 100vh;
+  height:100%;
   background: linear-gradient(180deg, #0F0C29 0%, rgba(2, 19, 91, 0.552083) 75%, #FFFFFF 100%);
+  z-index:-2;
 `
 export default class Index extends Component {
   componentDidUpdate() {

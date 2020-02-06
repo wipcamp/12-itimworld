@@ -115,7 +115,7 @@ export default class Index extends Component {
 
     render() {
       return (
-            <div className="container">
+            <div className="container bg-white"><br/>
                 <Header className="col-12 mb-5 mt-5">This is General Question page</Header>
                 <div>
                         {this.state.questions.map((data,i) => {

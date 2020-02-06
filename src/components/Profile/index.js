@@ -1,20 +1,33 @@
 import React, { Component } from 'react'
-import {
-  Radio
-} from 'antd';
-import 'antd/dist/antd.css';
-
 import AddressField from '../Core/AddressField'
 import TelNumberField from '../Core/TelNumberField'
 import TextField from '../Core/TextField'
-import ButtonRoute from '../Core/ButtonRoute'
 import UserService from '../../services/UserService'
 import Field from '../Core/Field'
-import AlertModal from './AlertModal'
-
-const { apiUrl } = window['runConfig'];
+import styled from 'styled-components'
+import {SmallText} from '../Core/Text'
+import { ButtonStyle } from '../Core/ButtonStyle'
+import SelectField from '../Core/SelectField'
+import { MinHeightRow } from '../Core/FieldStyle'
+import { Redirect } from 'react-router-dom'
+import ButtonRoute from './../Core/ButtonRoute'
 
 const userId = 120001;
+
+const SectionHeader = styled.h3`
+  margin-top:30px;
+  margin-bottom:20px;
+`
+const ContainerDiv = styled.div`
+  max-width:1200px;
+`
+
+const NotDisplayButton = styled.button`
+  display:none;
+`
+
+let checkBoxRef = null;
+let profileFormRef = null;
 export default class Index extends Component {
   state = {
     profileDataFirstSection: [
@@ -34,7 +47,16 @@ export default class Index extends Component {
         labelInput: 'ชื่อเล่น', placeHolder: '', name: 'nickName'
       }
     ],
-
+    genderData: [
+      {
+        value:"ชาย",
+        text:"ชาย"
+      },
+      {
+        value:"หญิง",
+        text:"หญิง"
+      }
+    ],
     profileDataSecondSection: [
       {
         labelInput: 'รหัสบัตรประชาชน', placeHolder: '', name: 'citizenId'
@@ -51,8 +73,62 @@ export default class Index extends Component {
         labelInput: 'ยาที่แพ้', placeHolder: 'หากไม่มีให้ใส่ -', name: 'congenitalDrug'
       }
     ],
-    religionData: ['เลือก', 'พุทธ', 'คริสต์', 'อิสลาม', 'ฮินดู', 'ซิกส์','ไม่มี'],
-    booldGroupData: ['เลือก', 'A', 'B', 'O', 'AB'],
+    religionData: [
+      {
+        value:"พุทธ",
+        text:"พุทธ"
+      }, 
+      {
+        value:'คริสต์',
+        text:'คริสต์'
+      },
+      {
+        value:'อิสลาม',
+        text:'อิสลาม'
+      },
+      {
+        value:'ฮินดู',
+        text:'ฮินดู'
+      }, 
+      {
+        value:'ซิกส์',
+        text:'ซิกส์'
+      },
+      {
+        value:'ไม่มี',
+        text:'ไม่มี'
+      }],
+    booldGroupData: [
+      {
+        value:'A',
+        text:'A'
+      },
+      {
+        value:'B',
+        text:'B'
+      },
+      {
+        value:'O',
+        text:'O'
+      },
+      {
+        value:'AB',
+        text:'AB'
+      }],
+    schoolLevelData:[
+      {
+        value:'ม.4',
+        text:'ม.3 ขึ้น ม.4'
+      },
+      {
+        value:'ม.5',
+        text:'ม.4 ขึ้น ม.5'
+      },
+      {
+        value:'ม.6',
+        text:'ม.5 ขึ้น ม.6'
+      }
+    ],
     data: {
       firstName: null,
       firstNameEn: null,
@@ -80,46 +156,35 @@ export default class Index extends Component {
         gpax: null
       },
       telEmergency: null,
-      province: null
+      province: null,
+      knowWhence: {
+        facebook:false,
+        dekd:false,
+        sit:false,
+        camphub:false,
+        etc:""
+      }
     },
     errorMsg: [],
-    etcInput:false
+    etcInput:false,
+    redirect:false
   }
 
   
   async componentDidMount() {
-    this.validateField(this.state.data);
+    console.log(checkBoxRef);
   }
 
   componentDidUpdate() {
     console.log(this.state.data)
   }
-
-  getUserService = async () => {
-    let data = await UserService.getUser(userId);
-    // console.log(data)
-  }
-
-  validateField = (data) => {
-    let requiredField = [];
-    const nonRequireKey = [
-      "allergicFood",
-      "congenitalDisease",
-      "congenitalDrug"
-    ];
-    Object.keys(data).map((keyData)=>{
-      if(!nonRequireKey.includes(keyData,0)){
-        if(data[keyData] == null){
-          requiredField.push(keyData)
-        }
-      }
-    })
-    this.setState({errorMsg:requiredField})
-    console.log("done validate");
-  }
-  putUser = async (data) => {
-    await UserService.putUser(userId, data).then(() => {UserService.postStatus(userId,{"status":"register"})});
-
+  
+  putUser = async (data,event) => {
+    event.preventDefault();
+    await UserService.putUser(userId, data)
+    .then(() => {UserService.postStatus(userId,{"status":"register"})})
+    .then(() => this.setState({redirect:true}))
+    
   }
   
   onSelect = (fullAddress) => {
@@ -169,6 +234,30 @@ export default class Index extends Component {
       })
       )
     }
+    else if (name === "etc"){
+      this.setState((prevState) => ({
+        data: {
+          ...prevState.data,
+          knowWhence: {
+            ...prevState.data.knowWhence,
+            etc: value
+          }
+        }
+      }))
+    }
+    else if (name === "knowWhence") {
+      let checked = event.target.checked;
+      
+      this.setState((prevState) => ({
+        data: {
+          ...prevState.data,
+          knowWhence: {
+            ...prevState.data.knowWhence,
+            [value]: checked
+          }
+        }
+      }))
+    }
     else{
     this.setState((prevState) => ({
       data: {
@@ -180,273 +269,301 @@ export default class Index extends Component {
     }
   }
 
-  displayNextButton = () => {
-    if(this.state.errorMsg.length === 0 || this.state.errorMsg == null){
-      return <ButtonRoute displayButtonLeft="none" linkNext="/general" onClick={(e) => this.putUser(this.state.data)} />
-    }else{
-      return <AlertModal errorMsg={this.state.errorMsg} />
-    }
-  }
-
   renderInputButton = ()=>{
     if(this.state.etcInput){
-      return <input class="form-control ml-2" type="text" name="knowWhence" onChange={e => this.handleChange(e)} />
+      return <input class="form-control ml-2" type="text" name="etc" onChange={e => this.handleChange(e)} />
     }
   }
 
   setEtcInput = (e,boolean) => {
     this.setState({etcInput:boolean})
-    if(boolean){
+    if(!boolean){
       this.setState((prevState)=>({
         data:{
           ...prevState.data,
-          knowWhence:null
+          knowWhence:{
+            ...prevState.data.knowWhence,
+            etc:""
+          }
         }
       }))
-    }else{
-      this.handleChange(e);
     }
+  }
+
+  setEtcBoxRef = e => {
+    checkBoxRef = e;
+  }
+
+  clickBox = () => {
+    checkBoxRef.click()
+  }
+
+  setProfileFormRef = e => {
+    profileFormRef = e;
+  }
+
+  clickSubmit = (e) => {
     
+    this.validateCheckboxField();
+    
+    profileFormRef.click();
+  }
+
+  validateCheckboxField= () => {
+    let countNotSelect = 0;
+
+    Object.keys(this.state.data.knowWhence).forEach((keyName)=>{
+      if(keyName !== "etc"){
+        if(!this.state.data.knowWhence[keyName]){
+          countNotSelect += 1;
+        }
+      }else{
+        if(this.state.data.knowWhence.etc === ""){
+          countNotSelect += 1;
+        }
+      }
+    })
+    
+    if(countNotSelect !== 5){
+      checkBoxRef.required = false;
+    }else{
+      checkBoxRef.required = true;
+    }
   }
 
   render() {
+    const { redirect } = this.state;
+
+    if (redirect) {
+      return <Redirect to='/menu'/>;
+    }
     return (
-        <div className ="container">
-          <div className="card p-5">
-            <section>
+        <ContainerDiv className ="container-fluid justify-content-center">
+          <form onSubmit={e=>{this.putUser(this.state.data,e)}}>
+          <div className="card p-5" style={{boxShadow: `0px 4px 4px rgba(0, 0, 0, 0.25)`,borderRadius: `4px`,opacity:`0.9`}}>
             <h1 className="text-center">ข้อมูลส่วนตัว</h1>
-            <h3 className="col-12">ข้อมูลทั่วไป</h3>
-            {
-              this.state.profileDataFirstSection.map((data, i) => (
-                <TextField
-                  key={i}
+              <section>
+                <SectionHeader className="col-12">ข้อมูลทั่วไป</SectionHeader>
+                {
+                  this.state.profileDataFirstSection.map((data, i) => (
+                    <TextField
+                      key={i}
+                      className="col-12 col-md-6 form-group"
+                      leftSide="col-12 col-md-4 col-form-label text-md-right"
+                      rightSide="col-12 col-md-8"
+                      labelInput={data.labelInput}
+                      placeHolder={data.placeHolder}
+                      name={data.name}
+                      onChange={(e) => this.handleChange(e)}
+                      additional="form-text text-muted"
+                      additionalText={data.additionalText}
+                      required
+                    />
+                  ))
+                }
+                <SelectField 
+                  dataOptions={this.state.genderData}
+                  onClickFunc={this.handleChange}
+                  selectId="gender"
+                  selectName="gender"
+                  labelName="เพศสภาพ"
+                />
+                <label className="col-12 col-md-6 form-group" htmlFor="birthDate">
+                  <div className="row">
+                    <div className="col-12 col-md-4 col-form-label text-md-right">วันเกิด</div>
+                    <div className="col-12 col-md-8">
+                      <input
+                        className="form-control" 
+                        type="date"
+                        name="birthDate"
+                        id="birthDate"
+                        min="1995-01-01"
+                        max="20010-12-31"
+                        value={this.state.birthDate}
+                        onChange={(e) => this.handleChange(e)}
+                        required
+                      />
+                    </div>
+                  </div>
+                </label>
+                <SelectField 
+                  dataOptions={this.state.religionData}
+                  onClickFunc={this.handleChange}
+                  selectId="religion"
+                  selectName="religion"
+                  labelName="ศาสนา"
+                />
+                {
+                  this.state.profileDataSecondSection.map((data, i) => (
+                    <TextField
+                      key={i}
+                      className="col-12 col-md-6 form-group"
+                      leftSide="col-12 col-md-4 col-form-label text-md-right"
+                      rightSide="col-12 col-md-8"
+                      labelInput={data.labelInput}
+                      placeHolder={data.placeHolder}
+                      name={data.name}
+                      onChange={(e) => this.handleChange(e)}
+                      additional="form-text text-muted"
+                      additionalText={data.additionalText}
+                      required
+                    />
+                  ))
+                }
+                <SelectField 
+                  dataOptions={this.state.booldGroupData}
+                  onClickFunc={this.handleChange}
+                  selectId="bloodGroup"
+                  selectName="bloodGroup"
+                  labelName="กรุ๊ปเลือด"
+                />
+                {
+                  this.state.congenitalData.map((data, i) => (
+                    <TextField
+                      key={i}
+                      className="col-12 col-md-6 form-group"
+                      leftSide="col-12 col-md-4 col-form-label text-md-right"
+                      rightSide="col-12 col-md-8"
+                      type="text"
+                      labelInput={data.labelInput}
+                      placeHolder={data.placeHolder}
+                      name={data.name}
+                      required=""
+                      onChange={(e) => this.handleChange(e)}
+                    />
+                  ))
+                }
+              </section>
+
+              <section>
+                <SectionHeader className="col-12">ข้อมูลการติดต่อ</SectionHeader>
+
+                <AddressField
                   className="col-12 col-md-6 form-group"
                   leftSide="col-12 col-md-4 col-form-label text-md-right"
                   rightSide="col-12 col-md-8"
-                  labelInput={data.labelInput}
-                  placeHolder={data.placeHolder}
-                  name={data.name}
+                  labelInput="จังหวัด"
+                  address="province"
+                  id="province"
+                  name="provice"
+                  value={this.state.data.province}
                   onChange={(e) => this.handleChange(e)}
-                  additional="form-text text-muted"
-                  additionalText={data.additionalText}
-                  required
+                  onSelect={(e) => this.onSelect(e)}
+                  placeholder="เลือก"
                 />
-              ))
-            }
 
-            <label className="col-12 col-md-6 form-group" htmlFor="gender">
-              <div className="row">
-                <div className="col-12 col-md-4 col-form-label text-md-right">เพศสภาพ</div>
-                <div className="col-12 col-md-8">
-                  <Radio.Group onChange={(e) => this.handleChange(e)} name="gender">
-                      <Radio.Button value="ชาย">ชาย</Radio.Button>
-                      <Radio.Button value="หญิง">หญิง</Radio.Button>
-                  </Radio.Group>
-                </div>
-              </div>
-            </label>
-            <label className="col-12 col-md-6 form-group" htmlFor="birthDate">
-              <div className="row">
-                <div className="col-12 col-md-4 col-form-label text-md-right">วันเกิด</div>
-                <div className="col-12 col-md-8">
-                  <input
-                    className="form-control" 
-                    type="date"
-                    name="birthDate"
-                    id="birthDate"
-                    min="1995-01-01"
-                    max="20010-12-31"
-                    value={this.state.birthDate}
-                    onChange={(e) => this.handleChange(e)}
-                    required
-                  />
-                </div>
-              </div>
-            </label>
-
-            <label className="col-12 col-md-6 form-group" htmlFor="religion">
-              <div className="row">
-                <div className="col-12 col-md-4 col-form-label text-md-right">ศาสนา</div>
-                <div className="col-12 col-md-8">
-                  <select className="form-control" name="religion" id="religion" onChange={(e) => this.handleChange(e)} required>
-                  {this.state.religionData.map((data, i) => <option value={data} key={i}>{data}</option>)}
-                  </select>
-                </div>
-              </div>
-            </label>
-
-            {
-              this.state.profileDataSecondSection.map((data, i) => (
-                <TextField
-                  key={i}
+                <TelNumberField labelInput="เบอร์โทรศัพท์" name="telNo" onChange={(e) => this.handleChange(e)} required/>  
+                <Field
                   className="col-12 col-md-6 form-group"
-                  leftSide="col-12 col-md-4 col-form-label text-md-right"
-                  rightSide="col-12 col-md-8"
-                  labelInput={data.labelInput}
-                  placeHolder={data.placeHolder}
-                  name={data.name}
-                  onChange={(e) => this.handleChange(e)}
-                  additional="form-text text-muted"
-                  additionalText={data.additionalText}
-                  required
-                />
-              ))
-            }
-            
-            <label className="col-12 col-md-6 form-group" htmlFor="bloodGroup">
-              <div className="row">
-                <div className="col-12 col-md-4 col-form-label text-md-right">กรุ๊ปเลือด</div>
-                <div className="col-12 col-md-8">
-                  <select className="form-control" name="bloodGroup" id="bloodGroup" onChange={(e) => this.handleChange(e)} required>
-                  {this.state.booldGroupData.map((data, i) => <option value={data} key={i}>{data}</option>)}
-                  </select>
-                </div>
-              </div>
-            </label>
-
-            
-            {
-              this.state.congenitalData.map((data, i) => (
+                  name="email"
+                  type="email"
+                  labelInput="E-Mail"
+                  placeHolder=""
+                  onChange={(e) => this.handleChange(e)} 
+                  required="required" />
+                <TelNumberField labelInput="เบอร์โทรผู้ปกครอง" name="parentTel" onChange={(e) => this.handleChange(e)} required/>
                 <TextField
-                  key={i}
                   className="col-12 col-md-6 form-group"
                   leftSide="col-12 col-md-4 col-form-label text-md-right"
                   rightSide="col-12 col-md-8"
                   type="text"
-                  labelInput={data.labelInput}
-                  placeHolder={data.placeHolder}
-                  name={data.name}
+                  labelInput="ผู้ปกครองเกี่ยวข้องเป็น"
+                  placeHolder=""
+                  name="parentRelation"
                   onChange={(e) => this.handleChange(e)}
+                  required
                 />
-              ))
-            }
-            </section>
-
-            <section>
-            <h3 className="col-12">ข้อมูลการติดต่อ</h3>
-
-            <AddressField
-              className="col-12 col-md-6 form-group"
-              leftSide="col-12 col-md-4 col-form-label text-md-right"
-              rightSide="col-12 col-md-8"
-              labelInput="จังหวัด"
-              address="province"
-              id="province"
-              name="provice"
-              value={this.state.data.province}
-              onChange={(e) => this.handleChange(e)}
-              onSelect={(e) => this.onSelect(e)}
-              placeholder="เลือก"
-              required
-            />
-
-            <TelNumberField labelInput="เบอร์โทรศัพท์" name="telNo" onChange={(e) => this.handleChange(e)} required/>  
-            <Field
-              className="col-12 col-md-6 form-group"
-              name="email"
-              type="email"
-              labelInput="E-Mail"
-              placeHolder=""
-              onChange={(e) => this.handleChange(e)} 
-              required="required" />
-            <TelNumberField labelInput="เบอร์โทรผู้ปกครอง" name="parentTel" onChange={(e) => this.handleChange(e)} required/>
-            <TextField
-              className="col-12 col-md-6 form-group"
-              leftSide="col-12 col-md-4 col-form-label text-md-right"
-              rightSide="col-12 col-md-8"
-              type="text"
-              labelInput="ผู้ปกครองเกี่ยวข้องเป็น"
-              placeHolder=""
-              name="parentRelation"
-              onChange={(e) => this.handleChange(e)}
-              required
-            />
-            <TelNumberField labelInput="เบอร์โทรฉุกเฉิน" name="telEmergency" onChange={(e) => this.handleChange(e)} required/>
-            </section>
-            <section>
-            <h3 className="col-12">ข้อมูลการศึกษา</h3>
-            <TextField
-              className="col-12 col-md-6 form-group"
-              leftSide="col-12 col-md-4 col-form-label text-md-right"
-              rightSide="col-12 col-md-8"
-              labelInput="โรงเรียน"
-              placeHolder="เลือก"
-              name="schoolName"
-              onChange={(e) => this.handleChange(e)}
-              required
-              />
-            <label className="col-12 col-md-6 form-group" htmlFor="level">
-              <div className="row">
-                <div className="col-12 col-md-4 col-form-label text-md-right">ระดับชั้น</div>
-                <div className="col-12 col-md-8">
-                  <select className="form-control" name="schoolLevel" id="level" onChange={(e) => this.handleChange(e)}  required>
-                    <option value="">เลือก</option>
-                    <option value="ม.4">ม.3 ขึ้น ม.4</option>
-                    <option value="ม.5">ม.4 ขึ้น ม.5</option>
-                    <option value="ม.6">ม.5 ขึ้น ม.6</option>
-                  </select>
+                <TelNumberField labelInput="เบอร์โทรฉุกเฉิน" name="telEmergency" onChange={(e) => this.handleChange(e)} required/>
+              </section>
+              <section>
+                <SectionHeader className="col-12">ข้อมูลการศึกษา</SectionHeader>
+                <TextField
+                  className="col-12 col-md-6 form-group"
+                  leftSide="col-12 col-md-4 col-form-label text-md-right"
+                  rightSide="col-12 col-md-8"
+                  labelInput="โรงเรียน"
+                  placeHolder="เลือก"
+                  name="schoolName"
+                  onChange={(e) => this.handleChange(e)}
+                  required
+                  />
+                <SelectField 
+                  dataOptions={this.state.schoolLevelData}
+                  onClickFunc={this.handleChange}
+                  selectId="level"
+                  selectName="schoolLevel"
+                  labelName="ระดับชั้น"
+                />
+                <TextField
+                  className="col-12 col-md-6 form-group"
+                  leftSide="col-12 col-md-4 col-form-label text-md-right"
+                  rightSide="col-12 col-md-8"
+                  labelInput="สายการเรียน"
+                  placeHolder="เลือก"
+                  name="schoolMajor"
+                  onChange={(e) => this.handleChange(e)}
+                  required
+                  />
+                <Field
+                  className="col-12 col-md-6 form-group"
+                  name="schoolGpax"
+                  type="number"
+                  labelInput="เกรดเฉลี่ย"
+                  placeHolder=""
+                  step="0.01"
+                  min="1.00"
+                  max="4.00"
+                  onChange={(e) => this.handleChange(e)} 
+                  required="required" />
+              </section>
+              <section>
+                <SectionHeader className="col-12">ช่องทางที่รู้จักค่าย</SectionHeader>
+                <MinHeightRow className="row form-group checkbox-group required">
+                  <div className="col-1"></div>
+                  <div className="form-check form-check-inline col-2">
+                    <input class="form-check-input" type="checkbox" name="knowWhence" id="knowWhenceFacebook"  value="facebook" onClick={e=>this.handleChange(e)}/>
+                    <label class="form-check-label" for="knowWhenceFacebook">Facebook</label>
+                  </div>
+                  <div class="form-check form-check-inline col-2">
+                    <input class="form-check-input" type="checkbox" name="knowWhence" id="knowWhenceCamphub" value="camphub" onClick={e=>this.handleChange(e)}/>
+                    <label class="form-check-label" for="knowWhenceCamphub">Camphub</label>
+                  </div>
+                  <div class="form-check form-check-inline col-2">
+                    <input class="form-check-input" type="checkbox" name="knowWhence" id="knowWhenceDek-D" value="dekd" onClick={e=>this.handleChange(e)}/>
+                    <label class="form-check-label" for="knowWhenceDek-D">Dek-D</label>
+                  </div>
+                  <div class="form-check form-check-inline col-2">
+                    <input class="form-check-input" type="checkbox" name="knowWhence" id="knowWhenceSIT" value="sit" onClick={e=>this.handleChange(e)}/>
+                    <label class="form-check-label" for="knowWhenceSIT">SIT</label>
+                  </div>
+                  <div class="form-check form-check-inline col-2">
+                    <input class="form-check-input" type="checkbox" name="knowWhence" id="knowWhenceEtc" value={null} onClick={e=>this.setEtcInput(e,!this.state.etcInput)} ref={this.setEtcBoxRef} required/>
+                    <label class="form-check-label" for="knowWhenceEtc">อื่นๆ</label>
+                    {this.renderInputButton()}
+                  </div>
+                </MinHeightRow>
+                <div className="row">
+                  <div className="col-1"></div>
+                  <SmallText class="col pt-2">น้องสามารถเลือกได้มากกว่าหนึ่งอย่าง</SmallText>
                 </div>
-              </div>
-            </label>
-            <TextField
-              className="col-12 col-md-6 form-group"
-              leftSide="col-12 col-md-4 col-form-label text-md-right"
-              rightSide="col-12 col-md-8"
-              labelInput="สายการเรียน"
-              placeHolder="เลือก"
-              name="schoolMajor"
-              onChange={(e) => this.handleChange(e)}
-              required
-              />
-            <Field
-              className="col-12 col-md-6 form-group"
-              name="schoolGpax"
-              type="number"
-              labelInput="เกรดเฉลี่ย"
-              placeHolder=""
-              step="0.01"
-              min="1.00"
-              max="4.00"
-              onChange={(e) => this.handleChange(e)} 
-              required="required" />
-            </section>
-            <h3 className="col-12">ผลงานและทักษะทางด้านคอมพิวเตอร์</h3>
-            <textarea 
-            class="form-control" 
-            placeholder="ผลงาน" 
-            rows="4" 
-            name="computerWorks"
-            onChange={(e) => this.handleChange(e)} 
-            ></textarea>
-
-            <h3 className="col-12 mt-5">ช่องทางที่รู้จักค่าย</h3>
-            <div className="row">
-              <div className="col-1"></div>
-              <div class="form-check form-check-inline col">
-                <input class="form-check-input" type="radio" name="knowWhence"  value="Facebook" onClick={e=>this.setEtcInput(e,false)} />
-                <label class="form-check-label" for="inlineRadio1">Facebook</label>
-              </div>
-              <div class="form-check form-check-inline col">
-                <input class="form-check-input" type="radio" name="knowWhence"  value="Camphub" onClick={e=>this.setEtcInput(e,false)} />
-                <label class="form-check-label" for="inlineRadio2">Camphub</label>
-              </div>
-              <div class="form-check form-check-inline col">
-                <input class="form-check-input" type="radio" name="knowWhence"  value="Dek-D" onClick={e=>this.setEtcInput(e,false)} />
-                <label class="form-check-label" for="inlineRadio2">Dek-D</label>
-              </div>
-              <div class="form-check form-check-inline col">
-                <input class="form-check-input" type="radio" name="knowWhence" value="SIT" onClick={e=>this.setEtcInput(e,false)} />
-                <label class="form-check-label" for="inlineRadio2">SIT</label>
-              </div>
-              <div class="form-check form-check-inline col">
-                <input class="form-check-input" type="radio" name="knowWhence" value={null} onClick={e=>this.setEtcInput(e,true)}/>
-                <label class="form-check-label" for="inlineRadio2">อื่นๆ</label>
-                {this.renderInputButton()}
-              </div>
+              </section>
+              <section>
+                <SectionHeader className="col-12">ผลงานและทักษะทางด้านคอมพิวเตอร์</SectionHeader>
+                <textarea 
+                class="form-control" 
+                placeholder="ผลงาน" 
+                rows="4" 
+                name="computerWorks"
+                onChange={(e) => this.handleChange(e)} 
+                ></textarea>
+              </section>
+              <NotDisplayButton ref={this.setProfileFormRef}> asd</NotDisplayButton>
             </div>
-            <ButtonRoute className="justify-content-between d-flex mt-5" linkBack="/menu" linkNext="/menu" onClick={(e) => this.putUser(this.state.data)} />
+          </form>
+          <div className="d-flex justify-content-end mt-3">
+            <ButtonStyle onClick={(e) => this.clickSubmit(e)}>ยืนยัน</ButtonStyle>
           </div>
-        </div>
+        </ContainerDiv>
     )
   }
 }

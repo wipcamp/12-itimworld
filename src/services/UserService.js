@@ -22,9 +22,14 @@ const userService = {
     return res
   },
   postStatus: async (id,data) =>{
-    let res = await apiUserService.post(`/user/${id}/status`,data);
+    let res = await apiUserService.post(`/user/${id}/status`,data)
+    return res
+  },
+  uploadDocument: async (id,data,header = {}) => {
+    let res = await apiUserService.post(`/user/${id}/uploadDocument`,data,header)
     return res
   }
+
 }
 
 export default userService

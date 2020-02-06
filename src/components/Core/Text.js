@@ -19,3 +19,16 @@ export const Paragrph = styled.div`
   text-align: center;
   margin-bottom: 3em;
 `
+export const Subtitle = styled.div`
+  font-style: normal!important;
+  font-weight: bold!important;
+  font-size: ${fonts.Subtitle};
+  line-height: 23px;
+`
+
+export const SmallText = styled.div`
+  font-style: normal;
+  font-weight: 300;
+  font-size: ${fonts.Small};
+  line-height: 17px;
+`

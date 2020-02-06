@@ -100,7 +100,7 @@ export default class Index extends Component {
     render() {
       console.log(this.state.majorId);
       return (
-            <div className="container">
+            <div className="container bg-white"><br/>
               <Header classname="col-12 mb-5 mt-5 ">คำถามสาขา</Header>
                 <div>
                         {this.state.questions.map((data,i) => {
