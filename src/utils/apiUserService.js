@@ -9,7 +9,7 @@ const createInstance = (headers) => {
     headers: {
       'Authorization': `Bearer ${cookies.get('token')}`,
       'Content-Type': 'application/json',
-      'Allow': 'GET, POST, PUT'
+      'Allow': 'GET, HEAD, POST, OPTIONS,  PUT'
     }
   })
 }
