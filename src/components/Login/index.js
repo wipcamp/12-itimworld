@@ -107,10 +107,11 @@ class Login extends Component {
       id_token: objectResponse.data.id_token,
       userId: objectResponse.data.userId
     }
-    this.postUserService(tokenObject.userId)
+    const postUserId = { "lineId": tokenObject.userId }
+    this.postUserService(postUserId)
 
     try {
-      let promise = await this.postUserService(tokenObject.userId)
+      let promise = await this.postUserService(postUserId)
       let response = promise.data;
       console.log(response.data[0].knowWhence);
 
