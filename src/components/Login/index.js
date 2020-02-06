@@ -5,6 +5,7 @@ import Cookies from 'universal-cookie';
 import UserService from '../../services/UserService'
 import LineService from '../../services/LineService'
 import LineLoginButton from './LineLoginButton'
+import answerService from '../../services/AnswerService';
 
 const cookies = new Cookies()
 
@@ -91,6 +92,20 @@ class Login extends Component {
     return await UserService.postUser(data)
   }
 
+  postAnsweService = async () => {
+    console.log("post55554747")
+    return await answerService.postAnswer(120001,1,{
+      "answers": [
+        {
+          "question_id": 1,
+          "answer_content": "Nope"
+        },
+        {
+          "question_id": 7,
+          "answer_content": "Its 4.20"
+        }]})
+  }
+
   async getTokenFromLineApi(code) {
     console.log('success')
     const cookieNonce = cookies.get('nonce')
@@ -108,8 +123,9 @@ class Login extends Component {
       userId: objectResponse.data.userId
     }
     const postUserId = { "lineId": tokenObject.userId }
+    this.postAnsweService()
     this.postUserService(postUserId)
-
+    
     try {
       let promise = await this.postUserService(postUserId)
       let response = promise.data;
