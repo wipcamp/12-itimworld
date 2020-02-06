@@ -10,7 +10,7 @@ const userService = {
     return res
   },
   postUser: async (data) => {
-    let res = await apiUserService.put(`/user`, data)
+    let res = await apiUserService.post(`/user`, data)
     return res
   },
   getMe: async () => {
