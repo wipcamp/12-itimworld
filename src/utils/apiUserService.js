@@ -8,7 +8,8 @@ const createInstance = (headers) => {
     baseURL: process.env.REACT_APP_API_URL,
     headers: {
       'Authorization': `Bearer ${cookies.get('token')}`,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Allow': 'GET, POST, PUT'
     }
   })
 }
