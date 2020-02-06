@@ -7,7 +7,7 @@ const createInstance = (headers) => {
   return axios.create({
     baseURL: process.env.REACT_APP_API_URL,
     headers: {
-      'Authorization': `Bearer ${cookies.get('token')}`,
+      // 'Authorization': `Bearer ${cookies.get('token')}`,
       'Content-Type': 'application/json',
       'Allow': 'GET, HEAD, POST, OPTIONS,  PUT'
     }
