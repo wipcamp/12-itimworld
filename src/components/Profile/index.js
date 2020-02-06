@@ -560,12 +560,7 @@ export default class Index extends Component {
               <NotDisplayButton ref={this.setProfileFormRef}> asd</NotDisplayButton>
             </div>
           </form>
-          <div className="d-flex justify-content-between mt-3">
-            <ButtonRoute 
-              displayButtonRight="none"
-              linkBack="menu"
-              className=""
-            />
+          <div className="d-flex justify-content-end mt-3">
             <ButtonStyle onClick={(e) => this.clickSubmit(e)}>ยืนยัน</ButtonStyle>
           </div>
         </ContainerDiv>
