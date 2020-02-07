@@ -186,19 +186,6 @@ export default class Index extends Component {
     .then(() => this.setState({redirect:true}))
     
   }
-  
-  onSelect = (fullAddress) => {
-    console.log(fullAddress);
-    
-    const { province } = fullAddress
-    const updateData = {
-      ...this.state.data,
-      province:province
-    }
-    this.setState({
-      data:updateData
-    })
-  }
 
   handleClick = () => {
     this.setState({
@@ -403,6 +390,8 @@ export default class Index extends Component {
                       labelInput={data.labelInput}
                       placeHolder={data.placeHolder}
                       name={data.name}
+                      pattern="[0-9]{13}"
+                      maxlength="13"
                       onChange={(e) => this.handleChange(e)}
                       additional="form-text text-muted"
                       additionalText={data.additionalText}
@@ -438,7 +427,7 @@ export default class Index extends Component {
               <section>
                 <SectionHeader className="col-12">ข้อมูลการติดต่อ</SectionHeader>
 
-                <AddressField
+                <TextField
                   className="col-12 col-md-6 form-group"
                   leftSide="col-12 col-md-4 col-form-label text-md-right"
                   rightSide="col-12 col-md-8"
@@ -448,8 +437,7 @@ export default class Index extends Component {
                   name="provice"
                   value={this.state.data.province}
                   onChange={(e) => this.handleChange(e)}
-                  onSelect={(e) => this.onSelect(e)}
-                  placeholder="เลือก"
+                  placeholder="จังหวัด"
                 />
 
                 <TelNumberField labelInput="เบอร์โทรศัพท์" name="telNo" onChange={(e) => this.handleChange(e)} required/>  
