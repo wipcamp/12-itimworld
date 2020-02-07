@@ -25,6 +25,8 @@ const TextField = (props) => {
               value={props.value}
               required={props.required}
               onChange={props.onChange}
+              maxlength={props.maxlength}
+              pattern={props.pattern}
             />
             <small className={props.additional}>{props.additionalText}</small>
           </div>
@@ -44,7 +46,9 @@ TextField.propsType = {
   required: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   additional: PropTypes.string,
-  additionalText: PropTypes.string
+  additionalText: PropTypes.string,
+  maxlength: PropTypes.string,
+  pattern: PropTypes.string
 }
 
 TextField.defaultProps = {
