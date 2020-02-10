@@ -3,11 +3,11 @@ import Cookies from 'universal-cookie'
 
 const cookies = new Cookies()
 
-require('dotenv').config()
+const { apiUrl } = window['runConfig'];
 
 const createInstance = (headers) => {
   return axios.create({
-    baseURL: process.env.REACT_APP_API_URL,
+    baseURL: apiUrl,
     headers: {
       // 'Authorization': `Bearer ${cookies.get('token')}`,
       'Content-Type': 'application/json',
