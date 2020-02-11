@@ -23,7 +23,7 @@ import General from './components/General'
 
 const cookies = new Cookies()
 
-const PrivateRoute = ({ children, ...rest }, { isAuthenticated }) => {
+const PrivateRoute = ({ isAuthenticated , children, ...rest }) => {
   return (
     <React.Fragment>
       <Route
