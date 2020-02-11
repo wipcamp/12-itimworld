@@ -109,7 +109,7 @@ class Login extends Component {
     }
     const postUserId = { "lineId": tokenObject.userId }
    
-    this.postUserService(postUserId)
+    // this.postUserService(postUserId)
     
     try {
       let promise = await this.postUserService(postUserId)
