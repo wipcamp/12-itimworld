@@ -5,7 +5,6 @@ import Cookies from 'universal-cookie';
 import UserService from '../../services/UserService'
 import LineService from '../../services/LineService'
 import LineLoginButton from './LineLoginButton'
-import answerService from '../../services/AnswerService';
 
 const cookies = new Cookies()
 
@@ -92,20 +91,6 @@ class Login extends Component {
     return await UserService.postUser(data)
   }
 
-  postAnsweService = async () => {
-    console.log("post55554747")
-    return await answerService.postAnswer(120001,1,{
-      "answers": [
-        {
-          "question_id": 1,
-          "answer_content": "Nope"
-        },
-        {
-          "question_id": 7,
-          "answer_content": "Its 4.20"
-        }]})
-  }
-
   async getTokenFromLineApi(code) {
     console.log('success')
     const cookieNonce = cookies.get('nonce')
@@ -123,7 +108,7 @@ class Login extends Component {
       userId: objectResponse.data.userId
     }
     const postUserId = { "lineId": tokenObject.userId }
-    this.postAnsweService()
+   
     this.postUserService(postUserId)
     
     try {
@@ -161,22 +146,20 @@ class Login extends Component {
     // localStorage.setItem('nonce', nonceGenerate.data);
     cookies.set('state', stateGenerate.data, { path: '/' });
     cookies.set('nonce', nonceGenerate.data, { path: '/' });
-    window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1653703435&redirect_uri=${this.state.itimUrl}&state=${stateGenerate.data}&scope=openid%20email%20profile&nonce=${nonceGenerate.data}`
+    // window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1653703435&redirect_uri=${this.state.itimUrl}&state=${stateGenerate.data}&scope=openid%20email%20profile&nonce=${nonceGenerate.data}`
   }
 
   
   render() {
     return (
-              <React.Fragment>
-                <Background>
-                  <WhiteLoginBox>
-                    <HeadText>WIP CAMP #12</HeadText>
-                    <LineLoginButton onClick={() => this.handleClick()}
-                    // callbackFromRouter={this.myCallBack} 
-                    />
-                  </WhiteLoginBox>
-                </Background>
-              </React.Fragment>
+      <React.Fragment>
+        <Background>
+          <WhiteLoginBox>
+            <HeadText>WIP CAMP #12</HeadText>
+            <LineLoginButton onClick={() => this.handleClick()} />
+          </WhiteLoginBox>
+        </Background>
+      </React.Fragment>
     )
   }
 }
