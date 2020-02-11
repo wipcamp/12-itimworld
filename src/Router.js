@@ -29,7 +29,7 @@ const PrivateRoute = ({ children, ...rest }, props) => {
       <Route
         {...rest}
         render={({ location }) =>
-          props.isAuthenticated ? (
+          !(cookies.get('token') !== undefined || cookies.get('token') !== null) ? (
             children
           ) : (
               <Redirect
