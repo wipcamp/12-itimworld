@@ -27,6 +27,7 @@ const Mountain = styled.div`
   background-size:contain;
   min-height: 100vh;
   width: 100%;
+  padding-bottom: 30px;
 `
 
 const PrivateRoute = ({ children, ...rest }) => {
