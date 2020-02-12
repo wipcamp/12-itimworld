@@ -551,6 +551,7 @@ export default class Index extends Component {
               onSelect={(e) => this.onSelect(e)}
               placeholder="เลือก"
               pattern={regexPattern.th}
+              title="โปรดกรอกเป็นภาษาไทย"
               required
             />
 

@@ -440,6 +440,7 @@ export default class Index extends Component {
                   onChange={(e) => this.handleChange(e)}
                   placeholder="จังหวัด"
                   pattern={regexPattern.th}
+                  title="โปรดกรอกภาษาไทย"
                 />
 
                 <TelNumberField labelInput="เบอร์โทรศัพท์" name="telNo" onChange={(e) => this.handleChange(e)} required/>  

@@ -20,6 +20,7 @@ const AddressField = (props) => {
             placeholder={props.placeholder}
             name={props.name}
             pattern={props.pattern}
+            title={props.title}
             />
         </div>
       </MinHeightRow>
@@ -38,7 +39,8 @@ AddressField.propsType = {
   onChange: PropTypes.func.isRequired,
   onSelect: PropTypes.func.isRequired,
   placeholder: PropTypes.string.isRequired,
-  pattern: PropTypes.string
+  pattern: PropTypes.string,
+  title: PropTypes.string
 }
 
 export default AddressField
