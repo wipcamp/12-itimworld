@@ -23,13 +23,13 @@ import General from './components/General'
 
 const cookies = new Cookies()
 
-const PrivateRoute = ({ isAuthenticated , children, ...rest }) => {
+const PrivateRoute = ({ children, ...rest }) => {
   return (
     <React.Fragment>
       <Route
         {...rest}
         render={({ location }) =>
-          isAuthenticated ? (
+          (cookies.get('token') !== undefined || cookies.get('token') !== null)? (
             children
           ) : (
               <Redirect
@@ -41,7 +41,7 @@ const PrivateRoute = ({ isAuthenticated , children, ...rest }) => {
             )
         }
       />
-      {console.log("Auth" + isAuthenticated)}
+      {console.log("Auth" + (cookies.get('token') !== undefined || cookies.get('token') !== null))}
     </React.Fragment>
   )
 }
