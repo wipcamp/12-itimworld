@@ -104,7 +104,14 @@ export default class index extends Component {
                                             อัพโหลด
                                         </ButttonText>
                                     </UploadButton>
-                                    <Test type="file" id="upload" name="document" ref={this.setUpload} />
+                                    <Test 
+                                        type="file" 
+                                        id="upload" 
+                                        name="document" 
+                                        accept=".pdf" 
+                                        ref={this.setUpload} 
+                                        onChange={e => console.log("done upload")}
+                                    />
                             </TableRowAlignMiddle>
                         </tr>
                         <tr>
