@@ -484,7 +484,7 @@ export default class Index extends Component {
                       name="birthDate"
                       id="birthDate"
                       min="1995-01-01"
-                      max="20010-12-31"
+                      max="2010-12-31"
                       value={this.state.oldUser.birthDate}
                       onChange={(e) => this.handleChange(e)}
                       required
