@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import AddressField from '../Core/AddressField'
 import TelNumberField from '../Core/TelNumberField'
 import TextField from '../Core/TextField'
 import UserService from '../../services/UserService'
@@ -10,7 +9,7 @@ import { ButtonStyle } from '../Core/ButtonStyle'
 import SelectField from '../Core/SelectField'
 import { MinHeightRow } from '../Core/FieldStyle'
 import { Redirect } from 'react-router-dom'
-import ButtonRoute from './../Core/ButtonRoute'
+import regexPattern from '../Core/RegexPattern'
 
 const userId = 120001;
 
@@ -38,10 +37,10 @@ export default class Index extends Component {
         labelInput: 'นามสกุล', placeHolder: 'ใจดี', name: 'lastName'
       },
       {
-        labelInput: 'Firstname', placeHolder: '', name: 'firstNameEn', additionalText:'ไม่ต้องใส่คำนำหน้าชื่อ'
+        labelInput: 'Firstname', placeHolder: '', name: 'firstNameEn', additionalText:'ไม่ต้องใส่คำนำหน้าชื่อ', pattern: regexPattern.eng
       },
       {
-        labelInput: 'Lastname', placeHolder: '', name: 'lastNameEn'
+        labelInput: 'Lastname', placeHolder: '', name: 'lastNameEn', pattern: regexPattern.eng
       },
       {
         labelInput: 'ชื่อเล่น', placeHolder: '', name: 'nickName'
@@ -344,6 +343,8 @@ export default class Index extends Component {
                       onChange={(e) => this.handleChange(e)}
                       additional="form-text text-muted"
                       additionalText={data.additionalText}
+                      pattern={data.pattern===regexPattern.eng?regexPattern.eng:regexPattern.th}
+                      title={data.pattern===regexPattern.eng?"โปรดกรอกภาษาอังกฤษ":"โปรดกรอกภาษาไทย"}
                       required
                     />
                   ))
@@ -438,6 +439,7 @@ export default class Index extends Component {
                   value={this.state.data.province}
                   onChange={(e) => this.handleChange(e)}
                   placeholder="จังหวัด"
+                  pattern={regexPattern.th}
                 />
 
                 <TelNumberField labelInput="เบอร์โทรศัพท์" name="telNo" onChange={(e) => this.handleChange(e)} required/>  
