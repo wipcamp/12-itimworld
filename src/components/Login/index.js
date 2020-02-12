@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import Cookies from 'universal-cookie';
 
+import UserService from '../../services/UserService'
 import LineService from '../../services/LineService'
 import LineLoginButton from './LineLoginButton'
+
+const cookies = new Cookies()
 
 const UpperBackground = styled.div`
   min-height: 40vh;
@@ -72,67 +76,93 @@ const Logo = styled.img`
     width:90%;
   }
 `
-// form line api
-// const nonce & const state send href
-// const state = state // vurify its real data 
-// const nonce && const code send to lineService 
-// const nonce = nonce // vurify its real user
-// reqeust json send lineService 
 
-
-export default class LoginBox extends Component {
+class Login extends Component {
 
   state = {
-    itimUrl: 'https://12-itim.freezer.wip.camp/login',
-    nonce: 'ABCDEFG',
-    state: 'HIJKLMN',
-    // scope: '',
-    // access_token: '',
-    // token_type: '',
-    // expires_in: '',
-    // id_token: '',
-    userId: ''
+    itimUrl: 'https://master.itim.wip.camp/login',
+    nonce: '',
+    state: '',
+    newState: '',
+    newNonce: '',
+    isLoad: false,
   }
 
-  getGenerateCode = () => {
-    let nonce = LineService.getGenerateCode();
-    let state = LineService.getGenerateCode();
-    this.setState({
-      nonce: nonce,
-      state: state
-    })
+  componentDidMount() {
+    const search = window.location.search.substring(1);
+    // console.log(search)
+    if (search) {
+      this.setState({
+        isLoad: true
+      })
+      const resFromLineApi = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}', function (key, value) { return key === "" ? value : decodeURIComponent(value) })
+      // console.log('get state from response from line api : ' + resFromLineApi.state)
+      const cookieState = cookies.get('state');
+      if (resFromLineApi.state === cookieState) {
+        this.getTokenFromLineApi(resFromLineApi.code)
+      }
+    } else {
+      this.setState({
+        isLoad: false
+      })
+      // console.log('fail from line api')
+    }
   }
 
-  async lineLogin() {
-    const stateGenerate = await LineService.getGenerateCode()
-    const nonceGenerate = await LineService.getGenerateCode()
-    console.log(2)
-    // Cookies.set('state', stateGenerate.data, { domain: 'game.freezer.wip.camp', path: '/login' })
-    // Cookies.set('nonce', nonceGenerate.data, { domain: 'game.freezer.wip.camp', path: '/login' })
-    // Cookies.set('state',nonceGenerate.data,{domain:})
-    // Cookies.set('nonce',nonceGenerate.data,{path: '/login'})
-    // let stateInCookies = Cookies.get('state')
-    // console.log('from cookies : ' + Cookies.get('state'))
-    // console.log('init stateInCookies : ' + stateInCookies)
-    // if (stateGenerate.data == Cookies.get('state')) {
-
-    // } else {
-    //     stateInCookies = "someThing"
-    // }
-    // const nonceInCookies = Cookies.get('nonce')
-    // console.log(stateInCookies)
-    // console.log(nonceInCookies)
-    // window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${clientId}
-    //                           &redirect_uri=${this.state.itimUrl}&state=${stateGenerate}&scope=openid%20email%
-    //                           20profile&nonce=${nonceGenerate}`
-
+  postUserService = async (data) => {
+    return await UserService.postUser(data)
   }
 
-  handleClick = () => {
-    // this.props.login()
-    // console.log(2)
-    // this.lineLogin()
-    // window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1653703435&redirect_uri=${this.state.itimUrl}&state=${this.state.state}&scope=openid%20email%20profile&nonce=${this.state.nonce}`
+  async getTokenFromLineApi(code) {
+    const cookieNonce = cookies.get('nonce')
+    const objectResponse = await LineService.lineLogin(code, cookieNonce, this.state.itimUrl)
+    if (objectResponse == null) {
+      window.location.href = this.state.itimUrl
+    }
+    const tokenObject = {
+      scope: objectResponse.data.scope,
+      access_token: objectResponse.data.access_token,
+      token_type: objectResponse.data.token_type,
+      expires_in: objectResponse.data.expires_in,
+      id_token: objectResponse.data.id_token,
+      userId: objectResponse.data.userId
+    }
+    const postUserId = { "lineId": tokenObject.userId }
+   
+    // this.postUserService(postUserId)
+    
+    try {
+      let promise = await this.postUserService(postUserId)
+      let response = promise.data;
+
+      if (response.success) {
+        const token = response.data[0].token
+        cookies.set('token', token, { path: '/' })
+        // this.setState({
+        //   oldUser: response.data[0],
+        //   oldData: response.data[0]
+        // });
+        // this.setState({ knowWhence: response.data[0].knowWhence });
+
+      } else {
+        console.log("Error get User request")
+      }
+    } catch (e) {
+      console.log("Error get User promise")
+    }
+    cookies.set('loginObj', tokenObject, { path: '/' })
+    window.location.href = 'https://master.itim.wip.camp/menu'
+  }
+
+  handleClick = async() => {
+    // const stateGenerate =await  LineService.getGenerateCode()
+    // const nonceGenerate =await LineService.getGenerateCode()
+    // localStorage.setItem('state',stateGenerate.data);
+    // localStorage.setItem('nonce', nonceGenerate.data);
+    // cookies.set('state', stateGenerate.data, { path: '/' });
+    // cookies.set('nonce', nonceGenerate.data, { path: '/' });
+    window.location.href = 'https://master.itim.wip.camp/menu'
+    // window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1653703435&redirect_uri=${this.state.itimUrl}&state=${stateGenerate.data}&scope=openid%20email%20profile&nonce=${nonceGenerate.data}`
   }
 
   
@@ -143,9 +173,11 @@ export default class LoginBox extends Component {
           <Logo src="/img/Logo.png"/>
         </UpperBackground>
         <LowerBackground className="mt-3">
-          <LineLoginButton onClick={() => this.handleClick()} callbackFromRouter={this.props.callbackFromRouter} />
+          <LineLoginButton onClick={() => this.handleClick()} />
         </LowerBackground>
       </div>
     )
   }
 }
+
+export default Login

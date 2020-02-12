@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-
-import { Authentication } from '../../context/Authentication-Context'
+import Cookies from 'universal-cookie'
 
 import UserService from '../../services/UserService'
 
 const location = window.location.pathname
 
 const userId = 120001
+
+const cookies = new Cookies()
 
 const Img = styled.img`
   width: 100%;
@@ -44,10 +45,10 @@ export default class Navbar extends Component {
 
   render() {
     return (
-        <Authentication.Consumer>
+      <React.Fragment>
         {
-          ({ isAuthenticated }) => (
-          isAuthenticated ?
+          // (cookies.get('token') !== undefined && cookies.get('token') !== null)  && location !== '/login' ?
+          true  && location !== '/login' ?
             <div className="pt-3 pb-3">
               <div className="container">
                 <div className="d-flex justify-content-between">
@@ -56,21 +57,20 @@ export default class Navbar extends Component {
                       <Img src="/img/Logo.png" alt="WIP Camp" />
                     </div>
                     <div className="col-md-9 col-sm-8 col-4">
-                      <div className="" style={{color: "white",textAlign:"right"}}>
+                      <div className="" style={{ color: "white", textAlign: "right" }}>
                         WIP ID : {this.state.wipId}
                         <br />
                         {this.state.name}
                       </div>
-                    </div> 
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            :
-            ''
-          )
+          :
+          ''
         }
-        </Authentication.Consumer>
+      </React.Fragment>
     )
   }
 }

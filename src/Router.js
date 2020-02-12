@@ -5,9 +5,11 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
+import Cookies from 'universal-cookie';
 import styled from 'styled-components'
 
-import { Authentication } from './context/Authentication-Context'
+import UserService from './services/UserService'
+
 import Navbar from './components/Core/Navbar'
 import Login from './components/Login'
 import Menu from './components/Menu'
@@ -30,32 +32,29 @@ const Mountain = styled.div`
   padding-bottom: 30px;
 `
 
+const cookies = new Cookies()
+
 const PrivateRoute = ({ children, ...rest }) => {
   return (
-    <Authentication.Consumer>
-      {
-        ({ isAuthenticated }) => (
-          <React.Fragment>
-            <Route
-              {...rest}
-              render={({ location }) =>
-                isAuthenticated ? (
-                  children
-                ) : (
-                    <Redirect
-                      to={{
-                        pathname: "/login",
-                        state: { from: location }
-                      }}
-                    />
-                  )
-              }
-            />
-          </React.Fragment>
-        )
-      }
-    </Authentication.Consumer>
-  );
+    <React.Fragment>
+      <Route
+        {...rest}
+        render={({ location }) =>
+          // (cookies.get('token') !== undefined && cookies.get('token') !== null)? (
+          true ? (
+            children
+          ) : (
+              <Redirect
+                to={{
+                  pathname: "/login",
+                  state: { from: location }
+                }}
+              />
+            )
+        }
+      />
+    </React.Fragment>
+  )
 }
 
 export default class Index extends React.Component {
@@ -65,77 +64,55 @@ export default class Index extends React.Component {
     user: false,
     isAuthenticated: false
   }
-
-  componentDidMount() {
-    if (!this.state.isAuthenticated) {
-      this.myCallback()
-    }
-  }
-
-  myCall = (wipId) => {
-    this.setState({
-      wipId: wipId
-    })
-  }
-
-  myCallback = (isAuthenticated) => {
-    this.setState({
-      isAuthenticated: isAuthenticated
-    })
-  }
-
+  
   render() {
     return (
-      <Authentication.Provider value={{
-        isAuthenticated : this.state.isAuthenticated,
-        changeAuthen: this.myCallback
-      }}>
-        <Router>
-          <Navbar />
-          <Switch>
-            <Route path="/login" >
-              <Mountain>
-                <Login callbackFromRouter={this.myCallback} />
-              </Mountain>
-            </Route>
-            <PrivateRoute path="/profile">
-              <Mountain>
-                <Profile />
-              </Mountain>
-            </PrivateRoute>
-            <PrivateRoute path="/general">
-              <Mountain> 
-                <General />
-              </Mountain>
-            </PrivateRoute>
-            <PrivateRoute path="/major">
-              <Major />
-            </PrivateRoute>
-            <PrivateRoute path="/menu">
-              <Menu />
-            </PrivateRoute>
-            <PrivateRoute path="/document">
-              <Document />
-            </PrivateRoute>
-            <PrivateRoute path="/questions">
-              <Mountain>
-                <Questions />
-              </Mountain>
-            </PrivateRoute>
-            <PrivateRoute path="/preview">
-              <Preview />
-            </PrivateRoute>
-            <PrivateRoute path="/success">
-              <Success />
-            </PrivateRoute>
-            <PrivateRoute path="/edit">
-              <Edit />
-            </PrivateRoute>
-            <PrivateRoute path="*" />
-          </Switch>
-        </Router>
-      </Authentication.Provider>
+      <Router>
+        <Navbar />
+        <Switch>
+          <Route path="/login" >
+            <Mountain>
+              <Login />
+            </Mountain>
+          </Route>
+          <PrivateRoute path="/profile">
+            <Mountain>
+              <Profile />
+            </Mountain>
+          </PrivateRoute>
+          <PrivateRoute path="/general">
+            <Mountain>
+              <General />
+            </Mountain>
+          </PrivateRoute>
+          <PrivateRoute path="/major">
+            <Major />
+          </PrivateRoute>
+          <PrivateRoute path="/menu">
+            <Menu />
+          </PrivateRoute>
+          <PrivateRoute path="/document">
+            <Document />
+          </PrivateRoute>
+          <PrivateRoute path="/questions">
+            <Mountain>
+              <Questions />
+            </Mountain>
+          </PrivateRoute>
+          <PrivateRoute path="/preview">
+            <Preview />
+          </PrivateRoute>
+          <PrivateRoute path="/success">
+            <Success />
+          </PrivateRoute>
+          <PrivateRoute path="/edit">
+            <Edit />
+          </PrivateRoute>
+          <PrivateRoute path="*" />
+        </Switch>
+      </Router>
     )
   }
 }
+
 
