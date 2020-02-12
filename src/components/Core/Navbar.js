@@ -47,7 +47,8 @@ export default class Navbar extends Component {
     return (
       <React.Fragment>
         {
-          (cookies.get('token') !== undefined && cookies.get('token') !== null)  && location !== '/login' ?
+          // (cookies.get('token') !== undefined && cookies.get('token') !== null)  && location !== '/login' ?
+          true  && location !== '/login' ?
             <div className="pt-3 pb-3">
               <div className="container">
                 <div className="d-flex justify-content-between">

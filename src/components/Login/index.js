@@ -155,13 +155,14 @@ class Login extends Component {
   }
 
   handleClick = async() => {
-    const stateGenerate =await  LineService.getGenerateCode()
-    const nonceGenerate =await LineService.getGenerateCode()
+    // const stateGenerate =await  LineService.getGenerateCode()
+    // const nonceGenerate =await LineService.getGenerateCode()
     // localStorage.setItem('state',stateGenerate.data);
     // localStorage.setItem('nonce', nonceGenerate.data);
-    cookies.set('state', stateGenerate.data, { path: '/' });
-    cookies.set('nonce', nonceGenerate.data, { path: '/' });
-    window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1653703435&redirect_uri=${this.state.itimUrl}&state=${stateGenerate.data}&scope=openid%20email%20profile&nonce=${nonceGenerate.data}`
+    // cookies.set('state', stateGenerate.data, { path: '/' });
+    // cookies.set('nonce', nonceGenerate.data, { path: '/' });
+    window.location.href = 'https://master.itim.wip.camp/menu'
+    // window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1653703435&redirect_uri=${this.state.itimUrl}&state=${stateGenerate.data}&scope=openid%20email%20profile&nonce=${nonceGenerate.data}`
   }
 
   

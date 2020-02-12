@@ -39,7 +39,8 @@ const PrivateRoute = ({ children, ...rest }) => {
       <Route
         {...rest}
         render={({ location }) =>
-          (cookies.get('token') !== undefined && cookies.get('token') !== null)? (
+          // (cookies.get('token') !== undefined && cookies.get('token') !== null)? (
+          true ? (
             children
           ) : (
               <Redirect
