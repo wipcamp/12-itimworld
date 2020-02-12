@@ -1,5 +1,5 @@
 const RegexPattern = {
-    th:"[ก-ฮ]*",
+    th:"[ก-์]*",
     eng:"[A-z]*"
   };
 
