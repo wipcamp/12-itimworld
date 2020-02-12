@@ -10,14 +10,13 @@ const location = window.location.pathname
 const userId = 120001
 
 const Img = styled.img`
-  width: 270px;
-  height: 81.41px;
+  width: 100%;
 `
 export default class Navbar extends Component {
 
   state = {
-    wipId: 0,
-    name: 'welcome'
+    wipId: 120001,
+    name: 'น้องเฟิร์สอ้วน'
   }
 
   async componentDidMount() {
@@ -49,13 +48,21 @@ export default class Navbar extends Component {
         {
           ({ isAuthenticated }) => (
           isAuthenticated ?
-            <div className="pt-3 mb-5">
-              <div className="d-flex justify-content-between ml-5 mr-5">
-                <Img src="/img/Logo.png" alt="WIP Camp" />
-                <div className="justify-content-end">
-                  WIP ID :{this.state.wipId}
-                  <br />
-                  {this.state.name}
+            <div className="pt-3 pb-3">
+              <div className="container">
+                <div className="d-flex justify-content-between">
+                  <div className="row">
+                    <div className="col-md-3 col-sm-4 col-8">
+                      <Img src="/img/Logo.png" alt="WIP Camp" />
+                    </div>
+                    <div className="col-md-9 col-sm-8 col-4">
+                      <div className="" style={{color: "white",textAlign:"right"}}>
+                        WIP ID : {this.state.wipId}
+                        <br />
+                        {this.state.name}
+                      </div>
+                    </div> 
+                  </div>
                 </div>
               </div>
             </div>
