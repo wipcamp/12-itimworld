@@ -63,18 +63,10 @@ export default class Index extends React.Component {
     isAuthenticated: false
   }
   
-  componentDidMount(){
-    if ((cookies.get('token') !== undefined || cookies.get('token') !== null) && !this.state.isAuthenticated ){
-      this.setState({
-        isAuthenticated: true
-      })
-    }
-  }
-
   render() {
     return (
       <Router>
-        <Navbar isAuthenticated={this.state.isAuthenticated} />
+        <Navbar />
         <Switch>
           <Route path="/login" >
             <Mountain>
