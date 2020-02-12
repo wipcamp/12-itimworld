@@ -44,7 +44,9 @@ export default class Index extends Component {
 
   questions = [];
   
-    state = { 
+    state = {
+      finishLoad:false,
+      errorLoad:false, 
         questions : 
           [
             { 
@@ -79,16 +81,14 @@ export default class Index extends Component {
           
           if (response.success) {
             this.setState({
-              questions: response.data[0].questionList
+              questions: response.data[0].questionList,
+              finishLoad: true
             });
-            console.log("question State = ");
-            
-            console.log(this.state.questions);
           } else {
-            console.log("Error get Major")
+            this.setState({errorLoad:true})
           }
         } catch (e) {
-          console.log("Error get Major")
+          this.setState({errorLoad:true})
         }
       }
     
@@ -98,28 +98,34 @@ export default class Index extends Component {
     }
     
     render() {
-      console.log(this.state.majorId);
-      return (
-            <div className="container bg-white"><br/>
-              <Header classname="col-12 mb-5 mt-5 ">คำถามสาขา</Header>
-                <div>
-                        {this.state.questions.map((data,i) => {
-                          return <Question
-                          questionCount={i+1}
-                          questionName={data.name}
-                          questionId={data.id}
-                          handleAnswer={this.handleAnswer}
-                          />
-                        })}
-                </div>
-                <ButtonRoute 
-                  buttonLeft="กลับ" 
-                  buttonRight="ยืนยัน" 
-                  linkBack ="/major"
-                  linkNext ="/menu"
-                  onClick={this.postAnswerService}
-                />
-            </div>
+      if(!this.state.finishLoad || this.state.errorLoad){
+        if(this.state.errorLoad){
+          return <p>Error Load</p>
+        }
+        return <p>Loading...</p>
+      }else{
+        return (
+          <div className="container bg-white"><br/>
+            <Header classname="col-12 mb-5 mt-5 ">คำถามสาขา</Header>
+              <div>
+                      {this.state.questions.map((data,i) => {
+                        return <Question
+                        questionCount={i+1}
+                        questionName={data.name}
+                        questionId={data.id}
+                        handleAnswer={this.handleAnswer}
+                        />
+                      })}
+              </div>
+              <ButtonRoute 
+                buttonLeft="กลับ" 
+                buttonRight="ยืนยัน" 
+                linkBack ="/major"
+                linkNext ="/menu"
+                onClick={this.postAnswerService}
+              />
+          </div>
         )
+      }
     }
 }
