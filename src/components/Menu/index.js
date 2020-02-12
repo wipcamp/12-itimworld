@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import userService from '../../services/UserService'
 
+const userId = 120001;
 
 const Background = styled.div`
   width: 100%;  
@@ -63,7 +65,50 @@ const MenuImage = styled.img`
     width: 90%;
   }
 `
+
 export default class Index extends Component {
+
+  async componentDidMount() {
+    let promise;
+    try {
+      promise = await userService.getUser(userId)
+      let response = promise.data;
+      
+
+      if (response.success) {
+
+        const menus = await this.state.menu.map( menu => {
+          let {userStatus} = response.data[0]
+          let status = false
+          if(menu.message == "ข้อมูลส่วนตัว"){
+            status = userStatus.registered
+            
+          }else if(menu.message == "คำถามทั่วไป"){
+            status = userStatus.generalAnswered
+
+          }else if(menu.message == "คำถามสาขา"){
+            status = userStatus.majorAnswered
+            
+          }else if(menu.message == "อัพโหลดเอกสาร"){
+            status = userStatus.submitted           
+          }
+          return {...menu,status}
+        })
+
+        this.setState({menu:menus})
+        console.log(this.state.menu);
+              
+      } else {
+        console.log("Error get User request")
+      }
+    } catch (e) {
+      console.log("Error get User promise")
+    }
+  }
+
+getUserStatus = async() => {
+  userService.getUser(userId)
+}
 
   state = {
     menu: [
@@ -81,8 +126,8 @@ export default class Index extends Component {
         <Box className="container">
           {
             this.state.menu.map((data, i) => (
-              <LinkStyle to={`/${data.link}`} className="text-center col-lg-3 col-md-3 col-sm-6 col-6 mb-5" key={i}>
-                <MenuImage src={ this.state.status ? data.imgBefore : data.imgAfter } key={i} alt={data.link}/>
+              <LinkStyle to={`/${data.link}`} className="text-center col-lg-3 col-md-3 col-sm-6 col-6 mb-5" key={i} style={{pointerEvents:`${ data.status ? "none" : "auto" }`}}>
+                <MenuImage src={ !data.status ? data.imgBefore : data.imgAfter } key={i} alt={data.link}/>
                   <Small className="btn">
                     {data.message}
                   </Small>
