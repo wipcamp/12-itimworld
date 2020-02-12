@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
-import { Authentication } from '../../context/Authentication-Context'
-
 import UserService from '../../services/UserService'
 
 const location = window.location.pathname
@@ -45,25 +43,23 @@ export default class Navbar extends Component {
 
   render() {
     return (
-        <Authentication.Consumer>
-        {
-          ({ isAuthenticated }) => (
-          isAuthenticated ?
-            <div className="pt-3 mb-5">
-              <div className="d-flex justify-content-between ml-5 mr-5">
-                <Img src="/img/Logo.png" alt="WIP Camp" />
-                <div className="justify-content-end">
-                  WIP ID :{this.state.wipId}
-                  <br />
-                  {this.state.name}
-                </div>
+      <React.Fragment>
+      {
+        this.props.isAuthenticated && location !== '/login' ?
+          <div className="pt-3 mb-5">
+            <div className="d-flex justify-content-between ml-5 mr-5">
+              <Img src="/img/Logo.png" alt="WIP Camp" />
+              <div className="justify-content-end">
+                WIP ID :{this.state.wipId}
+                <br />
+                {this.state.name}
               </div>
             </div>
-            :
-            ''
-          )
-        }
-        </Authentication.Consumer>
+          </div>
+          :
+          ''
+      }
+      </React.Fragment>
     )
   }
 }

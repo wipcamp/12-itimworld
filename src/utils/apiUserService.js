@@ -1,12 +1,17 @@
 import axios from 'axios'
+import Cookies from 'universal-cookie'
 
-// const { apiUrl } = window['runConfig'];
+const cookies = new Cookies()
+
+const { apiUrl } = window['runConfig'];
+
 const createInstance = (headers) => {
   return axios.create({
-    baseURL: process.env.REACT_APP_API_URL,
+    baseURL: apiUrl,
     headers: {
-      // 'Authorization': `Bearer ${CookiesService.gettokenJWTCookie()}`,
-      'Content-Type': 'application/json'
+      // 'Authorization': `Bearer ${cookies.get('token')}`,
+      'Content-Type': 'application/json',
+      'Allow': 'GET, HEAD, POST, OPTIONS,  PUT'
     }
   })
 }
