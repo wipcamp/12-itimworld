@@ -510,24 +510,23 @@ export default class Index extends Component {
               <section>
                 <SectionHeader className="col-12">ช่องทางที่รู้จักค่าย</SectionHeader>
                 <MinHeightRow className="row form-group checkbox-group required">
-                  <div className="col-1"></div>
-                  <div className="form-check form-check-inline col-2">
+                  <div className="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-1">
                     <input class="form-check-input" type="checkbox" name="knowWhence" id="knowWhenceFacebook"  value="facebook" onClick={e=>this.handleChange(e)}/>
                     <label class="form-check-label" for="knowWhenceFacebook">Facebook</label>
                   </div>
-                  <div class="form-check form-check-inline col-2">
+                  <div class="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0">
                     <input class="form-check-input" type="checkbox" name="knowWhence" id="knowWhenceCamphub" value="camphub" onClick={e=>this.handleChange(e)}/>
                     <label class="form-check-label" for="knowWhenceCamphub">Camphub</label>
                   </div>
-                  <div class="form-check form-check-inline col-2">
+                  <div class="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0">
                     <input class="form-check-input" type="checkbox" name="knowWhence" id="knowWhenceDek-D" value="dekd" onClick={e=>this.handleChange(e)}/>
                     <label class="form-check-label" for="knowWhenceDek-D">Dek-D</label>
                   </div>
-                  <div class="form-check form-check-inline col-2">
+                  <div class="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0">
                     <input class="form-check-input" type="checkbox" name="knowWhence" id="knowWhenceSIT" value="sit" onClick={e=>this.handleChange(e)}/>
                     <label class="form-check-label" for="knowWhenceSIT">SIT</label>
                   </div>
-                  <div class="form-check form-check-inline col-2">
+                  <div class="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0">
                     <input class="form-check-input" type="checkbox" name="knowWhence" id="knowWhenceEtc" value={null} onClick={e=>this.setEtcInput(e,!this.state.etcInput)} ref={this.setEtcBoxRef} required/>
                     <label class="form-check-label" for="knowWhenceEtc">อื่นๆ</label>
                     {this.renderInputButton()}
