@@ -75,7 +75,6 @@ class Login extends Component {
       // console.log('get state from response from line api : ' + resFromLineApi.state)
       const cookieState = cookies.get('state');
       if (resFromLineApi.state === cookieState) {
-        console.log("resapi")
         this.getTokenFromLineApi(resFromLineApi.code)
       }
     } else {
@@ -87,18 +86,15 @@ class Login extends Component {
   }
 
   postUserService = async (data) => {
-    console.log("post")
     return await UserService.postUser(data)
   }
 
   async getTokenFromLineApi(code) {
-    console.log('success')
     const cookieNonce = cookies.get('nonce')
     const objectResponse = await LineService.lineLogin(code, cookieNonce, this.state.itimUrl)
     if (objectResponse == null) {
       window.location.href = this.state.itimUrl
     }
-    console.log('token')
     const tokenObject = {
       scope: objectResponse.data.scope,
       access_token: objectResponse.data.access_token,
@@ -114,10 +110,8 @@ class Login extends Component {
     try {
       let promise = await this.postUserService(postUserId)
       let response = promise.data;
-      console.log(response.data[0].knowWhence);
 
       if (response.success) {
-        console.log("success")
         const token = response.data[0].token
         cookies.set('token', token, { path: '/' })
         // this.setState({

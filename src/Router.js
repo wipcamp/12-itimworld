@@ -9,7 +9,6 @@ import Cookies from 'universal-cookie';
 
 import UserService from './services/UserService'
 
-import { Authentication } from './context/Authentication-Context'
 import Navbar from './components/Core/Navbar'
 import Login from './components/Login'
 import Menu from './components/Menu'
@@ -41,7 +40,6 @@ const PrivateRoute = ({ children, ...rest }) => {
             )
         }
       />
-      {console.log("Auth" + (cookies.get('token') !== undefined && cookies.get('token') !== null))}
     </React.Fragment>
   )
 }
@@ -56,8 +54,6 @@ export default class Index extends React.Component {
   
   componentDidMount(){
     if ((cookies.get('token') !== undefined || cookies.get('token') !== null) && !this.state.isAuthenticated ){
-      console.log('token')
-      console.log(cookies.get('token'))
       this.setState({
         isAuthenticated: true
       })
