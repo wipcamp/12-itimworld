@@ -67,7 +67,7 @@ export default class Index extends Component {
 
   state = {
     menu: [
-      { link: 'menu' , message: 'ข้อมูลส่วนตัว' , imgBefore : '/img/Menu/person1.webp' , imgAfter : '/img/Menu/person1_done.webp' },
+      { link: 'edit' , message: 'ข้อมูลส่วนตัว' , imgBefore : '/img/Menu/person1.webp' , imgAfter : '/img/Menu/person1_done.webp' },
       { link: 'general', message: 'คำถามทั่วไป', imgBefore: '/img/Menu/question2.webp', imgAfter: '/img/Menu/question2_done.webp' },
       { link: 'major', message: 'คำถามสาขา', imgBefore : '/img/Menu/track3.webp', imgAfter : '/img/Menu/track3_done.webp' },
       { link: 'document', message: 'อัพโหลดเอกสาร', imgBefore: '/img/Menu/document4.webp', imgAfter: '/img/Menu/document4_done.webp' }

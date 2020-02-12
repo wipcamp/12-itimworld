@@ -21,6 +21,8 @@ const Title = styled.p`
 export default class Index extends Component {
 
   state = {
+    finishLoad:false,
+    errorLoad:false,
     pictures: {
       default: 'https://icatcare.org/app/uploads/2018/07/Thinking-of-getting-a-cat.png',
       selected: 'https://miro.medium.com/max/11400/1*lS9ZqdEGZrRiTcL1JUgt9w.jpeg'
@@ -79,19 +81,24 @@ export default class Index extends Component {
       let response = promise.data;
       if (response.success) {
         this.setState({
-          majors: response.data
+          majors: response.data,
+          finishLoad: true
         });
         console.log(this.state.majors);
       } else {
-        console.log("Error getting all majors data")
+        this.setState({errorLoad:true})
       }
     } catch (e) {
-      console.log("Error getting all majors data")
+      this.setState({errorLoad:true})
     }
   }
 
   async componentDidMount() {
     await this.GetMajors();
+  }
+
+  componentDidCatch() {
+    this.setState({errorLoad:true})
   }
 
   changeDescription = (i) => {
@@ -128,42 +135,50 @@ export default class Index extends Component {
   }
 
   render() {
-    return (
-      <React.Fragment>
-        <div className="row justify-content-center">
-          {
-            this.state.majors.map((data, key) => (
-              <ImageRadio
-                className="col-2 mr-5"
-                key={key}
-                imgPath={this.state.selectedMajor === data ? this.state.pictures.selected : this.state.pictures.default}
-                value={data.id}
-                onClick={() => this.changeDescription(key)}
+    if(!this.state.finishLoad || this.state.errorLoad){
+      if(this.state.errorLoad){
+        return <p>Error Get Major mtfk</p>
+      }
+      return <p>Loading chill the fuck out</p>
+    }
+    else{
+      return (
+        <React.Fragment>
+          <div className="row justify-content-center">
+            {
+              this.state.majors.map((data, key) => (
+                <ImageRadio
+                  className="col-2 mr-5"
+                  key={key}
+                  imgPath={this.state.selectedMajor === data ? this.state.pictures.selected : this.state.pictures.default}
+                  value={data.id}
+                  onClick={() => this.changeDescription(key)}
+                />
+              )
+              )
+            }
+            <Title className="d-flex col-12 justify-content-center" visible={this.state.selectedMajor.description ? "visible" : "hidden"}>
+                <Header>ชื่อสาขาที่เลือก</Header>
+            </Title>
+            <Title className={`d-flex col-12 justify-content-center ${this.state.selectedMajor.description ? "mb-4" : "mb-5"} `} visible={this.state.selectedMajor.description ? "visible" : "hidden"}>
+                {this.state.selectedMajor.description}
+            </Title>
+          </div>
+          <div className="d-inline justify-content-between">
+            <ButtonRoute
+              className="col-6 d-inline-flex"
+              linkBack="/menu"
+              displayButtonRight="none"
               />
-            )
-            )
-          }
-          <Title className="d-flex col-12 justify-content-center" visible={this.state.selectedMajor.description ? "visible" : "hidden"}>
-              <Header>ชื่อสาขาที่เลือก</Header>
-          </Title>
-          <Title className={`d-flex col-12 justify-content-center ${this.state.selectedMajor.description ? "mb-4" : "mb-5"} `} visible={this.state.selectedMajor.description ? "visible" : "hidden"}>
-              {this.state.selectedMajor.description}
-          </Title>
-        </div>
-        <div className="d-inline justify-content-between">
-          <ButtonRoute
-            className="col-6 d-inline-flex"
-            linkBack="/menu"
-            displayButtonRight="none"
+            <ConfirmModal 
+              majorId={this.state.selectedMajor.id} 
+              selectedMajor={this.state.selectedMajor} 
+              showMajor={this.state.showMajor}
+              disabled={this.state.buttonValue}
             />
-          <ConfirmModal 
-            majorId={this.state.selectedMajor.id} 
-            selectedMajor={this.state.selectedMajor} 
-            showMajor={this.state.showMajor}
-            disabled={this.state.buttonValue}
-          />
-        </div>
-      </React.Fragment>
-    )
+          </div>
+        </React.Fragment>
+      )
+    } 
   }
 }

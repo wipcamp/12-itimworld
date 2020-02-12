@@ -27,6 +27,7 @@ const TextField = (props) => {
               onChange={props.onChange}
               maxlength={props.maxlength}
               pattern={props.pattern}
+              title={props.title}
             />
             <small className={props.additional}>{props.additionalText}</small>
           </div>
@@ -48,7 +49,8 @@ TextField.propsType = {
   additional: PropTypes.string,
   additionalText: PropTypes.string,
   maxlength: PropTypes.string,
-  pattern: PropTypes.string
+  pattern: PropTypes.string,
+  title: PropTypes.string
 }
 
 TextField.defaultProps = {
