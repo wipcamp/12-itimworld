@@ -6,6 +6,7 @@ import {
   Redirect,
 } from "react-router-dom";
 import Cookies from 'universal-cookie';
+import styled from 'styled-components'
 
 import UserService from './services/UserService'
 
@@ -19,6 +20,16 @@ import Preview from "./components/Preview"
 import Success from './components/Success'
 import Edit from './components/Edit'
 import General from './components/General'
+import Document from './components/Document'
+
+const Mountain = styled.div`
+  background-image:url('/img/mountain.png');
+  background-repeat: no-repeat;
+  background-position-y: bottom;
+  background-size:contain;
+  min-height: 100vh;
+  width: 100%;
+`
 
 const cookies = new Cookies()
 
@@ -66,13 +77,19 @@ export default class Index extends React.Component {
         <Navbar isAuthenticated={this.state.isAuthenticated} />
         <Switch>
           <Route path="/login" >
-            <Login />
+            <Mountain>
+              <Login />
+            </Mountain>
           </Route>
           <PrivateRoute path="/profile">
-            <Profile />
+            <Mountain>
+              <Profile />
+            </Mountain>
           </PrivateRoute>
           <PrivateRoute path="/general">
-            <General />
+            <Mountain>
+              <General />
+            </Mountain>
           </PrivateRoute>
           <PrivateRoute path="/major">
             <Major />
@@ -81,10 +98,12 @@ export default class Index extends React.Component {
             <Menu />
           </PrivateRoute>
           <PrivateRoute path="/document">
-            {/* <Menu /> */}
+            <Document />
           </PrivateRoute>
           <PrivateRoute path="/questions">
-            <Questions />
+            <Mountain>
+              <Questions />
+            </Mountain>
           </PrivateRoute>
           <PrivateRoute path="/preview">
             <Preview />
@@ -95,7 +114,7 @@ export default class Index extends React.Component {
           <PrivateRoute path="/edit">
             <Edit />
           </PrivateRoute>
-        <PrivateRoute path="*" />
+          <PrivateRoute path="*" />
         </Switch>
       </Router>
     )

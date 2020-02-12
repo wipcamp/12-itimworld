@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
+import {MinHeightRow} from './FieldStyle'
 import InputAddress from 'react-thailand-address-autocomplete'
 
 const AddressField = (props) => {
   return (
 
     <label className={props.className} htmlFor={props.name} >
-      <div className="row">
+      <MinHeightRow className="row">
         <div className={props.leftSide}>{props.labelInput}</div>
         <div className={props.rightSide}>
           <InputAddress
@@ -19,9 +19,9 @@ const AddressField = (props) => {
             onSelect={props.onSelect}
             placeholder={props.placeholder}
             name={props.name}
-          />
+            />
         </div>
-      </div>
+      </MinHeightRow>
     </label>
   )
 }

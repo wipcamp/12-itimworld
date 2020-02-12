@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ButtonRoute from '../Core/ButtonRoute'
 import Question from './Question'
-import UserServuce from './../../services/UserService'
+import UserService from './../../services/UserService'
 import Styled from 'styled-components'
 
 const Header = Styled.h2`
@@ -70,7 +70,7 @@ export default class Index extends Component {
     getGeneralAnswerService = async() =>{
       let promise;
       try{
-        promise = await UserServuce.getUser(userId);
+        promise = await UserService.getUser(userId);
         let response = promise.data;
         if(response.success){
           let gettedUserGeneralAnswer = this.state.questions;
@@ -96,7 +96,8 @@ export default class Index extends Component {
     postGeneralAnswerService = async() =>{
       let promise;
       try{
-        promise = await UserServuce.postGeneralAnswer(userId,answer);
+        promise = await UserService.postGeneralAnswer(userId,answer).then(() => {UserService.postStatus(userId,{"status":"general"})});
+
         let response = promise.data;
         if(response.success){
           console.log("Post general answer success")
@@ -114,7 +115,7 @@ export default class Index extends Component {
 
     render() {
       return (
-            <div className="container">
+            <div className="container bg-white"><br/>
                 <Header className="col-12 mb-5 mt-5">This is General Question page</Header>
                 <div>
                         {this.state.questions.map((data,i) => {
@@ -132,7 +133,7 @@ export default class Index extends Component {
                   buttonRight="ยืนยัน" 
                   linkBack ="/menu"
                   linkNext ="/menu"
-                  onClick={this.postAnswerService}
+                  onClick={this.postGeneralAnswerService}
                 />
             </div>
         )

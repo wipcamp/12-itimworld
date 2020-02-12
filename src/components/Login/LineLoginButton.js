@@ -45,15 +45,12 @@ export default class LineLoginButton extends Component {
     return (
       <ButtonContainer>
         <Button>
-          {/* <button className="btn" onClick={this.handleClick()} > */}
             <Link 
-            // to="/menu" 
             onClick={this.props.onClick}   
             >
               <LineImg src="/img/line_88.png" /> 
               <span>Log in with LINE</span>
             </Link>
-            {/* </button> */}
         </Button>
       </ButtonContainer>
     )

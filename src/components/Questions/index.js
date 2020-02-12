@@ -3,6 +3,7 @@ import ButtonRoute from '../Core/ButtonRoute'
 import Question from './Question'
 import MajorService from './../../services/MajorService'
 import AnswerService from './../../services/AnswerService'
+import UserService from './../../services/UserService'
 import Styled from 'styled-components'
 
 let answer = [];
@@ -92,19 +93,14 @@ export default class Index extends Component {
       }
     
     postAnswerService = async() =>{
-      let response = await AnswerService.postAnswer(
-        userId,
-        majorId,
-        {
-          "answers":answer
-        });
+      let response = await AnswerService.postAnswer(userId,majorId,{"answers":answer}).then(() => {UserService.postStatus(userId,{"status":"major"})});
         console.log(response);
     }
     
     render() {
       console.log(this.state.majorId);
       return (
-            <div className="container">
+            <div className="container bg-white"><br/>
               <Header classname="col-12 mb-5 mt-5 ">คำถามสาขา</Header>
                 <div>
                         {this.state.questions.map((data,i) => {

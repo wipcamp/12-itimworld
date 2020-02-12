@@ -8,16 +8,24 @@ import LineLoginButton from './LineLoginButton'
 
 const cookies = new Cookies()
 
-const Background = styled.div`
+const UpperBackground = styled.div`
+  min-height: 40vh;
   width: 100%;  
-  min-height: 100vh;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   padding: 15px;
-  background: #9053c7;
-  background: linear-gradient(-135deg, #ffce00, #9053c7);
+`
+
+const LowerBackground = styled.div`
+  min-height: 40vh;
+  width: 100%;  
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: unset;
+  padding: 15px;
 `
 const WhiteLoginBox = styled.div`
   width: 960px;
@@ -35,7 +43,7 @@ const WhiteLoginBox = styled.div`
 
   @media (max-width: 992px) {
     padding: 77px 90px 33px 85px;
-  font-size: 20px;
+    font-size: 20px;
   }
 
   @media (max-width: 768px) {
@@ -51,6 +59,22 @@ const WhiteLoginBox = styled.div`
 const HeadText = styled.div`
   width: 100%;
   justify-self: center;
+`
+
+const Logo = styled.img`
+  width: 40%;
+
+  @media (max-width: 992px) {
+    width:50%;
+  }
+
+  @media (max-width: 768px) {
+    width:60%;
+  }
+
+  @media (max-width: 576px) {
+    width:90%;
+  }
 `
 
 class Login extends Component {
@@ -130,9 +154,6 @@ class Login extends Component {
     window.location.href = 'https://master.itim.wip.camp/menu'
   }
 
-
-  
-  
   handleClick = async() => {
     const stateGenerate =await  LineService.getGenerateCode()
     const nonceGenerate =await LineService.getGenerateCode()
@@ -146,14 +167,14 @@ class Login extends Component {
   
   render() {
     return (
-      <React.Fragment>
-        <Background>
-          <WhiteLoginBox>
-            <HeadText>WIP CAMP #12</HeadText>
-            <LineLoginButton onClick={() => this.handleClick()} />
-          </WhiteLoginBox>
-        </Background>
-      </React.Fragment>
+      <div>
+        <UpperBackground>
+          <Logo src="/img/Logo.png"/>
+        </UpperBackground>
+        <LowerBackground className="mt-3">
+          <LineLoginButton onClick={() => this.handleClick()} />
+        </LowerBackground>
+      </div>
     )
   }
 }

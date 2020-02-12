@@ -2,8 +2,31 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-const Div = styled.div`
-  background-color: gray;
+
+const Background = styled.div`
+  width: 100%;  
+  min-height: 70vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+`
+const Box = styled.div`
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+`
+
+const Centering = styled.div`
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
 `
 
 const LinkStyle = styled(Link)`
@@ -18,12 +41,33 @@ const Small = styled.div`
   font-weight: 500 !important;
   font-size: 24px !important;
   line-height: 31px !important;
+
+  @media (max-width: 576px) {
+    font-size: 14px !important;
+  }
+`
+
+const MenuImage = styled.img`
+  width:95%;
+  margin-bottom:10px;
+  @media (max-width: 992px) {
+    width: 85%;
+    }
+
+  @media (max-width: 768px) {
+    width: 80%;
+  }
+
+  @media (max-width: 576px) {
+    margin-bottom:0px;
+    width: 90%;
+  }
 `
 export default class Index extends Component {
 
   state = {
     menu: [
-      { link : 'profile' , message: 'ข้อมูลส่วนตัว' , imgBefore : '/img/Menu/person1.webp' , imgAfter : '/img/Menu/person1_done.webp' },
+      { link: 'menu' , message: 'ข้อมูลส่วนตัว' , imgBefore : '/img/Menu/person1.webp' , imgAfter : '/img/Menu/person1_done.webp' },
       { link: 'general', message: 'คำถามทั่วไป', imgBefore: '/img/Menu/question2.webp', imgAfter: '/img/Menu/question2_done.webp' },
       { link: 'major', message: 'คำถามสาขา', imgBefore : '/img/Menu/track3.webp', imgAfter : '/img/Menu/track3_done.webp' },
       { link: 'document', message: 'อัพโหลดเอกสาร', imgBefore: '/img/Menu/document4.webp', imgAfter: '/img/Menu/document4_done.webp' }
@@ -33,27 +77,20 @@ export default class Index extends Component {
 
   render() {
     return (
-      <Div className="d-flex justify-content-center" >
-        {
-          this.state.menu.map((data, i) => (
-            <LinkStyle to={`/${data.link}`} className="text-center col-lg-3 col-6" key={i}>
-              <img 
-                src={
-                      this.state.status
-                      ? data.imgBefore
-                      : data.imgAfter
-                    }
-                key={i}
-                />
-                {/* <div className="d-flex justify-content-center btn"> */}
-                <Small className="mt-3 btn">
-                  {data.message}
-                </Small>
-                {/* </div> */}
-            </LinkStyle>
-          ))
-        }
-      </Div>
+      <Background>
+        <Box className="container">
+          {
+            this.state.menu.map((data, i) => (
+              <LinkStyle to={`/${data.link}`} className="text-center col-lg-3 col-md-3 col-sm-6 col-6 mb-5" key={i}>
+                <MenuImage src={ this.state.status ? data.imgBefore : data.imgAfter } key={i} alt={data.link}/>
+                  <Small className="btn">
+                    {data.message}
+                  </Small>
+              </LinkStyle>
+            ))
+          }
+        </Box>
+      </Background>
     )
   }
 }
