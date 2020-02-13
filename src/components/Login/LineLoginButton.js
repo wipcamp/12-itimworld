@@ -7,50 +7,79 @@ const ButtonContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  padding-top: 20px;
   max-width: 400px;
-`
-const Button = styled.button`
-  background: #00C300;
-  color: #FFFFFF;
-  line-height: 1.5;
   height: 70px;
-  border-radius: 25px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 20px;
-  transition: all 0.4s;
+`
+const Button = styled.div`
+  height: 70px;
   width: 100%;
-  font-weight: 500;
-
-  &:hover{
-    background: #00E000;
+  max-width: 400px;
+  border-radius: 20px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  transition: all 0.3s ease-in-out;
+  @media(max-width: 500px) {
+    max-width: 350px;
   }
-
-  &:active{
-    background: #00B300;
+  @media(max-width: 360px) {
+    max-width: 300px;
+  }
+  &::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  height: 70px;
+  max-width: 400px;
+  @media(max-width: 500px) {
+    max-width: 350px;
+  }
+  @media(max-width: 360px) {
+    max-width: 300px;
+  }
+  width: 100%;
+  opacity: 0;
+  border-radius: 20px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  transition: opacity 0.3s ease-in-out;
+  }
+  &:hover {
+  transform: scale(1.2, 1.2);
+  }
+  &:hover::after {
+  opacity: 1;
   }
 `
 
 const LineImg = styled.img`
-  height: 50px;
-  width: 50px;
-  margin-right: 10px;
+  height:100%;
+`
+
+const Text = styled.div`
+  background: #00C300;
+  color: #FFFFFF;
+  border-radius: 20px;
+  height:100%;
+  font-size: 24px;
+  width:100%;
+  padding-right: 3rem;
+  @media(max-width: 500px) {
+    font-size: 20px;
+  }
+  @media(max-width: 360px) {
+    font-size: 15px;
+    padding-right: 1rem;
+  }
 `
 
 export default class LineLoginButton extends Component {
 
   render() {
     return (
-      <ButtonContainer>
-        <Button>
-            <Link 
-            onClick={this.props.onClick}   
-            >
-              <LineImg src="/img/line_88.png" /> 
-              <span>Log in with LINE</span>
-            </Link>
+      <ButtonContainer className="mt-5">
+        <Button onClick={this.props.onClick} className="row" >
+          <Text className="d-flex align-items-center justify-content-between pl-2">
+            <LineImg src="/img/btn_base.png" />
+            <div className="col-8">เข้าสู่ระบบด้วย Line</div>
+          </Text>
         </Button>
       </ButtonContainer>
     )
