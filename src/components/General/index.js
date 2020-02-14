@@ -115,27 +115,29 @@ export default class Index extends Component {
 
     render() {
       return (
-            <div className="container bg-white"><br/>
-                <Header className="col-12 mb-5 mt-5">This is General Question page</Header>
-                <div>
-                        {this.state.questions.map((data,i) => {
-                            return <Question 
-                            questionCount={i+1}  
-                            questionName={data.name} 
-                            questionId={data.id} 
-                            handleAnswer={this.handleAnswer}
-                            oldValue={this.state.questions[i].oldValue}
-                            />
-                        })}
-                </div>
-                <ButtonRoute 
-                  buttonLeft="กลับ" 
-                  buttonRight="ยืนยัน" 
-                  linkBack ="/menu"
-                  linkNext ="/menu"
-                  onClick={this.postGeneralAnswerService}
-                />
-            </div>
+          <div className="container">
+            <div className="bg-white pb-3">
+              <Header className="col-12 mb-5 mt-5 pt-3 pb-3">This is General Question page</Header>
+              <div className ="m-2">
+                      {this.state.questions.map((data,i) => {
+                          return <Question 
+                          questionCount={i+1}  
+                          questionName={data.name} 
+                          questionId={data.id} 
+                          handleAnswer={this.handleAnswer}
+                          oldValue={this.state.questions[i].oldValue}
+                          />
+                      })}
+              </div>
+              <ButtonRoute 
+                buttonLeft="กลับ" 
+                buttonRight="ยืนยัน" 
+                linkBack ="/menu"
+                linkNext ="/menu"
+                onClick={this.postGeneralAnswerService}
+              />
+          </div>
+        </div>
         )
     }
 }
