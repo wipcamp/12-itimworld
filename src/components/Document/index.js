@@ -9,10 +9,20 @@ import UserService from '../../services/UserService'
 import ButtonRoute from '../Core/ButtonRoute'
 
 const UploadButton = styled.button`
-width: 175px;
-height: 33px;
-background: #304151;
-border-radius: 4px;
+  width: 175px;
+  height: 33px;
+  background: #304151;
+  border-radius: 4px;
+
+  @media (max-width: 768px) {
+    width: 150.65px!important;
+    height: 49px!important;
+  }
+
+  @media (max-width: 576px) {
+    width: 88.8px!important;
+    height: 33.76px!important;
+  }
 `
 
 const TableStyle = styled(Table)`
@@ -80,7 +90,8 @@ export default class index extends Component {
 
     render() {
         return (
-            <ContainerBox className="container bg-white">
+            <div className="container">
+              <div className = "bg-white" style ={{minHeight:"70vh"}}>
                  <TableStyle className="center">
                      <thead>
                         <tr>
@@ -121,13 +132,13 @@ export default class index extends Component {
                 </TableStyle>
                 <ButtonRoute 
                   className= 'd-flex col-12 mb-5'
-                  buttonLeft="กลับ" 
-                  buttonRight="ยืนยัน" 
+                  buttonLeft="ย้อนกลับ" 
                   linkBack ="/menu"
-                  linkNext ="/menu"
+                  displayButtonRight="none"
                   onClick={(e) => this.uploadFile(e)}
                 />
-            </ContainerBox>
+              </div>
+            </div>
         )
     }
 }
