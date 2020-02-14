@@ -53,10 +53,10 @@ export default class Navbar extends Component {
               <div className="container">
                 <div className="d-flex justify-content-between">
                   <div className="row">
-                    <div className="col-md-3 col-sm-4 col-8">
+                    <div className="col-md-3 col-sm-4 col-6">
                       <Img src="/img/Logo.png" alt="WIP Camp" />
                     </div>
-                    <div className="col-md-9 col-sm-8 col-4">
+                    <div className="col-md-9 col-sm-8 col-6">
                       <div className="" style={{ color: "white", textAlign: "right" }}>
                         WIP ID : {this.state.wipId}
                         <br />
