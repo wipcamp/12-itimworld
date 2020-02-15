@@ -5,7 +5,7 @@ import { Modal, ModalBody } from 'reactstrap';
 
 import ButtonRoute from '../Core/ButtonRoute'
 import { ButtonStyle } from '../Core/ButtonStyle'
-import { HeaderText, Paragrph } from '../Core/Text'
+import { HeaderText, Paragraph } from '../Core/Text'
 
 const Hr = styled.hr`
   width: 557px;
@@ -46,9 +46,9 @@ const ConfirmModal = (props) => {
         <Body>
           <HeaderText className="mt-3">ยืนยันที่จะส่งข้อมูล</HeaderText>
           <Hr/>
-          <Paragrph className="row justify-content-center">
+          <Paragraph className="row justify-content-center">
             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five 
-          </Paragrph>
+          </Paragraph>
         <Alret> *หากยืนยันข้อมูล จะไม่สามารถกลับมาเเก้ไขส่วนคำถามที่ตอบเเละข้อมูลสาขาได้อีก </Alret>
         <Div className="row justify-content-around ml-5 pl-4 mr-auto pr-auto">
           <ButtonStyle onClick={toggle}>Cancel</ButtonStyle>
