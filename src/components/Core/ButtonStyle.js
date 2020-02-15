@@ -35,8 +35,8 @@ export const ButtonStyle = styled(Button)`
 `
 
 export const ButtonStyleLink = styled(Link)`
-  width: 218.65px!important;
-  height: 59px!important;
+  width: 218.65px;
+  height: 59px;
   background: #304151!important;
   border-radius: 4px!important;
   font-style: normal!important;
