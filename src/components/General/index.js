@@ -2,12 +2,22 @@ import React, { Component } from 'react'
 import ButtonRoute from '../Core/ButtonRoute'
 import Question from './Question'
 import UserService from './../../services/UserService'
-import Styled from 'styled-components'
+import styled from 'styled-components'
+import CustomModal from './../Core/CustomModal'
+import { ButtonStyle } from '../Core/ButtonStyle'
 
-const Header = Styled.h2`
+const Header = styled.h2`
   font-size: 36px;
   line-height: 47px;
   text-align: center;
+`
+
+const ContainerDiv = styled.div`
+  max-width:1200px;
+`
+
+const NotDisplayButton = styled.button`
+  display:none;
 `
 
 let answer = {
@@ -19,6 +29,7 @@ let answer = {
 
 let userId = 120001;
 
+let submitButtonRef = null;
 export default class Index extends Component {
   
   handleAnswer=(event)=> {
@@ -64,80 +75,62 @@ export default class Index extends Component {
           oldValue: ''
 
         }
-      ]
+      ],
+      modal:false
     }
 
-    getGeneralAnswerService = async() =>{
-      let promise;
-      try{
-        promise = await UserService.getUser(userId);
-        let response = promise.data;
-        if(response.success){
-          let gettedUserGeneralAnswer = this.state.questions;
-          gettedUserGeneralAnswer[0].oldValue = response.data[0].generalAnswer.firstAnswer
-          gettedUserGeneralAnswer[1].oldValue = response.data[0].generalAnswer.secondAnswer
-          gettedUserGeneralAnswer[2].oldValue = response.data[0].generalAnswer.thirdAnswer
-          gettedUserGeneralAnswer[3].oldValue = response.data[0].generalAnswer.forthAnswer
-
-          this.setState({ questions : gettedUserGeneralAnswer});
-          answer.firstAnswer = response.data[0].generalAnswer.firstAnswer===null?"":response.data[0].generalAnswer.firstAnswer;
-          answer.secondAnswer = response.data[0].generalAnswer.secondAnswer===null?"":response.data[0].generalAnswer.secondAnswer;
-          answer.thirdAnswer = response.data[0].generalAnswer.thirdAnswer===null?"":response.data[0].generalAnswer.thirdAnswer;
-          answer.forthAnswer = response.data[0].generalAnswer.forthAnswer===null?"":response.data[0].generalAnswer.forthAnswer;
-          console.log("GET general answer success")
-        }else{
-          console.log("success fail GET general answer")
-        }
-      }catch(e){
-        console.log("Error GET general answer")
-      }
+    toggleModal = () => {
+      this.setState({modal:!this.state.modal})
     }
     
-    postGeneralAnswerService = async() =>{
-      let promise;
-      try{
-        promise = await UserService.postGeneralAnswer(userId,answer).then(() => {UserService.postStatus(userId,{"status":"general"})});
-
-        let response = promise.data;
-        if(response.success){
-          console.log("Post general answer success")
-        }else{
-          console.log("success fail Post general answer")
-        }
-      }catch(e){
-        console.log("Error post general answer")
-      }
+    postGeneralAnswerService = async (event) =>{
+      event.preventDefault();
+      await UserService.postGeneralAnswer(userId,answer)
+        .then(() => {UserService.postStatus(userId,{"status":"general"})})
+        .catch(() => this.toggleModal())
     }
-    
-    async componentDidMount(){
-      await this.getGeneralAnswerService(); 
+
+    setSubmitButtonRef = e => {
+      submitButtonRef = e;
+    }
+  
+    clickSubmit = (e) => {
+      submitButtonRef.click();
     }
 
     render() {
       return (
-          <div className="container">
-            <div className="bg-white pb-3">
-              <Header className="col-12 mb-5 mt-5 pt-3 pb-3">This is General Question page</Header>
-              <div className ="m-2">
-                      {this.state.questions.map((data,i) => {
+        <ContainerDiv className ="container-fluid justify-content-center">
+            <div className="card p-5" style={{boxShadow: `0px 4px 4px rgba(0, 0, 0, 0.25)`,borderRadius: `4px`,opacity:`0.9`}}>
+                <Header className="col-12 mb-5 mt-5">This is General Question page</Header>
+                <div>
+                  <form onSubmit={e => this.postGeneralAnswerService(e)}>
+                        {this.state.questions.map((data,i) => {
                           return <Question 
                           questionCount={i+1}  
                           questionName={data.name} 
                           questionId={data.id} 
                           handleAnswer={this.handleAnswer}
-                          oldValue={this.state.questions[i].oldValue}
+                          required
                           />
-                      })}
-              </div>
-              <ButtonRoute 
-                buttonLeft="กลับ" 
-                buttonRight="ยืนยัน" 
-                linkBack ="/menu"
-                linkNext ="/menu"
-                onClick={this.postGeneralAnswerService}
-              />
-          </div>
-        </div>
+                        })}
+                      <NotDisplayButton ref={this.setSubmitButtonRef}> asd</NotDisplayButton>
+                  </form>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <ButtonRoute 
+                    buttonLeft="กลับ"  
+                    linkBack="/menu"
+                    className=""
+                    displayButtonRight="none"
+                  />
+                  <ButtonStyle className="" onClick={() => this.clickSubmit()}>
+                    ยืนยัน
+                  </ButtonStyle>
+                </div>
+              <CustomModal header="เกิดข้อผิดพลาดขึ้น" paragraph="โปรดติดต่อเจ้าหน้าที่" secondaryButtonText="ปิด" modal={this.state.modal} toggle={this.toggleModal} />
+            </div>
+          </ContainerDiv>
         )
     }
 }
