@@ -18,47 +18,27 @@ const TextArea = styled.textarea`
     box-sizing: border-box;
     border-radius: 4px;
 `
-export default class Question extends Component {
-    state = {
-        oldValue: ''
-    }
-
-    componentDidUpdate(prevProps){
-        if(this.props.oldValue !== prevProps.oldValue){
-            this.setState({
-                oldValue: this.props.oldValue
-            })
-        }
-    }
-
-    handleChange = (e) => {
-        this.props.handleAnswer(e);
-        this.setState({
-            oldValue: e.target.value
-        })
-    }
-
-
-    render() {
-        return (
-            <div className="form-group">
-            <QuestionName className="col-12 justify-content-center">คำถามที่ {this.props.questionCount} : {this.props.questionName}</QuestionName>
-                <TextArea 
-                className="col-12"
-                name={this.props.questionId} 
-                onChange={(e) => this.handleChange(e)}
-                value={this.state.oldValue}
-                >
-                </TextArea>
-            </div>
-        )
-    }
+const Question = (props) => {
+  return (
+    <div className="form-group">
+      <QuestionName className="col-12 justify-content-center">คำถามที่ {props.questionCount} : {props.questionName}</QuestionName>
+      <TextArea 
+        className="col-12"
+        name={props.questionId} 
+        onChange={(e) => props.handleAnswer(e)}
+        required={props.required}
+        >
+      </TextArea>
+    </div>
+  )
 }
 
 Question.propType = {
-    oldValue: PropTypes.object,
     questionId: PropTypes.any,
     questionName: PropTypes.string,
     questionCount: PropTypes.number,
     handleAnswer: PropTypes.func,
+    required: PropTypes.bool
 }
+
+export default Question;
