@@ -14,6 +14,7 @@ import SelectField from '../Core/SelectField'
 import { MinHeightRow } from '../Core/FieldStyle'
 import { Redirect } from 'react-router-dom'
 import regexPattern from '../Core/RegexPattern'
+import CustomModal from '../Core/CustomModal'
 
 const userId = 120001;
 
@@ -174,13 +175,22 @@ export default class Index extends Component {
     buttonDisable: true,
     knowWhence: "",
     etcInput:false,
-    redirect:false
+    redirect:false,
+    modal:false
   }
 
   componentDidCatch() {
     this.setState({errorLoad:true})
   }
 
+  toggleModal = () => {
+    this.setState({modal:!this.state.modal})
+  }
+
+  submitForm = (e) => {
+    e.preventDefault();
+    this.toggleModal();
+  }
 
   async componentDidMount() {
     let promise;
@@ -245,13 +255,40 @@ export default class Index extends Component {
     return data !== undefined && data !== null && Object.keys(data).length !== 0
   }
 
-  componentDidUpdate() {
-    console.log(this.state.newUser)
-    console.log(this.state.oldUser)
+  isKnowWhenceHasData = () => {
+    const newUser = this.state.newUser;
+    if(this.isExist(newUser) && this.isExist(newUser.knowWhence)){
+      const knowWhence = newUser.knowWhence;
+      return knowWhence.facebook === true || knowWhence.camphub === true || knowWhence.dekd === true || knowWhence.sit === true || this.isExist(knowWhence.etc)
+    } else{
+      return false;
+    }
+  }
 
-    if (this.state.newUser !== '')  {
-      if(this.state.buttonDisable)
-        this.setState({buttonDisable:false})
+  componentDidUpdate() {
+    console.log(this.state.newUser);
+    
+    if ( this.state.newUser !== '' )  {
+      if(Object.keys(this.state.newUser).length > 1){
+        if(this.state.buttonDisable)
+          this.setState({buttonDisable:false})
+      }else{
+        if(Object.keys(this.state.newUser).includes("knowWhence")){
+          if(this.isKnowWhenceHasData()){
+            if(this.state.buttonDisable)
+              this.setState({buttonDisable:false})
+          }else{
+            if(!this.state.buttonDisable)
+              this.setState({buttonDisable:true})
+          }
+        }else{
+          if(this.state.buttonDisable)
+            this.setState({buttonDisable:false})
+        }
+      }
+    }else{
+      if(!this.state.buttonDisable)
+        this.setState({buttonDisable:true})
     }
   }
 
@@ -372,17 +409,18 @@ export default class Index extends Component {
       }))
     }
     else{
-    this.setState((prevState) => ({
+    this.setState((prevState) => (
+      {
       newUser: {
         ...prevState.newUser,
         [name]: value
-      },
+        },
       oldUser: {
         ...prevState.oldUser,
         [name]: value
+        }
       }
-    }
-    ))
+      ))
     }
   }
 
@@ -399,7 +437,8 @@ export default class Index extends Component {
   }
 
   clickSubmit = (e) => {
-
+    
+    e.preventDefault();
     this.validateCheckboxField();
     
     profileFormRef.click();
@@ -441,7 +480,7 @@ export default class Index extends Component {
 
       return (
         <ContainerDiv className="container">
-          <form onSubmit={e=>{this.openModal()}}>
+          <form onSubmit={e=>{this.submitForm(e)}}>
           <div className="card p-5" style={{boxShadow: `0px 4px 4px rgba(0, 0, 0, 0.25)`,borderRadius: `4px`,opacity:`0.9`}}>
             <h1 className="text-center"> แก้ไขข้อมูลส่วนตัว </h1> 
             <section>
@@ -538,6 +577,7 @@ export default class Index extends Component {
                     placeHolder={data.placeHolder}
                     value={this.state.oldUser[data.name]}
                     name={data.name}
+                    required={false}
                     onChange={(e) => this.handleChange(e)}
                   />
                 ))
@@ -547,17 +587,15 @@ export default class Index extends Component {
             <section>
               <SectionHeader className="col-12">ข้อมูลการติดต่อ</SectionHeader>
 
-              <AddressField
+              <TextField
                 className="col-12 col-md-6 form-group"
                 leftSide="col-12 col-md-4 col-form-label text-md-right"
                 rightSide="col-12 col-md-8"
                 labelInput="จังหวัด"
-                address="province"
                 id="province"
-                name="addrProvice"
+                name="province"
                 value={this.state.oldUser.province}
                 onChange={(e) => this.handleChange(e)}
-                onSelect={(e) => this.onSelect(e)}
                 placeholder="เลือก"
                 pattern={regexPattern.th}
                 title="โปรดกรอกเป็นภาษาไทย"
@@ -597,7 +635,7 @@ export default class Index extends Component {
                 rightSide="col-12 col-md-8"
                 labelInput="โรงเรียน"
                 placeHolder="เลือก"
-                name="school"
+                name="schoolName"
                 value={this.state.oldUser.school.name}
                 onChange={(e) => this.handleChange(e)}
                 required
@@ -623,7 +661,7 @@ export default class Index extends Component {
               />
               <Field
                 className="col-12 col-md-6 form-group"
-                name="gpax"
+                name="schoolGpax"
                 type="number"
                 labelInput="เกรดเฉลี่ย"
                 placeHolder=""
@@ -676,18 +714,23 @@ export default class Index extends Component {
                   onChange={(e) => this.handleChange(e)} 
                   ></textarea>
                 </section>
-                  <NotDisplayButton ref={this.setProfileFormRef}> asd</NotDisplayButton>
+                <NotDisplayButton ref={this.setProfileFormRef}> asd</NotDisplayButton>
           </div>
           </form>
           <div className="d-flex justify-content-between mt-3">
-              <ButtonRoute 
-                displayButtonRight="none"
-                linkBack="menu"
-                className=""
-              />
-              {/* <ButtonStyle onClick={(e) => this.clickSubmit(e)}>ยืนยัน</ButtonStyle> */}
-              <EditModal disabled={this.state.buttonDisable} newUser={this.state.newUser} data={this.state.oldUser} onClick={(e)=>this.clickSubmit(e)}/>
-            </div>
+            <ButtonRoute 
+              displayButtonRight="none"
+              linkBack="menu"
+              className=""
+            />
+            <EditModal 
+              disabled={this.state.buttonDisable} 
+              newUser={this.state.newUser} 
+              data={this.state.oldUser}
+              modal={this.state.modal}
+              toggle={this.toggleModal} 
+              onClick={(e)=>this.clickSubmit(e)}/>
+          </div>
       </ContainerDiv>
       )
     }
