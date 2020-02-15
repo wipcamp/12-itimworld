@@ -10,6 +10,7 @@ import SelectField from '../Core/SelectField'
 import { MinHeightRow } from '../Core/FieldStyle'
 import { Redirect } from 'react-router-dom'
 import regexPattern from '../Core/RegexPattern'
+import CustomModal from '../Core/CustomModal'
 
 const userId = 120001;
 
@@ -166,9 +167,13 @@ export default class Index extends Component {
     },
     errorMsg: [],
     etcInput:false,
-    redirect:false
+    redirect:false,
+    modal:false
   }
 
+  toggleModal = () => {
+    this.setState({modal:!this.state.modal})
+  }
   
   async componentDidMount() {
     console.log(checkBoxRef);
@@ -181,9 +186,9 @@ export default class Index extends Component {
   putUser = async (data,event) => {
     event.preventDefault();
     await UserService.putUser(userId, data)
-    .then(() => {UserService.postStatus(userId,{"status":"register"})})
+    .then(() => UserService.postStatus(userId,{"status":"register"}))
     .then(() => this.setState({redirect:true}))
-    
+    .catch(() => this.toggleModal())
   }
 
   handleClick = () => {
@@ -257,7 +262,7 @@ export default class Index extends Component {
 
   renderInputButton = ()=>{
     if(this.state.etcInput){
-      return <input class="form-control ml-2" type="text" name="etc" onChange={e => this.handleChange(e)} />
+      return <input class="form-control ml-2" type="text" name="etc" onChange={e => this.handleChange(e)} required />
     }
   }
 
@@ -553,6 +558,7 @@ export default class Index extends Component {
           <div className="d-flex justify-content-end mt-3">
             <ButtonStyle onClick={(e) => this.clickSubmit(e)}>ยืนยัน</ButtonStyle>
           </div>
+          <CustomModal header="เกิดข้อผิดพลาดขึ้น" paragraph="โปรดติดต่อเจ้าหน้าที่" secondaryButtonText="ปิด" modal={this.state.modal} toggle={this.toggleModal} />
         </ContainerDiv>
     )
   }
