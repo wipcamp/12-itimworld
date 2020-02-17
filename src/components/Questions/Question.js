@@ -30,6 +30,7 @@ export default class Question extends Component {
                     className="col-12"
                     name={this.props.questionId}
                     onChange={this.props.handleAnswer}
+                    required={this.props.required}
                     />
             </div>
 
@@ -41,5 +42,6 @@ Question.propTypes = {
     questionCount: PropTypes.number,
     questionName: PropTypes.string,
     questionId: PropTypes.any,
-    handleAnswer: PropTypes.func
+    handleAnswer: PropTypes.func,
+    required: PropTypes.bool
 }
