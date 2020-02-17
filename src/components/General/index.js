@@ -5,6 +5,7 @@ import UserService from './../../services/UserService'
 import styled from 'styled-components'
 import CustomModal from './../Core/CustomModal'
 import { ButtonStyle } from '../Core/ButtonStyle'
+import { Redirect } from 'react-router-dom'
 
 const Header = styled.h2`
   font-size: 36px;
@@ -87,6 +88,7 @@ export default class Index extends Component {
       event.preventDefault();
       await UserService.postGeneralAnswer(userId,answer)
         .then(() => {UserService.postStatus(userId,{"status":"general"})})
+        .then(() => this.setState({redirect:true}))
         .catch(() => this.toggleModal())
     }
 
@@ -99,6 +101,13 @@ export default class Index extends Component {
     }
 
     render() {
+      
+      const { redirect } = this.state;
+
+      if (redirect) {
+        return <Redirect to='/menu'/>;
+      }
+
       return (
         <ContainerDiv className ="container-fluid justify-content-center">
             <div className="card p-5" style={{boxShadow: `0px 4px 4px rgba(0, 0, 0, 0.25)`,borderRadius: `4px`,opacity:`0.9`}}>
