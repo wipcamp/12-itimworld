@@ -22,6 +22,10 @@ const MajorName = styled(Title)`
   height:15vh;
 `
 
+const ContainerDiv = styled.div`
+  max-width:1800px;
+`
+
 export default class Index extends Component {
 
   state = {
@@ -147,7 +151,7 @@ export default class Index extends Component {
     }
     else{
       return (
-        <React.Fragment>
+        <ContainerDiv className="container-fluid">
           <div className="row justify-content-center">
             {
               this.state.majors.map((data, key) => (
@@ -168,22 +172,18 @@ export default class Index extends Component {
                 {this.state.selectedMajor.name}
             </MajorName>
           </div>
-          <div className="d-inline justify-content-between">
+          <div className="row">
+            <div className="col-2" />
             <ButtonRoute
-              className="col-4 d-inline-flex offset-2"
+              className="col-8 d-inline-flex justify-content-between"
+              linkNext={`/questions?major=${this.state.selectedMajor.id}`} 
               linkBack="/menu"
-              displayButtonRight="none"
+              buttonRight="ยืนยัน"
+              buttonRightDisabled={this.state.selectedMajor.name === null}
               />
-            {/* <ConfirmModal 
-              majorId={this.state.selectedMajor.id} 
-              selectedMajor={this.state.selectedMajor} 
-              showMajor={this.state.showMajor}
-              disabled={this.state.buttonValue}
-            /> */}
-            <ButtonRoute className="col-4 d-inline-flex justify-content-end" linkNext={`/questions?major=${this.state.selectedMajor.id}`} buttonRight="ยืนยัน" displayButtonLeft="none" />
-            <div class="col-2" />
+            <div className="col-2" />
           </div>
-        </React.Fragment>
+        </ContainerDiv>
       )
     } 
   }
