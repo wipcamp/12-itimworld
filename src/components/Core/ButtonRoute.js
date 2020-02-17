@@ -37,7 +37,7 @@ class ButtonRoute extends React.Component{
           displayButtonRight={this.props.displayButtonRight}
           onClick={()=>this.handleGoToNextPage()}
         >
-            <ButtonStyle> {this.props.buttonRight}</ButtonStyle>
+            <ButtonStyle disabled={this.props.buttonRightDisabled}> {this.props.buttonRight}</ButtonStyle>
         </ButtonRight>
       </div>
     )
@@ -52,7 +52,8 @@ ButtonRoute.propTypes = {
   displayButtonRight: PropTypes.string,
   buttonLeft: PropTypes.string,
   linkBack: PropTypes.string,
-  buttonRight: PropTypes.string
+  buttonRight: PropTypes.string,
+  buttonRightDisabled: PropTypes.bool
 }
 
 ButtonRoute.defaultProps = {
@@ -60,7 +61,8 @@ ButtonRoute.defaultProps = {
   displayButtonRight: 'block',
   buttonLeft: 'กลับ',
   buttonRight:'ถัดไป',
-  className: 'd-flex col-12'
+  className: 'd-flex col-12',
+  buttonRightDisabled: false
 }
 
 export default ButtonRoute
