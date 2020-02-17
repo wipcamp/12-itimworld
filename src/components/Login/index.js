@@ -80,7 +80,7 @@ const Logo = styled.img`
 class Login extends Component {
 
   state = {
-    itimUrl: 'https://master.itim.wip.camp/login',
+    itimUrl: 'https://12-lineauth.freezer.wip.camp/login',
     nonce: '',
     state: '',
     newState: '',
