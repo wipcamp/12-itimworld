@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { Modal, ModalBody } from 'reactstrap'
 
-import { HeaderText, Paragrph } from '../Core/Text'
+import { HeaderText, Paragraph } from '../Core/Text'
 import { ButtonStyle, ButtonStyleLink } from '../Core/ButtonStyle'
 
 const SubHeader = styled(HeaderText)`
@@ -26,14 +26,8 @@ const EditData = styled.div`
   background: #FFFFFF;
 `
 const ConfirmModal = (props) => {
-  const { 
-    newUser,
-    className
-  } = props;
 
   const [modal, setModal] = useState(false);
-
-  const toggle = () => setModal(!modal)
 
   const toggleWithProps = () => {
     setModal(!modal)
@@ -41,30 +35,26 @@ const ConfirmModal = (props) => {
   }
   return (
     <div>
-      <ButtonStyle color="primary" onClick={toggle} disabled={props.disabled} >บันทึก</ButtonStyle>
-      <Modal isOpen={modal} toggle={toggle} className={className}>
+      <ButtonStyle color="primary" onClick={props.onClickButton} disabled={props.disabled} >บันทึก</ButtonStyle>
+      <Modal isOpen={props.modal} toggle={props.toggleModal} className={props.className}>
         <Body>
           <HeaderText className="col-12">ยืนยันที่จะแก้ไขข้อมูล</HeaderText>
           <div className="row justify-content-center mb-5">
-            <Paragrph className="col-8 ">
+            <Paragraph className="col-8 ">
               Lorem Ipsum is simply dummy text of the printing and
               typesetting industry. Lorem Ipsum has been the industry's
               standard dummy text ever since the 1500s,
-          </Paragrph>
+          </Paragraph>
             <SubHeader className="d-flex justify-content-start col-8"> ข้อมูลที่ท่านแก้ไขมีดังนี้ </SubHeader>
             <EditData className="col-8">
-              {
-                Object.values(newUser).map((data, i) => (
-                  <React.Fragment key={i}>
-                    <span key={i}>{data}</span><br key={i} />
-                  </React.Fragment>
-                ))
-              }
+              {props.displayText.map(element => {
+                return <p>{element}</p>;
+              })}
             </EditData>
           </div>
         <Div className="d-flex justify-content-between ml-5 pl-4 mr-5 pr-4">
-          <ButtonStyle color="secondary" onClick={toggle}>Cancel</ButtonStyle>
-          <ButtonStyleLink to="/success" class="btn btn-primary" onClick={toggleWithProps}>ยืนยัน</ButtonStyleLink>
+          <ButtonStyle color="secondary" onClick={props.toggleModal}>Cancel</ButtonStyle>
+          <ButtonStyle onClick={toggleWithProps}>ยืนยัน</ButtonStyle>
         </Div>
         </Body>
       </Modal>
@@ -73,7 +63,17 @@ const ConfirmModal = (props) => {
 }
 
 ConfirmModal.propsType = {
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  displayText: PropTypes.array,
+  modal: PropTypes.bool.isRequired,
+  toggleModal: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
+  onClickButton: PropTypes.func.isRequired
+
+}
+
+ConfirmModal.defaultProps = {
+  displayText: []
 }
 
 export default ConfirmModal;

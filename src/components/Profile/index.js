@@ -10,6 +10,7 @@ import SelectField from '../Core/SelectField'
 import { MinHeightRow } from '../Core/FieldStyle'
 import { Redirect } from 'react-router-dom'
 import regexPattern from '../Core/RegexPattern'
+import CustomModal from '../Core/CustomModal'
 
 const userId = 120001;
 
@@ -166,9 +167,13 @@ export default class Index extends Component {
     },
     errorMsg: [],
     etcInput:false,
-    redirect:false
+    redirect:false,
+    modal:false
   }
 
+  toggleModal = () => {
+    this.setState({modal:!this.state.modal})
+  }
   
   async componentDidMount() {
     console.log(checkBoxRef);
@@ -181,9 +186,9 @@ export default class Index extends Component {
   putUser = async (data,event) => {
     event.preventDefault();
     await UserService.putUser(userId, data)
-    .then(() => {UserService.postStatus(userId,{"status":"register"})})
+    .then(() => UserService.postStatus(userId,{"status":"register"}))
     .then(() => this.setState({redirect:true}))
-    
+    .catch(() => this.toggleModal())
   }
 
   handleClick = () => {
@@ -257,7 +262,7 @@ export default class Index extends Component {
 
   renderInputButton = ()=>{
     if(this.state.etcInput){
-      return <input class="form-control ml-2" type="text" name="etc" onChange={e => this.handleChange(e)} />
+      return <input class="form-control ml-2" type="text" name="etc" onChange={e => this.handleChange(e)} required />
     }
   }
 
@@ -366,7 +371,7 @@ export default class Index extends Component {
                         name="birthDate"
                         id="birthDate"
                         min="1995-01-01"
-                        max="20010-12-31"
+                        max="2010-12-31"
                         value={this.state.birthDate}
                         onChange={(e) => this.handleChange(e)}
                         required
@@ -510,24 +515,23 @@ export default class Index extends Component {
               <section>
                 <SectionHeader className="col-12">ช่องทางที่รู้จักค่าย</SectionHeader>
                 <MinHeightRow className="row form-group checkbox-group required">
-                  <div className="col-1"></div>
-                  <div className="form-check form-check-inline col-2">
+                  <div className="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-1">
                     <input class="form-check-input" type="checkbox" name="knowWhence" id="knowWhenceFacebook"  value="facebook" onClick={e=>this.handleChange(e)}/>
                     <label class="form-check-label" for="knowWhenceFacebook">Facebook</label>
                   </div>
-                  <div class="form-check form-check-inline col-2">
+                  <div class="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0">
                     <input class="form-check-input" type="checkbox" name="knowWhence" id="knowWhenceCamphub" value="camphub" onClick={e=>this.handleChange(e)}/>
                     <label class="form-check-label" for="knowWhenceCamphub">Camphub</label>
                   </div>
-                  <div class="form-check form-check-inline col-2">
+                  <div class="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0">
                     <input class="form-check-input" type="checkbox" name="knowWhence" id="knowWhenceDek-D" value="dekd" onClick={e=>this.handleChange(e)}/>
                     <label class="form-check-label" for="knowWhenceDek-D">Dek-D</label>
                   </div>
-                  <div class="form-check form-check-inline col-2">
+                  <div class="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0">
                     <input class="form-check-input" type="checkbox" name="knowWhence" id="knowWhenceSIT" value="sit" onClick={e=>this.handleChange(e)}/>
                     <label class="form-check-label" for="knowWhenceSIT">SIT</label>
                   </div>
-                  <div class="form-check form-check-inline col-2">
+                  <div class="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0">
                     <input class="form-check-input" type="checkbox" name="knowWhence" id="knowWhenceEtc" value={null} onClick={e=>this.setEtcInput(e,!this.state.etcInput)} ref={this.setEtcBoxRef} required/>
                     <label class="form-check-label" for="knowWhenceEtc">อื่นๆ</label>
                     {this.renderInputButton()}
@@ -554,6 +558,7 @@ export default class Index extends Component {
           <div className="d-flex justify-content-end mt-3">
             <ButtonStyle onClick={(e) => this.clickSubmit(e)}>ยืนยัน</ButtonStyle>
           </div>
+          <CustomModal header="เกิดข้อผิดพลาดขึ้น" paragraph="โปรดติดต่อเจ้าหน้าที่" secondaryButtonText="ปิด" modal={this.state.modal} toggle={this.toggleModal} />
         </ContainerDiv>
     )
   }

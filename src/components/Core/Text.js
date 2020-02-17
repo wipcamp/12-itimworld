@@ -9,7 +9,7 @@ export const HeaderText = styled.h1`
   text-align: center!important;
 `
 
-export const Paragrph = styled.div`
+export const Paragraph = styled.div`
   font-style: normal;
   font-weight: 300;
   font-size: ${fonts.Paragraph};
