@@ -22,6 +22,8 @@ import Edit from './components/Edit'
 import General from './components/General'
 import Document from './components/Document'
 
+const locationNow = window.location.pathname
+
 const Mountain = styled.div`
   background-image:url('/img/mountain.png');
   background-repeat: no-repeat;
@@ -42,7 +44,21 @@ const PrivateRoute = ({ children, ...rest }) => {
         render={({ location }) =>
           (cookies.get('token') !== undefined && cookies.get('token') !== null)? (
           // true ? (
-            children
+            <React.Fragment>
+            {
+                locationNow === '/menu' || locationNow === '/profile' || 
+                  locationNow === '/general' || locationNow === '/major' ||
+                  locationNow === '/document' ? 
+              children
+              :
+              <Redirect
+                to={{
+                  pathname: "/menu",
+                  state: { from: locationNow }
+                }}
+              />
+            }
+            </React.Fragment>
           ) : (
               <Redirect
                 to={{
@@ -57,6 +73,25 @@ const PrivateRoute = ({ children, ...rest }) => {
   )
 }
 
+const MenuRoute = () => {
+  return(
+    <React.Fragment>
+      {
+        (cookies.get('token') !== undefined && cookies.get('token') !== null)? (
+        // true ? (
+          <Menu />
+        ) : (
+            <Redirect
+              to={{
+                pathname: "/login",
+                state: { from: locationNow }
+              }}
+            />
+          )
+      }
+    </React.Fragment>
+  )
+}
 export default class Index extends React.Component {
 
   state = {
@@ -88,9 +123,9 @@ export default class Index extends React.Component {
           <PrivateRoute path="/major">
             <Major />
           </PrivateRoute>
-          <PrivateRoute path="/menu">
-            <Menu />
-          </PrivateRoute>
+          <MenuRoute path="/menu" />
+            {/* <Menu />
+          </MenuRoute> */}
           <PrivateRoute path="/document">
             <Document />
           </PrivateRoute>
