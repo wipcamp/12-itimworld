@@ -18,6 +18,10 @@ const Title = styled.p`
   visibility:${props => props.visible};
 `
 
+const MajorName = styled(Title)`
+  height:15vh;
+`
+
 export default class Index extends Component {
 
   state = {
@@ -157,25 +161,27 @@ export default class Index extends Component {
               )
               )
             }
-            <Title className="d-flex col-12 justify-content-center" visible={this.state.selectedMajor.description ? "visible" : "hidden"}>
+            <Title className="d-flex col-12 justify-content-center mt-4" visible={this.state.selectedMajor.name ? "visible" : "hidden"}>
                 <Header>ชื่อสาขาที่เลือก</Header>
             </Title>
-            <Title className={`d-flex col-12 justify-content-center ${this.state.selectedMajor.description ? "mb-4" : "mb-5"} `} visible={this.state.selectedMajor.description ? "visible" : "hidden"}>
-                {this.state.selectedMajor.description}
-            </Title>
+            <MajorName className={`d-flex col-12 justify-content-center`} visible={this.state.selectedMajor.description ? "visible" : "hidden"}>
+                {this.state.selectedMajor.name}
+            </MajorName>
           </div>
           <div className="d-inline justify-content-between">
             <ButtonRoute
-              className="col-6 d-inline-flex"
+              className="col-4 d-inline-flex offset-2"
               linkBack="/menu"
               displayButtonRight="none"
               />
-            <ConfirmModal 
+            {/* <ConfirmModal 
               majorId={this.state.selectedMajor.id} 
               selectedMajor={this.state.selectedMajor} 
               showMajor={this.state.showMajor}
               disabled={this.state.buttonValue}
-            />
+            /> */}
+            <ButtonRoute className="col-4 d-inline-flex justify-content-end" linkNext={`/questions?major=${this.state.selectedMajor.id}`} buttonRight="ยืนยัน" displayButtonLeft="none" />
+            <div class="col-2" />
           </div>
         </React.Fragment>
       )
