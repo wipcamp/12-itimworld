@@ -15,7 +15,7 @@ const PrimaryButton = styled.div`
   box-sizing: border-box;
   border-radius: 4px;
 
-  display: ${props=>props.primaryButtonDisplay?props.primaryButtonDisplay:"none"}!important;
+  display: ${props=>props.display?props.display:"none"}!important;
 `
 
 const SecondaryButton = styled.div`
@@ -56,13 +56,6 @@ const CustomModal = props => {
             </div>
           </div>
           <NoBorder className="modal-footer">
-            <PrimaryButton>
-              <button type="button" class="btn" onClick={props.toggle}>
-                  <WhiteParagraphContext>
-                    {props.primaryButtonText}
-                  </WhiteParagraphContext>
-                </button>
-            </PrimaryButton>
             <SecondaryButton>
                 <button type="button" class="btn" onClick={props.toggle}>
                   <ParagraphContext>
@@ -70,6 +63,13 @@ const CustomModal = props => {
                   </ParagraphContext>
                 </button>
             </SecondaryButton>
+            <PrimaryButton display={props.primaryButtonDisplay}>
+              <button type="button" class="btn" onClick={props.primaryOnClick}>
+                  <WhiteParagraphContext>
+                    {props.primaryButtonText}
+                  </WhiteParagraphContext>
+                </button>
+            </PrimaryButton>
           </NoBorder>
         </div>
       </Modal>
@@ -83,12 +83,14 @@ CustomModal.propTypes = {
     paragraph: PropTypes.string.isRequired,
     primaryButtonDisplay: PropTypes.string,
     primaryButtonText: PropTypes.string,
+    primaryOnClick: PropTypes.func,
     secondaryButtonText: PropTypes.string,
     dangerSubtitle: PropTypes.string
 }
 
 CustomModal.defaultProps = {
   primaryButtonText: "ยืนยัน",
+  primaryOnClick: () => {},
   secondaryButtonText: "ยกเลิก",
   dangerSubtitle: ""
 }
