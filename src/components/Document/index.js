@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import { Table } from 'reactstrap'
-import { Button } from 'reactstrap'
 import styled from 'styled-components'
 import {Subtitle,SmallText} from '../Core/Text'
 import {ButtonStyle} from '../Core/ButtonStyle'
@@ -15,22 +13,16 @@ const UploadButton = styled.button`
   border-radius: 4px;
 
   @media (max-width: 768px) {
-    width: 150.65px!important;
-    height: 49px!important;
+    width: 155px!important;
+    height: 33px!important;
+    /* width: 150.65px!important;
+    height: 49px!important; */
   }
 
   @media (max-width: 576px) {
     width: 88.8px!important;
     height: 33.76px!important;
   }
-`
-
-const TableStyle = styled(Table)`
-    
-`
-
-const ContainerBox = styled.div`
-height:70vh;
 `
 
 const ButttonText = styled.div`
@@ -53,6 +45,10 @@ const Div = styled.div`
 
 const Test = styled.input`
 display:none;
+`
+
+const TableHeader = styled.div`
+ background:#F5F6F7;
 `
 
 let uploadDocument = null;
@@ -90,54 +86,47 @@ export default class index extends Component {
 
     render() {
         return (
-            <div className="container">
-              <div className = "bg-white" style ={{minHeight:"70vh"}}>
-                 <TableStyle className="center">
-                     <thead>
-                        <tr>
-                            <th></th>
-                            <th><Subtitle>เอกสารที่ต้องอัพโหลด</Subtitle></th>
-                            <th className="text-right"><Subtitle>ภายในวันที่</Subtitle></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td></td>
-                            <td>
-                                <Subtitle>ปพ.5</Subtitle>
-                                <SmallConText>Lorem ipsum <br /> asapkok</SmallConText>
-                            </td>
-                            <td></td>
-                            <TableRowAlignMiddle className="align-content-center">
-                                <UploadButton className="float-right text-center" onClick={this.clickUpload}>
-                                        <ButttonText>
-                                            อัพโหลด
-                                        </ButttonText>
-                                    </UploadButton>
-                                    <Test 
-                                        type="file" 
-                                        id="upload" 
-                                        name="document" 
-                                        accept=".pdf" 
-                                        ref={this.setUpload} 
-                                        onChange={e => console.log("done upload")}
-                                    />
-                            </TableRowAlignMiddle>
-                        </tr>
-                        <tr>
-                            <td colSpan="4"></td>
-                        </tr>
-                    </tbody>
-                </TableStyle>
+            <div className="container bg-white">
+
+              <TableHeader className="row bg-gray">
+                <Subtitle className="col-5 col-md-5 mt-3 mb-3 offset-md-1">เอกสารที่ต้องอัพโหลด</Subtitle>
+                <Subtitle className="col-6 col-md-6 mt-3 mb-3">
+                  <p className="text-right text-md-left">
+                    ภายในวันที่
+                  </p>
+                </Subtitle>
+              </TableHeader>
+              <div className="row border-bottom md-2">
+                <div className="col-12 col-md-5 offset-md-1">
+                <Subtitle className="mt-2 mb-2">ปพ.5</Subtitle>
+                <SmallConText className="mb-2">Lorem ipsum <br /> asapkok</SmallConText>
+                </div>
+                <div className="col-12 col-md-5 justify-content-end mt-3 md-3 mr-1 ">
+                  <UploadButton  className="float-right text-center"  onClick={this.clickUpload}>
+                    <ButttonText>
+                      อัพโหลด
+                    </ButttonText>
+                  </UploadButton>
+                </div>
+              </div>
+              <div className="row">
+                <div className="offset-md-1 mt-3 md-5">
                 <ButtonRoute 
                   className= 'd-flex col-12 mb-5'
-                  buttonLeft="ย้อนกลับ" 
-                  linkBack ="/menu"
+                  buttonLeft="กลับ"
                   displayButtonRight="none"
-                  onClick={(e) => this.uploadFile(e)}
+                  linkBack ="/menu"
                 />
+                </div>
               </div>
+                    <Test 
+                      type="file" 
+                      id="upload" 
+                      name="document" 
+                      accept=".pdf" 
+                      ref={this.setUpload} 
+                     onChange={e => this.uploadFile(e)}
+                    />
             </div>
         )
     }
