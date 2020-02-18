@@ -15,6 +15,7 @@ import { MinHeightRow } from '../Core/FieldStyle'
 import { Redirect } from 'react-router-dom'
 import regexPattern from '../Core/RegexPattern'
 import CustomModal from '../Core/CustomModal'
+import Waiting from '../Core/Waiting'
 
 const userId = 120001;
 
@@ -176,20 +177,27 @@ export default class Index extends Component {
     knowWhence: "",
     etcInput:false,
     redirect:false,
-    modal:false
+    confirmModal:false,
+    alertModal:false
   }
 
   componentDidCatch() {
-    this.setState({errorLoad:true})
+    this.toggleAlertModal();
   }
 
-  toggleModal = () => {
-    this.setState({modal:!this.state.modal})
+  toggleAlertModal = () => {
+    this.setState({alertModal:!this.state.alertModal})
+  }
+
+  toggleConfirmModal = () => {
+    console.log("confirm modal");
+    
+    this.setState({confirmModal:!this.state.confirmModal})
   }
 
   submitForm = (e) => {
     e.preventDefault();
-    this.toggleModal();
+      this.toggleConfirmModal();
   }
 
   async componentDidMount() {
@@ -465,19 +473,23 @@ export default class Index extends Component {
     }
   }
 
+  putUser = async (data) => {
+    await UserService.putUser(userId, data)
+    .then(()=>this.setState({redirect:true}))
+    .catch(()=>this.toggleAlertModal())
+  }
+
   render() {
+
+    const { redirect } = this.state;
+
+    if (redirect) {
+      return <Redirect to='/menu'/>;
+    }
+
     if(!this.state.finishLoad || this.state.errorLoad){
-      if(this.state.errorLoad){
-        return <p >Error Something mtfk</p>
-      }
-      return <p >Loading mtfk</p>
+      return <Waiting error={this.state.errorLoad} />
     }else{
-      const { redirect } = this.state;
-
-      if (redirect) {
-        return <Redirect to='/menu'/>;
-      }
-
       return (
         <ContainerDiv className="container">
           <form onSubmit={e=>{this.submitForm(e)}}>
@@ -723,13 +735,22 @@ export default class Index extends Component {
               linkBack="menu"
               className=""
             />
-            <EditModal 
-              disabled={this.state.buttonDisable} 
-              newUser={this.state.newUser} 
-              data={this.state.oldUser}
-              modal={this.state.modal}
-              toggle={this.toggleModal} 
-              onClick={(e)=>this.clickSubmit(e)}/>
+            <ButtonStyle onClick={(e) => this.clickSubmit(e)} disabled={this.state.buttonDisable} > ยืนยัน </ButtonStyle>
+            <CustomModal 
+              modal={this.state.confirmModal}
+              toggle={this.toggleConfirmModal}
+              header="ยืนยันการแก้ไขข้อมูล"
+              paragraph="ต้องการแก้ไขข้อมูลใช่หรือไม่"
+              primaryButtonDisplay="flex"
+              primaryButtonText="ยืนยัน"
+              primaryOnClick={e=>this.putUser(this.state.oldData)}
+            />
+            <CustomModal 
+              modal={this.state.alertModal}
+              toggle={this.toggleAlertModal}
+              header="เกิดข้อผิดพลาดขึ้น"
+              paragraph="โปรดติดต่อเจ้าหน้าที่"
+            />
           </div>
       </ContainerDiv>
       )

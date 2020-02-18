@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import Cookies from 'universal-cookie'
+import {Subtitle} from './Text'
+import {Redirect} from 'react-router-dom'
 
 import UserService from '../../services/UserService'
 
@@ -17,7 +19,8 @@ export default class Navbar extends Component {
 
   state = {
     wipId: 120001,
-    name: 'น้องเฟิร์สอ้วน'
+    name: 'น้องเฟิร์สอ้วน',
+    redirect:false
   }
 
   async componentDidMount() {
@@ -43,7 +46,19 @@ export default class Navbar extends Component {
     return await UserService.getUser(userId);
   }
 
+  logOut = () => {
+    cookies.remove('token')
+    this.setState({redirect:true})
+  }
+
   render() {
+
+    const { redirect } = this.state;
+
+    if (redirect) {
+      return <Redirect to='/login'/>;
+    }
+
     return (
       <React.Fragment>
         {
@@ -58,9 +73,14 @@ export default class Navbar extends Component {
                     </div>
                     <div className="col-md-9 col-sm-8 col-6">
                       <div className="" style={{ color: "white", textAlign: "right" }}>
-                        WIP ID : {this.state.wipId}
-                        <br />
-                        {this.state.name}
+                        <Subtitle className="text-weight-bold">
+                          WIP ID : {this.state.wipId}
+                        </Subtitle>
+                        <button className="btn btn-danger mt-2" onClick={() => this.logOut()}>
+                          <Subtitle>
+                            Log Out
+                          </Subtitle>
+                        </button>
                       </div>
                     </div>
                   </div>

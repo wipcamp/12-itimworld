@@ -9,6 +9,7 @@ import {HeaderText} from './../Core/Text'
 import {ButtonStyle} from './../Core/ButtonStyle'
 import CustomModal from './../Core/CustomModal'
 import {Redirect} from 'react-router-dom'
+import Waiting from './../Core/Waiting'
 
 let answer = [];
 let majorId = 1;
@@ -135,10 +136,7 @@ export default class Index extends Component {
       }
 
       if(!this.state.finishLoad || this.state.errorLoad){
-        if(this.state.errorLoad){
-          return <p>Error Load</p>
-        }
-        return <p>Loading...</p>
+        return <Waiting error={this.state.errorLoad} />
       }else{
         return (
           <ContainerDiv className ="container-fluid justify-content-center">
