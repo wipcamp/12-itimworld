@@ -22,10 +22,6 @@ const MajorName = styled(Title)`
   height:15vh;
 `
 
-const ContainerDiv = styled.div`
-  max-width:1800px;
-`
-
 export default class Index extends Component {
 
   state = {
@@ -151,18 +147,20 @@ export default class Index extends Component {
     }
     else{
       return (
-        <ContainerDiv className="container-fluid">
-          <div className="row justify-content-center">
+        <div className="container justify-content-center">
+          <div className="row text-center">
             {
               this.state.majors.map((data, key) => (
-                <ImageRadio
-                  className="col-2 mr-5"
-                  key={key}
-                  imgPath={this.state.selectedMajor === data ? this.state.pictures.selected : this.state.pictures.default}
-                  value={data.id}
-                  onClick={() => this.changeDescription(key)}
-                />
-              )
+                <div className="col-6 col-sm-6 col-md-6 col-lg-3">
+                  <ImageRadio
+                    className="justify-content-center"
+                    key={key}
+                    imgPath={this.state.selectedMajor === data ? this.state.pictures.selected : this.state.pictures.default}
+                    value={data.id}
+                    onClick={() => this.changeDescription(key)}
+                  />
+                </div>
+                ) 
               )
             }
             <Title className="d-flex col-12 justify-content-center mt-4" visible={this.state.selectedMajor.name ? "visible" : "hidden"}>
@@ -183,7 +181,7 @@ export default class Index extends Component {
               />
             <div className="col-2" />
           </div>
-        </ContainerDiv>
+        </div>
       )
     } 
   }
