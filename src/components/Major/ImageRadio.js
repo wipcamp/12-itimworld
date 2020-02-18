@@ -17,14 +17,12 @@ const InputRadio = styled.label`
 
 /* CHECKED STYLES */
 [type=radio]:checked + img {
-  content: url('https://images2.minutemediacdn.com/image/upload/c_crop,h_1192,w_2122,x_0,y_74/f_auto,q_auto,w_1100/v1575329078/shape/mentalfloss/609640-gettyimages-802480150.jpg');
+  content: url('/img/Track/website.png');
 }
 `
 
 const ImageMajor = styled.img`
   width: 80%;
-  background: #C4C4C4;
-  border-radius: 30px;
 `
 
 const ImageRadio = (props) => {
