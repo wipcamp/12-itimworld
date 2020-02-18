@@ -21,12 +21,13 @@ import Success from './components/Success'
 import Edit from './components/Edit'
 import General from './components/General'
 import Document from './components/Document'
+import Star from './components/Core/Star';
 
 const Mountain = styled.div`
-  background-image:url('/img/mountain.png');
+  background-image:url('/img/mountain.png') , url('/img/Star/zodiac1.png'), url('/img/Star/zodiac2.png'), url('/img/Star/zodiac3.png') , url('/img/Star/star1.png'), url('/img/Star/star2.png'), url('/img/Star/star3.png');
   background-repeat: no-repeat;
-  background-position-y: bottom;
-  background-size:contain;
+  background-position: center bottom , 5% 20% , 15% 2% , 90% 10% , 10% 6% ,  87% 0% , 100% 13%;
+  background-size:contain , 5% , 8% , 5% , 14% , 25% , 15% ;
   min-height: 100vh;
   width: 100%;
   padding-bottom: 30px;
