@@ -149,7 +149,7 @@ export default class Index extends Component {
     }
     else{
       return (
-        <div className="container justify-content-center">
+        <div className="container justify-content-center mt-5">
           <div className="row text-center">
             {
               this.state.majors.map((data, key) => (
