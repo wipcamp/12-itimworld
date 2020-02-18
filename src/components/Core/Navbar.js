@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { Button } from 'reactstrap'
 import Cookies from 'universal-cookie'
 
 import UserService from '../../services/UserService'
@@ -13,11 +14,19 @@ const cookies = new Cookies()
 const Img = styled.img`
   width: 100%;
 `
+
+const Logout = styled(Button)`
+  font-weight: 500;
+  font-size: 18px;
+  background: #D11242!important;
+  width: 120px;
+  height: 40px;
+`
+
 export default class Navbar extends Component {
 
   state = {
-    wipId: 120001,
-    name: 'น้องเฟิร์สอ้วน'
+    wipId: 120001
   }
 
   async componentDidMount() {
@@ -43,6 +52,14 @@ export default class Navbar extends Component {
     return await UserService.getUser(userId);
   }
 
+  handleClick = () => {
+    cookies.remove('token', { path: '/' })
+    cookies.remove('state', { path: '/' })
+    cookies.remove('nonce', { path: '/' })
+    cookies.remove('loginObj', { path: '/' })
+    window.location.href = '/login'
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -57,10 +74,12 @@ export default class Navbar extends Component {
                       <Img src="/img/Logo.png" alt="WIP Camp" />
                     </div>
                     <div className="col-md-9 col-sm-8 col-6">
-                      <div className="" style={{ color: "white", textAlign: "right" }}>
+                      <div className="" style={{ color: "white", textAlign: "right" ,fontSize: '24px' }}>
                         WIP ID : {this.state.wipId}
                         <br />
-                        {this.state.name}
+                        <Logout onClick={() => this.handleClick()}>
+                          Log Out
+                        </Logout>
                       </div>
                     </div>
                   </div>
