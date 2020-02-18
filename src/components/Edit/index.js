@@ -694,7 +694,7 @@ export default class Index extends Component {
                     </div>
                     <div class="form-check form-check-inline col-2">
                       <input class="form-check-input" type="checkbox" name="knowWhence" id="knowWhenceCamphub" value="camphub" onClick={e=>this.handleChange(e)} checked={this.state.oldUser.knowWhence.camphub}/>
-                      <label class="form-check-label" for="knowWhenceCamphub">Camphub</label>
+                      <label class="form-check-label" for="knowWhenceCamphub">CampHub</label>
                     </div>
                     <div class="form-check form-check-inline col-2">
                       <input class="form-check-input" type="checkbox" name="knowWhence" id="knowWhenceDek-D" value="dekd" onClick={e=>this.handleChange(e)} checked={this.state.oldUser.knowWhence.dekd}/>
