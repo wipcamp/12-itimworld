@@ -21,7 +21,6 @@ import Success from './components/Success'
 import Edit from './components/Edit'
 import General from './components/General'
 import Document from './components/Document'
-import Star from './components/Core/Star';
 
 const Mountain = styled.div`
   background-image:url('/img/mountain.png') , url('/img/Star/zodiac1.png'), url('/img/Star/zodiac2.png'), url('/img/Star/zodiac3.png') , url('/img/Star/star1.png'), url('/img/Star/star2.png'), url('/img/Star/star3.png');
