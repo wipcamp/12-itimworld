@@ -137,7 +137,7 @@ class Login extends Component {
 
       if (response.success) {
         const token = response.data[0].token
-        cookies.set('token', token, { path: '/' })
+        cookies.set('token', token, { path: '/', maxAge: '7200'})
         // this.setState({
         //   oldUser: response.data[0],
         //   oldData: response.data[0]
@@ -150,17 +150,17 @@ class Login extends Component {
     } catch (e) {
       console.log("Error get User promise")
     }
-    cookies.set('loginObj', tokenObject, { path: '/' })
+    cookies.set('loginObj', tokenObject, { path: '/', maxAge: '300' })
     window.location.href = '/menu'
   }
 
   handleClick = async() => {
     const stateGenerate =await  LineService.getGenerateCode()
     const nonceGenerate =await LineService.getGenerateCode()
+    cookies.set('state', stateGenerate.data, { path: '/', maxAge: '300' });
+    cookies.set('nonce', nonceGenerate.data, { path: '/', maxAge: '300' });
     // localStorage.setItem('state',stateGenerate.data);
     // localStorage.setItem('nonce', nonceGenerate.data);
-    cookies.set('state', stateGenerate.data, { path: '/' });
-    cookies.set('nonce', nonceGenerate.data, { path: '/' });
     // window.location.href = '/menu'
     window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1653703435&redirect_uri=${this.state.itimUrl}&state=${stateGenerate.data}&scope=openid%20email%20profile&nonce=${nonceGenerate.data}`
   }
