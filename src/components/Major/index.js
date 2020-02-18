@@ -30,8 +30,8 @@ export default class Index extends Component {
     finishLoad:false,
     errorLoad:false,
     pictures: {
-      default: 'https://icatcare.org/app/uploads/2018/07/Thinking-of-getting-a-cat.png',
-      selected: 'https://miro.medium.com/max/11400/1*lS9ZqdEGZrRiTcL1JUgt9w.jpeg'
+      default: '/img/Track/programmer.png',
+      selected: '/img/Track/website.png'
     },
     selectedMajor: {
       id: null,
