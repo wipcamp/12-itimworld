@@ -22,8 +22,7 @@ const InputRadio = styled.label`
 `
 
 const ImageMajor = styled.img`
-  width: 270px;
-  height: 413px;
+  width: 80%;
   background: #C4C4C4;
   border-radius: 30px;
 `
