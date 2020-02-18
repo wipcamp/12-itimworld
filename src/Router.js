@@ -108,7 +108,9 @@ export default class Index extends React.Component {
             <Success />
           </PrivateRoute>
           <PrivateRoute path="/edit">
-            <Edit />
+            <Mountain>
+              <Edit />
+            </Mountain>
           </PrivateRoute>
           <PrivateRoute path="*" />
         </Switch>
