@@ -5,6 +5,8 @@ import MajorService from './../../services/MajorService'
 import ImageRadio from './ImageRadio'
 import ButtonRoute from '../Core/ButtonRoute'
 import ConfirmModal from './ConfirmModal'
+import Waiting from '../Core/Waiting'
+import CustomModal from './../Core/CustomModal'
 
 const Header = styled.div`
   font-style: normal;
@@ -79,7 +81,8 @@ export default class Index extends Component {
         "questionList": []
       }
     ],
-    buttonValue: true
+    buttonValue: true,
+    alertModal:false
   }
 
   GetMajors = async () => {
@@ -101,16 +104,19 @@ export default class Index extends Component {
     }
   }
 
+  toggleAlertModal = () => {
+    this.setState({alertModal: !this.state.alertModal})
+  }
+
   async componentDidMount() {
     await this.GetMajors();
   }
 
   componentDidCatch() {
-    this.setState({errorLoad:true})
+    this.toggleAlertModal();
   }
 
   changeDescription = (i) => {
-    console.log(i)
     let major = this.state.majors[i]
     const dataEntries = Object.entries(major)
     for (const [dataArray, dataFromEntity] of dataEntries) {
@@ -133,7 +139,6 @@ export default class Index extends Component {
         )
       }
     }
-    console.log(major);
     this.setState((prevState) => ({
       descriptionNum: major.description,
       selectedMajor: major,
@@ -144,10 +149,7 @@ export default class Index extends Component {
 
   render() {
     if(!this.state.finishLoad || this.state.errorLoad){
-      if(this.state.errorLoad){
-        return <p>Error Get Major mtfk</p>
-      }
-      return <p>Loading chill the fuck out</p>
+      return <Waiting error={this.state.errorLoad} />
     }
     else{
       return (
@@ -183,6 +185,7 @@ export default class Index extends Component {
               />
             <div className="col-2" />
           </div>
+          <CustomModal header="เกิดข้อผิดพลาดขึ้น" paragraph="โปรดติดต่อเจ้าหน้าที่" secondaryButtonText="ปิด" modal={this.state.alertModal} toggle={this.toggleAlertModal} />
         </ContainerDiv>
       )
     } 
