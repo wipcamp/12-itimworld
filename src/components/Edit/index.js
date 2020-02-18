@@ -729,7 +729,7 @@ export default class Index extends Component {
                 <NotDisplayButton ref={this.setProfileFormRef}> asd</NotDisplayButton>
           </div>
           </form>
-          <div className="d-flex justify-content-between mt-3">
+          <div className="d-flex justify-content-between mt-3 mb-5">
             <ButtonRoute 
               displayButtonRight="none"
               linkBack="menu"
