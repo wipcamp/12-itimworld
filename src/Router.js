@@ -92,7 +92,9 @@ export default class Index extends React.Component {
             <Menu />
           </PrivateRoute>
           <PrivateRoute path="/document">
-            <Document />
+            <Mountain>
+              <Document />
+            </Mountain>
           </PrivateRoute>
           <PrivateRoute path="/questions">
             <Mountain>
