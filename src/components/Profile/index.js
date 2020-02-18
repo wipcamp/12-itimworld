@@ -174,6 +174,10 @@ export default class Index extends Component {
   toggleModal = () => {
     this.setState({modal:!this.state.modal})
   }
+
+  componentDidCatch() {
+    this.toggleModal();
+  }
   
   async componentDidMount() {
     console.log(checkBoxRef);

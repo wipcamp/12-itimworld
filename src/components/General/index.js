@@ -45,8 +45,6 @@ export default class Index extends Component {
     }else{
       answer.forthAnswer = val;
     }
-    console.log(answer);
-    
   };
   
 
@@ -98,6 +96,10 @@ export default class Index extends Component {
   
     clickSubmit = (e) => {
       submitButtonRef.click();
+    }
+
+    componentDidCatch() {
+      this.toggleModal();
     }
 
     render() {
