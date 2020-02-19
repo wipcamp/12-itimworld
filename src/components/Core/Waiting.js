@@ -2,8 +2,8 @@ import React from 'react';
 import ReactLoading from 'react-loading';
 import styled from 'styled-components'
 
-const MiddleScreen = styled.div`
-  margin-top:30vh;
+const Section = styled.div`
+  min-height:50vh;
 `
 
 const Error = () => {
@@ -67,12 +67,20 @@ const display = (error) => {
     return <Loading />;
 }
 
+
 const Landing = (props) => {
   return (
-    <div class="container">
-      <div className="row text-center">
-        {display(props.error)}
+    <div>
+    <Section>
+      <div className="container">
+        <div className="row text-center">
+          {display(props.error)}
+        </div>
       </div>
+    </Section>
+    <div>
+      <h4 className="text-white mt-3 text-center">Loading...</h4>
+    </div>
     </div>
     )
   };
