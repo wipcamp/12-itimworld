@@ -16,10 +16,14 @@ const ThisIsBackground = styled.div`
 `
 export default class Index extends Component {
 
+  componentDidMount(){
+    window.location.href = 'https://wip.camp/'
+  }
+
   render() {
     return (
       <React.Fragment>
-        {
+        {/* {
           dateEnd.isAfter(dateNow)
           ?
             <ThisIsBackground>
@@ -27,7 +31,7 @@ export default class Index extends Component {
             </ThisIsBackground>
           :
           'ปิดรับสมัครแล้วจ้า'
-        }
+        } */}
       </React.Fragment>
     )
   }
