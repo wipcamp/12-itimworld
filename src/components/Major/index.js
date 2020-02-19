@@ -4,7 +4,6 @@ import MajorService from './../../services/MajorService'
 
 import ImageRadio from './ImageRadio'
 import ButtonRoute from '../Core/ButtonRoute'
-import ConfirmModal from './ConfirmModal'
 import Waiting from '../Core/Waiting'
 import CustomModal from './../Core/CustomModal'
 
@@ -24,15 +23,18 @@ const MajorName = styled(Title)`
   height:15vh;
 `
 
+const trackPictures = {
+  programmer: '/img/Track/programmer.png',
+  website: '/img/Track/website.png',
+  uxui: '/img/Track/uxui.png',
+  network: '/img/Track/network.png'
+}
+
 export default class Index extends Component {
 
   state = {
     finishLoad:false,
     errorLoad:false,
-    pictures: {
-      default: '/img/Track/programmer.png',
-      selected: '/img/Track/website.png'
-    },
     selectedMajor: {
       id: null,
       description: null,
@@ -56,7 +58,11 @@ export default class Index extends Component {
             "id": 2,
             "name": "What time is it"
           }
-        ]
+        ],
+        "pictures": {
+          "default": '',
+          "selected": ''
+        }
       },
       {
         "id": 2,
@@ -87,11 +93,21 @@ export default class Index extends Component {
       promise = await MajorService.getAllMajors();
       let response = promise.data;
       if (response.success) {
+        const majorsData = response.data.map(major => {
+          if(major.name.toLowerCase() === "programmer"){
+            return {...major,picture:trackPictures.programmer}
+          }else if(major.name.toLowerCase() === "website"){
+            return {...major,picture:trackPictures.website}
+          }else if(major.name.toLowerCase() === "uxui"){
+            return {...major,picture:trackPictures.uxui}
+          }else{
+            return {...major,picture:trackPictures.network}
+          }
+        })
         this.setState({
-          majors: response.data,
+          majors: majorsData,
           finishLoad: true
-        });
-        console.log(this.state.majors);
+        })
       } else {
         this.setState({errorLoad:true})
       }
@@ -157,8 +173,10 @@ export default class Index extends Component {
                   <ImageRadio
                     className="justify-content-center"
                     key={key}
-                    imgPath={this.state.selectedMajor === data ? this.state.pictures.selected : this.state.pictures.default}
+                    imgPath={data.picture}
                     value={data.id}
+                    alt={data.name}
+                    isSelected={this.state.selectedMajor.name === null?true:(this.state.selectedMajor.name === data.name?true:false)}
                     onClick={() => this.changeDescription(key)}
                   />
                 </div>
@@ -168,14 +186,14 @@ export default class Index extends Component {
             <Title className="d-flex col-12 justify-content-center mt-4" visible={this.state.selectedMajor.name ? "visible" : "hidden"}>
                 <Header>ชื่อสาขาที่เลือก</Header>
             </Title>
-            <MajorName className={`d-flex col-12 justify-content-center`} visible={this.state.selectedMajor.description ? "visible" : "hidden"}>
+            <MajorName className={`d-flex col-12 justify-content-center`} visible={this.state.selectedMajor.name ? "visible" : "hidden"}>
                 {this.state.selectedMajor.name}
             </MajorName>
           </div>
           <div className="row">
             <div className="col-2" />
             <ButtonRoute
-              className="col-8 d-inline-flex justify-content-between"
+              className="col-8 d-inline-flex justify-content-between mb-3"
               linkNext={`/questions?major=${this.state.selectedMajor.id}`} 
               linkBack="/menu"
               buttonRight="ยืนยัน"
