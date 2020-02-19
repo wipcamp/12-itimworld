@@ -13,6 +13,7 @@ const Header = styled.div`
   font-size: 36px;
   line-height: 47px;
   text-align: center;
+  color: white;
 `
 
 const Title = styled.p`
@@ -183,11 +184,11 @@ export default class Index extends Component {
                 ) 
               )
             }
-            <Title className="d-flex col-12 justify-content-center mt-4" visible={this.state.selectedMajor.name ? "visible" : "hidden"}>
-                <Header>ชื่อสาขาที่เลือก</Header>
+            <Title className="d-flex col-12 justify-content-center mt-4">
+                <Header>{this.state.selectedMajor.name == null ? 'โปรดเลือกสาขาที่ต้องการสมัคร' : this.state.selectedMajor.name}</Header>
             </Title>
             <MajorName className={`d-flex col-12 justify-content-center`} visible={this.state.selectedMajor.name ? "visible" : "hidden"}>
-                {this.state.selectedMajor.name}
+                
             </MajorName>
           </div>
           <div className="row">
