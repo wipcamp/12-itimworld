@@ -115,10 +115,10 @@ getUserStatus = async() => {
 
   state = {
     menu: [
-      { link: 'edit' , message: 'ข้อมูลส่วนตัว' , imgBefore : '/img/Menu/person1.webp' , imgAfter : '/img/Menu/person1_done.webp' },
-      { link: 'general', message: 'คำถามทั่วไป', imgBefore: '/img/Menu/question2.webp', imgAfter: '/img/Menu/question2_done.webp' },
-      { link: 'major', message: 'คำถามสาขา', imgBefore : '/img/Menu/track3.webp', imgAfter : '/img/Menu/track3_done.webp' },
-      { link: 'document', message: 'อัพโหลดเอกสาร', imgBefore: '/img/Menu/document4.webp', imgAfter: '/img/Menu/document4_done.webp' }
+      { link: 'edit' , message: 'ข้อมูลส่วนตัว'  },
+      { link: 'general', message: 'คำถามทั่วไป' },
+      { link: 'major', message: 'คำถามสาขา' },
+      { link: 'document', message: 'อัพโหลดเอกสาร' }
     ],
     status:true,
     alertModal:false,
@@ -137,7 +137,7 @@ getUserStatus = async() => {
             {
               this.state.menu.map((data, i) => (
                 <LinkStyle to={`/${data.link}`} className="text-center col-lg-3 col-md-3 col-sm-6 col-6 mb-5" key={i} style={{pointerEvents:`${ data.status ? "none" : "auto" }`}}>
-                  <MenuImage src={ !data.status ? data.imgBefore : data.imgAfter } key={i} alt={data.link}/>
+                  <MenuImage src={`/img/Menu/Button${i+1}.png`} key={i} alt={data.link}/>
                     <Small className="btn">
                       {data.message}
                     </Small>
