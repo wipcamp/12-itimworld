@@ -17,7 +17,7 @@ const InputRadio = styled.label`
 
 /* CHECKED STYLES */
 [type=radio]:checked + img {
-  content: url('/img/Track/website.png');
+  /* content: url('/img/Track/website.png'); */
 }
 `
 
