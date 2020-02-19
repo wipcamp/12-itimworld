@@ -188,7 +188,7 @@ export default class Index extends Component {
                 <Header>{this.state.selectedMajor.name == null ? 'โปรดเลือกสาขาที่ต้องการสมัคร' : this.state.selectedMajor.name}</Header>
             </Title>
             <MajorName className={`d-flex col-12 justify-content-center`} visible={this.state.selectedMajor.name ? "visible" : "hidden"}>
-                
+                <div className="text-white">{this.state.selectedMajor.description}</div>
             </MajorName>
           </div>
           <div className="row">
