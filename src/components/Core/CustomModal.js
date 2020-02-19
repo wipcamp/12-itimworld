@@ -39,6 +39,7 @@ const WhiteParagraphContext = styled(ParagraphContext)`
 
 const DangerSubtitle = styled(Subtitle)`
   color: #FF0000;
+  font-weight: bold;
 `
 
 const CustomModal = props => {
