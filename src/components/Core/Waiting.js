@@ -15,6 +15,7 @@ const Loading = () => {
       <Sky>
         <Skypic src='img/Loading/l_bge.png' />
         <Wippo src='/img/Loading/l_maine.png' />
+        <WippoAnimation src='img/Loading/l_greye.png'/>
       </Sky>
     </div>;
 }
@@ -45,6 +46,31 @@ const Wippo = styled.img`
   @media (max-width: 576px) {
     width:80%;
   }
+`
+
+const WippoAnimation = styled(Wippo)`
+  animation: change 7.5s alternate infinite;
+  @keyframes change {
+    0% {
+    opacity:0;
+    }
+    20% {
+    opacity:0.2;
+    }
+    40% {
+    opacity:0.4;
+    }
+    60% {
+    opacity:0.6;
+    }
+    80% {
+    opacity:0.8;
+    }
+    100% {
+    opacity:1;
+    }
+  }
+}
 `
 
 const Skypic = styled(Wippo)`
