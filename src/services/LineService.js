@@ -3,7 +3,7 @@ import api from '../utils/apiLineService'
 
 const lineService = {
   lineLogin: async (code, nonce, url) => {
-    let res = await api.get(`/userAuth?code=${code}&nonce=${nonce}&url=${url}`)
+    let res = await api.get(`/auth?code=${code}&nonce=${nonce}&url=${url}`)
     // let res = await api.get(`/auth?code=${code}&url=${url}`)
     return res;
   },
