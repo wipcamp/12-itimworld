@@ -20,22 +20,36 @@ const TextArea = styled.textarea`
     box-sizing: border-box;
     border-radius: 4px;
 `
-export default class Question extends Component {
-		
-    render() {
-        return (
-            <div className="form-group">
-                <QuestionName className="col-12 justify-content-center">คำถามที่ {this.props.questionCount} : {this.props.questionName}</QuestionName>
-                    <TextArea
-                    className="col-12"
-                    name={this.props.questionId}
-                    onChange={this.props.handleAnswer}
-                    required={this.props.required}
-                    />
-            </div>
 
-        )
-    }
+const Picture = styled.img`
+  width:80%;
+  min-width: 230px;
+  max-width: 490px;
+`
+
+const displayFlowchart = (id) => {
+  if(id === 2){
+    return (
+      <div className="col-12 mb-2">
+        <Picture src="/img/Question/Flowchart.png" alt="Flowchart Here*" />
+      </div>
+    )
+  }
+}
+
+const Question = (props) => {
+  return (
+    <div className="form-group">
+      <QuestionName className="col-12 justify-content-center">คำถามที่ {props.questionCount} : {props.questionName}</QuestionName>
+      {displayFlowchart(props.questionId)}
+      <TextArea
+        className="col-12"
+        name={props.questionId}
+        onChange={props.handleAnswer}
+        required={props.required}
+      />
+    </div>
+  )
 }
 
 Question.propTypes = {
@@ -45,3 +59,5 @@ Question.propTypes = {
     handleAnswer: PropTypes.func,
     required: PropTypes.bool
 }
+
+export default Question;
