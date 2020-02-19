@@ -5,10 +5,10 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import Cookies from 'universal-cookie';
+// import Cookies from 'universal-cookie';
 import styled from 'styled-components'
 
-import UserService from './services/UserService'
+// import UserService from './services/UserService'
 
 import Navbar from './components/Core/Navbar'
 import Login from './components/Login'
@@ -32,7 +32,7 @@ const Mountain = styled.div`
   padding-bottom: 30px;
 `
 
-const cookies = new Cookies()
+// const cookies = new Cookies()
 
 const PrivateRoute = ({ children, ...rest }) => {
   return (

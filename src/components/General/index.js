@@ -6,12 +6,7 @@ import styled from 'styled-components'
 import CustomModal from './../Core/CustomModal'
 import { ButtonStyle } from '../Core/ButtonStyle'
 import { Redirect } from 'react-router-dom'
-
-const Header = styled.h2`
-  font-size: 36px;
-  line-height: 47px;
-  text-align: center;
-`
+import { HeaderText } from './../Core/Text'
 
 const ContainerDiv = styled.div`
   max-width:1200px;
@@ -36,11 +31,11 @@ export default class Index extends Component {
   handleAnswer=(event)=> {
     const val = event.target.value;
     const id = event.target.name;
-    if(id == 1){
+    if(id === '1'){
       answer.firstAnswer = val;
-    }else if(id == 2){
+    }else if(id === '2'){
       answer.secondAnswer = val;
-    }else if(id == 3){
+    }else if(id === '3'){
       answer.thirdAnswer = val;
     }else{
       answer.forthAnswer = val;
@@ -113,7 +108,7 @@ export default class Index extends Component {
       return (
         <ContainerDiv className ="container-fluid justify-content-center">
             <div className="card p-5" style={{boxShadow: `0px 4px 4px rgba(0, 0, 0, 0.25)`,borderRadius: `4px`,opacity:`0.9`}}>
-                <Header className="col-12 mb-5 mt-5">This is General Question page</Header>
+                <HeaderText className="col-12 mb-5 mt-5">คำถามทั่วไป</HeaderText>
                 <div>
                   <form onSubmit={e => this.postGeneralAnswerService(e)}>
                         {this.state.questions.map((data,i) => {

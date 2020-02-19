@@ -25,14 +25,6 @@ const Box = styled.div`
   text-align: center;
 `
 
-const Centering = styled.div`
-  overflow: hidden;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  text-align: center;
-`
-
 const LinkStyle = styled(Link)`
   &::hover {
     text-decoration: none !important;

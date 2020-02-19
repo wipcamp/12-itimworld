@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types';
 import styled from 'styled-components' 
 import { Link } from 'react-router-dom'
-import { ButtonStyle, ButtonStyleLink } from './ButtonStyle'
+import { ButtonStyle } from './ButtonStyle'
 
 const ButtonRight = styled(Link)`
   display: ${props => props.displayButtonRight};
@@ -10,6 +10,37 @@ const ButtonRight = styled(Link)`
 
 const ButtonLeft = styled(Link)`
   display: ${props => props.displayButtonLeft};
+`
+
+const ButtonBack = styled(ButtonStyle)`
+
+  @media (max-width: 768px) {
+    
+    background: #FFFFFF!important;
+
+    /* blue */
+    border: 1px solid #304151!important;
+    box-sizing: border-box!important;
+    border-radius: 4px!important;
+
+    color: #000!important;
+
+    width: 150.65px!important;
+    height: 49px!important;
+    border-radius: 4px!important;
+    font-weight: 300!important;
+    font-size: 16px!important;
+    line-height: 21px!important;
+  }
+
+  @media (max-width: 576px) {
+    width: 88.8px!important;
+    height: 33.76px!important;
+    border-radius: 4px!important;
+    font-weight: 300!important;
+    font-size: 16px!important;
+    line-height: 10px!important;
+  }
 `
 
 class ButtonRoute extends React.Component{
@@ -29,7 +60,7 @@ class ButtonRoute extends React.Component{
           to={this.props.linkBack} 
           displayButtonLeft={this.props.displayButtonLeft} 
         >
-          <ButtonStyle> {this.props.buttonLeft} </ButtonStyle>
+          <ButtonBack> {this.props.buttonLeft} </ButtonBack>
         </ButtonLeft >
         
         <ButtonRight 

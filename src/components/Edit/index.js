@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
-import AddressField from '../Core/AddressField'
 import TelNumberField from '../Core/TelNumberField'
 import TextField from '../Core/TextField'
 import ButtonRoute from '../Core/ButtonRoute'
 import UserService from '../../services/UserService'
 import Field from '../Core/Field'
-import EditModal from './EditModal'
 import {SmallText} from '../Core/Text'
 import { ButtonStyle } from '../Core/ButtonStyle'
 import SelectField from '../Core/SelectField'

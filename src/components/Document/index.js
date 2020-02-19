@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import {Subtitle,SmallText} from '../Core/Text'
-import {ButtonStyle} from '../Core/ButtonStyle'
-import fonts from '../../config/fonts'
 import UserService from '../../services/UserService'
 import ButtonRoute from '../Core/ButtonRoute'
 
@@ -30,17 +28,6 @@ color: white;
 `
 const SmallConText = styled(SmallText)`
 height: 100%;
-`
-
-const TableRowAlignMiddle = styled.td`
-vertical-align:middle!important;
-`
-
-const Div = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  text-align: center;
 `
 
 const Test = styled.input`
