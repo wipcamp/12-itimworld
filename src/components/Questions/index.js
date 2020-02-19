@@ -126,6 +126,11 @@ export default class Index extends Component {
         .then(() => this.setState({redirect:true}))
         .catch(() => this.toggleAlertModal());
     }
+
+    resubmitAndCloseModal = () => {
+      this.toggleAlertModal();
+      this.clickSubmit();
+    }
     
     render() {
 
@@ -170,16 +175,20 @@ export default class Index extends Component {
               modal={this.state.confirmModal}
               toggle={this.toggleConfirmModal}
               header="ยืนยันที่จะเลือกสาขา" 
-              paragraph="Lorem Ipsum"
+              paragraph="หากกกดยืนยันการเลือกสาขาเรียบร้อยแล้วจะไม่สามารถกกลับมาแก้ไขเป็นสาขาอื่นได้กรุณาตรวจสอบให้ชัดเจนก่อนกดยืนยัน"
               dangerSubtitle="*เมื่อเลือกสาขาแล้ว ไม่สามารถย้อนกลับมา" 
               primaryButtonDisplay="flex"
               primaryOnClick={() => this.postAnswerService()}
             />
             <CustomModal 
-              modal={this.state.alertModal}
-              toggle={this.toggleAlertModal}
-              header="เกิดข้อผิดพลาดขึ้น" 
-              paragraph="โปรดติดต่อเจ้าหน้าที่"
+              header="การบันทึกข้อมูลผิดพลาด" 
+              paragraph="การบันทึกข้อมูลเกิดข้อผิดพลาด ไม่สามารถส่งข้อมูลได้ กรุณากดยืนยันข้อมูลใหม่อีกครั้ง" 
+              secondaryButtonText="ยกเลิก" 
+              primaryButtonDisplay="flex"
+              primaryButtonText="ยืนยัน"
+              primaryOnClick={() => {this.resubmitAndCloseModal()}}
+              modal={this.state.alertModal} 
+              toggle={this.toggleAlertModal} 
             />
           </ContainerDiv>
         )
