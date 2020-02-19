@@ -1,8 +1,7 @@
-import React, {useState} from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { Modal, ModalBody, ModalHeader, ModalFooter } from 'reactstrap';
+import { Modal} from 'reactstrap';
 import { HeaderText, Paragraph, Subtitle } from './Text'
-import { ButtonStyle } from './ButtonStyle'
 import PropTypes from 'prop-types'
 
 const NoBorder = styled.div`
