@@ -477,6 +477,11 @@ export default class Index extends Component {
     .catch(()=>this.toggleAlertModal())
   }
 
+  resubmitAndCloseModal = () => {
+    this.toggleAlertModal();
+    this.clickSubmit();
+  }
+
   render() {
 
     const { redirect } = this.state;
@@ -716,12 +721,12 @@ export default class Index extends Component {
             <section>
                   <SectionHeader className="col-12">ผลงานและทักษะทางด้านคอมพิวเตอร์</SectionHeader>
                   <textarea 
-                  class="form-control" 
-                  placeholder="ผลงาน" 
-                  rows="4" 
-                  name="computerWorks"
-                  value={this.state.oldUser.computerWorks}
-                  onChange={(e) => this.handleChange(e)} 
+                    class="form-control" 
+                    placeholder="ผลงาน" 
+                    rows="4" 
+                    name="computerWorks"
+                    value={this.state.oldUser.computerWorks}
+                    onChange={(e) => this.handleChange(e)} 
                   ></textarea>
                 </section>
                 <NotDisplayButton ref={this.setProfileFormRef}> asd</NotDisplayButton>
@@ -744,10 +749,14 @@ export default class Index extends Component {
               primaryOnClick={e=>this.putUser(this.state.oldData)}
             />
             <CustomModal 
-              modal={this.state.alertModal}
-              toggle={this.toggleAlertModal}
-              header="เกิดข้อผิดพลาดขึ้น"
-              paragraph="โปรดติดต่อเจ้าหน้าที่"
+              header="การบันทึกข้อมูลผิดพลาด" 
+              paragraph="การบันทึกข้อมูลเกิดข้อผิดพลาด ไม่สามารถส่งข้อมูลได้ กรุณากดยืนยันข้อมูลใหม่อีกครั้ง" 
+              secondaryButtonText="ยกเลิก" 
+              primaryButtonDisplay="flex"
+              primaryButtonText="ยืนยัน"
+              primaryOnClick={() => {this.resubmitAndCloseModal()}}
+              modal={this.state.alertModal} 
+              toggle={this.toggleAlertModal} 
             />
           </div>
       </ContainerDiv>
