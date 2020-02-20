@@ -148,7 +148,7 @@ class Login extends Component {
     await UserService.getMe().then(
         (response) => {
           response.data.data[0].userStatus === null ?
-            response.data.data[0].userStatus.accept? 
+            response.data.data[0].userStatus.accepted? 
           window.location.href = '/menu' 
           :
           window.location.href = '/term'
