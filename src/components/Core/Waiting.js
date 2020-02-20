@@ -6,6 +6,13 @@ const Section = styled.div`
   min-height:50vh;
 `
 
+const ButtonBack = styled(ButtonStyle)`
+  background-color: #304151!important;
+  @media (max-width: 576px){
+    width:150.65px!important; 
+  }
+`
+
 const Sky = styled.div`
   /* background-image:url('/img/Loading/l_bge.png'); */
   background-repeat: no-repeat;
@@ -83,6 +90,7 @@ const Skypic = styled(Wippo)`
   }
 `
 
+
 const Loading = () => {
   return (
     <div>
@@ -106,6 +114,7 @@ const Loading = () => {
   );
 }
 
+
 export const Error = () => {
   return (
     <div>
@@ -117,7 +126,7 @@ export const Error = () => {
             <div className="col-12 col-md-6 col-lg-6">
               <h1 className="text-white mt-3">มีบางอย่างผิดพลาด  </h1>
               <h4 className="text-white mt-4">ขอโทษครับ ไม่สามารถเรียกข้อมูลที่ต้องการได้ ลองใหม่อีกครั้งนะครับ</h4>
-              <div className="text-right mt-5"><ButtonStyleLink to="/menu"><ButtonStyle style={{background: '#304151'}}>กลับสู่หน้าหลัก</ButtonStyle></ButtonStyleLink></div>
+              <div className="text-right mt-5"><ButtonStyleLink to="/menu"><ButtonBack>กลับสู่หน้าหลัก</ButtonBack></ButtonStyleLink></div>
             </div>
           </div>
         </div>

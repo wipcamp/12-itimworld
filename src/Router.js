@@ -21,6 +21,7 @@ import General from './components/General'
 import Document from './components/Document'
 import {Error} from './components/Core/Waiting'
 import Agreement from './components/Agreement'
+import Term from './components/Term'
 
 const locationNow = window.location.pathname
 
@@ -115,6 +116,11 @@ export default class Index extends React.Component {
               <Login />
             </Mountain>
           </Route>
+          <PrivateRoute path="/term">
+            <Mountain>
+              <Term />
+            </Mountain>
+          </PrivateRoute>
           <PrivateRoute path="/agreement">
             <Mountain>
               <Agreement />
