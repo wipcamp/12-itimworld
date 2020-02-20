@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 export const ButtonStyle = styled(Button)`
   width: 218.65px!important;
   height: 59px!important;
-  background: #304151!important;
+  background: #304151;
   border-radius: 4px!important;
   font-style: normal!important;
   font-weight: 300!important;

@@ -28,7 +28,7 @@ const Picture = styled.img`
 `
 
 const displayFlowchart = (id) => {
-  if(id === 2){
+  if(id === 5){
     return (
       <div className="col-12 mb-2">
         <Picture src="/img/Question/Flowchart.png" alt="Flowchart Here*" />
