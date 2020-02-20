@@ -14,8 +14,6 @@ import Menu from './components/Menu'
 import Profile from './components/Profile'
 import Major from './components/Major'
 import Questions from "./components/Questions"
-import Preview from "./components/Preview"
-import Success from './components/Success'
 import Edit from './components/Edit'
 import General from './components/General'
 import Document from './components/Document'
@@ -43,13 +41,14 @@ const PrivateRoute = ({ children, ...rest }) => {
       <Route
         {...rest}
         render={({ location }) =>
-//           (cookies.get('token') !== undefined && cookies.get('token') !== null)? (
-          true ? (
+          (cookies.get('token') !== undefined && cookies.get('token') !== null)? (
+          // true ? (
             <React.Fragment>
             {
                 locationNow === '/menu' || locationNow === '/profile' || 
                 locationNow === '/general' || locationNow === '/major' ||
-                locationNow === '/document' || locationNow === '/agreement'? 
+                locationNow === '/document' || locationNow === '/agreement' ||
+                locationNow === '/term'? 
               children
               :
               <Redirect
@@ -78,8 +77,8 @@ const MenuRoute = () => {
   return(
     <React.Fragment>
       {
-//         (cookies.get('token') !== undefined && cookies.get('token') !== null)? (
-        true ? (
+        (cookies.get('token') !== undefined && cookies.get('token') !== null)? (
+        // true ? (
           <Menu />
         ) : (
             <Redirect
@@ -105,8 +104,8 @@ export default class Index extends React.Component {
     return (
       <Router>
         {
-//           (cookies.get('token') !== undefined && cookies.get('token') !== null)  && locationNow !== '/login' ?
-          true  && locationNow !== '/login' ?
+          (cookies.get('token') !== undefined && cookies.get('token') !== null)  && locationNow !== '/login' ?
+          // true  && locationNow !== '/login' ?
             <Navbar />:
             ''
         }

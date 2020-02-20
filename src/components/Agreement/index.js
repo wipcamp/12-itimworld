@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
+
+import UserService from '../../services/UserService'
+
 import ButtonRoute from '../Core/ButtonRoute'
 
 
@@ -9,29 +12,32 @@ export default class index extends Component {
     checkbox: true
   }
 
+  putStateUserService = async () => {
+    return await UserService.postStatusMe({ "status": "acceptData" })
+  }
+
   onClick = (e) => {
-    this.setState(
-      {
-        buttonRightDisabled: !e.target.checked,
-      });
+    this.setState({
+        buttonRightDisabled: !e.target.checked
+    })
   }
 
   getInitialState = () => {
     this.setState( {
       buttonRightDisabled: true
-    });
+    })
   }
 
   handleScroll = (e) => {
-    const bottom = e.target.scrollHeight - e.target.scrollTop - 10 <= e.target.clientHeight;
+    const bottom = e.target.scrollHeight - e.target.scrollTop - 10 <= e.target.clientHeight
     if (bottom) { 
       this.setState( {
         checkbox: false
-      });
+      })
     } else{
       this.setState( {
         checkbox: true
-      });
+      })
     }
   }
   
@@ -84,11 +90,12 @@ export default class index extends Component {
               <ButtonRoute 
                 className= 'd-flex col-12 mt-3 mb-2'
                 buttonLeft="ไม่ยอมรับ"
-                linkBack ="/login"
+                linkBack ="/menu"
                 buttonRight="ยอมรับ"
                 linkNext="/menu"
                 buttonLeftStyle="white"
                 buttonRightDisabled={this.state.buttonRightDisabled}
+                onClick={() => this.putStateUserService()}
               />
             </div>
           </div>

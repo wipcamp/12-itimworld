@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
-import ButtonRoute from '../Core/ButtonRoute'
+import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
+import UserService from '../../services/UserService'
+
+import ButtonRoute from '../Core/ButtonRoute'
 
 export default class index extends Component {
   state = {
@@ -8,9 +11,12 @@ export default class index extends Component {
     checkbox: true
   }
 
+  putStateUserService = async () => {
+    return await UserService.postStatusMe({ "status": "accept" })
+  }
+
   onClick = (e) => {
-    this.setState(
-      {
+    this.setState({
         buttonRightDisabled: !e.target.checked,
       });
   }
@@ -65,6 +71,7 @@ export default class index extends Component {
                 buttonRight="ยอมรับ"
                 linkNext="/agreement"
                 buttonRightDisabled={this.state.buttonRightDisabled}
+                onClick={() => this.putStateUserService()}
               />
             </div>
           </div>

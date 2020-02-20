@@ -4,6 +4,8 @@ import Cookies from 'universal-cookie';
 
 import UserService from '../../services/UserService'
 import LineService from '../../services/LineService'
+
+import Waiting from '../Core/Waiting'
 import LineLoginButton from './LineLoginButton'
 
 const cookies = new Cookies()
@@ -80,11 +82,29 @@ class Login extends Component {
     state: '',
     newState: '',
     newNonce: '',
-    isLoad: false,
+    isLoad: false
   }
 
   componentDidMount() {
     const search = window.location.search.substring(1);
+    
+    const dataEntries = Object.entries(cookies.getAll())
+    let waitNonce = false 
+    let waitState = false
+    for (const [dataArray, dataFromEntity] of dataEntries) {
+      console.log(dataArray)
+      if (dataArray === "nonce" && (dataFromEntity !== null || dataFromEntity !== undefined )){
+        waitNonce = true
+      }
+      if (dataArray === "state" && (dataFromEntity !== null || dataFromEntity !== undefined )){
+        waitState = true
+      }
+    }
+    if(waitNonce && waitState){
+      cookies.set('wait', "wait", { path: '/', maxAge: '10' })
+    }else{
+      cookies.set('wait', "true", { path: '/', maxAge: '10' });
+    }
     // console.log(search)
     if (search) {
       this.setState({
@@ -102,6 +122,10 @@ class Login extends Component {
       })
       // console.log('fail from line api')
     }
+  }
+
+  getUserService = async () => {
+    return await UserService.getMe();
   }
 
   postUserService = async (data) => {
@@ -123,21 +147,16 @@ class Login extends Component {
       userId: objectResponse.data.userId
     }
     const postUserId = { "lineId": tokenObject.userId }
-   
+
     // this.postUserService(postUserId)
-    
+
     try {
       let promise = await this.postUserService(postUserId)
       let response = promise.data;
 
       if (response.success) {
         const token = response.data[0].token
-        cookies.set('token', token, { path: '/', maxAge: '7200'})
-        // this.setState({
-        //   oldUser: response.data[0],
-        //   oldData: response.data[0]
-        // });
-        // this.setState({ knowWhence: response.data[0].knowWhence });
+        cookies.set('token', token, { path: '/', maxAge: '7200' })
 
       } else {
         console.log("Error get User request")
@@ -146,32 +165,50 @@ class Login extends Component {
       console.log("Error get User promise")
     }
     cookies.set('loginObj', tokenObject, { path: '/', maxAge: '300' })
-    window.location.href = '/menu'
+    await UserService.getMe().then(
+      (response) => {
+        if (response.data.data[0].userStatus.accepted === true) {
+          window.location.href = '/menu'
+        } else {
+          window.location.href = '/term'
+        }
+      }
+    )
   }
 
-  handleClick = async() => {
-    const stateGenerate =await  LineService.getGenerateCode()
-    const nonceGenerate =await LineService.getGenerateCode()
+  handleClick = async () => {
+  
+    const stateGenerate = await LineService.getGenerateCode()
+    const nonceGenerate = await LineService.getGenerateCode()
     cookies.set('state', stateGenerate.data, { path: '/', maxAge: '300' });
     cookies.set('nonce', nonceGenerate.data, { path: '/', maxAge: '300' });
+    // cookies.set('wait', "wait", { path: '/', maxAge: '300' });
     // localStorage.setItem('state',stateGenerate.data);
     // localStorage.setItem('nonce', nonceGenerate.data);
-    window.location.href = '/menu'
-//     window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1653703435&redirect_uri=${this.state.itimUrl}&state=${stateGenerate.data}&scope=openid%20email%20profile&nonce=${nonceGenerate.data}`
+    // window.location.href = '/menu'
+    window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1653703435&redirect_uri=${this.state.itimUrl}&state=${stateGenerate.data}&scope=openid%20email%20profile&nonce=${nonceGenerate.data}`
 
   }
 
-  
+
   render() {
     return (
-      <div>
-        <UpperBackground>
-          <Logo src="/img/Logo.png"/>
-        </UpperBackground>
-        <LowerBackground className="mt-3">
-          <LineLoginButton onClick={() => this.handleClick()} />
-        </LowerBackground>
-      </div>
+      <React.Fragment>
+        {
+          cookies.get('wait') === "true" ?
+          <React.Fragment>
+            <UpperBackground>
+              <Logo src="/img/Logo.png" />
+            </UpperBackground>
+            <LowerBackground className="mt-3">
+              <LineLoginButton onClick={() => this.handleClick()} />
+            </LowerBackground>
+          </React.Fragment>
+          :
+          <Waiting />
+
+        }
+      </React.Fragment>
     )
   }
 }

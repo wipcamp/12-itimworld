@@ -24,8 +24,8 @@
     "universal-cookie": "^4.0.3"
   },
   "scripts": {
-    "start": "cross-env PORT=3211 react-scripts start",
-    "dev": "cross-env PORT=3211 react-scripts start",
+    "start": "cross-env PORT=3213 react-scripts start",
+    "dev": "cross-env PORT=3213 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

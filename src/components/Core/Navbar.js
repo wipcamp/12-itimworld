@@ -37,25 +37,21 @@ export default class Navbar extends Component {
 
   async componentDidMount() {
     const cookieToken = cookies.get('token');
-    if (cookieToken !== null && cookieToken !== undefined && Object.keys(cookieToken).length !== 0) {
-      await this.getUserService();
-    }
-  }
-
-  getUserService = async () => {
-    let promise;
-    try {
-      promise = await UserService.getUser();
-      let response = promise.data;
-      if (response.success) {
-        this.setState({
-          wipId: response.data[0].wipId
-        });
-      } else {
-        console.log("Error get User request in navbar")
+    if (cookieToken !== null && cookieToken !== undefined) {
+      let promise;
+      try {
+        promise = await this.getUserService();
+        let response = promise.data;
+        if (response.success) {
+          this.setState({
+            wipId: response.data[0].wipId
+          });
+        } else {
+          console.log("Error get User request")
+        }
+      } catch (e) {
+        console.log("Error get User promise")
       }
-    } catch (e) {
-      console.log("Error get User promise in navbar")
     }
   }
 
