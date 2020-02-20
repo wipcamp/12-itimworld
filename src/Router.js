@@ -14,8 +14,6 @@ import Menu from './components/Menu'
 import Profile from './components/Profile'
 import Major from './components/Major'
 import Questions from "./components/Questions"
-import Preview from "./components/Preview"
-import Success from './components/Success'
 import Edit from './components/Edit'
 import General from './components/General'
 import Document from './components/Document'

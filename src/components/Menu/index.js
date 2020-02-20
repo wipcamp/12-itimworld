@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import userService from '../../services/UserService'
 import CustomModal from './../Core/CustomModal'
 import Waiting from './../Core/Waiting'
+import update from 'react-addons-update';
 
 const userId = 120001;
 
@@ -59,7 +60,67 @@ const MenuImage = styled.img`
     width: 90%;
   }
 `
+const ErrorBox = styled.div`
+  width: 100%;
+  height: 100%;
+  background: #FFF1F0;
+  border: 1px solid #F5222D;
+  box-sizing: border-box;
+  border-radius: 20px;
+`
 
+const SuccessBox = styled.div`
+  width: 100%;
+  height: 100%;
+  background: #F8FFF0;
+  border: 1px solid #76B445;
+  box-sizing: border-box;
+  border-radius: 20px;
+`
+
+const AlertError = (props) => {
+  return(
+    <div className="container mb-5" style={props.style}>
+      <div className="row">
+        <div className="col-12 col-sm-8 col-md-6 col-lg-4 offset-sm-2 offset-md-3 offset-lg-4">
+          <ErrorBox className="pt-2 pb-2 p-4">
+            <div className="row">
+              <div className="col-2">
+                <img src='/img/error.png' />
+              </div>
+              <div className="col-10">
+                <h4>{props.title}</h4>
+                <div>{props.content}</div>
+              </div>
+            </div>
+          </ErrorBox>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const SuccessAlert = (props) => {
+  return(
+    <div className="container mb-5" style={props.style}>
+      <div className="row">
+        <div className="col-12 col-sm-8 col-md-6 col-lg-4 offset-sm-2 offset-md-3 offset-lg-4">
+          <SuccessBox className="pt-2 pb-2 p-4">
+            <div className="row">
+              <div className="col-2">
+                <img src='/img/correct.png' />
+              </div>
+              <div className="col-10">
+                <h4>{props.title}</h4>
+                <div>{props.content}</div>
+              </div>
+            </div>
+          </SuccessBox>
+        </div>
+      </div>
+    </div>
+  )
+}
 export default class Index extends Component {
   toggleAlertModal = () => {
     this.setState({alertModal:!this.state.alertModal})
@@ -77,7 +138,45 @@ export default class Index extends Component {
       
 
       if (response.success) {
+        if(response.data[0].userStatus.documentFailed === true){
+          this.setState({
+            documentFail: '',
+          })
+        } else{
+          this.setState({
+            documentFail: 'none'
+          })
+        }
 
+        if(response.data[0].userStatus.generalAnswered === true && response.data[0].userStatus.majorAnswered === true && response.data[0].userStatus.submitted === true && this.state.documentFail === false){
+          this.setState({
+            successAlert: true
+          })
+        } else{
+          this.setState({
+            successAlert: false
+          })
+        }
+        if(response.data[0].userStatus.registered === true){
+          this.setState({
+            menu: update(this.state.menu, {0: {done: {$set: true}}})
+          })
+        }
+        if(response.data[0].userStatus.generalAnswered === true){
+          this.setState({
+            menu: update(this.state.menu, {1: {done: {$set: true}}})
+          })
+        }
+        if(response.data[0].userStatus.majorAnswered === true){
+          this.setState({
+            menu: update(this.state.menu, {2: {done: {$set: true}}})
+          })
+        }
+        if(response.data[0].userStatus.submitted === true){
+          this.setState({
+            menu: update(this.state.menu, {3: {done: {$set: true}}})
+          })
+        }
         const menus = await this.state.menu.map( menu => {
           let {userStatus} = response.data[0]
           let status = false
@@ -95,6 +194,7 @@ export default class Index extends Component {
           }
           return {...menu,status}
         })
+
 
         this.setState({
           menu:menus,
@@ -115,15 +215,17 @@ getUserStatus = async() => {
 
   state = {
     menu: [
-      { link: 'edit' , message: 'ข้อมูลส่วนตัว'  },
-      { link: 'general', message: 'คำถามทั่วไป' },
-      { link: 'major', message: 'คำถามสาขา' },
-      { link: 'document', message: 'อัพโหลดเอกสาร' }
+      { link: 'edit' , message: 'ข้อมูลส่วนตัว' ,done: false },
+      { link: 'general', message: 'คำถามทั่วไป' ,done: false },
+      { link: 'major', message: 'คำถามสาขา' ,done: false },
+      { link: 'document', message: 'อัพโหลดเอกสาร' ,done: false}
     ],
     status:true,
     alertModal:false,
     finishLoad:false,
-    errorLoad:false
+    errorLoad:false,
+    documentFail: 'none',
+    successAlert: false,
   }
 
   render() {
@@ -133,11 +235,13 @@ getUserStatus = async() => {
     else{
       return (
         <Background>
+          <SuccessAlert style={{display: this.state.successAlert === true ? '' : 'none'}} title='ดำเนินการสมัครเสร็จสิ้น' content='รอประกาศผลวันที่ 28 มีนาคม 2563'/>
+          <AlertError style={{display: this.state.documentFail }} title='คำเตือน' content='เอกสารที่อัปโหลดมีข้อผิดพลาด' />
           <Box className="container">
             {
               this.state.menu.map((data, i) => (
                 <LinkStyle to={`/${data.link}`} className="text-center col-lg-3 col-md-3 col-sm-6 col-6 mb-5" key={i} style={{pointerEvents:`${ data.status ? "none" : "auto" }`}}>
-                  <MenuImage src={`/img/Menu/Button${i+1}.png`} key={i} alt={data.link}/>
+                  <MenuImage src={`/img/Menu/Button${i+1}${data.done === true ? "_done" : ""}.png`} key={i} alt={data.link}/>
                     <Small className="btn">
                       {data.message}
                     </Small>

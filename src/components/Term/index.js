@@ -5,7 +5,6 @@ import UserService from '../../services/UserService'
 
 import ButtonRoute from '../Core/ButtonRoute'
 
-
 export default class index extends Component {
   state = {
     buttonRightDisabled: true,

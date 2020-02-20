@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components'
 
 const QuestionName = styled.p`
-font-family: Sarabun Medium;
 font-style: normal;
 font-weight: 500;
 font-size: 18px;

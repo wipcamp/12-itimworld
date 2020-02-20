@@ -101,9 +101,9 @@ class Login extends Component {
       }
     }
     if(waitNonce && waitState){
-      cookies.set('wait', "wait", { path: '/', maxAge: '300' })
+      cookies.set('wait', "wait", { path: '/', maxAge: '10' })
     }else{
-      cookies.set('wait', "true", { path: '/', maxAge: '300' });
+      cookies.set('wait', "true", { path: '/', maxAge: '10' });
     }
     // console.log(search)
     if (search) {
@@ -177,6 +177,7 @@ class Login extends Component {
   }
 
   handleClick = async () => {
+  
     const stateGenerate = await LineService.getGenerateCode()
     const nonceGenerate = await LineService.getGenerateCode()
     cookies.set('state', stateGenerate.data, { path: '/', maxAge: '300' });

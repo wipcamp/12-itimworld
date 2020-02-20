@@ -84,7 +84,7 @@ export default class Navbar extends Component {
                 <Img src="/img/Logo.png" alt="WIP Camp" />
               </div>
               <div className="col-md-9 col-sm-8 col-6">
-                <div className="" style={{ color: "white", textAlign: "right", fontSize: '24px' }}>
+                <div style={{ color: "white", textAlign: "right", fontSize: '24px' }}>
                   {
                     this.state.wipId !== null || this.state.wipId !== undefined || this.state.wipId !== '' ?
                       <WIPId>
@@ -93,10 +93,10 @@ export default class Navbar extends Component {
                       :
                       <div>Error</div>
                   }
-                  <br />
                   <Logout onClick={() => this.handleClick()}>
-                    Log Out
+                      Log Out
                   </Logout>
+
                 </div>
               </div>
             </div>
