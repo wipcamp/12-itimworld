@@ -9,9 +9,8 @@ const createInstance = (headers) => {
   return axios.create({
     baseURL: apiUrl,
     headers: {
-      // 'Authorization': `Bearer ${cookies.get('token')}`,
+      'Authorization': `${cookies.get('token')}`,
       'Content-Type': 'application/json',
-      'Allow': 'GET, HEAD, POST, OPTIONS,  PUT'
     }
   })
 }
