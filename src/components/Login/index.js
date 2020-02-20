@@ -154,7 +154,7 @@ class Login extends Component {
           window.location.href = '/term'
           :
           window.location.href = '/term'
-          console.log(response)
+        console.log(response.data.data[0].userStatus.accepted)
         } 
       )
     
