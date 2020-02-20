@@ -105,7 +105,7 @@ export default class Index extends React.Component {
       <Router>
         {
 //           (cookies.get('token') !== undefined && cookies.get('token') !== null)  && locationNow !== '/login' ?
-          true  && location !== '/login' ?
+          true  && locationNow !== '/login' ?
             <Navbar />:
             ''
         }
