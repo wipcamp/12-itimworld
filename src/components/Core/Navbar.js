@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Button } from 'reactstrap'
 import Cookies from 'universal-cookie'
-import {Subtitle} from './Text'
 import {Redirect} from 'react-router-dom'
 
 import UserService from '../../services/UserService'
@@ -46,10 +45,9 @@ export default class Navbar extends Component {
   getUserService = async () => {
     let promise;
     try {
-      promise = await UserService.getUser(userId);
+      promise = await UserService.getUser();
       let response = promise.data;
       if (response.success) {
-        let nickName = response.data[0].nickName === null || response.data[0].nickName === '' ? 'Welcome' : response.data[0].nickName
         this.setState({
           wipId: response.data[0].wipId
         });
