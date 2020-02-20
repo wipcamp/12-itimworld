@@ -8,8 +8,6 @@ import {
 import Cookies from 'universal-cookie';
 import styled from 'styled-components'
 
-import UserService from './services/UserService'
-
 import Navbar from './components/Core/Navbar'
 import Login from './components/Login'
 import Menu from './components/Menu'
@@ -103,7 +101,12 @@ export default class Index extends React.Component {
   render() {
     return (
       <Router>
-        <Navbar />
+        {
+          (cookies.get('token') !== undefined && cookies.get('token') !== null)  && locationNow !== '/login' ?
+          // true  && location !== '/login' ?
+            <Navbar />:
+            ''
+        }
         <Switch>
           <Route path="/login" >
             <Mountain>
