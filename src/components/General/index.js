@@ -97,6 +97,11 @@ export default class Index extends Component {
       this.toggleModal();
     }
 
+    resubmitAndCloseModal = () => {
+      this.toggleModal()
+      this.clickSubmit()
+    }
+
     render() {
       
       const { redirect } = this.state;
@@ -134,8 +139,17 @@ export default class Index extends Component {
                     ยืนยัน
                   </ButtonStyle>
                 </div>
-              <CustomModal header="เกิดข้อผิดพลาดขึ้น" paragraph="โปรดติดต่อเจ้าหน้าที่" secondaryButtonText="ปิด" modal={this.state.modal} toggle={this.toggleModal} />
             </div>
+            <CustomModal 
+              header="การบันทึกข้อมูลผิดพลาด" 
+              paragraph="การบันทึกข้อมูลเกิดข้อผิดพลาด ไม่สามารถส่งข้อมูลได้ กรุณากดยืนยันข้อมูลใหม่อีกครั้ง" 
+              secondaryButtonText="ยกเลิก" 
+              primaryButtonDisplay="flex"
+              primaryButtonText="ยืนยัน"
+              primaryOnClick={() => {this.resubmitAndCloseModal()}}
+              modal={this.state.modal} 
+              toggle={this.toggleModal} 
+            />
           </ContainerDiv>
         )
     }

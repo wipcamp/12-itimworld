@@ -22,6 +22,7 @@ const Field = (props) => {
             required={props.required} 
             pattern={props.pattern}
             title={props.title}
+            disabled={props.disabled}
             />
         </div>
       </MinHeightRow>
@@ -42,11 +43,13 @@ Field.propsTypes = {
   required: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   pattern: PropTypes.string,
-  title: PropTypes.string
+  title: PropTypes.string,
+  disabled: PropTypes.bool
 }
 
 Field.defaultProps = {
-  required: 'required'
+  required: true,
+  disabled: false
 }
 
 export default Field

@@ -24,9 +24,16 @@ export default class Navbar extends Component {
   }
 
   async componentDidMount() {
+    const cookieToken = cookies.get('token');
+    if(cookieToken !== null && cookieToken !== undefined && Object.keys(cookieToken).length !== 0){
+      await this.getUserService();
+    }
+  }
+
+  getUserService = async () => {
     let promise;
     try {
-      promise = await this.getUserService();
+      promise = await UserService.getUser(userId);
       let response = promise.data;
       if (response.success) {
         let nickName = response.data[0].nickName === null || response.data[0].nickName === '' ? 'Welcome' : response.data[0].nickName
@@ -35,15 +42,11 @@ export default class Navbar extends Component {
           name: nickName,
         });
       } else {
-        console.log("Error get User request")
+        console.log("Error get User request in navbar")
       }
     } catch (e) {
-      console.log("Error get User promise")
+      console.log("Error get User promise in navbar")
     }
-  }
-
-  getUserService = async () => {
-    return await UserService.getUser(userId);
   }
 
   logOut = () => {
