@@ -104,6 +104,10 @@ class Login extends Component {
     }
   }
 
+  getUserService = async () => {
+    return await UserService.getMe();
+  }
+
   postUserService = async (data) => {
     return await UserService.postUser(data)
   }
@@ -133,11 +137,6 @@ class Login extends Component {
       if (response.success) {
         const token = response.data[0].token
         cookies.set('token', token, { path: '/', maxAge: '7200'})
-        // this.setState({
-        //   oldUser: response.data[0],
-        //   oldData: response.data[0]
-        // });
-        // this.setState({ knowWhence: response.data[0].knowWhence });
 
       } else {
         console.log("Error get User request")
@@ -146,7 +145,15 @@ class Login extends Component {
       console.log("Error get User promise")
     }
     cookies.set('loginObj', tokenObject, { path: '/', maxAge: '300' })
-    window.location.href = '/menu'
+    await UserService.putUser().then(
+        (response) => {
+          response.data[0].userStatus.acceptedStoreData && response.data[0].userStatus.accepted ?
+          window.location.href = '/menu'
+          :
+          window.location.href = '/term'
+        } 
+      )
+    
   }
 
   handleClick = async() => {
