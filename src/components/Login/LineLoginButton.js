@@ -33,6 +33,13 @@ const Text = styled.div`
   font-size: 24px;
   width:100%;
   padding-right: 3rem;
+  @media (max-width:768px) {
+    font-size: 20px;
+  }
+  @media (max-width:360px) {
+    font-size: 18px;
+    padding-right: 1rem;
+  }
 `
 
 export default class LineLoginButton extends Component {
