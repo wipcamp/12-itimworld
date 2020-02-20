@@ -183,6 +183,7 @@ export default class Index extends Component {
 
   componentDidCatch() {
     this.toggleAlertModal();
+    this.setState({ errorLoad: true })
   }
 
   toggleAlertModal = () => {
@@ -205,6 +206,11 @@ export default class Index extends Component {
       .then((promise) => {
         const response = promise.data;
         const responseData = response.data[0];
+
+        if(responseData.telNo === null){
+          this.setState({ errorLoad: true })
+        }
+        
         if (response.success) {
           this.setState({
             oldUser: responseData,

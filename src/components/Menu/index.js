@@ -59,7 +59,14 @@ const MenuImage = styled.img`
     width: 90%;
   }
 `
-
+const ErrorBox = styled.div`
+  width: 100%;
+  height: 100%;
+  background: #FFF1F0;
+  border: 1px solid #F5222D;
+  box-sizing: border-box;
+  border-radius: 20px;
+`
 export default class Index extends Component {
   toggleAlertModal = () => {
     this.setState({alertModal:!this.state.alertModal})
@@ -145,6 +152,24 @@ getUserStatus = async() => {
               ))
             }
           </Box>
+          <div className="container">
+            <div className="row">
+              <div className="col-8 col-md-4 col-lg-4 offset-2 offset-md-4 offset-lg-4">
+                <ErrorBox className="pt-2 pb-2 p-4">
+                  <div className="row">
+                    <div className="col-2">
+            
+                    </div>
+                    <div className="col-10">
+                      <h4>ข้อผิดพลาด</h4>
+                      <div>ไม่สามารถเรียกใช้ข้อมูลได้ กรุณาลองใหม่อีกครั้ง</div>
+                    </div>
+                  </div>
+                </ErrorBox>
+              </div>
+            </div>
+          </div>
+          
           <CustomModal header="เกิดข้อผิดพลาดขึ้น" paragraph="โปรดติดต่อเจ้าหน้าที่" secondaryButtonText="ปิด" modal={this.state.alertModal} toggle={this.toggleAlertModal} />
         </Background>
       )
