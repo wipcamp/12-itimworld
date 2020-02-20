@@ -145,14 +145,14 @@ class Login extends Component {
       console.log("Error get User promise")
     }
     cookies.set('loginObj', tokenObject, { path: '/', maxAge: '300' })
-    await UserService.putMe().then(
+    await UserService.getMe().then(
         (response) => {
           response.data.data[0].userStatus === null ?
-            // response.data.data[0].userStatus.accept? 
+            response.data.data[0].userStatus.accept? 
           window.location.href = '/menu' 
           :
-          // window.location.href = '/term'
-          // :
+          window.location.href = '/term'
+          :
           window.location.href = '/term'
           console.log(response)
         } 
