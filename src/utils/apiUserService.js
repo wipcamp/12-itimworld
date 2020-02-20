@@ -1,7 +1,7 @@
 import axios from 'axios'
-import Cookies from 'universal-cookie'
+// import Cookies from 'universal-cookie'
 
-const cookies = new Cookies()
+// const cookies = new Cookies()
 
 const { apiUrl } = window['runConfig'];
 

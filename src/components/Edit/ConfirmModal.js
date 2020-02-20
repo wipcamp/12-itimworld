@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { Modal, ModalBody } from 'reactstrap'
 
 import { HeaderText, Paragraph } from '../Core/Text'
-import { ButtonStyle, ButtonStyleLink } from '../Core/ButtonStyle'
+import { ButtonStyle} from '../Core/ButtonStyle'
 
 const SubHeader = styled(HeaderText)`
   font-size: 24px;

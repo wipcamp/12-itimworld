@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import userService from '../../services/UserService'
+import CustomModal from './../Core/CustomModal'
+import Waiting from './../Core/Waiting'
 
 const userId = 120001;
 
@@ -16,14 +18,6 @@ const Background = styled.div`
 `
 const Box = styled.div`
   width: 100%;
-  overflow: hidden;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  text-align: center;
-`
-
-const Centering = styled.div`
   overflow: hidden;
   display: flex;
   flex-wrap: wrap;
@@ -67,6 +61,13 @@ const MenuImage = styled.img`
 `
 
 export default class Index extends Component {
+  toggleAlertModal = () => {
+    this.setState({alertModal:!this.state.alertModal})
+  }
+
+  componentDidCatch() {
+    this.toggleAlertModal();
+  }
 
   async componentDidMount() {
     let promise;
@@ -80,29 +81,31 @@ export default class Index extends Component {
         const menus = await this.state.menu.map( menu => {
           let {userStatus} = response.data[0]
           let status = false
-          if(menu.message == "ข้อมูลส่วนตัว"){
+          if(menu.message === "ข้อมูลส่วนตัว"){
             status = userStatus.registered
             
-          }else if(menu.message == "คำถามทั่วไป"){
+          }else if(menu.message === "คำถามทั่วไป"){
             status = userStatus.generalAnswered
 
-          }else if(menu.message == "คำถามสาขา"){
+          }else if(menu.message === "คำถามสาขา"){
             status = userStatus.majorAnswered
             
-          }else if(menu.message == "อัพโหลดเอกสาร"){
+          }else if(menu.message === "อัพโหลดเอกสาร"){
             status = userStatus.submitted           
           }
           return {...menu,status}
         })
 
-        this.setState({menu:menus})
-        console.log(this.state.menu);
+        this.setState({
+          menu:menus,
+          finishLoad:true
+        })
               
       } else {
-        console.log("Error get User request")
+        this.setState({errorLoad:true})
       }
     } catch (e) {
-      console.log("Error get User promise")
+      this.setState({errorLoad:true})
     }
   }
 
@@ -117,25 +120,34 @@ getUserStatus = async() => {
       { link: 'major', message: 'คำถามสาขา', imgBefore : '/img/Menu/track3.webp', imgAfter : '/img/Menu/track3_done.webp' },
       { link: 'document', message: 'อัพโหลดเอกสาร', imgBefore: '/img/Menu/document4.webp', imgAfter: '/img/Menu/document4_done.webp' }
     ],
-    status:true
+    status:true,
+    alertModal:false,
+    finishLoad:false,
+    errorLoad:false
   }
 
   render() {
-    return (
-      <Background>
-        <Box className="container">
-          {
-            this.state.menu.map((data, i) => (
-              <LinkStyle to={`/${data.link}`} className="text-center col-lg-3 col-md-3 col-sm-6 col-6 mb-5" key={i} style={{pointerEvents:`${ data.status ? "none" : "auto" }`}}>
-                <MenuImage src={ !data.status ? data.imgBefore : data.imgAfter } key={i} alt={data.link}/>
-                  <Small className="btn">
-                    {data.message}
-                  </Small>
-              </LinkStyle>
-            ))
-          }
-        </Box>
-      </Background>
-    )
+    if(!this.state.finishLoad || this.state.errorLoad){
+      return <Waiting error={this.state.errorLoad} />
+    }
+    else{
+      return (
+        <Background>
+          <Box className="container">
+            {
+              this.state.menu.map((data, i) => (
+                <LinkStyle to={`/${data.link}`} className="text-center col-lg-3 col-md-3 col-sm-6 col-6 mb-5" key={i} style={{pointerEvents:`${ data.status ? "none" : "auto" }`}}>
+                  <MenuImage src={ !data.status ? data.imgBefore : data.imgAfter } key={i} alt={data.link}/>
+                    <Small className="btn">
+                      {data.message}
+                    </Small>
+                </LinkStyle>
+              ))
+            }
+          </Box>
+          <CustomModal header="เกิดข้อผิดพลาดขึ้น" paragraph="โปรดติดต่อเจ้าหน้าที่" secondaryButtonText="ปิด" modal={this.state.alertModal} toggle={this.toggleAlertModal} />
+        </Background>
+      )
+    }
   }
 }

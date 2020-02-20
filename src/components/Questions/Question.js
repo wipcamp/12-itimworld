@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types';
 import styled from 'styled-components'
 
@@ -20,26 +20,44 @@ const TextArea = styled.textarea`
     box-sizing: border-box;
     border-radius: 4px;
 `
-export default class Question extends Component {
-		
-    render() {
-        return (
-            <div className="form-group">
-                <QuestionName className="col-12 justify-content-center">คำถามที่ {this.props.questionCount} : {this.props.questionName}</QuestionName>
-                    <TextArea
-                    className="col-12"
-                    name={this.props.questionId}
-                    onChange={this.props.handleAnswer}
-                    />
-            </div>
 
-        )
-    }
+const Picture = styled.img`
+  width:80%;
+  min-width: 230px;
+  max-width: 490px;
+`
+
+const displayFlowchart = (id) => {
+  if(id === 5){
+    return (
+      <div className="col-12 mb-2">
+        <Picture src="/img/Question/Flowchart.png" alt="Flowchart Here*" />
+      </div>
+    )
+  }
+}
+
+const Question = (props) => {
+  return (
+    <div className="form-group">
+      <QuestionName className="col-12 justify-content-center">คำถามที่ {props.questionCount} : {props.questionName}</QuestionName>
+      {displayFlowchart(props.questionId)}
+      <TextArea
+        className="col-12"
+        name={props.questionId}
+        onChange={props.handleAnswer}
+        required={props.required}
+      />
+    </div>
+  )
 }
 
 Question.propTypes = {
     questionCount: PropTypes.number,
     questionName: PropTypes.string,
     questionId: PropTypes.any,
-    handleAnswer: PropTypes.func
+    handleAnswer: PropTypes.func,
+    required: PropTypes.bool
 }
+
+export default Question;

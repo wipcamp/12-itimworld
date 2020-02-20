@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Button } from 'reactstrap'
 import Cookies from 'universal-cookie'
+import {Subtitle} from './Text'
+import {Redirect} from 'react-router-dom'
 
 import UserService from '../../services/UserService'
 
@@ -35,9 +37,16 @@ export default class Navbar extends Component {
   }
 
   async componentDidMount() {
+    const cookieToken = cookies.get('token');
+    if(cookieToken !== null && cookieToken !== undefined && Object.keys(cookieToken).length !== 0){
+      await this.getUserService();
+    }
+  }
+
+  getUserService = async () => {
     let promise;
     try {
-      promise = await this.getUserService();
+      promise = await UserService.getUser(userId);
       let response = promise.data;
       if (response.success) {
         let nickName = response.data[0].nickName === null || response.data[0].nickName === '' ? 'Welcome' : response.data[0].nickName
@@ -45,10 +54,10 @@ export default class Navbar extends Component {
           wipId: response.data[0].wipId
         });
       } else {
-        console.log("Error get User request")
+        console.log("Error get User request in navbar")
       }
     } catch (e) {
-      console.log("Error get User promise")
+      console.log("Error get User promise in navbar")
     }
   }
 
@@ -65,6 +74,13 @@ export default class Navbar extends Component {
   }
 
   render() {
+
+    const { redirect } = this.state;
+
+    if (redirect) {
+      return <Redirect to='/login'/>;
+    }
+
     return (
       <div className="pt-3 pb-3">
         <div className="container">
@@ -86,7 +102,7 @@ export default class Navbar extends Component {
                   <br />
                   <Logout onClick={() => this.handleClick()}>
                     Log Out
-                        </Logout>
+                  </Logout>
                 </div>
               </div>
             </div>

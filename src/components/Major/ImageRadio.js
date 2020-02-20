@@ -17,22 +17,20 @@ const InputRadio = styled.label`
 
 /* CHECKED STYLES */
 [type=radio]:checked + img {
-  content: url('https://images2.minutemediacdn.com/image/upload/c_crop,h_1192,w_2122,x_0,y_74/f_auto,q_auto,w_1100/v1575329078/shape/mentalfloss/609640-gettyimages-802480150.jpg');
+  /* content: url('/img/Track/website.png'); */
 }
 `
 
 const ImageMajor = styled.img`
-  width: 270px;
-  height: 413px;
-  background: #C4C4C4;
-  border-radius: 30px;
+  width: 80%;
+  filter: ${(props => props.isSelected?"brightness(100%)":"brightness(50%)")};
 `
 
 const ImageRadio = (props) => {
   return (
       <InputRadio className={props.className}>
         <input type="radio" name="major" value={props.value} />
-        <ImageMajor src={props.imgPath}  alt="wow" onClick={props.onClick}/>
+        <ImageMajor src={props.imgPath}  alt={props.alt} onClick={props.onClick} isSelected={props.isSelected} />
       </InputRadio>
   )
 }
@@ -41,7 +39,9 @@ ImageRadio.propsTypes = {
   className: PropTypes.string,
   imgPath: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired
+  value: PropTypes.string.isRequired,
+  alt: PropTypes.string.isRequired,
+  isSelected: PropTypes.bool.isRequired
 }
 
 export default ImageRadio

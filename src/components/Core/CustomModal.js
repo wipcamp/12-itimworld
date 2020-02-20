@@ -1,8 +1,7 @@
-import React, {useState} from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { Modal, ModalBody, ModalHeader, ModalFooter } from 'reactstrap';
+import { Modal} from 'reactstrap';
 import { HeaderText, Paragraph, Subtitle } from './Text'
-import { ButtonStyle } from './ButtonStyle'
 import PropTypes from 'prop-types'
 
 const NoBorder = styled.div`
@@ -15,7 +14,7 @@ const PrimaryButton = styled.div`
   box-sizing: border-box;
   border-radius: 4px;
 
-  display: ${props=>props.primaryButtonDisplay?props.primaryButtonDisplay:"none"}!important;
+  display: ${props=>props.display?props.display:"none"}!important;
 `
 
 const SecondaryButton = styled.div`
@@ -27,6 +26,11 @@ const SecondaryButton = styled.div`
 
 const ParagraphContext = styled(Paragraph)`
   margin-bottom: auto;
+  text-align: start;
+`
+
+const HeaderContext = styled(HeaderText)`
+  text-align: start;
 `
 
 const WhiteParagraphContext = styled(ParagraphContext)`
@@ -35,34 +39,25 @@ const WhiteParagraphContext = styled(ParagraphContext)`
 
 const DangerSubtitle = styled(Subtitle)`
   color: #FF0000;
+  font-weight: bold;
 `
 
 const CustomModal = props => {
     return (
       <Modal isOpen={props.modal} toggle={props.toggle} >
-        <div class="modal-content">
+        <div class="modal-content container">
           <NoBorder className="modal-header row">
-            <HeaderText className="modal-title col-11 col-md-9">{props.header}</HeaderText>
-            <div class="col-1 col-md-3"></div>
+            <HeaderContext className="modal-title col-12 ml-1">{props.header}</HeaderContext>
           </NoBorder>
-          <div class="modal-body col-11 offset-1">
-            <div class="ml-3">
-              <ParagraphContext className="ml-3">
+          <div class="modal-body col-12">
+              <ParagraphContext className="ml-4">
                 <p>{props.paragraph}</p>
               </ParagraphContext>
-              <DangerSubtitle className="mt-1">
+              <DangerSubtitle className="ml-3">
                 <p>{props.dangerSubtitle}</p>  
               </DangerSubtitle>
-            </div>
           </div>
           <NoBorder className="modal-footer">
-            <PrimaryButton>
-              <button type="button" class="btn" onClick={props.toggle}>
-                  <WhiteParagraphContext>
-                    {props.primaryButtonText}
-                  </WhiteParagraphContext>
-                </button>
-            </PrimaryButton>
             <SecondaryButton>
                 <button type="button" class="btn" onClick={props.toggle}>
                   <ParagraphContext>
@@ -70,6 +65,13 @@ const CustomModal = props => {
                   </ParagraphContext>
                 </button>
             </SecondaryButton>
+            <PrimaryButton display={props.primaryButtonDisplay}>
+              <button type="button" class="btn" onClick={props.primaryOnClick}>
+                  <WhiteParagraphContext>
+                    {props.primaryButtonText}
+                  </WhiteParagraphContext>
+                </button>
+            </PrimaryButton>
           </NoBorder>
         </div>
       </Modal>
@@ -83,12 +85,14 @@ CustomModal.propTypes = {
     paragraph: PropTypes.string.isRequired,
     primaryButtonDisplay: PropTypes.string,
     primaryButtonText: PropTypes.string,
+    primaryOnClick: PropTypes.func,
     secondaryButtonText: PropTypes.string,
     dangerSubtitle: PropTypes.string
 }
 
 CustomModal.defaultProps = {
   primaryButtonText: "ยืนยัน",
+  primaryOnClick: () => {},
   secondaryButtonText: "ยกเลิก",
   dangerSubtitle: ""
 }

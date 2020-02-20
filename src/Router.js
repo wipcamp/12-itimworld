@@ -5,7 +5,7 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import Cookies from 'universal-cookie';
+// import Cookies from 'universal-cookie';
 import styled from 'styled-components'
 
 import Navbar from './components/Core/Navbar'
@@ -19,20 +19,22 @@ import Success from './components/Success'
 import Edit from './components/Edit'
 import General from './components/General'
 import Document from './components/Document'
+import {Error} from './components/Core/Waiting'
+import Agreement from './components/Agreement'
 
 const locationNow = window.location.pathname
 
 const Mountain = styled.div`
-  background-image:url('/img/mountain.png');
+  background-image:url('/img/mountain.png') , url('/img/Star/zodiac1.png'), url('/img/Star/zodiac2.png'), url('/img/Star/zodiac3.png') , url('/img/Star/star1.png'), url('/img/Star/star2.png'), url('/img/Star/star3.png');
   background-repeat: no-repeat;
-  background-position-y: bottom;
-  background-size:contain;
+  background-position: center bottom , 5% 20% , 15% 2% , 90% 10% , 10% 6% ,  87% 0% , 100% 13%;
+  background-size:contain , 5% , 8% , 5% , 14% , 25% , 15% ;
   min-height: 100vh;
   width: 100%;
   padding-bottom: 30px;
 `
 
-const cookies = new Cookies()
+// const cookies = new Cookies()
 
 const PrivateRoute = ({ children, ...rest }) => {
   return (
@@ -40,8 +42,8 @@ const PrivateRoute = ({ children, ...rest }) => {
       <Route
         {...rest}
         render={({ location }) =>
-          (cookies.get('token') !== undefined && cookies.get('token') !== null)? (
-          // true ? (
+//           (cookies.get('token') !== undefined && cookies.get('token') !== null)? (
+          true ? (
             <React.Fragment>
             {
                 locationNow === '/menu' || locationNow === '/profile' || 
@@ -75,8 +77,8 @@ const MenuRoute = () => {
   return(
     <React.Fragment>
       {
-        (cookies.get('token') !== undefined && cookies.get('token') !== null)? (
-        // true ? (
+//         (cookies.get('token') !== undefined && cookies.get('token') !== null)? (
+        true ? (
           <Menu />
         ) : (
             <Redirect
@@ -102,8 +104,8 @@ export default class Index extends React.Component {
     return (
       <Router>
         {
-          (cookies.get('token') !== undefined && cookies.get('token') !== null)  && locationNow !== '/login' ?
-          // true  && location !== '/login' ?
+//           (cookies.get('token') !== undefined && cookies.get('token') !== null)  && locationNow !== '/login' ?
+          true  && location !== '/login' ?
             <Navbar />:
             ''
         }
@@ -113,6 +115,11 @@ export default class Index extends React.Component {
               <Login />
             </Mountain>
           </Route>
+          <PrivateRoute path="/agreement">
+            <Mountain>
+              <Agreement />
+            </Mountain>
+          </PrivateRoute>
           <PrivateRoute path="/profile">
             <Mountain>
               <Profile />
@@ -130,7 +137,9 @@ export default class Index extends React.Component {
             {/* <Menu />
           </MenuRoute> */}
           <PrivateRoute path="/document">
-            <Document />
+            <Mountain>
+              <Document />
+            </Mountain>
           </PrivateRoute>
           <PrivateRoute path="/questions">
             <Mountain>
@@ -144,7 +153,12 @@ export default class Index extends React.Component {
             <Success />
           </PrivateRoute>
           <PrivateRoute path="/edit">
-            <Edit />
+            <Mountain>
+              <Edit />
+            </Mountain>
+          </PrivateRoute>
+          <PrivateRoute path="/error">
+            <Error/>
           </PrivateRoute>
           <PrivateRoute path="*" />
         </Switch>

@@ -5,12 +5,8 @@ import UserService from './../../services/UserService'
 import styled from 'styled-components'
 import CustomModal from './../Core/CustomModal'
 import { ButtonStyle } from '../Core/ButtonStyle'
-
-const Header = styled.h2`
-  font-size: 36px;
-  line-height: 47px;
-  text-align: center;
-`
+import { Redirect } from 'react-router-dom'
+import { HeaderText } from './../Core/Text'
 
 const ContainerDiv = styled.div`
   max-width:1200px;
@@ -35,17 +31,15 @@ export default class Index extends Component {
   handleAnswer=(event)=> {
     const val = event.target.value;
     const id = event.target.name;
-    if(id == 1){
+    if(id === '1'){
       answer.firstAnswer = val;
-    }else if(id == 2){
+    }else if(id === '2'){
       answer.secondAnswer = val;
-    }else if(id == 3){
+    }else if(id === '3'){
       answer.thirdAnswer = val;
     }else{
       answer.forthAnswer = val;
     }
-    console.log(answer);
-    
   };
   
 
@@ -54,24 +48,24 @@ export default class Index extends Component {
     state = {
       questions: [{
           id: 1,
-          name: 'This is general question 1',
+          name: 'ถ้าน้องต้องเปิดบริษัทขึ้นมาหนึ่งบริษัท น้องจะทำบริษัทเกี่ยวกับอะไร จะนำไอทีมาใช้อย่างไร และจะแบ่งการทำงานของไอทีออกเป็นกี่ส่วน อะไรบ้าง',
           oldValue: ''
         },
         {
           id: 2,
-          name: 'This is general question 2',
+          name: 'แต่งเรื่องจากคำที่พี่กำหนดให้อย่างน้อย 5 บรรทัด คำนั้นคือ “บะบะบิ, ดูดวง, พี่วิปโป้, ปังมากพี่นัท, จะแล้วมั้ย, ไม้เอก…ไม้โท…ไม้อะไร, โรตีดิบ, อิรัชชัยมาเสะ, เฉียบ, ตาลือตกบ้าน, ดูออก, ผัดกะเพรา”',
           oldValue: ''
 
         },
         {
           id: 3,
-          name: 'This is general question 3',
+          name: 'จากคลิปเสียง อยากรู้ว่าพี่ ๆ พูดอะไรกัน',
           oldValue: ''
 
         },
         {
           id: 4,
-          name: 'This is general question 4',
+          name: 'กาลครั้งหนึ่งนานมาแล้ว ณ จักรวาลอันยิ่งใหญ่ ได้มีการแข่งขันเกิดขึ้นระหว่างเหล่ากลุ่มดาวจักรราศี นั่นก็คือ แอรีส แคนเซอร์ ลีโอ ไพซีส สกอร์ปิโอ และเจมินาย ระหว่างการแข่งขันนั้นได้มีเหตุการณ์ไม่คาดฝันเกิดขึ้น แอรีส วิ่งผ่าน แคนเซอร์ แล้ว ลีโอ ก็วิ่งผ่าน แอรีส แต่ว่า แคนเซอร์ วิ่งช้ากว่า เจมินาย แล้ว ไพซีส ก็วิ่งนำ แคนเซอร์ แต่ว่า ลีโอ สะดุดล้มเลยวิ่งตามหลังแอรีส แล้วสกอร์ปิโอ ก็วิ่งสกัด แอรีส แล้ว ไพซีสก็หยุดพักเหนื่อยทำให้ตามหลัง เจมินาย แล้วราศีไหนมีเกณฑ์จะติดค่าย WIP CAMP #12 เพราะอะไร',
           oldValue: ''
 
         }
@@ -87,6 +81,7 @@ export default class Index extends Component {
       event.preventDefault();
       await UserService.postGeneralAnswer(userId,answer)
         .then(() => {UserService.postStatus(userId,{"status":"general"})})
+        .then(() => this.setState({redirect:true}))
         .catch(() => this.toggleModal())
     }
 
@@ -98,11 +93,27 @@ export default class Index extends Component {
       submitButtonRef.click();
     }
 
+    componentDidCatch() {
+      this.toggleModal();
+    }
+
+    resubmitAndCloseModal = () => {
+      this.toggleModal()
+      this.clickSubmit()
+    }
+
     render() {
+      
+      const { redirect } = this.state;
+
+      if (redirect) {
+        return <Redirect to='/menu'/>;
+      }
+
       return (
         <ContainerDiv className ="container-fluid justify-content-center">
             <div className="card p-5" style={{boxShadow: `0px 4px 4px rgba(0, 0, 0, 0.25)`,borderRadius: `4px`,opacity:`0.9`}}>
-                <Header className="col-12 mb-5 mt-5">This is General Question page</Header>
+                <HeaderText className="col-12 mb-5 mt-5">คำถามทั่วไป</HeaderText>
                 <div>
                   <form onSubmit={e => this.postGeneralAnswerService(e)}>
                         {this.state.questions.map((data,i) => {
@@ -128,8 +139,17 @@ export default class Index extends Component {
                     ยืนยัน
                   </ButtonStyle>
                 </div>
-              <CustomModal header="เกิดข้อผิดพลาดขึ้น" paragraph="โปรดติดต่อเจ้าหน้าที่" secondaryButtonText="ปิด" modal={this.state.modal} toggle={this.toggleModal} />
             </div>
+            <CustomModal 
+              header="การบันทึกข้อมูลผิดพลาด" 
+              paragraph="การบันทึกข้อมูลเกิดข้อผิดพลาด ไม่สามารถส่งข้อมูลได้ กรุณากดยืนยันข้อมูลใหม่อีกครั้ง" 
+              secondaryButtonText="ยกเลิก" 
+              primaryButtonDisplay="flex"
+              primaryButtonText="ยืนยัน"
+              primaryOnClick={() => {this.resubmitAndCloseModal()}}
+              modal={this.state.modal} 
+              toggle={this.toggleModal} 
+            />
           </ContainerDiv>
         )
     }
