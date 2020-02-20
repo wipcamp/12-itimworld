@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components'
-import { ButtonStyle } from './ButtonStyle'
-import { Link } from 'react-router-dom'
+import { ButtonStyle , ButtonStyleLink } from './ButtonStyle'
 
 const Section = styled.div`
   min-height:50vh;
@@ -118,7 +117,7 @@ export const Error = () => {
             <div className="col-12 col-md-6 col-lg-6">
               <h1 className="text-white mt-3">มีบางอย่างผิดพลาด  </h1>
               <h4 className="text-white mt-4">ขอโทษครับ ไม่สามารถเรียกข้อมูลที่ต้องการได้ ลองใหม่อีกครั้งนะครับ</h4>
-              <div className="text-right mt-5"><Link to="/menu"><ButtonStyle>กลับสู่หน้าหลัก</ButtonStyle></Link></div>
+              <div className="text-right mt-5"><ButtonStyleLink to="/menu"><ButtonStyle style={{background: '#304151'}}>กลับสู่หน้าหลัก</ButtonStyle></ButtonStyleLink></div>
             </div>
           </div>
         </div>
