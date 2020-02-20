@@ -47,8 +47,8 @@ const PrivateRoute = ({ children, ...rest }) => {
             <React.Fragment>
             {
                 locationNow === '/menu' || locationNow === '/profile' || 
-                  locationNow === '/general' || locationNow === '/major' ||
-                  locationNow === '/document' ? 
+                locationNow === '/general' || locationNow === '/major' ||
+                locationNow === '/document' || locationNow === '/agreement'? 
               children
               :
               <Redirect
@@ -134,8 +134,6 @@ export default class Index extends React.Component {
             <Major />
           </PrivateRoute>
           <MenuRoute path="/menu" />
-            {/* <Menu />
-          </MenuRoute> */}
           <PrivateRoute path="/document">
             <Mountain>
               <Document />
@@ -145,12 +143,6 @@ export default class Index extends React.Component {
             <Mountain>
               <Questions />
             </Mountain>
-          </PrivateRoute>
-          <PrivateRoute path="/preview">
-            <Preview />
-          </PrivateRoute>
-          <PrivateRoute path="/success">
-            <Success />
           </PrivateRoute>
           <PrivateRoute path="/edit">
             <Mountain>
