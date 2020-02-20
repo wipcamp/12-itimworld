@@ -13,7 +13,7 @@ export default class index extends Component {
   }
 
   putStateUserService = async () => {
-    return await UserService.postStatusMe({ "status": "acceptUse" })
+    return await UserService.postStatusMe({ "status": "accept" })
   }
 
   onClick = (e) => {
