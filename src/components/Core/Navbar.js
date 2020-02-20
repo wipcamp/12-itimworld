@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Button } from 'reactstrap'
 import Cookies from 'universal-cookie'
-import {Redirect} from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
 import UserService from '../../services/UserService'
 
@@ -37,25 +37,21 @@ export default class Navbar extends Component {
 
   async componentDidMount() {
     const cookieToken = cookies.get('token');
-    if(cookieToken !== null && cookieToken !== undefined){
-      await this.getUserService();
-    }
-  }
-
-  getUserService = async () => {
-    let promise;
-    try {
-      promise = await UserService.getMe();
-      let response = promise.data;
-      if (response.success) {
-        this.setState({
-          wipId: response.data[0].wipId
-        });
-      } else {
-        console.log("Error get User request in navbar")
+    if (cookieToken !== null && cookieToken !== undefined) {
+      let promise;
+      try {
+        promise = await this.getUserService();
+        let response = promise.data;
+        if (response.success) {
+          this.setState({
+            wipId: response.data[0].wipId
+          });
+        } else {
+          console.log("Error get User request")
+        }
+      } catch (e) {
+        console.log("Error get User promise")
       }
-    } catch (e) {
-      console.log("Error get User promise in navbar")
     }
   }
 
@@ -76,7 +72,7 @@ export default class Navbar extends Component {
     const { redirect } = this.state;
 
     if (redirect) {
-      return <Redirect to='/login'/>;
+      return <Redirect to='/login' />;
     }
 
     return (
