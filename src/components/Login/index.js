@@ -147,10 +147,11 @@ class Login extends Component {
     cookies.set('loginObj', tokenObject, { path: '/', maxAge: '300' })
     await UserService.putMe().then(
         (response) => {
-          response.data[0].userStatus.accepted ?
-          window.location.href = '/menu'
-          :
-          window.location.href = '/term'
+          // response.data[0].userStatus.accepted ?
+          // window.location.href = '/menu'
+          // :
+          // window.location.href = '/term'
+          console.log(response)
         } 
       )
     
