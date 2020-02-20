@@ -5,7 +5,7 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-// import Cookies from 'universal-cookie';
+import Cookies from 'universal-cookie';
 import styled from 'styled-components'
 
 import Navbar from './components/Core/Navbar'
@@ -35,7 +35,7 @@ const Mountain = styled.div`
   padding-bottom: 30px;
 `
 
-// const cookies = new Cookies()
+const cookies = new Cookies()
 
 const PrivateRoute = ({ children, ...rest }) => {
   return (
@@ -43,13 +43,13 @@ const PrivateRoute = ({ children, ...rest }) => {
       <Route
         {...rest}
         render={({ location }) =>
-//           (cookies.get('token') !== undefined && cookies.get('token') !== null)? (
-          true ? (
+          (cookies.get('token') !== undefined && cookies.get('token') !== null)? (
+          // true ? (
             <React.Fragment>
             {
                 locationNow === '/menu' || locationNow === '/profile' || 
-                  locationNow === '/general' || locationNow === '/major' ||
-                  locationNow === '/document' || locationNow === '/agreement' || locationNow === '/term' ? 
+                locationNow === '/general' || locationNow === '/major' ||
+                locationNow === '/document' || locationNow === '/agreement'? 
               children
               :
               <Redirect
@@ -78,8 +78,8 @@ const MenuRoute = () => {
   return(
     <React.Fragment>
       {
-//         (cookies.get('token') !== undefined && cookies.get('token') !== null)? (
-        true ? (
+        (cookies.get('token') !== undefined && cookies.get('token') !== null)? (
+        // true ? (
           <Menu />
         ) : (
             <Redirect
@@ -105,8 +105,8 @@ export default class Index extends React.Component {
     return (
       <Router>
         {
-//           (cookies.get('token') !== undefined && cookies.get('token') !== null)  && locationNow !== '/login' ?
-          true  && locationNow !== '/login' ?
+          (cookies.get('token') !== undefined && cookies.get('token') !== null)  && locationNow !== '/login' ?
+          // true  && locationNow !== '/login' ?
             <Navbar />:
             ''
         }
@@ -140,8 +140,6 @@ export default class Index extends React.Component {
             <Major />
           </PrivateRoute>
           <MenuRoute path="/menu" />
-            {/* <Menu />
-          </MenuRoute> */}
           <PrivateRoute path="/document">
             <Mountain>
               <Document />
@@ -151,12 +149,6 @@ export default class Index extends React.Component {
             <Mountain>
               <Questions />
             </Mountain>
-          </PrivateRoute>
-          <PrivateRoute path="/preview">
-            <Preview />
-          </PrivateRoute>
-          <PrivateRoute path="/success">
-            <Success />
           </PrivateRoute>
           <PrivateRoute path="/edit">
             <Mountain>

@@ -156,8 +156,8 @@ class Login extends Component {
     cookies.set('nonce', nonceGenerate.data, { path: '/', maxAge: '300' });
     // localStorage.setItem('state',stateGenerate.data);
     // localStorage.setItem('nonce', nonceGenerate.data);
-    window.location.href = '/menu'
-//     window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1653703435&redirect_uri=${this.state.itimUrl}&state=${stateGenerate.data}&scope=openid%20email%20profile&nonce=${nonceGenerate.data}`
+    // window.location.href = '/menu'
+    window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1653703435&redirect_uri=${this.state.itimUrl}&state=${stateGenerate.data}&scope=openid%20email%20profile&nonce=${nonceGenerate.data}`
 
   }
 
