@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Button } from 'reactstrap'
 import Cookies from 'universal-cookie'
-import {Redirect} from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
 import UserService from '../../services/UserService'
 
@@ -37,7 +37,7 @@ export default class Navbar extends Component {
 
   async componentDidMount() {
     const cookieToken = cookies.get('token');
-    if(cookieToken !== null && cookieToken !== undefined && Object.keys(cookieToken).length !== 0){
+    if (cookieToken !== null && cookieToken !== undefined && Object.keys(cookieToken).length !== 0) {
       await this.getUserService();
     }
   }
@@ -76,7 +76,7 @@ export default class Navbar extends Component {
     const { redirect } = this.state;
 
     if (redirect) {
-      return <Redirect to='/login'/>;
+      return <Redirect to='/login' />;
     }
 
     return (
@@ -88,7 +88,7 @@ export default class Navbar extends Component {
                 <Img src="/img/Logo.png" alt="WIP Camp" />
               </div>
               <div className="col-md-9 col-sm-8 col-6">
-                <div className="" style={{ color: "white", textAlign: "right", fontSize: '24px' }}>
+                <div style={{ color: "white", textAlign: "right", fontSize: '24px' }}>
                   {
                     this.state.wipId !== null || this.state.wipId !== undefined || this.state.wipId !== '' ?
                       <WIPId>
@@ -97,10 +97,10 @@ export default class Navbar extends Component {
                       :
                       <div>Error</div>
                   }
-                  <br />
                   <Logout onClick={() => this.handleClick()}>
-                    Log Out
+                      Log Out
                   </Logout>
+
                 </div>
               </div>
             </div>
