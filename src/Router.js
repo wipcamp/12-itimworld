@@ -49,7 +49,8 @@ const PrivateRoute = ({ children, ...rest }) => {
             {
                 locationNow === '/menu' || locationNow === '/profile' || 
                 locationNow === '/general' || locationNow === '/major' ||
-                locationNow === '/document' || locationNow === '/agreement'? 
+                locationNow === '/document' || locationNow === '/agreement' ||
+                locationNow === '/term'? 
               children
               :
               <Redirect
