@@ -58,9 +58,9 @@ class ButtonRoute extends React.Component{
                 : "justify-content-between"}`}>
         <ButtonLeft 
           to={this.props.linkBack} 
-          displayButtonLeft={this.props.displayButtonLeft} 
+          displayButtonLeft={this.props.displayButtonLeft}
         >
-          <ButtonBack> {this.props.buttonLeft} </ButtonBack>
+          <ButtonBack style={this.props.buttonLeftStyle === "white" ? {background: '#FFFFFF',border: '1px solid #304151',borderRadius: '4px',color: '#000'} :{color: '#FFFFFF'}}> {this.props.buttonLeft} </ButtonBack>
         </ButtonLeft >
         
         <ButtonRight 
@@ -68,7 +68,7 @@ class ButtonRoute extends React.Component{
           displayButtonRight={this.props.displayButtonRight}
           onClick={()=>this.handleGoToNextPage()}
         >
-            <ButtonStyle disabled={this.props.buttonRightDisabled}> {this.props.buttonRight}</ButtonStyle>
+            <ButtonStyle disabled={this.props.buttonRightDisabled} style={{background: '#304151'}}> {this.props.buttonRight}</ButtonStyle>
         </ButtonRight>
       </div>
     )

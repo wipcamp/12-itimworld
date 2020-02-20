@@ -22,6 +22,7 @@ import Edit from './components/Edit'
 import General from './components/General'
 import Document from './components/Document'
 import {Error} from './components/Core/Waiting'
+import Agreement from './components/Agreement'
 
 const Mountain = styled.div`
   background-image:url('/img/mountain.png') , url('/img/Star/zodiac1.png'), url('/img/Star/zodiac2.png'), url('/img/Star/zodiac3.png') , url('/img/Star/star1.png'), url('/img/Star/star2.png'), url('/img/Star/star3.png');
@@ -76,6 +77,11 @@ export default class Index extends React.Component {
               <Login />
             </Mountain>
           </Route>
+          <PrivateRoute path="/agreement">
+            <Mountain>
+              <Agreement />
+            </Mountain>
+          </PrivateRoute>
           <PrivateRoute path="/profile">
             <Mountain>
               <Profile />
