@@ -1,7 +1,7 @@
 import axios from 'axios'
-// import Cookies from 'universal-cookie'
+import Cookies from 'universal-cookie'
 
-// const cookies = new Cookies()
+const cookies = new Cookies()
 
 const { apiUrl } = window['runConfig'];
 
@@ -9,9 +9,8 @@ const createInstance = (headers) => {
   return axios.create({
     baseURL: apiUrl,
     headers: {
-      // 'Authorization': `Bearer ${cookies.get('token')}`,
+      'Authorization': `${cookies.get('token')}`,
       'Content-Type': 'application/json',
-      'Allow': 'GET, HEAD, POST, OPTIONS,  PUT'
     }
   })
 }
