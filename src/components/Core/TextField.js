@@ -28,6 +28,7 @@ const TextField = (props) => {
               maxlength={props.maxlength}
               pattern={props.pattern}
               title={props.title}
+              disabled={props.disabled}
             />
             <small className={props.additional}>{props.additionalText}</small>
           </div>
@@ -44,17 +45,19 @@ TextField.propsType = {
   rightSide: PropTypes.string,
   placeholder: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
-  required: PropTypes.string,
+  required: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   additional: PropTypes.string,
   additionalText: PropTypes.string,
   maxlength: PropTypes.string,
   pattern: PropTypes.string,
-  title: PropTypes.string
+  title: PropTypes.string,
+  disabled: PropTypes.bool
 }
 
 TextField.defaultProps = {
-  required: 'required'
+  required: true,
+  disabled: false
 }
 
 export default TextField
