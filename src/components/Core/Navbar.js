@@ -45,7 +45,7 @@ export default class Navbar extends Component {
   getUserService = async () => {
     let promise;
     try {
-      promise = await UserService.getUser();
+      promise = await UserService.getMe();
       let response = promise.data;
       if (response.success) {
         this.setState({
