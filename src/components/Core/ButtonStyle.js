@@ -45,7 +45,6 @@ export const ButtonStyleLink = styled(Link)`
   line-height: 21px!important;
   align-items: center!important;
   text-align: center!important;
-  padding-top:18px;
   color: #FFFFFF;
   &:hover{
     color: #FFFFFF!important;
