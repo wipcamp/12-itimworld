@@ -12,6 +12,7 @@ import { Redirect } from 'react-router-dom'
 import regexPattern from '../Core/RegexPattern'
 import CustomModal from '../Core/CustomModal'
 import Waiting from '../Core/Waiting'
+import notStoreableFieldName from '../Core/NotStoreableFieldName'
 
 const userId = 120001;
 
@@ -30,7 +31,6 @@ const NotDisplayButton = styled.button`
 let checkBoxRef = null;
 let profileFormRef = null;
 
-const notStoreableFieldName = ['email', 'province'];
 export default class Index extends Component {
   state = {
     profileDataFirstSection: [
@@ -191,9 +191,6 @@ export default class Index extends Component {
   }
 
   componentDidUpdate() {
-    // console.log(this.state.finishLoad);
-    // console.log(this.state.errorLoad);
-    
   }
 
   getUser = async () => {
@@ -207,8 +204,7 @@ export default class Index extends Component {
         }
       })
       .catch(() => {
-        console.log("something happed");
-        
+        this.setState({ errorLoad: true })
       })
   }
 
