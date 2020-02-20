@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import {Subtitle, SmallText} from '../Core/Text'
 import UserService from '../../services/UserService'
 import ButtonRoute from '../Core/ButtonRoute'
+import {Redirect} from 'react-router-dom'
 
 const UploadButton = styled.button `
 width: 93.33px;
@@ -46,7 +47,8 @@ let userId = 120001;
 export default class index extends Component {
 
     state = {
-        documentLink: ""
+        documentLink: "",
+        redirect: false
     }
 
     setUpload = e => {
@@ -59,7 +61,9 @@ export default class index extends Component {
 
     }
 
-    async componentDidMount() {
+    async componentDidMount() {await this.getUserDocument()}
+
+    getUserDocument = async () => {
         let promise;
         try {
             promise = await UserService.getDocument(userId)
@@ -88,6 +92,9 @@ export default class index extends Component {
             .uploadDocument(userId, formData, config.headers)
             .then(() => {
                 UserService.postStatus(userId, {"status": "submit"})
+            })
+            .then(() => {
+                this.getUserDocument();
             });
         console.log(response);
 
@@ -95,7 +102,9 @@ export default class index extends Component {
 
     renderDocumentButton = () => {
         if (this.state.documentLink !== "") {
-            return <DocumentButton className="ml-md-2 mb-2 mb-md-0" onClick={() => window.open(this.state.documentLink)}>
+            return <DocumentButton
+                className="ml-md-2 mb-2 mb-md-0"
+                onClick={() => window.open(this.state.documentLink)}>
                 <ButttonText>
                     แสดงไฟล์
                 </ButttonText>
@@ -104,6 +113,11 @@ export default class index extends Component {
     }
 
     render() {
+        const {redirect} = this.state;
+
+        if (redirect) {
+            return <Redirect to='/menu'/>;
+        }
         return (
             <div className="container bg-white">
 
@@ -133,14 +147,14 @@ export default class index extends Component {
                         </p>
                     </div>
                     <div className="col-4 offset-8 offset-md-0 col-md-4 mt-md-3">
-                      <div className="float-right">
-                        <UploadButton className="text-center mb-2 mb-md-0" onClick={this.clickUpload}>
-                            <ButttonText>
-                                อัพโหลด
-                            </ButttonText>
-                        </UploadButton>
-                        {this.renderDocumentButton()}
-                      </div>
+                        <div className="float-right">
+                            <UploadButton className="text-center mb-2 mb-md-0" onClick={this.clickUpload}>
+                                <ButttonText>
+                                    อัพโหลด
+                                </ButttonText>
+                            </UploadButton>
+                            {this.renderDocumentButton()}
+                        </div>
                     </div>
                 </div>
                 <div className="row">
