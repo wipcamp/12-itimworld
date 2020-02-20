@@ -11,7 +11,6 @@ const createInstance = (headers) => {
     headers: {
       'Authorization': `${cookies.get('token')}`,
       'Content-Type': 'application/json',
-      'Allow': 'GET, HEAD, POST, OPTIONS,  PUT'
     }
   })
 }
