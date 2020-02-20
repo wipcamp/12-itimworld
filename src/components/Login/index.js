@@ -148,11 +148,11 @@ class Login extends Component {
     await UserService.putMe().then(
         (response) => {
           response.data.data[0].userStatus === null ?
-            response.data.data[0].userStatus.accept? 
+            // response.data.data[0].userStatus.accept? 
           window.location.href = '/menu' 
           :
-          window.location.href = '/term'
-          :
+          // window.location.href = '/term'
+          // :
           window.location.href = '/term'
           console.log(response)
         } 
