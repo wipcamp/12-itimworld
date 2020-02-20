@@ -4,13 +4,14 @@ import TextField from '../Core/TextField'
 import UserService from '../../services/UserService'
 import Field from '../Core/Field'
 import styled from 'styled-components'
-import {SmallText} from '../Core/Text'
+import { SmallText } from '../Core/Text'
 import { ButtonStyle } from '../Core/ButtonStyle'
 import SelectField from '../Core/SelectField'
 import { MinHeightRow } from '../Core/FieldStyle'
 import { Redirect } from 'react-router-dom'
 import regexPattern from '../Core/RegexPattern'
 import CustomModal from '../Core/CustomModal'
+import Waiting from '../Core/Waiting'
 
 const userId = 120001;
 
@@ -28,17 +29,19 @@ const NotDisplayButton = styled.button`
 
 let checkBoxRef = null;
 let profileFormRef = null;
+
+const notStoreableFieldName = ['email', 'province'];
 export default class Index extends Component {
   state = {
     profileDataFirstSection: [
       {
-        labelInput: 'ชื่อ', placeHolder: 'วิปโป้', name: 'firstName', additionalText:'ไม่ต้องใส่คำนำหน้าชื่อ'
+        labelInput: 'ชื่อ', placeHolder: 'วิปโป้', name: 'firstName', additionalText: 'ไม่ต้องใส่คำนำหน้าชื่อ'
       },
       {
         labelInput: 'นามสกุล', placeHolder: 'ใจดี', name: 'lastName'
       },
       {
-        labelInput: 'Firstname', placeHolder: '', name: 'firstNameEn', additionalText:'ไม่ต้องใส่คำนำหน้าชื่อ', pattern: regexPattern.eng
+        labelInput: 'Firstname', placeHolder: '', name: 'firstNameEn', additionalText: 'ไม่ต้องใส่คำนำหน้าชื่อ', pattern: regexPattern.eng
       },
       {
         labelInput: 'Lastname', placeHolder: '', name: 'lastNameEn', pattern: regexPattern.eng
@@ -49,12 +52,12 @@ export default class Index extends Component {
     ],
     genderData: [
       {
-        value:"ชาย",
-        text:"ชาย"
+        value: "ชาย",
+        text: "ชาย"
       },
       {
-        value:"หญิง",
-        text:"หญิง"
+        value: "หญิง",
+        text: "หญิง"
       }
     ],
     profileDataSecondSection: [
@@ -75,58 +78,58 @@ export default class Index extends Component {
     ],
     religionData: [
       {
-        value:"พุทธ",
-        text:"พุทธ"
-      }, 
-      {
-        value:'คริสต์',
-        text:'คริสต์'
+        value: "พุทธ",
+        text: "พุทธ"
       },
       {
-        value:'อิสลาม',
-        text:'อิสลาม'
+        value: 'คริสต์',
+        text: 'คริสต์'
       },
       {
-        value:'ฮินดู',
-        text:'ฮินดู'
-      }, 
-      {
-        value:'ซิกส์',
-        text:'ซิกส์'
+        value: 'อิสลาม',
+        text: 'อิสลาม'
       },
       {
-        value:'ไม่มี',
-        text:'ไม่มี'
+        value: 'ฮินดู',
+        text: 'ฮินดู'
+      },
+      {
+        value: 'ซิกส์',
+        text: 'ซิกส์'
+      },
+      {
+        value: 'ไม่มี',
+        text: 'ไม่มี'
       }],
     booldGroupData: [
       {
-        value:'A',
-        text:'A'
+        value: 'A',
+        text: 'A'
       },
       {
-        value:'B',
-        text:'B'
+        value: 'B',
+        text: 'B'
       },
       {
-        value:'O',
-        text:'O'
+        value: 'O',
+        text: 'O'
       },
       {
-        value:'AB',
-        text:'AB'
+        value: 'AB',
+        text: 'AB'
       }],
-    schoolLevelData:[
+    schoolLevelData: [
       {
-        value:'ม.4',
-        text:'ม.3 ขึ้น ม.4'
+        value: 'ม.4',
+        text: 'ม.3 ขึ้น ม.4'
       },
       {
-        value:'ม.5',
-        text:'ม.4 ขึ้น ม.5'
+        value: 'ม.5',
+        text: 'ม.4 ขึ้น ม.5'
       },
       {
-        value:'ม.6',
-        text:'ม.5 ขึ้น ม.6'
+        value: 'ม.6',
+        text: 'ม.5 ขึ้น ม.6'
       }
     ],
     data: {
@@ -141,7 +144,7 @@ export default class Index extends Component {
       birthDate: null,
       bloodGroup: null,
       religion: null,
-      email:null,
+      email: null,
       allergicFood: null,
       congenitalDisease: null,
       congenitalDrug: null,
@@ -158,41 +161,63 @@ export default class Index extends Component {
       telEmergency: null,
       province: null,
       knowWhence: {
-        facebook:false,
-        dekd:false,
-        sit:false,
-        camphub:false,
-        etc:""
+        facebook: false,
+        dekd: false,
+        sit: false,
+        camphub: false,
+        etc: ""
       }
     },
     errorMsg: [],
-    etcInput:false,
-    redirect:false,
-    modal:false
+    etcInput: false,
+    redirect: false,
+    modal: false,
+    finishLoad: false,
+    errorLoad: false,
+    isUserAcceptedData: false
   }
 
   toggleModal = () => {
-    this.setState({modal:!this.state.modal})
+    this.setState({ modal: !this.state.modal })
   }
 
   componentDidCatch() {
     this.toggleModal();
   }
-  
+
   async componentDidMount() {
-    console.log(checkBoxRef);
+    await this.getUser();
+    
   }
 
   componentDidUpdate() {
-    console.log(this.state.data)
+    // console.log(this.state.finishLoad);
+    // console.log(this.state.errorLoad);
+    
   }
-  
-  putUser = async (data,event) => {
+
+  getUser = async () => {
+    await UserService.getUser(userId)
+      .then((promise) => {
+        const response = promise.data;
+        if (response.success) {
+          this.setState({ finishLoad: true, isUserAcceptedData: response.data[0].userStatus.acceptedStoreData })
+        } else {
+          this.setState({ errorLoad: true })
+        }
+      })
+      .catch(() => {
+        console.log("something happed");
+        
+      })
+  }
+
+  putUser = async (data, event) => {
     event.preventDefault();
     await UserService.putUser(userId, data)
-    .then(() => UserService.postStatus(userId,{"status":"register"}))
-    .then(() => this.setState({redirect:true}))
-    .catch(() => this.toggleModal())
+      .then(() => UserService.postStatus(userId, { "status": "register" }))
+      .then(() => this.setState({ redirect: true }))
+      .catch(() => this.toggleModal())
   }
 
   handleClick = () => {
@@ -203,33 +228,33 @@ export default class Index extends Component {
 
   handleChange = (event) => {
     const { name, value } = event.target;
-    if (name === "parentRelation" || name === "parentTel"){
+    if (name === "parentRelation" || name === "parentTel") {
       const newName = name === "parentRelation" ? "relation" : "telNo"
       this.setState((prevState) => ({
         data: {
           ...prevState.data,
-          parent:{
+          parent: {
             ...prevState.data.parent,
-            [newName] : value
+            [newName]: value
           }
         }
       }
       ))
     }
-    else if(name.match("school") !== null){
-      const keyName = name.replace("school","").toLowerCase();
+    else if (name.match("school") !== null) {
+      const keyName = name.replace("school", "").toLowerCase();
       this.setState((prevState) => ({
         data: {
           ...prevState.data,
-          school:{
+          school: {
             ...prevState.data.school,
-            [keyName]:value
+            [keyName]: value
           }
         }
       })
       )
     }
-    else if (name === "etc"){
+    else if (name === "etc") {
       this.setState((prevState) => ({
         data: {
           ...prevState.data,
@@ -242,7 +267,7 @@ export default class Index extends Component {
     }
     else if (name === "knowWhence") {
       let checked = event.target.checked;
-      
+
       this.setState((prevState) => ({
         data: {
           ...prevState.data,
@@ -253,32 +278,32 @@ export default class Index extends Component {
         }
       }))
     }
-    else{
-    this.setState((prevState) => ({
-      data: {
-        ...prevState.data,
-        [name]: value
-      }
-    }
-    ))
-    }
-  }
-
-  renderInputButton = ()=>{
-    if(this.state.etcInput){
-      return <input class="form-control ml-2" type="text" name="etc" onChange={e => this.handleChange(e)} required />
-    }
-  }
-
-  setEtcInput = (e,boolean) => {
-    this.setState({etcInput:boolean})
-    if(!boolean){
-      this.setState((prevState)=>({
-        data:{
+    else {
+      this.setState((prevState) => ({
+        data: {
           ...prevState.data,
-          knowWhence:{
+          [name]: value
+        }
+      }
+      ))
+    }
+  }
+
+  renderInputButton = () => {
+    if (this.state.etcInput) {
+      return <input class="form-control ml-2" type="text" name="etc" onChange={e => this.handleChange(e)} required={true} disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes("knowwhence")} />
+    }
+  }
+
+  setEtcInput = (e, boolean) => {
+    this.setState({ etcInput: boolean })
+    if (!boolean) {
+      this.setState((prevState) => ({
+        data: {
+          ...prevState.data,
+          knowWhence: {
             ...prevState.data.knowWhence,
-            etc:""
+            etc: ""
           }
         }
       }))
@@ -297,31 +322,31 @@ export default class Index extends Component {
     profileFormRef = e;
   }
 
-  clickSubmit = (e) => {
-    
+  clickSubmit = () => {
+
     this.validateCheckboxField();
-    
+
     profileFormRef.click();
   }
 
-  validateCheckboxField= () => {
+  validateCheckboxField = () => {
     let countNotSelect = 0;
 
-    Object.keys(this.state.data.knowWhence).forEach((keyName)=>{
-      if(keyName !== "etc"){
-        if(!this.state.data.knowWhence[keyName]){
+    Object.keys(this.state.data.knowWhence).forEach((keyName) => {
+      if (keyName !== "etc") {
+        if (!this.state.data.knowWhence[keyName]) {
           countNotSelect += 1;
         }
-      }else{
-        if(this.state.data.knowWhence.etc === ""){
+      } else {
+        if (this.state.data.knowWhence.etc === "") {
           countNotSelect += 1;
         }
       }
     })
-    
-    if(countNotSelect !== 5){
+
+    if (countNotSelect !== 5) {
       checkBoxRef.required = false;
-    }else{
+    } else {
       checkBoxRef.required = true;
     }
   }
@@ -335,13 +360,17 @@ export default class Index extends Component {
     const { redirect } = this.state;
 
     if (redirect) {
-      return <Redirect to='/menu'/>;
+      return <Redirect to='/menu' />;
     }
-    return (
-        <ContainerDiv className ="container-fluid justify-content-center">
-          <form onSubmit={e=>{this.putUser(this.state.data,e)}}>
-          <div className="card p-5" style={{boxShadow: `0px 4px 4px rgba(0, 0, 0, 0.25)`,borderRadius: `4px`,opacity:`0.9`}}>
-            <h1 className="text-center">ข้อมูลส่วนตัว</h1>
+
+    if (!this.state.finishLoad || this.state.errorLoad) {
+      return <Waiting error={this.state.errorLoad} />
+    } else {
+      return (
+        <ContainerDiv className="container-fluid justify-content-center">
+          <form onSubmit={e => { this.putUser(this.state.data, e) }}>
+            <div className="card p-5" style={{ boxShadow: `0px 4px 4px rgba(0, 0, 0, 0.25)`, borderRadius: `4px`, opacity: `0.9` }}>
+              <h1 className="text-center">ข้อมูลส่วนตัว</h1>
               <section>
                 <SectionHeader className="col-12">ข้อมูลทั่วไป</SectionHeader>
                 {
@@ -357,43 +386,49 @@ export default class Index extends Component {
                       onChange={(e) => this.handleChange(e)}
                       additional="form-text text-muted"
                       additionalText={data.additionalText}
-                      pattern={data.pattern===regexPattern.eng?regexPattern.eng:regexPattern.th}
-                      title={data.pattern===regexPattern.eng?"โปรดกรอกภาษาอังกฤษ":"โปรดกรอกภาษาไทย"}
-                      required
+                      pattern={data.pattern === regexPattern.eng ? regexPattern.eng : regexPattern.th}
+                      title={data.pattern === regexPattern.eng ? "โปรดกรอกภาษาอังกฤษ" : "โปรดกรอกภาษาไทย"}
+                      required={true}
+                      disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes(data.name.toLowerCase())}
                     />
                   ))
                 }
-                <SelectField 
+                <SelectField
                   dataOptions={this.state.genderData}
                   onClickFunc={this.handleChange}
                   selectId="gender"
                   selectName="gender"
                   labelName="เพศสภาพ"
+                  required={true}
+                  disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes("gender")}
                 />
                 <label className="col-12 col-md-6 form-group" htmlFor="birthDate">
                   <div className="row">
                     <div className="col-12 col-md-4 col-form-label text-md-right">วันเกิด</div>
                     <div className="col-12 col-md-8">
                       <input
-                        className="form-control" 
+                        className="form-control"
                         type="date"
                         name="birthDate"
                         id="birthDate"
                         min="1995-01-01"
                         max="2010-12-31"
-                        value={this.state.birthDate}
+                        value={this.state.data.birthDate}
                         onChange={(e) => this.handleChange(e)}
-                        required
+                        required={true}
+                        disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes("birthdate")}
                       />
                     </div>
                   </div>
                 </label>
-                <SelectField 
+                <SelectField
                   dataOptions={this.state.religionData}
                   onClickFunc={this.handleChange}
                   selectId="religion"
                   selectName="religion"
                   labelName="ศาสนา"
+                  required={true}
+                  disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes("religion")}
                 />
                 {
                   this.state.profileDataSecondSection.map((data, i) => (
@@ -409,17 +444,19 @@ export default class Index extends Component {
                       maxlength="13"
                       onChange={(e) => this.handleChange(e)}
                       additional="form-text text-muted"
-                      additionalText={data.additionalText}
-                      required
+                      required={true}
+                      disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes(data.name.toLowerCase())}
                     />
                   ))
                 }
-                <SelectField 
+                <SelectField
                   dataOptions={this.state.booldGroupData}
                   onClickFunc={this.handleChange}
                   selectId="bloodGroup"
                   selectName="bloodGroup"
                   labelName="กรุ๊ปเลือด"
+                  required={true}
+                  disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes("bloodgroup")}
                 />
                 {
                   this.state.congenitalData.map((data, i) => (
@@ -432,7 +469,8 @@ export default class Index extends Component {
                       labelInput={data.labelInput}
                       placeHolder={data.placeHolder}
                       name={data.name}
-                      required=""
+                      required={false}
+                      disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes(data.name.toLowerCase())}
                       onChange={(e) => this.handleChange(e)}
                     />
                   ))
@@ -449,24 +487,40 @@ export default class Index extends Component {
                   labelInput="จังหวัด"
                   address="province"
                   id="province"
-                  name="provice"
+                  name="province"
                   value={this.state.data.province}
                   onChange={(e) => this.handleChange(e)}
                   placeholder="จังหวัด"
                   pattern={regexPattern.th}
                   title="โปรดกรอกภาษาไทย"
+                  required={true}
+                  disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes("province")}
                 />
 
-                <TelNumberField labelInput="เบอร์โทรศัพท์" name="telNo" onChange={(e) => this.handleChange(e)} required/>  
+                <TelNumberField
+                  labelInput="เบอร์โทรศัพท์"
+                  name="telNo"
+                  onChange={(e) => this.handleChange(e)}
+                  required={true}
+                  disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes("telno")}
+                />
                 <Field
                   className="col-12 col-md-6 form-group"
                   name="email"
                   type="email"
                   labelInput="E-Mail"
                   placeHolder=""
-                  onChange={(e) => this.handleChange(e)} 
-                  required="required" />
-                <TelNumberField labelInput="เบอร์โทรผู้ปกครอง" name="parentTel" onChange={(e) => this.handleChange(e)} required/>
+                  onChange={(e) => this.handleChange(e)}
+                  required={true}
+                  disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes("email")}
+                />
+                <TelNumberField
+                  labelInput="เบอร์โทรผู้ปกครอง"
+                  name="parentTel"
+                  onChange={(e) => this.handleChange(e)}
+                  required={true}
+                  disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes("parenttel")}
+                />
                 <TextField
                   className="col-12 col-md-6 form-group"
                   leftSide="col-12 col-md-4 col-form-label text-md-right"
@@ -476,9 +530,16 @@ export default class Index extends Component {
                   placeHolder=""
                   name="parentRelation"
                   onChange={(e) => this.handleChange(e)}
-                  required
+                  required={true}
+                  disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes("parentrelation")}
                 />
-                <TelNumberField labelInput="เบอร์โทรฉุกเฉิน" name="telEmergency" onChange={(e) => this.handleChange(e)} required/>
+                <TelNumberField
+                  labelInput="เบอร์โทรฉุกเฉิน"
+                  name="telEmergency"
+                  onChange={(e) => this.handleChange(e)}
+                  required={true}
+                  disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes("telemergency")}
+                />
               </section>
               <section>
                 <SectionHeader className="col-12">ข้อมูลการศึกษา</SectionHeader>
@@ -490,14 +551,17 @@ export default class Index extends Component {
                   placeHolder="เลือก"
                   name="schoolName"
                   onChange={(e) => this.handleChange(e)}
-                  required
-                  />
-                <SelectField 
+                  required={true}
+                  disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes("schoolname")}
+                />
+                <SelectField
                   dataOptions={this.state.schoolLevelData}
                   onClickFunc={this.handleChange}
                   selectId="level"
                   selectName="schoolLevel"
                   labelName="ระดับชั้น"
+                  required={true}
+                  disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes("schoollevel")}
                 />
                 <TextField
                   className="col-12 col-md-6 form-group"
@@ -507,8 +571,9 @@ export default class Index extends Component {
                   placeHolder="เลือก"
                   name="schoolMajor"
                   onChange={(e) => this.handleChange(e)}
-                  required
-                  />
+                  required={true}
+                  disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes("schoolmajor")}
+                />
                 <Field
                   className="col-12 col-md-6 form-group"
                   name="schoolGpax"
@@ -518,30 +583,74 @@ export default class Index extends Component {
                   step="0.01"
                   min="1.00"
                   max="4.00"
-                  onChange={(e) => this.handleChange(e)} 
-                  required="required" />
+                  onChange={(e) => this.handleChange(e)}
+                  required={true}
+                  disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes("schoolgpax")}
+                />
               </section>
               <section>
                 <SectionHeader className="col-12">ช่องทางที่รู้จักค่าย</SectionHeader>
                 <MinHeightRow className="row form-group checkbox-group required">
                   <div className="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-1">
-                    <input class="form-check-input" type="checkbox" name="knowWhence" id="knowWhenceFacebook"  value="facebook" onClick={e=>this.handleChange(e)}/>
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      name="knowWhence"
+                      id="knowWhenceFacebook"
+                      value="facebook"
+                      onClick={e => this.handleChange(e)}
+                      disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes("knowwhence")}
+                    />
                     <label class="form-check-label" for="knowWhenceFacebook">Facebook</label>
                   </div>
                   <div class="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0">
-                    <input class="form-check-input" type="checkbox" name="knowWhence" id="knowWhenceCamphub" value="camphub" onClick={e=>this.handleChange(e)}/>
-                    <label class="form-check-label" for="knowWhenceCamphub">Camphub</label>
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      name="knowWhence"
+                      id="knowWhenceCamphub"
+                      value="camphub"
+                      onClick={e => this.handleChange(e)}
+                      disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes("knowwhence")}
+                    />
+                    <label class="form-check-label" for="knowWhenceCamphub">CampHub</label>
                   </div>
                   <div class="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0">
-                    <input class="form-check-input" type="checkbox" name="knowWhence" id="knowWhenceDek-D" value="dekd" onClick={e=>this.handleChange(e)}/>
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      name="knowWhence"
+                      id="knowWhenceDek-D"
+                      value="dekd"
+                      onClick={e => this.handleChange(e)}
+                      disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes("knowwhence")}
+                    />
                     <label class="form-check-label" for="knowWhenceDek-D">Dek-D</label>
                   </div>
                   <div class="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0">
-                    <input class="form-check-input" type="checkbox" name="knowWhence" id="knowWhenceSIT" value="sit" onClick={e=>this.handleChange(e)}/>
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      name="knowWhence"
+                      id="knowWhenceSIT"
+                      value="sit"
+                      onClick={e => this.handleChange(e)}
+                      disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes("knowwhence")}
+                    />
                     <label class="form-check-label" for="knowWhenceSIT">SIT</label>
                   </div>
                   <div class="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0">
-                    <input class="form-check-input" type="checkbox" name="knowWhence" id="knowWhenceEtc" value={null} onClick={e=>this.setEtcInput(e,!this.state.etcInput)} ref={this.setEtcBoxRef} required/>
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      name="knowWhence"
+                      id="knowWhenceEtc"
+                      value={null}
+                      onClick={e => this.setEtcInput(e, !this.state.etcInput)}
+                      ref={this.setEtcBoxRef}
+                      required={true}
+                      disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes("knowwhence")}
+                    />
                     <label class="form-check-label" for="knowWhenceEtc">อื่นๆ</label>
                     {this.renderInputButton()}
                   </div>
@@ -553,12 +662,12 @@ export default class Index extends Component {
               </section>
               <section>
                 <SectionHeader className="col-12">ผลงานและทักษะทางด้านคอมพิวเตอร์</SectionHeader>
-                <textarea 
-                class="form-control" 
-                placeholder="ผลงาน" 
-                rows="4" 
-                name="computerWorks"
-                onChange={(e) => this.handleChange(e)} 
+                <textarea
+                  class="form-control"
+                  placeholder="ผลงาน"
+                  rows="4"
+                  name="computerWorks"
+                  onChange={(e) => this.handleChange(e)}
                 ></textarea>
               </section>
               <NotDisplayButton ref={this.setProfileFormRef}> asd</NotDisplayButton>
@@ -567,17 +676,18 @@ export default class Index extends Component {
           <div className="d-flex justify-content-end mt-3">
             <ButtonStyle onClick={(e) => this.clickSubmit(e)}>ยืนยัน</ButtonStyle>
           </div>
-          <CustomModal 
-            header="การบันทึกข้อมูลผิดพลาด" 
-            paragraph="การบันทึกข้อมูลเกิดข้อผิดพลาด ไม่สามารถส่งข้อมูลได้ กรุณากดยืนยันข้อมูลใหม่อีกครั้ง" 
-            secondaryButtonText="ยกเลิก" 
+          <CustomModal
+            header="การบันทึกข้อมูลผิดพลาด"
+            paragraph="การบันทึกข้อมูลเกิดข้อผิดพลาด ไม่สามารถส่งข้อมูลได้ กรุณากดยืนยันข้อมูลใหม่อีกครั้ง"
+            secondaryButtonText="ยกเลิก"
             primaryButtonDisplay="flex"
             primaryButtonText="ยืนยัน"
-            primaryOnClick={() => {this.resubmitAndCloseModal()}}
-            modal={this.state.modal} 
-            toggle={this.toggleModal} 
+            primaryOnClick={() => { this.resubmitAndCloseModal() }}
+            modal={this.state.modal}
+            toggle={this.toggleModal}
           />
         </ContainerDiv>
-    )
+      )
+    }
   }
 }
