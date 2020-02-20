@@ -37,7 +37,7 @@ export default class Navbar extends Component {
 
   async componentDidMount() {
     const cookieToken = cookies.get('token');
-    if(cookieToken !== null && cookieToken !== undefined && Object.keys(cookieToken).length !== 0){
+    if(cookieToken !== null && cookieToken !== undefined){
       await this.getUserService();
     }
   }
