@@ -99,7 +99,7 @@ export default class Index extends Component {
             return {...major,picture:trackPictures.programmer}
           }else if(major.name.toLowerCase() === "website"){
             return {...major,picture:trackPictures.website}
-          }else if(major.name.toLowerCase() === "uxui"){
+          }else if(major.name.toLowerCase() === "ux&ui"){
             return {...major,picture:trackPictures.uxui}
           }else{
             return {...major,picture:trackPictures.network}
