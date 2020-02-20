@@ -15,7 +15,7 @@ const WIPId = styled.div`
   font-size: 24px;
   @media (max-width:768px) {
     font-weight: 300;
-    font-size: 13px;
+    font-size: 16px;
     line-height: 17px;
   }
 `
@@ -39,7 +39,6 @@ export default class Navbar extends Component {
     try {
       promise = await this.getUserService();
       let response = promise.data;
-      console.log(response)
       if (response.success) {
         let nickName = response.data[0].nickName === null || response.data[0].nickName === '' ? 'Welcome' : response.data[0].nickName
         this.setState({
