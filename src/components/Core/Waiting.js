@@ -107,7 +107,7 @@ const Loading = () => {
   );
 }
 
-const Error = () => {
+export const Error = () => {
   return (
     <div>
     <Mountain>
