@@ -26,7 +26,7 @@ const Logout = styled(Button)`
 export default class Navbar extends Component {
 
   state = {
-    wipId: 120001
+    wipId: ''
   }
 
   async componentDidMount() {
@@ -34,11 +34,11 @@ export default class Navbar extends Component {
     try {
       promise = await this.getUserService();
       let response = promise.data;
+      console.log(response)
       if (response.success) {
         let nickName = response.data[0].nickName === null || response.data[0].nickName === '' ? 'Welcome' : response.data[0].nickName
         this.setState({
-          wipId: response.data[0].wipId,
-          name: nickName,
+          wipId: response.data[0].wipId
         });
       } else {
         console.log("Error get User request")
@@ -49,7 +49,7 @@ export default class Navbar extends Component {
   }
 
   getUserService = async () => {
-    return await UserService.getUser(userId);
+    return await UserService.getMe();
   }
 
   handleClick = () => {
