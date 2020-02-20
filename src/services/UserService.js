@@ -32,6 +32,10 @@ const userService = {
   uploadDocument: async (id,data,header = {}) => {
     let res = await apiUserService.post(`/user/${id}/uploadDocument`,data,header)
     return res
+  },
+  getDocument: async (id = {}) => {
+    let res = await apiUserService.get(`/user/${id}/uploadDocument`)
+    return res
   }
 
 }
