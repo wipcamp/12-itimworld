@@ -150,11 +150,14 @@ class Login extends Component {
         console.log(response.data.data[0].userStatus.accepted)
           if (response.data.data[0].userStatus === null ){
             if (response.data.data[0].userStatus.accepted === true) {
+              console.log("menu")
               window.location.href = '/menu' 
             }
+            console.log("term2")
             window.location.href = '/term'
           }
           else{
+            console.log("term3")
             window.location.href = '/term'
           } 
         }
