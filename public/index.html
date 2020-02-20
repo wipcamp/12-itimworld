@@ -46,8 +46,32 @@
       })(window, document, 'script', 'dataLayer', 'GTM-WD7J6T9');</script>
     <!-- End Google Tag Manager -->
   </head>
-  <body>
+  <body oncontextmenu="return false;">
+    <script>
+      document.onkeydown = function (e) {
+          if (event.keyCode === 123) {
+            return false;
+          }
+          if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) {
+            return false;
+          }
+          if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) {
+            return false;
+          }
+          if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {
+            return false;
+          }
+          if (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) {
+            return false;
+          }
+          if (e.cmdKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) {
+            return false;
+          }
+        }
+
+    </script>
     <!-- Google Tag Manager (noscript) -->
+
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WD7J6T9" height="0" width="0"
         style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
