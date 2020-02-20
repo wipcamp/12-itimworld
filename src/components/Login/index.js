@@ -89,14 +89,18 @@ class Login extends Component {
     const search = window.location.search.substring(1);
     
     const dataEntries = Object.entries(cookies.getAll())
-    const wait = false
+    let waitNonce = false 
+    let waitState = false
     for (const [dataArray, dataFromEntity] of dataEntries) {
       console.log(dataArray)
-      if (dataArray === "nonce" && dataArray === "state"){
-        wait = true
+      if (dataArray === "nonce" && (dataFromEntity !== null || dataFromEntity !== undefined )){
+        waitNonce = true
+      }
+      if (dataArray === "state" && (dataFromEntity !== null || dataFromEntity !== undefined )){
+        waitState = true
       }
     }
-    if(wait){
+    if(waitNonce && waitState){
       cookies.set('wait', "wait", { path: '/', maxAge: '300' })
     }else{
       cookies.set('wait', "true", { path: '/', maxAge: '300' });
@@ -177,7 +181,7 @@ class Login extends Component {
     const nonceGenerate = await LineService.getGenerateCode()
     cookies.set('state', stateGenerate.data, { path: '/', maxAge: '300' });
     cookies.set('nonce', nonceGenerate.data, { path: '/', maxAge: '300' });
-    cookies.set('wait', "wait", { path: '/', maxAge: '300' });
+    // cookies.set('wait', "wait", { path: '/', maxAge: '300' });
     // localStorage.setItem('state',stateGenerate.data);
     // localStorage.setItem('nonce', nonceGenerate.data);
     // window.location.href = '/menu'
