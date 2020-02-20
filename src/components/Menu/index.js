@@ -67,6 +67,28 @@ const ErrorBox = styled.div`
   box-sizing: border-box;
   border-radius: 20px;
 `
+
+const AlertError = (props) => {
+  return(
+    <div className="container mb-3" style={props.style}>
+      <div className="row">
+        <div className="col-12 col-sm-8 col-md-6 col-lg-4 offset-sm-2 offset-md-3 offset-lg-4">
+          <ErrorBox className="pt-2 pb-2 p-4">
+            <div className="row">
+              <div className="col-2">
+                
+              </div>
+              <div className="col-10">
+                <h4>{props.title}</h4>
+                <div>{props.content}</div>
+              </div>
+            </div>
+          </ErrorBox>
+        </div>
+      </div>
+    </div>
+  )
+}
 export default class Index extends Component {
   toggleAlertModal = () => {
     this.setState({alertModal:!this.state.alertModal})
@@ -84,7 +106,15 @@ export default class Index extends Component {
       
 
       if (response.success) {
-
+        if(response.data[0].userStatus.documentFailed === true){
+          this.setState({
+            documentFail: '',
+          })
+        } else{
+          this.setState({
+            documentFail: 'none'
+          })
+        }
         const menus = await this.state.menu.map( menu => {
           let {userStatus} = response.data[0]
           let status = false
@@ -102,6 +132,7 @@ export default class Index extends Component {
           }
           return {...menu,status}
         })
+
 
         this.setState({
           menu:menus,
@@ -130,7 +161,8 @@ getUserStatus = async() => {
     status:true,
     alertModal:false,
     finishLoad:false,
-    errorLoad:false
+    errorLoad:false,
+    documentFail: 'none'
   }
 
   render() {
@@ -152,24 +184,7 @@ getUserStatus = async() => {
               ))
             }
           </Box>
-          <div className="container">
-            <div className="row">
-              <div className="col-8 col-md-4 col-lg-4 offset-2 offset-md-4 offset-lg-4">
-                <ErrorBox className="pt-2 pb-2 p-4">
-                  <div className="row">
-                    <div className="col-2">
-            
-                    </div>
-                    <div className="col-10">
-                      <h4>ข้อผิดพลาด</h4>
-                      <div>ไม่สามารถเรียกใช้ข้อมูลได้ กรุณาลองใหม่อีกครั้ง</div>
-                    </div>
-                  </div>
-                </ErrorBox>
-              </div>
-            </div>
-          </div>
-          
+          <AlertError style={{display: this.state.documentFail }} title='คำเตือน' content='เอกสารที่อัปโหลดมีข้อผิดพลาด' />
           <CustomModal header="เกิดข้อผิดพลาดขึ้น" paragraph="โปรดติดต่อเจ้าหน้าที่" secondaryButtonText="ปิด" modal={this.state.alertModal} toggle={this.toggleAlertModal} />
         </Background>
       )
