@@ -43,8 +43,8 @@ const PrivateRoute = ({ children, ...rest }) => {
       <Route
         {...rest}
         render={({ location }) =>
-          (cookies.get('token') !== undefined && cookies.get('token') !== null)? (
-          // true ? (
+//           (cookies.get('token') !== undefined && cookies.get('token') !== null)? (
+          true ? (
             <React.Fragment>
             {
                 locationNow === '/menu' || locationNow === '/profile' || 
@@ -78,8 +78,8 @@ const MenuRoute = () => {
   return(
     <React.Fragment>
       {
-        (cookies.get('token') !== undefined && cookies.get('token') !== null)? (
-        // true ? (
+//         (cookies.get('token') !== undefined && cookies.get('token') !== null)? (
+        true ? (
           <Menu />
         ) : (
             <Redirect
@@ -105,8 +105,8 @@ export default class Index extends React.Component {
     return (
       <Router>
         {
-          (cookies.get('token') !== undefined && cookies.get('token') !== null)  && locationNow !== '/login' ?
-          // true  && locationNow !== '/login' ?
+//           (cookies.get('token') !== undefined && cookies.get('token') !== null)  && locationNow !== '/login' ?
+          true  && locationNow !== '/login' ?
             <Navbar />:
             ''
         }
