@@ -214,6 +214,7 @@ export default class Index extends Component {
     await UserService.putMe(data)
       .then(() => UserService.postStatusMe({ "status": "register" }))
       .then(() => this.setState({ redirect: true }))
+      .then(() => this.forceUpdate())
       .catch(() => this.toggleModal())
   }
 
@@ -354,9 +355,8 @@ export default class Index extends Component {
   }
 
   render() {
-    const { redirect } = this.state;
-
-    if (redirect) {
+    
+    if (this.state.redirect) {
       return <Redirect to='/menu' />;
     }
 
