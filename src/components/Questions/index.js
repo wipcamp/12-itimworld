@@ -22,10 +22,6 @@ const NotDisplayButton = styled.button`
   display:none;
 `
 
-const Card = styled.div`
-  background-color:rgba(255,255,255,0.9);
-`
-
 let submitButtonRef = null;
 export default class Index extends Component {
   
@@ -148,7 +144,7 @@ export default class Index extends Component {
       }else{
         return (
           <ContainerDiv className ="container-fluid justify-content-center">
-            <Card className="card p-5" style={{boxShadow: `0px 4px 4px rgba(0, 0, 0, 0.25)`,borderRadius: `4px`}}>
+            <div className="card p-5" style={{boxShadow: `0px 4px 4px rgba(0, 0, 0, 0.25)`,borderRadius: `4px`, backgroundColor: `rgba(255, 255, 255, 0.9)`}}>
               <form onSubmit={e=>this.openConfirmModal(e)}>
                 <HeaderText classname="col-12 mb-5 mt-5">คำถามสาขา</HeaderText>
                 {this.state.questions.map((data,i) => {
@@ -173,7 +169,7 @@ export default class Index extends Component {
                   <ButtonStyle className="text-center" onClick={() => this.clickSubmit()}>ยืนยัน</ButtonStyle>
                 </div>
               </div>
-            </Card>
+            </div>
             <CustomModal 
               modal={this.state.confirmModal}
               toggle={this.toggleConfirmModal}

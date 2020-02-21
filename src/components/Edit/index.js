@@ -497,7 +497,7 @@ export default class Index extends Component {
       return (
         <ContainerDiv className="container">
           <form onSubmit={e => { this.submitForm(e) }}>
-            <div className="card p-5" style={{ boxShadow: `0px 4px 4px rgba(0, 0, 0, 0.25)`, borderRadius: `4px`, opacity: `0.9` }}>
+            <div className="card p-5" style={{ boxShadow: `0px 4px 4px rgba(0, 0, 0, 0.25)`, borderRadius: `4px`, backgroundColor: `rgba(255, 255, 255, 0.9)` }}>
               <h1 className="text-center"> แก้ไขข้อมูลส่วนตัว </h1>
               <section>
                 <SectionHeader className="col-12">ข้อมูลส่วนตัว</SectionHeader>
