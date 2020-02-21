@@ -77,7 +77,7 @@ const Logo = styled.img`
 class Login extends Component {
 
   state = {
-    itimUrl: 'https://12-itim.freezer.wip.camp/login',
+    itimUrl: 'https://itim.wip.camp/login',
     nonce: '',
     state: '',
     newState: '',
@@ -167,7 +167,6 @@ class Login extends Component {
   }
 
   handleClick = async () => {
-  
     const stateGenerate = await LineService.getGenerateCode()
     const nonceGenerate = await LineService.getGenerateCode()
     cookies.set('state', stateGenerate.data, { path: '/', maxAge: '300' });
@@ -177,7 +176,6 @@ class Login extends Component {
     // localStorage.setItem('nonce', nonceGenerate.data);
     // window.location.href = '/menu'
     window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1653703435&redirect_uri=${this.state.itimUrl}&state=${stateGenerate.data}&scope=openid%20email%20profile&nonce=${nonceGenerate.data}`
-
   }
 
 
