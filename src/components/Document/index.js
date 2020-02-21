@@ -23,7 +23,7 @@ border-radius: 4px;
 `
 
 const ImageDiv = styled.div `
-
+padding-left:2.5vh;
   @media (max-width: 768px) {
       display:none;
     }
@@ -129,11 +129,6 @@ export default class index extends Component {
     }
 
     render() {
-        const {redirect} = this.state;
-
-        if (redirect) {
-            return <Redirect to='/menu'/>;
-        }
         return (
             <div className="container bg-white">
 
@@ -148,10 +143,10 @@ export default class index extends Component {
                     </Subtitle>
                 </TableHeader>
                 <div className="row border-bottom md-2">
-                    <ImageDiv className="col-md-1 mt-auto mb-auto pl-auto">
+                    <ImageDiv className="col-md-1 mt-auto mb-auto">
                         <DocumentIcon src="/img/Document/doc_icon.png" alt="doc_icon"/>
                     </ImageDiv>
-                    <div className="col-6 col-md-4 offset-sm-1">
+                    <div className="col-6 col-md-4 offset-md-0">
                         <Subtitle className="mt-2 mb-2">
                             ใบรับรองผลการศึกษา (ปพ.7)
                         </Subtitle>
