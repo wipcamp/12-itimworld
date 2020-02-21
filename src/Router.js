@@ -138,7 +138,7 @@ export default class Index extends React.Component {
           </Route>
           <MenuObjRoute path="/term"
             condit={
-              true
+              false
               // UserService.getMe().then((response) => response.data.data[0].userStatus.accepted)
             }>
             <Mountain>
