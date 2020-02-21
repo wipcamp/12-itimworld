@@ -90,7 +90,6 @@ const topicList = [
   }
   ];
 
-const userId = 120001;
 export default class Index extends Component {
 
   state = {
@@ -172,7 +171,7 @@ export default class Index extends Component {
   GetUser = async () => {
     let promise;
     try {
-      promise = await UserService.getUser(userId);
+      promise = await UserService.getMe();
       let response = promise.data;
       if (response.success) {
         this.setState({

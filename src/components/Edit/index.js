@@ -302,7 +302,7 @@ export default class Index extends Component {
   }
 
   getUserService = async () => {
-    return await UserService.getUser(userId);
+    return await UserService.getMe();
   }
 
 

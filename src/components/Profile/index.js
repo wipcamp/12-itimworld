@@ -194,7 +194,7 @@ export default class Index extends Component {
   }
 
   getUser = async () => {
-    await UserService.getUser(userId)
+    await UserService.getMe()
       .then((promise) => {
         const response = promise.data;
         if (response.success) {

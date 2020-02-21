@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+
 import userService from '../../services/UserService'
+
 import CustomModal from './../Core/CustomModal'
 import Waiting from './../Core/Waiting'
 import update from 'react-addons-update';
-
-const userId = 120001;
 
 const Background = styled.div`
   width: 100%;  
@@ -133,7 +133,7 @@ export default class Index extends Component {
   async componentDidMount() {
     let promise;
     try {
-      promise = await userService.getUser(userId)
+      promise = await userService.getMe()
       let response = promise.data;
       
 
@@ -210,7 +210,7 @@ export default class Index extends Component {
   }
 
 getUserStatus = async() => {
-  userService.getUser(userId)
+  userService.getMe()
 }
 
   state = {
