@@ -101,7 +101,7 @@ class Login extends Component {
       }
     }
     if(waitNonce && waitState){
-      cookies.set('wait', "wait", { path: '/', maxAge: '10' })
+      cookies.set('wait', "wait", { path: '/', maxAge: '2' })
     }else{
       cookies.set('wait', "true", { path: '/', maxAge: '10' });
     }
