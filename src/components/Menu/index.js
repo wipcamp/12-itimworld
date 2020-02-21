@@ -148,11 +148,7 @@ export default class Index extends Component {
           })
         }
         const userStatusSuccess = response.data[0].userStatus.generalAnswered === true && response.data[0].userStatus.majorAnswered === true && response.data[0].userStatus.submitted === true && response.data[0].userStatus.documentFail === false
-        console.log(userStatusSuccess);
-        console.log(response.data[0].userStatus.generalAnswered)
-        console.log(response.data[0].userStatus.majorAnswered)
-        console.log(response.data[0].userStatus.submitted)
-        console.log(response.data[0].userStatus.documentFail)
+        
         if(userStatusSuccess){
           this.setState({
             successAlert: true
