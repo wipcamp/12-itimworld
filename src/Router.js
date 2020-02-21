@@ -113,89 +113,8 @@ const MenuObjRoute = (props) => {
     </React.Fragment>
   )
 }
-// const MajorRoute = ({ major }) => {
-//   console.log("major" + major)
-//   return (
-//     <MenuObjRoute condit={major !== null}>
-//       <Major />
-//     </MenuObjRoute>
-//   )
-// }
 
-// const AgreeRoute = ({ agree }) => {
-//   console.log("agree" +agree)
-//   return (
-//     <MenuObjRoute condit={agree}>
-//       <Mountain>
-//         <Agreement />
-//       </Mountain>
-//     </MenuObjRoute>
-//   )
-// }
-
-// const TermRoute = ({ term }) => {
-//   console.log("term" +term)
-//   return (
-    
-//   )
-// }
 export default class Index extends React.Component {
-
-  state = {
-    major: null,
-    agree: false,
-    term:false
-  }
-
-  // async componentDidMount() {
-  //   const cookieToken = cookies.get('token');
-  //   if (cookieToken !== null && cookieToken !== undefined) {
-  //     let promise;
-  //     try {
-  //       promise = await this.getUserService();
-  //       let response = promise.data;
-  //       if (response.success) {
-  //         console.log(response.data[0].major)
-  //         console.log(response.data[0].userStatus.accepted)
-  //         console.log(response.data[0].userStatus.acceptedStoreData)
-  //         this.setState({
-  //           major: response.data[0].major,
-  //           term: response.data[0].userStatus.accepted,
-  //           agree: response.data[0].userStatus.acceptedStoreData
-  //         });
-  //       } else {
-  //         console.log("Error get User request")
-  //       }
-  //     } catch (e) {
-  //       console.log("Error get User promise")
-  //     }
-  //   }
-  // }
-
-  // async componentDidUpdate() {
-  //   const cookieToken = cookies.get('token');
-  //   if (cookieToken !== null && cookieToken !== undefined) {
-  //     let promise;
-  //     try {
-  //       promise = await this.getUserService();
-  //       let response = promise.data;
-  //       if (response.success) {
-  //         console.log(response.data[0].major)
-  //         console.log(response.data[0].userStatus.accepted)
-  //         console.log(response.data[0].userStatus.acceptedStoreData)
-  //         this.setState({
-  //           major: response.data[0].major,
-  //           term: response.data[0].userStatus.accepted,
-  //           agree: response.data[0].userStatus.acceptedStoreData
-  //         });
-  //       } else {
-  //         console.log("Error get User request")
-  //       }
-  //     } catch (e) {
-  //       console.log("Error get User promise")
-  //     }
-  //   }
-  // }
 
   getUserService = async () => {
     return await UserService.getMe();
@@ -219,7 +138,7 @@ export default class Index extends React.Component {
           <MenuObjRoute path="/term"
             condit={
               async () => 
-              await UserService.getMe().then((response) => response.data.data[0].userStatus.acceptedStoreData)
+              await UserService.getMe().then((response) => response.data.data[0].userStatus.accepted)
             }>
             <Mountain>
               <Term />
@@ -231,7 +150,11 @@ export default class Index extends React.Component {
             </Mountain>
           </TermRoute> */}
           {/* <AgreeRoute path="/agreement" agree={this.state.agree} /> */}
-          <MenuObjRoute path="/agreement" condit={this.state.agree}>
+          <MenuObjRoute path="/agreement" 
+            condit={
+              async () =>
+                await UserService.getMe().then((response) => response.data.data[0].userStatus.acceptedStoreData)
+            }>
             <Mountain>
               <Agreement />
             </Mountain>
@@ -252,7 +175,11 @@ export default class Index extends React.Component {
           </PrivateRoute>
           {/* <MajorRoute path="/major" major={this.state.major} /> */}
           {/* </MajorRoute> */}
-          <MenuObjRoute path="/major" condit={this.state.major}>
+          <MenuObjRoute path="/major" 
+            condit={(
+              async () =>
+                await UserService.getMe().then((response) => response.data.data[0].major)
+            ) !== null }>
             <Major />
           </MenuObjRoute>
           <MenuRoute path="/menu" />
