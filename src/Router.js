@@ -114,6 +114,7 @@ const MenuObjRoute = (props) => {
   )
 }
 const MajorRoute = ({ major }) => {
+  console.log("major" + major)
   return (
     <MenuObjRoute condit={major !== null}>
       <Major />
@@ -122,6 +123,7 @@ const MajorRoute = ({ major }) => {
 }
 
 const AgreeRoute = ({ agree }) => {
+  console.log("agree" +agree)
   return (
     <MenuObjRoute condit={agree}>
       <Mountain>
@@ -132,6 +134,7 @@ const AgreeRoute = ({ agree }) => {
 }
 
 const TermRoute = ({ term }) => {
+  console.log("term" +term)
   return (
     <MenuObjRoute condit={term}>
       <Mountain>
@@ -156,6 +159,9 @@ export default class Index extends React.Component {
         promise = await this.getUserService();
         let response = promise.data;
         if (response.success) {
+          console.log(response.data[0].major)
+          console.log(response.data[0].userStatus.accepted)
+          console.log(response.data[0].userStatus.acceptedStoreData)
           this.setState({
             major: response.data[0].major,
             term: response.data[0].userStatus.accepted,
