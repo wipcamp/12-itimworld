@@ -696,7 +696,7 @@ export default class Index extends Component {
                   className="col-12 col-md-6 form-group"
                   name="schoolGpax"
                   type="number"
-                  labelInput="เกรดเฉลี่ย"
+                  labelInput="เกรดเฉลี่ยเทอมล่าสุด"
                   placeHolder=""
                   step="0.01"
                   min="1.00"
@@ -708,10 +708,9 @@ export default class Index extends Component {
                 />
               </section>
               <section>
-                <SectionHeader className="col-12">ผลงานและทักษะทางด้านคอมพิวเตอร์</SectionHeader>
+                <SectionHeader className="col-12">ช่องทางที่รู้จักค่าย</SectionHeader>
                 <MinHeightRow className="row form-group checkbox-group required">
-                  <div className="col-1"></div>
-                  <div className="form-check form-check-inline col-2">
+                  <div className="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-1">
                     <input
                       class="form-check-input" 
                       type="checkbox" 
@@ -724,7 +723,7 @@ export default class Index extends Component {
                     />
                     <label class="form-check-label" for="knowWhenceFacebook">Facebook</label>
                   </div>
-                  <div class="form-check form-check-inline col-2">
+                  <div class="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0">
                     <input 
                       class="form-check-input" 
                       type="checkbox" 
@@ -737,7 +736,7 @@ export default class Index extends Component {
                     />
                     <label class="form-check-label" for="knowWhenceCamphub">CampHub</label>
                   </div>
-                  <div class="form-check form-check-inline col-2">
+                  <div class="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0">
                     <input 
                       class="form-check-input" 
                       type="checkbox" 
@@ -750,7 +749,7 @@ export default class Index extends Component {
                     />
                     <label class="form-check-label" for="knowWhenceDek-D">Dek-D</label>
                   </div>
-                  <div class="form-check form-check-inline col-2">
+                  <div class="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0">
                     <input 
                       class="form-check-input" 
                       type="checkbox" 
@@ -763,7 +762,7 @@ export default class Index extends Component {
                     />
                     <label class="form-check-label" for="knowWhenceSIT">SIT</label>
                   </div>
-                  <div class="form-check form-check-inline col-2">
+                  <div class="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0">
                     <input 
                       class="form-check-input" 
                       type="checkbox" 
