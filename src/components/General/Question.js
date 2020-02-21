@@ -36,7 +36,7 @@ const displayAppPlayer = (id) => {
     return (
       <div class="col-12 justify-content-start mb-2">
          <Media controls>
-            <source src="/audio/WIPAudio1.m4a" type="audio/mp3" />
+            <source src="/audio/WIP_cut.mp3" type="audio/mp3" />
             <DangerSubtitle>*Browser ของท่านไม่ Support Audio Player</DangerSubtitle>
           </Media> 
       </div>
