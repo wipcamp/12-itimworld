@@ -70,17 +70,17 @@ export default class Index extends Component {
         labelInput: 'รหัสบัตรประชาชน', placeHolder: '', name: 'citizenId'
       }
     ],
-    congenitalData: [
-      {
-        labelInput: 'โรคประจำตัว', placeHolder: 'หากไม่มีให้ใส่ -', name: 'congenitalDisease'
-      },
-      {
-        labelInput: 'อาหารที่แพ้', placeHolder: 'หากไม่มีให้ใส่ -', name: 'allergicFood'
-      },
-      {
-        labelInput: 'ยาที่แพ้', placeHolder: 'หากไม่มีให้ใส่ -', name: 'congenitalDrug'
-      }
-    ],
+    // congenitalData: [
+    //   {
+    //     labelInput: 'โรคประจำตัว', placeHolder: 'หากไม่มีให้ใส่ -', name: 'congenitalDisease'
+    //   },
+    //   {
+    //     labelInput: 'อาหารที่แพ้', placeHolder: 'หากไม่มีให้ใส่ -', name: 'allergicFood'
+    //   },
+    //   {
+    //     labelInput: 'ยาที่แพ้', placeHolder: 'หากไม่มีให้ใส่ -', name: 'congenitalDrug'
+    //   }
+    // ],
     religionData: [
       {
         value: "พุทธ",
@@ -301,7 +301,7 @@ export default class Index extends Component {
   }
 
   getUserService = async () => {
-    return await UserService.getMe();
+    return await UserService.getUser(120001);
   }
 
 
@@ -578,7 +578,7 @@ export default class Index extends Component {
                     />
                   ))
                 }
-                <SelectField
+                {/* <SelectField
                   dataOptions={this.state.booldGroupData}
                   onClickFunc={this.handleChange}
                   selectId="bloodGroup"
@@ -587,25 +587,7 @@ export default class Index extends Component {
                   labelName="กรุ๊ปเลือด"
                   required={true}
                   disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes("bloodgroup")}
-                />
-                {
-                  this.state.congenitalData.map((data, i) => (
-                    <TextField
-                      key={i}
-                      className="col-12 col-md-6 form-group"
-                      leftSide="col-12 col-md-4 col-form-label text-md-right"
-                      rightSide="col-12 col-md-8"
-                      type="text"
-                      labelInput={data.labelInput}
-                      placeHolder={data.placeHolder}
-                      value={this.state.oldUser[data.name]}
-                      name={data.name}
-                      required={false}
-                      onChange={(e) => this.handleChange(e)}
-                      disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes(data.name.toLowerCase())}
-                    />
-                  ))
-                }
+                /> */}
               </section>
 
               <section>
@@ -654,7 +636,7 @@ export default class Index extends Component {
                   required={true}
                   disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes("parenttel")}
                 />
-                <TextField
+                {/* <TextField
                   className="col-12 col-md-6 form-group"
                   leftSide="col-12 col-md-4 col-form-label text-md-right"
                   rightSide="col-12 col-md-8"
@@ -674,7 +656,7 @@ export default class Index extends Component {
                   onChange={(e) => this.handleChange(e)}
                   required={true}
                   disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes("telemergency")}
-                />
+                /> */}
               </section>
               <section>
                 <SectionHeader className="col-12">ข้อมูลการศึกษา</SectionHeader>
