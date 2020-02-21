@@ -9,7 +9,8 @@ import ButtonRoute from '../Core/ButtonRoute'
 export default class index extends Component {
   state = {
     buttonRightDisabled: true,
-    checkbox: true
+    checkbox: true,
+    link:'/profile'
   }
 
   putStateUserService = async () => {
@@ -20,6 +21,22 @@ export default class index extends Component {
     this.setState({
         buttonRightDisabled: !e.target.checked
     })
+  }
+
+  getRoute = async () => {
+    await UserService.getMe().then(
+      (response) => {
+        if (response.data.data[0].userStatus.registered === true) {
+          this.setState({
+            link : '/menu'
+          })
+        }else{
+          this.setState({
+            link: '/profile'
+          })
+        }
+        }
+    )
   }
 
   getInitialState = () => {
@@ -90,9 +107,9 @@ export default class index extends Component {
               <ButtonRoute 
                 className= 'd-flex col-12 mt-3 mb-2'
                 buttonLeft="ไม่ยอมรับ"
-                linkBack ="/menu"
+                linkBack ={this.state.link}
                 buttonRight="ยอมรับ"
-                linkNext="/menu"
+                linkNext={this.state.link}
                 buttonLeftStyle="white"
                 buttonRightDisabled={this.state.buttonRightDisabled}
                 onClick={() => this.putStateUserService()}
