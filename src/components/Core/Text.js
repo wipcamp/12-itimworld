@@ -6,10 +6,10 @@ export const HeaderText = styled.h1`
   font-weight: 500;
   font-size: ${fonts.Headline};
   line-height: 47px;
-  text-align: center!important;
+  text-align: center;
 `
 
-export const Paragrph = styled.div`
+export const Paragraph = styled.div`
   font-style: normal;
   font-weight: 300;
   font-size: ${fonts.Paragraph};
@@ -20,8 +20,8 @@ export const Paragrph = styled.div`
   margin-bottom: 3em;
 `
 export const Subtitle = styled.div`
-  font-style: normal!important;
-  font-weight: bold!important;
+  font-style: normal;
+  font-weight: 500;
   font-size: ${fonts.Subtitle};
   line-height: 23px;
 `

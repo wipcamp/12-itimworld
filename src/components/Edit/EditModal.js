@@ -5,86 +5,157 @@ import UserService from '../../services/UserService'
 
 import ConfirmModal from './ConfirmModal';
 
+import CustomModal from './../Core/CustomModal'
+
+import {Redirect} from 'react-router-dom'
+
 const userId = 120001;
+
+const keyNameToText = {
+  "firstName": "ชื่อ",
+  "lastName": "นามสกุล",
+  "firstNameEn": "Firstname",
+  "lastNameEn": "Lastname",
+  "nickName": "ชื่อเล่น",
+  "email": "E-Mail",
+  "birthDate": "วันเกิด",
+  "citizenId": "เลขบัตรประชาชน",
+  "gender": "เพศสภาพ",
+  "bloodGroup": "กรุ๊ปเลือด",
+  "telNo": "เบอร์โทรศัพท์",
+  "religion": "ศาสนา",
+  "telEmergency": "เบอร์โทรฉุกเฉิน",
+  "allergicFood": "อาหารที่แพ้",
+  "congenitalDisease": "โรคประจำตัว",
+  "congenitalDrug": "ยาที่แพ้",
+  "computerWorks": "ผลงานทางด้านคอมพิวเตอร์",
+  "province": "จังหวัด",
+  "school": {
+    "name": "โรงเรียน",
+    "level": "ระดับชั้น",
+    "major": "สาขการเรียน",
+    "gpax": "เกรดเฉลี่ย"
+  },
+  "parent": {
+    "telNo": "เบอร์โทรผู้ปกครอง",
+    "relation": "ผู้ปกครองเกียวข้องเป็น"
+  },
+  "knowWhence": {
+    "id": 3,
+    "facebook": "Facebook",
+    "camphub": "Camphub",
+    "dekd": "Dek-D",
+    "sit": "คณะ SIT"
+  }
+}
 
 export default class EditModal extends Component {
   
   state = {
-    newUser: {},
-    newUserObj: {},
-    data:{}
+    displayText:[],
+    data:{},
+    redirect:false,
+    errorModal: false
   }
+
+  toggleModal = () => {
+    this.setState({errorModal:!this.state.errorModal});
+  }
+
+  isExist = (data) =>{
+    return data !== undefined && data !== null && Object.keys(data).length !== 0
+  }
+
   componentDidUpdate(prevProps){
     if(this.props.newUser !== prevProps.newUser){
-      const dataEntries = Object.entries(this.props.newUser)
-      for (const [dataArray, dataFromEntity] of dataEntries) {
-        const newName = dataArray === "firstName" ? "ชื่อ" 
-                          : dataArray === "firstNameEn" ? "ชื่อ (ภาษาอังกฤษ)" 
-                          : dataArray === "lastName" ? "นามสกุล"
-                          : dataArray === "lastNameEn" ? "นามสกุล (ภาษอังกฤษ)"
-                          : dataArray === "nickName" ? "ชื่อเล่น"
-                          : dataArray === "email" ? "E-mail"
-                          : dataArray === "brithDate" ? "วัน / เดือน / ปี เกิด"
-                          : dataArray === "citizenId" ? "รหัสบัตรประชาชน / Passport Number"
-                          : dataArray === "gender" ? "เพศสภาพ"
-                          : dataArray === "bloodGroup" ? "กรุ๊ปเลือด"
-                          : dataArray === "telNo" ? "เบอร์โทรศัพท์"
-                          : dataArray === "religion" ? "ศาสนา"
-                          : dataArray === "school" ? "โรงเรียน"
-                          : dataArray === "schoolMajor" ? "สายการเรียน"
-                          : dataArray === "level" ? "ระดับชั้น"
-                          : dataArray === "telEmergency" ? "เบอร์ติดต่อฉุกเฉิน"
-                          : dataArray === "parentRelation" ? "เกี่ยวข้องกับน้องยังไง"
-                          : dataArray === "parentTel" ? "เบอร์โทรศัพท์ของผู้ปกครอง"
-                          : dataArray === "congenitalDrug" ? "ยาที่แพ้"
-                          : dataArray === "congenitalDisease" ? "โรคประจำตัว"
-                          : dataArray === "allergicFood" ? "อาหารที่แพ้"
-                          : dataArray === "congenitalDrug" ? "อาหารที่แพ้"
-                          : dataArray === "congenitalDrug" ? "อาหารที่แพ้"
-                          : dataArray === "province" ? "เขต / อำเภอ"
-                          : dataArray === "district" ? "จังหวัด"
-                          : dataArray === "skill" ? "ผลงานและทักษะทางด้านคอมพิวเตอร์"
-                          : dataArray 
-        const data = newName + "   " + dataFromEntity
-          this.setState((prevState) => ({
-            newUser: {
-              ...prevState.newUser,
-              [newName] : data
-            }
-          }))
-        }
-      this.setState(state => ({
+      if(this.isExist(this.props.newUser)){
+        const newUserKeys = Object.keys(this.props.newUser);
+        let finalDisplayText = [];
+        newUserKeys.forEach((key)=>{
+          let newValue;
+          let thaiContext;
+          if(key === "knowWhence"){
+            const knowWhenceKeys = Object.keys(this.props.newUser[key]);
+            let knowWhenceChangeText = [];
+            knowWhenceKeys.forEach((knowWhenceKey)=>{
+              if(this.props.newUser[key][knowWhenceKey] === true || this.isExist(this.props.newUser[key]["etc"])){
+                
+                if(knowWhenceKey === "etc"){
+                  newValue = this.props.newUser[key][knowWhenceKey]
+                }else{
+                  newValue = keyNameToText[key][knowWhenceKey]
+                }
 
-        data: this.props.data
-      }))
+                if(knowWhenceChangeText.length !== 0){
+                  thaiContext = ", "
+                  knowWhenceChangeText.push(this.performNewDisplayString(thaiContext,newValue,false))
+                }else{
+                  thaiContext = "ช่องทางที่รู้จัก"
+                  knowWhenceChangeText.push(this.performNewDisplayString(thaiContext,newValue))
+                }
+              }
+            })
+            finalDisplayText.push(knowWhenceChangeText)
+          }else if(key === "school"){
+            const schoolKeys = Object.keys(this.props.newUser[key]);
+            schoolKeys.forEach((schoolKey)=>{
+              newValue = this.props.newUser[key][schoolKey]
+              thaiContext = keyNameToText[key][schoolKey]
+              finalDisplayText.push(this.performNewDisplayString(thaiContext,newValue))
+            })
+          }else if(key === "parent"){
+            const parentKeys = Object.keys(this.props.newUser[key]);
+            parentKeys.forEach((parentKey)=>{
+              newValue = this.props.newUser[key][parentKey]
+              thaiContext = keyNameToText[key][parentKey]
+              finalDisplayText.push(this.performNewDisplayString(thaiContext,newValue))
+            })
+          }else{
+            newValue = this.props.newUser[key]
+            if(newValue === ""){
+              newValue = "ไม่มี"
+            }
+            thaiContext = keyNameToText[key]
+            finalDisplayText.push(this.performNewDisplayString(thaiContext,newValue))
+          }
+        });
+        this.setState({displayText:finalDisplayText});
+      }
+    }
+  }
+
+  performNewDisplayString = (context,value, addChange = true) => {
+    if(addChange){
+      return context+" แก้ไขเป็น "+value;
+    }else{
+      return context+value;
     }
   }
     
   putUser = async (data) => {
-    const nonRequireKey = [
-      "allergicFood",
-      "congenitalDisease",
-      "congenitalDrug"
-    ];
-    Object.keys(data).map((keyData) => {
-      if (!nonRequireKey.includes(keyData, 0)) {
-        if (data[keyData] == null) {
-          alert(keyData + " cannot be empty")
-        }
-      }
-    })
-
-    let data1 = await UserService.putUser(userId, data)
-    // console.log(data1)
+    await UserService.putMe(data)
+    .then(()=>this.setState({redirect:true}))
+    .catch(()=>this.toggleModal())
   }
 
   render() {
-
-    return (
-      <div className={this.props.className}>
-        <ConfirmModal disabled={this.props.disabled} newUser={this.state.newUser} onClick={() => this.putUser(this.state.data)}/>
-      </div>
-    )
+    if(this.state.redirect){
+      return <Redirect to="/menu" />
+    }else{
+      return (
+        <div className={this.props.className}>
+          <ConfirmModal 
+            disabled={this.props.disabled} 
+            displayText={this.state.displayText} 
+            onClick={() => this.putUser(this.state.data)} 
+            modal={this.props.modal} 
+            toggleModal={this.props.toggle}
+            onClickButton={this.props.onClick}  
+          />
+          <CustomModal header="เกิดข้อผิดพลาดขึ้น" paragraph="โปรดติดต่อเจ้าหน้าที่" secondaryButtonText="ปิด" modal={this.state.errorModal} toggle={this.toggleModal} />
+        </div>
+      )
+    }
   }
 }
 
@@ -92,6 +163,8 @@ EditModal.propType = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
   newUser: PropTypes.object, 
-  data: PropTypes.object
+  data: PropTypes.object,
+  modal: PropTypes.bool.isRequired,
+  toggle: PropTypes.func.isRequired
 }
 

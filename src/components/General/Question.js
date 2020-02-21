@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import {Subtitle} from './../Core/Text'
 
 const QuestionName = styled.p`
     font-weight: 500;
@@ -18,47 +19,55 @@ const TextArea = styled.textarea`
     box-sizing: border-box;
     border-radius: 4px;
 `
-export default class Question extends Component {
-    state = {
-        oldValue: ''
-    }
 
-    componentDidUpdate(prevProps){
-        if(this.props.oldValue !== prevProps.oldValue){
-            this.setState({
-                oldValue: this.props.oldValue
-            })
-        }
-    }
+const Media = styled.audio`
+  width:300px;
+  @media (max-width: 576px) {
+    width: 200px!important;
+  }
+`
 
-    handleChange = (e) => {
-        this.props.handleAnswer(e);
-        this.setState({
-            oldValue: e.target.value
-        })
-    }
+const DangerSubtitle = styled(Subtitle)`
+  color:red;
+`
 
+const displayAppPlayer = (id) => {
+  if(id === 3){
+    return (
+      <div class="col-12 justify-content-start mb-2">
+         <Media controls>
+            <source src="/audio/WIPAudio1.m4a" type="audio/mp3" />
+            <DangerSubtitle>*Browser ของท่านไม่ Support Audio Player</DangerSubtitle>
+          </Media> 
+      </div>
+    )
+  }
+}
 
-    render() {
-        return (
-            <div className="form-group">
-            <QuestionName className="col-12 justify-content-center">คำถามที่ {this.props.questionCount} : {this.props.questionName}</QuestionName>
-                <TextArea 
-                className="col-12"
-                name={this.props.questionId} 
-                onChange={(e) => this.handleChange(e)}
-                value={this.state.oldValue}
-                >
-                </TextArea>
-            </div>
-        )
-    }
+const Question = (props) => {
+  return (
+    <div className="form-group">
+      <QuestionName className="col-12 justify-content-center">คำถามที่ {props.questionCount} : {props.questionName}</QuestionName>
+      {displayAppPlayer(props.questionId)}
+      <TextArea 
+        className="col-12"
+        name={props.questionId} 
+        onChange={(e) => props.handleAnswer(e)}
+        required={props.required}
+        value={props.oldValue}
+        >
+      </TextArea>
+    </div>
+  )
 }
 
 Question.propType = {
-    oldValue: PropTypes.object,
     questionId: PropTypes.any,
     questionName: PropTypes.string,
     questionCount: PropTypes.number,
     handleAnswer: PropTypes.func,
+    oldValue: PropTypes.string,
+    required: PropTypes.bool
 }
+
+export default Question;
