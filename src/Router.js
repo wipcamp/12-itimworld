@@ -79,7 +79,7 @@ const MenuRoute = (props) => {
       {
         (cookies.get('token') !== undefined && cookies.get('token') !== null) ? (
           // true ? (
-            <Menu />
+          <Menu />
         ) : (
             <Redirect
               to={{
@@ -149,12 +149,21 @@ const MajorRoute = (props) => {
     <React.Fragment>
       {
         (cookies.get('token') !== undefined && cookies.get('token') !== null) ?
-          props.condit === null ? (
-            <Major />
-          ) : (
+          props.majorStatus ?
+            props.condit === null ? (
+              <Major />
+            ) : (
+                <Redirect
+                  to={{
+                    pathname: "/questions",
+                    state: { from: locationNow }
+                  }}
+                />
+              )
+            : (
               <Redirect
                 to={{
-                  pathname: "/questions",
+                  pathname: "/major",
                   state: { from: locationNow }
                 }}
               />
@@ -177,6 +186,7 @@ export default class Index extends React.Component {
     term: false,
     agree: false,
     profile: false,
+    majorStatus: false,
     major: null
   }
 
@@ -193,6 +203,7 @@ export default class Index extends React.Component {
             term: response.data[0].userStatus.accepted,
             agree: response.data[0].userStatus.acceptedStoreData,
             profile: response.data[0].userStatus.registered,
+            majorStatus: response.data[0].userStatus.majorAnswered,
             major: response.data[0].major
           })
         } else {
@@ -234,7 +245,7 @@ export default class Index extends React.Component {
               <General />
             </Mountain>
           </PrivateRoute>
-          <MajorRoute path="/major" condit={this.state.major !== null} />
+          <MajorRoute path="/major" condit={this.state.major !== null} majorStatus={this.state.majorStatus} />
           {/* </MajorRoute> */}
           <MenuRoute path="/menu" />
           <PrivateRoute path="/document">
