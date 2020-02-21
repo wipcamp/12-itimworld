@@ -122,7 +122,7 @@ export default class Index extends React.Component {
   }
 
   async componentDidMount(){
-    await this.getUserService();
+    await this.getUser();
   }
 
   getUser = async () => {
