@@ -51,15 +51,15 @@ const PrivateRoute = ({ condit, children, ...rest }) => {
                   locationNow === '/general' || locationNow === '/major' ||
                   locationNow === '/document' || locationNow === '/agreement' ||
                   locationNow === '/term' ?
-                    (condit)  ?
+                  (condit) ?
                     children
                     :
-                      <Redirect
-                        to={{
-                          pathname: "/profile",
-                          state: { from: locationNow }
-                        }}
-                      />
+                    <Redirect
+                      to={{
+                        pathname: "/profile",
+                        state: { from: locationNow }
+                      }}
+                    />
                   :
                   <Redirect
                     to={{
@@ -89,7 +89,7 @@ const MenuRoute = (props) => {
       {
         (cookies.get('token') !== undefined && cookies.get('token') !== null) ? (
           // true ? (
-          !(props.condit) ?(
+          !(props.condit) ? (
             <Menu />
           ) : (
               <Redirect
@@ -138,8 +138,10 @@ const ProfileRoute = (props) => {
   return (
     <React.Fragment>
       {
-        (cookies.get('token') !== undefined && cookies.get('token') !== null) && !(props.condit) ? (
-          props.children
+        (cookies.get('token') !== undefined && cookies.get('token') !== null) && (props.condit) ? (
+          <Mountain >
+            <Profile />
+          </Mountain>
         ) : (
             <Redirect
               to={{
@@ -158,11 +160,11 @@ export default class Index extends React.Component {
   state = {
     term: true,
     agree: true,
-    profile: true,
+    profile: false,
     major: null
   }
 
-  async componentDidMount(){
+  async componentDidMount() {
     await this.getUser();
   }
 
@@ -171,10 +173,10 @@ export default class Index extends React.Component {
       .then((promise) => {
         const response = promise.data;
         if (response.success) {
-          this.setState({ 
+          this.setState({
             term: response.data[0].userStatus.accepted,
-            agree: response.data[0].userStatus.acceptedStoreData ,
-            profile: response.data[0].userStatus.registered ,
+            agree: response.data[0].userStatus.acceptedStoreData,
+            profile: response.data[0].userStatus.registered,
             major: response.data[0].major
           })
         } else {
@@ -201,21 +203,21 @@ export default class Index extends React.Component {
               <Login />
             </Mountain>
           </Route>
-          <MenuObjRoute path="/term" condit={ this.state.term }>
+          <MenuObjRoute path="/term" condit={this.state.term}>
             <Mountain>
               <Term />
             </Mountain>
           </MenuObjRoute>
-          <MenuObjRoute path="/agreement" condit={this.state.agree }>
+          <MenuObjRoute path="/agreement" condit={this.state.agree}>
             <Mountain>
               <Agreement />
             </Mountain>
           </MenuObjRoute>
-          <ProfileRoute  path="/profile" condit={this.state.profile}>
-            <Mountain>
+          <ProfileRoute path="/profile" condit={this.state.profile} />
+            {/* <Mountain>
               <Profile />
             </Mountain>
-          </ProfileRoute>
+          </ProfileRoute> */}
           <PrivateRoute path="/general" condit={this.state.profile}>
             <Mountain>
               <General />
