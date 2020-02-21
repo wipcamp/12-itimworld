@@ -17,7 +17,7 @@ const ThisIsBackground = styled.div`
 export default class Index extends Component {
 
   componentDidMount(){
-    window.location.href = 'https://wip.camp/'
+    // window.location.href = 'https://wip.camp/'
   }
 
   render() {
