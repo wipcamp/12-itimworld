@@ -135,8 +135,8 @@ export const Loading = () => {
 export const Error = () => {
   return (
     <div>
-    {/* <Mountain>
-    </Mountain> */}
+    <Mountain>
+    </Mountain>
       <Section>
         <div className="container pt-5">
           <div className="row">
