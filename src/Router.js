@@ -114,32 +114,37 @@ const MenuObjRoute = (props) => {
   )
 }
 
-const MajorRoute = async () => {
+const MajorRoute = async (props) => {
   
   return (
-    <MenuObjRoute 
-    condit={(await UserService.getMe().then( (response) => response.data.data[0].major))!== null}>
-      <Major />
+    <MenuObjRoute condit={(await UserService.getMe().then( (response) => response.data.data[0].major))!== null}>
+      <Route path={props.path} >
+        <Major />
+      </Route>
     </MenuObjRoute>
   )
 }
 
-const AgreeRoute = async () => {
+const AgreeRoute = async (props) => {
   return (
     <MenuObjRoute condit={await UserService.getMe().then((response) => response.data.data[0].userStatus.accepted)}>
-      <Mountain>
-        <Agreement />
-      </Mountain>
+      <Route path={props.path}>
+        <Mountain>
+          <Agreement />
+        </Mountain>
+      </Route>
     </MenuObjRoute>
   )
 }
 
-const TermRoute = async () => {
+const TermRoute = async (props) => {
   return (
     <MenuObjRoute condit={await UserService.getMe().then((response) => response.data.data[0].userStatus.acceptedStoreData)}>
-      <Mountain>
-        <Term />
-      </Mountain>  
+      <Route path={props.path}>
+        <Mountain>
+          <Term />
+        </Mountain>  
+      </Route>
     </MenuObjRoute>
   )
 }
