@@ -240,7 +240,7 @@ getUserStatus = async() => {
           <Box className="container">
             {
               this.state.menu.map((data, i) => (
-                <LinkStyle to={`/${data.link}`} className="text-center col-lg-3 col-md-3 col-sm-6 col-6 mb-5" key={i} style={{pointerEvents:`${ data.status &&  data.message === 'คำถามทั่วไป'  ? "none" : "auto" }`}}>
+                <LinkStyle to={`/${data.link}`} className="text-center col-lg-3 col-md-3 col-sm-6 col-6 mb-5" key={i} style={{pointerEvents:`${ data.status &&  data.message === 'คำถามสาขา'  ? "auto" : "none" }`}}>
                   <MenuImage src={`/img/Menu/Button${i+1}${data.done === true ? "_done" : ""}.png`} key={i} alt={data.link}/>
                     <Small className="btn">
                       {data.message}
