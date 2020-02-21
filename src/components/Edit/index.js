@@ -272,7 +272,7 @@ export default class Index extends Component {
   }
 
   componentDidUpdate() {
-    console.log(this.state.newUser);
+    // console.log(this.state.newUser);
 
     if (this.state.newUser !== '') {
       if (Object.keys(this.state.newUser).length > 1) {
@@ -549,14 +549,14 @@ export default class Index extends Component {
                     </div>
                   </div>
                 </label>
-                <SelectField
+                {/* <SelectField
                   dataOptions={this.state.religionData}
                   onClickFunc={this.handleChange}
                   selectId="religion"
                   selectName="religion"
                   selectValue={this.state.oldUser.religion}
                   labelName="ศาสนา"
-                />
+                /> */}
                 {
                   this.state.profileDataSecondSection.map((data, i) => (
                     <TextField
