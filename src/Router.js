@@ -138,14 +138,29 @@ const AgreeRoute = async (props) => {
 }
 
 const TermRoute = async (props) => {
+  const check = await UserService.getMe().then((response) => response.data.data[0].userStatus.acceptedStoreData)
   return (
-    <MenuObjRoute condit={await UserService.getMe().then((response) => response.data.data[0].userStatus.acceptedStoreData)}>
-      <Route path={props.path}>
-        <Mountain>
-          <Term />
-        </Mountain>  
-      </Route>
-    </MenuObjRoute>
+    <React.Fragment>
+      {
+        (cookies.get('token') !== undefined && cookies.get('token') !== null) && check ? (
+          <Mountain>
+            <Term />
+          </Mountain> 
+        ) : (
+            <Redirect
+              to={{
+                pathname: "/menu",
+                state: { from: locationNow }
+              }}
+            />
+          )
+      }
+    </React.Fragment>
+    // <MenuObjRoute condit={await UserService.getMe().then((response) => response.data.data[0].userStatus.acceptedStoreData)}>
+    //   <Route path={props.path}>
+         
+    //   </Route>
+    // </MenuObjRoute>
   )
 }
 export default class Index extends React.Component {
