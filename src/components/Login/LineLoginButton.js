@@ -76,7 +76,7 @@ export default class LineLoginButton extends Component {
         <Button onClick={() => this.mouseClick()} onMouseOver={() => this.mouseOver()} onMouseOut={() => this.mouseOut()} className="btn row" >
           <Text className="d-flex align-items-center justify-content-between pl-2" bgColor={this.state.bgColor}>
             <LineImg imgLine={this.state.imgLine}/>
-            <div className="col-8">เข้าสู่ระบบด้วย Line</div>
+            <div className="col-8">Log in with Line</div>
           </Text>
         </Button>
       </ButtonContainer>
