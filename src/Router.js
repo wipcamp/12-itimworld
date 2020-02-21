@@ -162,7 +162,7 @@ export default class Index extends React.Component {
           console.log(response.data[0].major)
           console.log(response.data[0].userStatus.accepted)
           console.log(response.data[0].userStatus.acceptedStoreData)
-          this.setState({
+          await this.setState({
             major: response.data[0].major,
             term: response.data[0].userStatus.accepted,
             agree: response.data[0].userStatus.acceptedStoreData
