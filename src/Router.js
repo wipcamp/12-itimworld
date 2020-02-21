@@ -95,21 +95,25 @@ const MenuRoute = () => {
   )
 }
 
-const MenuObjRoute = (props) => {
+const MenuObjRoute = ({ condit, children, ...rest }) => {
   return (
     <React.Fragment>
-      {
-        (cookies.get('token') !== undefined && cookies.get('token') !== null) && props.condit ? (
-          props.children
-        ) : (
-            <Redirect
-              to={{
-                pathname: "/menu",
-                state: { from: locationNow }
-              }}
-            />
-          )
-      }
+      <Route
+        {...rest}
+        render={() => {
+          (cookies.get('token') !== undefined && cookies.get('token') !== null) && condit ? (
+            children
+          ) : (
+              <Redirect
+                to={{
+                  pathname: "/menu",
+                  state: { from: locationNow }
+                }}
+              />
+            )
+        }
+        }
+      />
     </React.Fragment>
   )
 }
@@ -123,7 +127,7 @@ const MajorRoute = ({ major }) => {
 }
 
 const AgreeRoute = ({ agree }) => {
-  console.log("agree" +agree)
+  console.log("agree" + agree)
   return (
     <MenuObjRoute condit={agree}>
       <Mountain>
@@ -133,22 +137,18 @@ const AgreeRoute = ({ agree }) => {
   )
 }
 
-const TermRoute = ({ term }) => {
-  console.log("term" +term)
-  return (
-    <MenuObjRoute condit={term}>
-      <Mountain>
-        <Term />
-      </Mountain>
-    </MenuObjRoute>
-  )
-}
+// const TermRoute = ({ term }) => {
+//   console.log("term" +term)
+//   return (
+
+//   )
+// }
 export default class Index extends React.Component {
 
   state = {
     major: null,
     agree: false,
-    term:false
+    term: false
   }
 
   async componentDidMount() {
@@ -220,13 +220,23 @@ export default class Index extends React.Component {
               <Login />
             </Mountain>
           </Route>
-          <TermRoute path="/term" term={this.state.term} />
-            {/* <Mountain>
+          <MenuObjRoute path="/term" condit={this.state.term}>
+            <Mountain>
+              <Term />
+            </Mountain>
+          </MenuObjRoute>
+          {/* <TermRoute path="/term"  /> */}
+          {/* <Mountain>
               <Term />
             </Mountain>
           </TermRoute> */}
-          <AgreeRoute path="/agreement" agree={this.state.agree} />
-            {/* <Mountain>
+          {/* <AgreeRoute path="/agreement" agree={this.state.agree} /> */}
+          <MenuObjRoute path="/agreement" condit={this.state.agree}>
+            <Mountain>
+              <Agreement />
+            </Mountain>
+          </MenuObjRoute>
+          {/* <Mountain>
               <Agreement />
             </Mountain>
           </AgreeRoute> */}
@@ -240,8 +250,11 @@ export default class Index extends React.Component {
               <General />
             </Mountain>
           </PrivateRoute>
-          <MajorRoute path="/major" major={this.state.major} />
+          {/* <MajorRoute path="/major" major={this.state.major} /> */}
           {/* </MajorRoute> */}
+          <MenuObjRoute path="/major" condit={this.state.major}>
+            <Major />
+          </MenuObjRoute>
           <MenuRoute path="/menu" />
           <PrivateRoute path="/document">
             <Mountain>
