@@ -8,6 +8,8 @@ import {
 import Cookies from 'universal-cookie';
 import styled from 'styled-components'
 
+import UserService from './services/UserService'
+
 import Navbar from './components/Core/Navbar'
 import Login from './components/Login'
 import Menu from './components/Menu'
@@ -17,7 +19,7 @@ import Questions from "./components/Questions"
 import Edit from './components/Edit'
 import General from './components/General'
 import Document from './components/Document'
-import {Error} from './components/Core/Waiting'
+import { Error } from './components/Core/Waiting'
 import Agreement from './components/Agreement'
 import Term from './components/Term'
 
@@ -41,23 +43,23 @@ const PrivateRoute = ({ children, ...rest }) => {
       <Route
         {...rest}
         render={({ location }) =>
-          (cookies.get('token') !== undefined && cookies.get('token') !== null)? (
-          // true ? (
+          (cookies.get('token') !== undefined && cookies.get('token') !== null) ? (
+            // true ? (
             <React.Fragment>
-            {
-                locationNow === '/menu' || locationNow === '/profile' || 
-                locationNow === '/general' || locationNow === '/major' ||
-                locationNow === '/document' || locationNow === '/agreement' ||
-                locationNow === '/term'? 
-              children
-              :
-              <Redirect
-                to={{
-                  pathname: "/menu",
-                  state: { from: locationNow }
-                }}
-              />
-            }
+              {
+                locationNow === '/menu' || locationNow === '/profile' ||
+                  locationNow === '/general' || locationNow === '/major' ||
+                  locationNow === '/document' || locationNow === '/agreement' ||
+                  locationNow === '/term' ?
+                  children
+                  :
+                  <Redirect
+                    to={{
+                      pathname: "/menu",
+                      state: { from: locationNow }
+                    }}
+                  />
+              }
             </React.Fragment>
           ) : (
               <Redirect
@@ -74,11 +76,11 @@ const PrivateRoute = ({ children, ...rest }) => {
 }
 
 const MenuRoute = () => {
-  return(
+  return (
     <React.Fragment>
       {
-        (cookies.get('token') !== undefined && cookies.get('token') !== null)? (
-        // true ? (
+        (cookies.get('token') !== undefined && cookies.get('token') !== null) ? (
+          // true ? (
           <Menu />
         ) : (
             <Redirect
@@ -92,21 +94,93 @@ const MenuRoute = () => {
     </React.Fragment>
   )
 }
+
+const MenuObjRoute = (props) => {
+  return (
+    <React.Fragment>
+      {
+        (cookies.get('token') !== undefined && cookies.get('token') !== null) && props.condit ? (
+          props.children
+        ) : (
+            <Redirect
+              to={{
+                pathname: "/menu",
+                state: { from: locationNow }
+              }}
+            />
+          )
+      }
+    </React.Fragment>
+  )
+}
+const MajorRoute = ({ major }) => {
+  return (
+    <MenuObjRoute condit={major !== null}>
+      <Major />
+    </MenuObjRoute>
+  )
+}
+
+const AgreeRoute = ({ agree }) => {
+  return (
+    <MenuObjRoute condit={agree}>
+      <Mountain>
+        <Agreement />
+      </Mountain>
+    </MenuObjRoute>
+  )
+}
+
+const TermRoute = ({ term }) => {
+  return (
+    <MenuObjRoute condit={term}>
+      <Mountain>
+        <Term />
+      </Mountain>
+    </MenuObjRoute>
+  )
+}
 export default class Index extends React.Component {
 
   state = {
-    wipId: null,
-    user: false,
-    isAuthenticated: false
+    major: null,
+    agree: false,
+    term:false
   }
-  
+
+  async componentDidMount() {
+    const cookieToken = cookies.get('token');
+    if (cookieToken !== null && cookieToken !== undefined) {
+      let promise;
+      try {
+        promise = await this.getUserService();
+        let response = promise.data;
+        if (response.success) {
+          this.setState({
+            major: response.data[0].major,
+            term: response.data[0].userStatus.accepted,
+            agree: response.data[0].userStatus.acceptedStoreData
+          });
+        } else {
+          console.log("Error get User request")
+        }
+      } catch (e) {
+        console.log("Error get User promise")
+      }
+    }
+  }
+
+  getUserService = async () => {
+    return await UserService.getMe();
+  }
+
   render() {
     return (
       <Router>
         {
-          (cookies.get('token') !== undefined && cookies.get('token') !== null)  && locationNow !== '/login' ?
-          // true  && locationNow !== '/login' ?
-            <Navbar />:
+          (cookies.get('token') !== undefined && cookies.get('token') !== null) && locationNow !== '/login' ?
+            // true  && locationNow !== '/login' ?
+            <Navbar /> :
             ''
         }
         <Switch>
@@ -115,16 +189,16 @@ export default class Index extends React.Component {
               <Login />
             </Mountain>
           </Route>
-          <PrivateRoute path="/term">
-            <Mountain>
+          <TermRoute path="/term" term={this.state.term} />
+            {/* <Mountain>
               <Term />
             </Mountain>
-          </PrivateRoute>
-          <PrivateRoute path="/agreement">
-            <Mountain>
+          </TermRoute> */}
+          <AgreeRoute path="/agreement" agree={this.state.agree} />
+            {/* <Mountain>
               <Agreement />
             </Mountain>
-          </PrivateRoute>
+          </AgreeRoute> */}
           <PrivateRoute path="/profile">
             <Mountain>
               <Profile />
@@ -135,9 +209,8 @@ export default class Index extends React.Component {
               <General />
             </Mountain>
           </PrivateRoute>
-          <PrivateRoute path="/major">
-            <Major />
-          </PrivateRoute>
+          <MajorRoute path="/major" major={this.state.major} />
+          {/* </MajorRoute> */}
           <MenuRoute path="/menu" />
           <PrivateRoute path="/document">
             <Mountain>
@@ -155,7 +228,7 @@ export default class Index extends React.Component {
             </Mountain>
           </PrivateRoute>
           <PrivateRoute path="/error">
-            <Error/>
+            <Error />
           </PrivateRoute>
           <PrivateRoute path="*" />
         </Switch>
