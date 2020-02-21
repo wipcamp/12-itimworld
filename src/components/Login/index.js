@@ -88,23 +88,23 @@ class Login extends Component {
   componentDidMount() {
     const search = window.location.search.substring(1);
     
-    const dataEntries = Object.entries(cookies.getAll())
-    let waitNonce = false 
-    let waitState = false
-    for (const [dataArray, dataFromEntity] of dataEntries) {
-      console.log(dataArray)
-      if (dataArray === "nonce" && (dataFromEntity !== null || dataFromEntity !== undefined )){
-        waitNonce = true
-      }
-      if (dataArray === "state" && (dataFromEntity !== null || dataFromEntity !== undefined )){
-        waitState = true
-      }
-    }
-    if(waitNonce && waitState){
-      cookies.set('wait', "wait", { path: '/', maxAge: '2' })
-    }else{
-      cookies.set('wait', "true", { path: '/', maxAge: '10' });
-    }
+    // const dataEntries = Object.entries(cookies.getAll())
+    // let waitNonce = false 
+    // let waitState = false
+    // for (const [dataArray, dataFromEntity] of dataEntries) {
+    //   console.log(dataArray)
+    //   if (dataArray === "nonce" && (dataFromEntity !== null || dataFromEntity !== undefined )){
+    //     waitNonce = true
+    //   }
+    //   if (dataArray === "state" && (dataFromEntity !== null || dataFromEntity !== undefined )){
+    //     waitState = true
+    //   }
+    // }
+    // if(waitNonce && waitState){
+    //   cookies.set('wait', "wait", { path: '/', maxAge: '2' })
+    // }else{
+    cookies.set('wait', "true", { path: '/', maxAge: '10' });
+    // }
     // console.log(search)
     if (search) {
       this.setState({
@@ -113,6 +113,10 @@ class Login extends Component {
       const resFromLineApi = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}', function (key, value) { return key === "" ? value : decodeURIComponent(value) })
       // console.log('get state from response from line api : ' + resFromLineApi.state)
       const cookieState = cookies.get('state');
+      if(resFromLineApi.code){
+        console.log("wait")
+        cookies.set('wait', "wait", { path: '/', maxAge: '2' })
+      }
       if (resFromLineApi.state === cookieState) {
         this.getTokenFromLineApi(resFromLineApi.code)
       }
