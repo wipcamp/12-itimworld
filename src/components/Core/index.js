@@ -8,7 +8,7 @@ import Navbar from './Navbar'
 
 const dateNow = dayjs().format('YYYY-MM-DDTHH:mm')
 // const dateNow = dayjs('2020-03-14T00:00')
-const dateEnd = dayjs('2020-03-13T00:00')
+const dateEnd = dayjs('2020-21-1T00:00')
 
 const locationNow = window.location.pathname
 const cookies = new Cookies()
