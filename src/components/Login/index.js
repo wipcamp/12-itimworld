@@ -96,7 +96,7 @@ class Login extends Component {
       // console.log('get state from response from line api : ' + resFromLineApi.state)
       const cookieState = cookies.get('state');
       if(resFromLineApi.code){
-        console.log("wait")
+        // console.log("wait")
         cookies.set('wait', "wait", { path: '/', maxAge: '2' })
       }
       if (resFromLineApi.state === cookieState) {

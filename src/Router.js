@@ -102,7 +102,6 @@ const MenuRoute = (props) => {
 }
 
 const MenuObjRoute = (props) => {
-  console.log(props.condit)
   return (
     <React.Fragment>
       {
@@ -143,7 +142,6 @@ const ProfileRoute = (props) => {
 }
 
 const MajorRoute = (props) => {
-  console.log(props.condit)
   return (
     <React.Fragment>
       {
