@@ -147,7 +147,7 @@ export default class Index extends Component {
             documentFail: 'none'
           })
         }
-        const userStatusSuccess = response.data[0].userStatus.generalAnswered === true && response.data[0].userStatus.majorAnswered === true && response.data[0].userStatus.submitted === true && response.data[0].userStatus.documentFail === false
+        const userStatusSuccess = response.data[0].userStatus.generalAnswered === true && response.data[0].userStatus.majorAnswered === true && response.data[0].userStatus.submitted === true && response.data[0].userStatus.documentFailed === false
         
         if(userStatusSuccess){
           this.setState({
@@ -241,7 +241,7 @@ getUserStatus = async() => {
           <Box className="container">
             {
               this.state.menu.map((data, i) => (
-                <LinkStyle to={`/${data.link}`} className="text-center col-lg-3 col-md-3 col-sm-6 col-6 mb-5" key={i} style={{pointerEvents:`${ data.status &&  data.message === 'คำถามสาขา'  ? "none" : "auto" }`}}>
+                <LinkStyle to={`/${data.link}`} className="text-center col-lg-3 col-md-3 col-sm-6 col-6 mb-5" key={i} style={{pointerEvents:`${ (data.status && data.message === 'คำถามสาขา' ) || data.message ===  'อัพโหลดเอกสาร' ? "none" : "auto" }`}}>
                   <MenuImage src={`/img/Menu/Button${i+1}${data.done === true ? "_done" : ""}.png`} key={i} alt={data.link}/>
                     <Small className="btn">
                       {data.message}
