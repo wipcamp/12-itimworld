@@ -10,7 +10,6 @@ import styled from 'styled-components'
 
 import UserService from './services/UserService'
 
-import Navbar from './components/Core/Navbar'
 import Login from './components/Login'
 import Menu from './components/Menu'
 import Profile from './components/Profile'
@@ -191,12 +190,7 @@ export default class Index extends React.Component {
   render() {
     return (
       <Router>
-        {
-          (cookies.get('token') !== undefined && cookies.get('token') !== null) && locationNow !== '/login' ?
-            // true  && locationNow !== '/login' ?
-            <Navbar /> :
-            ''
-        }
+       
         <Switch>
           <Route path="/login" >
             <Mountain>
