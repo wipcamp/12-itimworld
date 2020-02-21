@@ -118,7 +118,9 @@ const MenuObjRoute = (props) => {
 export default class Index extends React.Component {
 
   state = {
-    term: false
+    term: false,
+    agree: false,
+    major: null
   }
 
   async componentDidMount(){
@@ -130,7 +132,11 @@ export default class Index extends React.Component {
       .then((promise) => {
         const response = promise.data;
         if (response.success) {
-          this.setState({ term: response.data[0].userStatus.accepted })
+          this.setState({ 
+            term: response.data[0].userStatus.accepted,
+            agree: response.data[0].userStatus.acceptedStoreData ,
+            major: response.data[0].major
+          })
         } else {
           this.setState({ errorLoad: true })
         }
@@ -155,10 +161,7 @@ export default class Index extends React.Component {
               <Login />
             </Mountain>
           </Route>
-          <MenuObjRoute path="/term"
-            condit={ this.state.term
-              // UserService.getMe().then((response) => response.data.data[0].userStatus.accepted)
-            }>
+          <MenuObjRoute path="/term" condit={ this.state.term }>
             <Mountain>
               <Term />
             </Mountain>
@@ -169,11 +172,7 @@ export default class Index extends React.Component {
             </Mountain>
           </TermRoute> */}
           {/* <AgreeRoute path="/agreement" agree={this.state.agree} /> */}
-          <MenuObjRoute path="/agreement" 
-            condit={
-              async () =>
-                await UserService.getMe().then((response) => response.data.data[0].userStatus.acceptedStoreData)
-            }>
+          <MenuObjRoute path="/agreement" condit={this.state.agree }>
             <Mountain>
               <Agreement />
             </Mountain>
@@ -195,10 +194,7 @@ export default class Index extends React.Component {
           {/* <MajorRoute path="/major" major={this.state.major} /> */}
           {/* </MajorRoute> */}
           <MenuObjRoute path="/major" 
-            condit={(
-              async () =>
-                await UserService.getMe().then((response) => response.data.data[0].major)
-            ) !== null }>
+            condit={this.state.major !== null}>
             <Major />
           </MenuObjRoute>
           <MenuRoute path="/menu" />
