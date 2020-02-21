@@ -51,7 +51,7 @@ const PrivateRoute = ({ condit, children, ...rest }) => {
                   locationNow === '/general' || locationNow === '/major' ||
                   locationNow === '/document' || locationNow === '/agreement' ||
                   locationNow === '/term' ?
-                    !(condit)  ?
+                    (condit)  ?
                     children
                     :
                       <Redirect
@@ -132,6 +132,27 @@ const MenuObjRoute = (props) => {
   )
 }
 
+const ProfileRoute = (props) => {
+  console.log(props.condit)
+  console.log(!props.condit)
+  return (
+    <React.Fragment>
+      {
+        (cookies.get('token') !== undefined && cookies.get('token') !== null) && !(props.condit) ? (
+          props.children
+        ) : (
+            <Redirect
+              to={{
+                pathname: "/menu",
+                state: { from: locationNow }
+              }}
+            />
+          )
+      }
+    </React.Fragment>
+  )
+}
+
 export default class Index extends React.Component {
 
   state = {
@@ -190,11 +211,11 @@ export default class Index extends React.Component {
               <Agreement />
             </Mountain>
           </MenuObjRoute>
-          <MenuObjRoute path="/profile" condit={!(this.state.profile)}>
+          <ProfileRoute  path="/profile" condit={this.state.profile}>
             <Mountain>
               <Profile />
             </Mountain>
-          </MenuObjRoute>
+          </ProfileRoute>
           <PrivateRoute path="/general" condit={this.state.profile}>
             <Mountain>
               <General />
