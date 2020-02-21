@@ -100,7 +100,7 @@ const MenuObjRoute = (props) => {
   return (
     <React.Fragment>
       {
-        (cookies.get('token') !== undefined && cookies.get('token') !== null) && props.condit ? (
+        (cookies.get('token') !== undefined && cookies.get('token') !== null) && !(props.condit) ? (
           props.children
         ) : (
             <Redirect
@@ -117,8 +117,27 @@ const MenuObjRoute = (props) => {
 
 export default class Index extends React.Component {
 
-  getUserService = async () => {
-    return await UserService.getMe();
+  state = {
+    term: false
+  }
+
+  async componentDidMount(){
+    await this.getUserService();
+  }
+
+  getUser = async () => {
+    await UserService.getMe()
+      .then((promise) => {
+        const response = promise.data;
+        if (response.success) {
+          this.setState({ term: response.data[0].userStatus.accepted })
+        } else {
+          this.setState({ errorLoad: true })
+        }
+      })
+      .catch(() => {
+        this.setState({ errorLoad: true })
+      })
   }
 
   render() {
@@ -137,8 +156,7 @@ export default class Index extends React.Component {
             </Mountain>
           </Route>
           <MenuObjRoute path="/term"
-            condit={
-              false
+            condit={ this.state.term
               // UserService.getMe().then((response) => response.data.data[0].userStatus.accepted)
             }>
             <Mountain>
