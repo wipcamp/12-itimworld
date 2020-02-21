@@ -75,11 +75,11 @@ const PrivateRoute = ({ children, ...rest }) => {
   )
 }
 
-const MenuRoute = () => {
+const MenuRoute = (props) => {
   return (
     <React.Fragment>
       {
-        (cookies.get('token') !== undefined && cookies.get('token') !== null) ? (
+        (cookies.get('token') !== undefined && cookies.get('token') !== null) && !(props.condit)? (
           // true ? (
           <Menu />
         ) : (
@@ -118,8 +118,9 @@ const MenuObjRoute = (props) => {
 export default class Index extends React.Component {
 
   state = {
-    term: false,
-    agree: false,
+    term: true,
+    agree: true,
+    profile: true,
     major: null
   }
 
@@ -135,6 +136,7 @@ export default class Index extends React.Component {
           this.setState({ 
             term: response.data[0].userStatus.accepted,
             agree: response.data[0].userStatus.acceptedStoreData ,
+            profile: response.data[0].userStatus.registered ,
             major: response.data[0].major
           })
         } else {
@@ -193,11 +195,10 @@ export default class Index extends React.Component {
           </PrivateRoute>
           {/* <MajorRoute path="/major" major={this.state.major} /> */}
           {/* </MajorRoute> */}
-          <MenuObjRoute path="/major" 
-            condit={this.state.major !== null}>
+          <MenuObjRoute path="/major" condit={this.state.major !== null}>
             <Major />
           </MenuObjRoute>
-          <MenuRoute path="/menu" />
+          <MenuRoute path="/menu" condit={this.state.agree} />
           <PrivateRoute path="/document">
             <Mountain>
               <Document />
