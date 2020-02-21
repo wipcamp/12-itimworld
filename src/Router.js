@@ -96,6 +96,7 @@ const MenuRoute = () => {
 }
 
 const MenuObjRoute = (props) => {
+  console.log(props.condit)
   return (
     <React.Fragment>
       {
