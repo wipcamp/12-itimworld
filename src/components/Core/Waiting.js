@@ -4,6 +4,12 @@ import { ButtonStyle , ButtonStyleLink } from './ButtonStyle'
 
 const Section = styled.div`
   min-height:50vh;
+  opacity: 1;
+`
+
+const BackgroundBlack = styled.div`
+  min-height: 100vh;
+  background: rgba(0, 0, 0, 0.4); 
 `
 
 const ButtonBack = styled(ButtonStyle)`
@@ -91,9 +97,10 @@ const Skypic = styled(Wippo)`
 `
 
 
-const Loading = () => {
+export const Loading = () => {
   return (
     <div>
+      <BackgroundBlack>
       <Section>
         <div className="container">
           <div className="row text-center">
@@ -110,6 +117,7 @@ const Loading = () => {
       <div>
         <h4 className="text-white mt-3 text-center">Loading...</h4>
       </div>
+      </BackgroundBlack>
     </div>
   );
 }
