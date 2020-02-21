@@ -3,7 +3,11 @@ import styled from 'styled-components'
 import { ButtonStyle , ButtonStyleLink } from './ButtonStyle'
 
 const Section = styled.div`
-  min-height:50vh;
+  min-height:70vh;
+`
+
+const DSection = styled.div`
+  min-height: 30vh;
 `
 
 const BackgroundBlack = styled.div`
@@ -119,9 +123,9 @@ export const Loading = () => {
             </div>
           </div>
         </Section>
-        <Section>
+        <DSection>
           <h4 className="text-white mt-3 text-center">Loading...</h4>
-        </Section>`
+        </DSection>
       </BackgroundBlack>
     </div>
   );
