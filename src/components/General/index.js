@@ -207,8 +207,8 @@ export default class Index extends Component {
                 displayButtonRight="none"
               />
               <ButtonStyle className="" onClick={() => this.clickSubmit()}>
-                ยืนยัน
-                  </ButtonStyle>
+                บันทึกคำตอบ
+              </ButtonStyle>
             </div>
           </div>
           <CustomModal
