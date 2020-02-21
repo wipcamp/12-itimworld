@@ -37,7 +37,7 @@ const Mountain = styled.div`
 
 const cookies = new Cookies()
 
-const PrivateRoute = ({ children, ...rest }) => {
+const PrivateRoute = ({ condit, children, ...rest }) => {
   return (
     <React.Fragment>
       <Route
@@ -51,7 +51,15 @@ const PrivateRoute = ({ children, ...rest }) => {
                   locationNow === '/general' || locationNow === '/major' ||
                   locationNow === '/document' || locationNow === '/agreement' ||
                   locationNow === '/term' ?
-                  children
+                    (condit)  ?
+                    children
+                    :
+                      <Redirect
+                        to={{
+                          pathname: "/profile",
+                          state: { from: locationNow }
+                        }}
+                      />
                   :
                   <Redirect
                     to={{
@@ -106,7 +114,27 @@ const MenuRoute = (props) => {
 }
 
 const MenuObjRoute = (props) => {
+  return (
+    <React.Fragment>
+      {
+        (cookies.get('token') !== undefined && cookies.get('token') !== null) && !(props.condit) ? (
+          props.children
+        ) : (
+            <Redirect
+              to={{
+                pathname: "/menu",
+                state: { from: locationNow }
+              }}
+            />
+          )
+      }
+    </React.Fragment>
+  )
+}
+
+const ProfileRoute = (props) => {
   console.log(props.condit)
+  console.log(!props.condit)
   return (
     <React.Fragment>
       {
@@ -178,48 +206,36 @@ export default class Index extends React.Component {
               <Term />
             </Mountain>
           </MenuObjRoute>
-          {/* <TermRoute path="/term"  /> */}
-            {/* <Mountain>
-              <Term />
-            </Mountain>
-          </TermRoute> */}
-          {/* <AgreeRoute path="/agreement" agree={this.state.agree} /> */}
           <MenuObjRoute path="/agreement" condit={this.state.agree }>
             <Mountain>
               <Agreement />
             </Mountain>
           </MenuObjRoute>
-            {/* <Mountain>
-              <Agreement />
-            </Mountain>
-          </AgreeRoute> */}
-          <PrivateRoute path="/profile">
+          <ProfileRoute  path="/profile" condit={this.state.profile}>
             <Mountain>
               <Profile />
             </Mountain>
-          </PrivateRoute>
-          <PrivateRoute path="/general">
+          </ProfileRoute>
+          <PrivateRoute path="/general" condit={this.state.profile}>
             <Mountain>
               <General />
             </Mountain>
           </PrivateRoute>
-          {/* <MajorRoute path="/major" major={this.state.major} /> */}
-          {/* </MajorRoute> */}
           <MenuObjRoute path="/major" condit={this.state.major !== null}>
             <Major />
           </MenuObjRoute>
-          <MenuRoute path="/menu" condit={this.state.agree} />
-          <PrivateRoute path="/document">
+          <MenuRoute path="/menu" condit={this.state.profile} />
+          <PrivateRoute path="/document" condit={this.state.profile}>
             <Mountain>
               <Document />
             </Mountain>
           </PrivateRoute>
-          <PrivateRoute path="/questions">
+          <PrivateRoute path="/questions" condit={this.state.profile}>
             <Mountain>
               <Questions />
             </Mountain>
           </PrivateRoute>
-          <PrivateRoute path="/edit">
+          <PrivateRoute path="/edit" condit={this.state.profile}>
             <Mountain>
               <Edit />
             </Mountain>
