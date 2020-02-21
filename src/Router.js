@@ -23,10 +23,7 @@ import { Error } from './components/Core/Waiting'
 import Agreement from './components/Agreement'
 import Term from './components/Term'
 
-
 const locationNow = window.location.pathname
-
-let check = async () => await UserService.getMe().then((response) => response.data.data[0].userStatus.acceptedStoreData)
 
 const Mountain = styled.div`
   background-image:url('/img/mountain.png') , url('/img/Star/zodiac1.png'), url('/img/Star/zodiac2.png'), url('/img/Star/zodiac3.png') , url('/img/Star/star1.png'), url('/img/Star/star2.png'), url('/img/Star/star3.png');
@@ -116,59 +113,93 @@ const MenuObjRoute = (props) => {
     </React.Fragment>
   )
 }
+// const MajorRoute = ({ major }) => {
+//   console.log("major" + major)
+//   return (
+//     <MenuObjRoute condit={major !== null}>
+//       <Major />
+//     </MenuObjRoute>
+//   )
+// }
 
-const MajorRoute = async (props) => {
-  
-  return (
-    <MenuObjRoute condit={(await UserService.getMe().then( (response) => response.data.data[0].major))!== null}>
-      <Route path={props.path} >
-        <Major />
-      </Route>
-    </MenuObjRoute>
-  )
-}
+// const AgreeRoute = ({ agree }) => {
+//   console.log("agree" +agree)
+//   return (
+//     <MenuObjRoute condit={agree}>
+//       <Mountain>
+//         <Agreement />
+//       </Mountain>
+//     </MenuObjRoute>
+//   )
+// }
 
-const AgreeRoute = async (props) => {
-  return (
-    <MenuObjRoute condit={await UserService.getMe().then((response) => response.data.data[0].userStatus.accepted)}>
-      <Route path={props.path}>
-        <Mountain>
-          <Agreement />
-        </Mountain>
-      </Route>
-    </MenuObjRoute>
-  )
-}
-
-const TermRoute = async (props) => {
-  
-
-
-  return (
-    <React.Fragment>
-      {
-        (cookies.get('token') !== undefined && cookies.get('token') !== null) && check ? (
-          <Mountain>
-            <Term />
-          </Mountain> 
-        ) : (
-            <Redirect
-              to={{
-                pathname: "/menu",
-                state: { from: locationNow }
-              }}
-            />
-          )
-      }
-    </React.Fragment>
-    // <MenuObjRoute condit={await UserService.getMe().then((response) => response.data.data[0].userStatus.acceptedStoreData)}>
-    //   <Route path={props.path}>
-         
-    //   </Route>
-    // </MenuObjRoute>
-  )
-}
+// const TermRoute = ({ term }) => {
+//   console.log("term" +term)
+//   return (
+    
+//   )
+// }
 export default class Index extends React.Component {
+
+  state = {
+    major: null,
+    agree: false,
+    term:false
+  }
+
+  // async componentDidMount() {
+  //   const cookieToken = cookies.get('token');
+  //   if (cookieToken !== null && cookieToken !== undefined) {
+  //     let promise;
+  //     try {
+  //       promise = await this.getUserService();
+  //       let response = promise.data;
+  //       if (response.success) {
+  //         console.log(response.data[0].major)
+  //         console.log(response.data[0].userStatus.accepted)
+  //         console.log(response.data[0].userStatus.acceptedStoreData)
+  //         this.setState({
+  //           major: response.data[0].major,
+  //           term: response.data[0].userStatus.accepted,
+  //           agree: response.data[0].userStatus.acceptedStoreData
+  //         });
+  //       } else {
+  //         console.log("Error get User request")
+  //       }
+  //     } catch (e) {
+  //       console.log("Error get User promise")
+  //     }
+  //   }
+  // }
+
+  // async componentDidUpdate() {
+  //   const cookieToken = cookies.get('token');
+  //   if (cookieToken !== null && cookieToken !== undefined) {
+  //     let promise;
+  //     try {
+  //       promise = await this.getUserService();
+  //       let response = promise.data;
+  //       if (response.success) {
+  //         console.log(response.data[0].major)
+  //         console.log(response.data[0].userStatus.accepted)
+  //         console.log(response.data[0].userStatus.acceptedStoreData)
+  //         this.setState({
+  //           major: response.data[0].major,
+  //           term: response.data[0].userStatus.accepted,
+  //           agree: response.data[0].userStatus.acceptedStoreData
+  //         });
+  //       } else {
+  //         console.log("Error get User request")
+  //       }
+  //     } catch (e) {
+  //       console.log("Error get User promise")
+  //     }
+  //   }
+  // }
+
+  getUserService = async () => {
+    return await UserService.getMe();
+  }
 
   render() {
     return (
@@ -185,23 +216,26 @@ export default class Index extends React.Component {
               <Login />
             </Mountain>
           </Route>
-          {/* <MenuObjRoute path="/term" condit={this.state.term}> */}
-          {/* <MenuObjRoute path="/term" condit={this.state.term}>
+          <MenuObjRoute path="/term"
+            condit={
+              async () => 
+              await UserService.getMe().then((response) => response.data.data[0].userStatus.acceptedStoreData)
+            }>
             <Mountain>
               <Term />
             </Mountain>
-          </MenuObjRoute> */}
-          <TermRoute path="/term"  />
+          </MenuObjRoute>
+          {/* <TermRoute path="/term"  /> */}
             {/* <Mountain>
               <Term />
             </Mountain>
           </TermRoute> */}
-          <AgreeRoute path="/agreement"/>
-          {/* <MenuObjRoute path="/agreement" condit={this.state.agree}>
+          {/* <AgreeRoute path="/agreement" agree={this.state.agree} /> */}
+          <MenuObjRoute path="/agreement" condit={this.state.agree}>
             <Mountain>
               <Agreement />
             </Mountain>
-          </MenuObjRoute> */}
+          </MenuObjRoute>
             {/* <Mountain>
               <Agreement />
             </Mountain>
@@ -216,11 +250,11 @@ export default class Index extends React.Component {
               <General />
             </Mountain>
           </PrivateRoute>
-          <MajorRoute path="/major"  />
+          {/* <MajorRoute path="/major" major={this.state.major} /> */}
           {/* </MajorRoute> */}
-          {/* <MenuObjRoute path="/major" condit={this.state.major}>
+          <MenuObjRoute path="/major" condit={this.state.major}>
             <Major />
-          </MenuObjRoute> */}
+          </MenuObjRoute>
           <MenuRoute path="/menu" />
           <PrivateRoute path="/document">
             <Mountain>
