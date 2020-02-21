@@ -187,7 +187,7 @@ export default class Index extends React.Component {
               <General />
             </Mountain>
           </PrivateRoute>
-          <MenuObjRoute path="/major" condit={this.state.major !== null}>
+          <MenuObjRoute path="/major" condit={!(this.state.major !== null)}>
             <Major />
           </MenuObjRoute>
           <MenuRoute path="/menu" condit={this.state.profile} />
