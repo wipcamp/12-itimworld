@@ -79,17 +79,7 @@ const MenuRoute = (props) => {
       {
         (cookies.get('token') !== undefined && cookies.get('token') !== null) ? (
           // true ? (
-          !(props.condit) ? (
             <Menu />
-          ) : (
-              <Redirect
-                to={{
-                  pathname: "/profile",
-                  state: { from: locationNow }
-                }}
-              />
-            )
-
         ) : (
             <Redirect
               to={{
@@ -137,6 +127,34 @@ const ProfileRoute = (props) => {
               <Redirect
                 to={{
                   pathname: "/menu",
+                  state: { from: locationNow }
+                }}
+              />
+            ) : (
+            <Redirect
+              to={{
+                pathname: "/menu",
+                state: { from: locationNow }
+              }}
+            />
+          )
+      }
+    </React.Fragment>
+  )
+}
+
+const MajorRoute = (props) => {
+  console.log(props.condit)
+  return (
+    <React.Fragment>
+      {
+        (cookies.get('token') !== undefined && cookies.get('token') !== null) ?
+          props.condit === null ? (
+            <Major />
+          ) : (
+              <Redirect
+                to={{
+                  pathname: "/questions",
                   state: { from: locationNow }
                 }}
               />
@@ -216,10 +234,9 @@ export default class Index extends React.Component {
               <General />
             </Mountain>
           </PrivateRoute>
-          <MenuObjRoute path="/major" condit={this.state.major !== null}>
-            <Major />
-          </MenuObjRoute>
-          <MenuRoute path="/menu" condit={this.state.profile} />
+          <MajorRoute path="/major" condit={this.state.major !== null} />
+          {/* </MajorRoute> */}
+          <MenuRoute path="/menu" />
           <PrivateRoute path="/document">
             <Mountain>
               <Document />
