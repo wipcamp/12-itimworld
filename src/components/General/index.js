@@ -130,7 +130,7 @@ export default class Index extends Component {
   }
 
   getUser = async () => {
-    await UserService.getUserMe()
+    await UserService.getMe()
       .then(promise => {
         const response = promise.data;
         const responseGeneralAnswer = response.data[0].generalAnswer;
