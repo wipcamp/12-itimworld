@@ -65,17 +65,18 @@ export default class Index extends Component {
         labelInput: 'รหัสบัตรประชาชน', placeHolder: '', name: 'citizenId'
       }
     ],
-    congenitalData: [
-      {
-        labelInput: 'โรคประจำตัว', placeHolder: 'หากไม่มีให้ใส่ -', name: 'congenitalDisease'
-      },
-      {
-        labelInput: 'อาหารที่แพ้', placeHolder: 'หากไม่มีให้ใส่ -', name: 'allergicFood'
-      },
-      {
-        labelInput: 'ยาที่แพ้', placeHolder: 'หากไม่มีให้ใส่ -', name: 'congenitalDrug'
-      }
-    ],
+    // congenitalData: [
+    //   {
+    //     labelInput: 'โรคประจำตัว', placeHolder: 'หากไม่มีให้ใส่ -', name: 'congenitalDisease'
+    //   },
+    //   {
+    //     labelInput: 'อาหารที่แพ้', placeHolder: 'หากไม่มีให้ใส่ -', name: 'allergicFood'
+    //   },
+    //   {
+    //     labelInput: 'ยาที่แพ้', placeHolder: 'หากไม่มีให้ใส่ -', name: 'congenitalDrug'
+    //   }
+    // ]
+    // ,
     religionData: [
       {
         value: "พุทธ",
@@ -211,7 +212,7 @@ export default class Index extends Component {
   putUser = async (data, event) => {
     event.preventDefault();
     await UserService.putMe(data)
-      .then(() => UserService.postStatus(userId, { "status": "register" }))
+      .then(() => UserService.postStatusMe({ "status": "register" }))
       .then(() => this.setState({ redirect: true }))
       .catch(() => this.toggleModal())
   }
@@ -363,7 +364,7 @@ export default class Index extends Component {
       return <Waiting error={this.state.errorLoad} />
     } else {
       return (
-        <ContainerDiv className="container-fluid justify-content-center">
+        <ContainerDiv className="container-fluid justify-content-center" style={{paddingBottom:'30px'}}>
           <form onSubmit={e => { this.putUser(this.state.data, e) }}>
             <div className="card p-5" style={{ boxShadow: `0px 4px 4px rgba(0, 0, 0, 0.25)`, borderRadius: `4px`, backgroundColor: `rgba(255, 255, 255, 0.9)` }}>
               <h1 className="text-center">ข้อมูลส่วนตัว</h1>
@@ -417,15 +418,6 @@ export default class Index extends Component {
                     </div>
                   </div>
                 </label>
-                <SelectField
-                  dataOptions={this.state.religionData}
-                  onClickFunc={this.handleChange}
-                  selectId="religion"
-                  selectName="religion"
-                  labelName="ศาสนา"
-                  required={true}
-                  disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes("religion")}
-                />
                 {
                   this.state.profileDataSecondSection.map((data, i) => (
                     <TextField
@@ -445,7 +437,7 @@ export default class Index extends Component {
                     />
                   ))
                 }
-                <SelectField
+                {/* <SelectField
                   dataOptions={this.state.booldGroupData}
                   onClickFunc={this.handleChange}
                   selectId="bloodGroup"
@@ -453,23 +445,23 @@ export default class Index extends Component {
                   labelName="กรุ๊ปเลือด"
                   required={true}
                   disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes("bloodgroup")}
-                />
+                /> */}
                 {
-                  this.state.congenitalData.map((data, i) => (
-                    <TextField
-                      key={i}
-                      className="col-12 col-md-6 form-group"
-                      leftSide="col-12 col-md-4 col-form-label text-md-right"
-                      rightSide="col-12 col-md-8"
-                      type="text"
-                      labelInput={data.labelInput}
-                      placeHolder={data.placeHolder}
-                      name={data.name}
-                      required={false}
-                      disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes(data.name.toLowerCase())}
-                      onChange={(e) => this.handleChange(e)}
-                    />
-                  ))
+                  // this.state.congenitalData.map((data, i) => (
+                  //   <TextField
+                  //     key={i}
+                  //     className="col-12 col-md-6 form-group"
+                  //     leftSide="col-12 col-md-4 col-form-label text-md-right"
+                  //     rightSide="col-12 col-md-8"
+                  //     type="text"
+                  //     labelInput={data.labelInput}
+                  //     placeHolder={data.placeHolder}
+                  //     name={data.name}
+                  //     required={false}
+                  //     disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes(data.name.toLowerCase())}
+                  //     onChange={(e) => this.handleChange(e)}
+                  //   />
+                  // ))
                 }
               </section>
 
@@ -517,7 +509,7 @@ export default class Index extends Component {
                   required={true}
                   disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes("parenttel")}
                 />
-                <TextField
+                {/* <TextField
                   className="col-12 col-md-6 form-group"
                   leftSide="col-12 col-md-4 col-form-label text-md-right"
                   rightSide="col-12 col-md-8"
@@ -535,7 +527,7 @@ export default class Index extends Component {
                   onChange={(e) => this.handleChange(e)}
                   required={true}
                   disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes("telemergency")}
-                />
+                /> */}
               </section>
               <section>
                 <SectionHeader className="col-12">ข้อมูลการศึกษา</SectionHeader>

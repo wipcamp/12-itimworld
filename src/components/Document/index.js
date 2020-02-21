@@ -148,7 +148,7 @@ export default class index extends Component {
                         </Subtitle>
                         <SmallConText className="mb-2">
                             อัปโหลดไฟล์ประเภท PDF<br/>
-                            ขนาดไม่เกิน 5 MB
+                            ขนาดไม่เกิน 2 MB
                         </SmallConText>
                     </div>
                     <div className="col-6 col-md-3 mt-3 md-3">
