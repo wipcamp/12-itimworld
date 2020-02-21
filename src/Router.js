@@ -86,7 +86,7 @@ const MenuRoute = (props) => {
           ) : (
               <Redirect
                 to={{
-                  pathname: "/menu",
+                  pathname: "/profile",
                   state: { from: locationNow }
                 }}
               />
