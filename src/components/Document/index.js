@@ -1,126 +1,189 @@
-import React, { Component } from 'react'
-import { Table } from 'reactstrap'
-import { Button } from 'reactstrap'
+import React, {Component} from 'react'
 import styled from 'styled-components'
-import {Subtitle,SmallText} from '../Core/Text'
-import {ButtonStyle} from '../Core/ButtonStyle'
-import fonts from '../../config/fonts'
+import {Subtitle, SmallText} from '../Core/Text'
 import UserService from '../../services/UserService'
 import ButtonRoute from '../Core/ButtonRoute'
 
-const UploadButton = styled.button`
-width: 175px;
-height: 33px;
-background: #304151;
+const UploadButton = styled.button `
+width: 93.33px;
+height: 35.16px;
+background: #16AD94;
 border-radius: 4px;
+
+  /* @media (max-width: 768px) {
+    width: 150.65px!important;
+    height: 49px!important;
+  }
+
+  @media (max-width: 576px) {
+    width: 88.8px!important;
+    height: 33.76px!important;
+  } */
 `
 
-const TableStyle = styled(Table)`
-    
+const ImageDiv = styled.div `
+  @media (max-width: 768px) {
+      display:none!important;
+    }
 `
 
-const ContainerBox = styled.div`
-height:70vh;
+const DocumentIcon = styled.img `
+width: 40px;
+height: 40px;
+
+  @media (max-width: 768px) {
+    display:none!important;
+  }
 `
 
-const ButttonText = styled.div`
+const DocumentButton = styled(UploadButton)`
+background: #304051;
+`
+
+const ButttonText = styled.div `
 color: white;
 `
 const SmallConText = styled(SmallText)`
 height: 100%;
 `
 
-const TableRowAlignMiddle = styled.td`
-vertical-align:middle!important;
-`
-
-const Div = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  text-align: center;
-`
-
-const Test = styled.input`
+const Test = styled.input `
 display:none;
+`
+
+const TableHeader = styled.div `
+ background:#F5F6F7;
 `
 
 let uploadDocument = null;
 
-let userId = 120001;
-
 export default class index extends Component {
+
+    state = {
+        documentLink: ""
+    }
 
     setUpload = e => {
         uploadDocument = e;
     }
-    
-    clickUpload = () =>{
+
+    clickUpload = () => {
         uploadDocument.click()
-        console.log(uploadDocument.files);
-        
+        // console.log(uploadDocument.files);
+
     }
 
-    componentDidMount(){
-        console.log(uploadDocument);
+    async componentDidMount() {
+        await this.getUserDocument()
     }
 
-    uploadFile = async (e) =>{
+    getUserDocument = async() => {
+        let promise;
+        try {
+            promise = await UserService.getDocumentMe()
+            let response = promise.data;
+
+            if (response.success) {
+                this.setState({documentLink: response.data[0]})
+
+            } else {
+                this.setState({errorLoad: true})
+            }
+        } catch (e) {
+            this.setState({errorLoad: true})
+        }
+    }
+
+    uploadFile = async(e) => {
         let formData = new FormData();
-        formData.append('file',uploadDocument.files[0])
+        formData.append('file', uploadDocument.files[0])
         const config = {
             headers: {
                 'content-type': 'multipart/form-data'
             }
         }
-        let response = await UserService.uploadDocument(userId,formData,config.headers).then(() => {UserService.postStatus(userId,{"status":"submit"})});
-        console.log(response);
-        
+        await UserService
+            .uploadDocumentMe(formData, config.headers)
+            .then(() => {
+                UserService.postStatusMe({"status": "submit"})
+            })
+            .then(() => {
+                this.getUserDocument();
+            });
+    }
+
+    renderDocumentButton = () => {
+        if (this.state.documentLink !== "") {
+            return <DocumentButton
+                className="ml-md-2 mb-2 mb-md-0"
+                onClick={() => window.open(this.state.documentLink)}>
+                <ButttonText>
+                    แสดงไฟล์
+                </ButttonText>
+            </DocumentButton>
+        }
     }
 
     render() {
         return (
-            <ContainerBox className="container bg-white">
-                 <TableStyle className="center">
-                     <thead>
-                        <tr>
-                            <th></th>
-                            <th><Subtitle>เอกสารที่ต้องอัพโหลด</Subtitle></th>
-                            <th className="text-right"><Subtitle>ภายในวันที่</Subtitle></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td></td>
-                            <td>
-                                <Subtitle>ปพ.5</Subtitle>
-                                <SmallConText>Lorem ipsum <br /> asapkok</SmallConText>
-                            </td>
-                            <td></td>
-                            <TableRowAlignMiddle className="align-content-center">
-                                <UploadButton className="float-right text-center" onClick={this.clickUpload}>
-                                        <ButttonText>
-                                            อัพโหลด
-                                        </ButttonText>
-                                    </UploadButton>
-                                    <Test type="file" id="upload" name="document" ref={this.setUpload} />
-                            </TableRowAlignMiddle>
-                        </tr>
-                        <tr>
-                            <td colSpan="4"></td>
-                        </tr>
-                    </tbody>
-                </TableStyle>
-                <ButtonRoute 
-                  className= 'd-flex col-12 mb-5'
-                  buttonLeft="กลับ" 
-                  buttonRight="ยืนยัน" 
-                  linkBack ="/menu"
-                  linkNext ="/menu"
-                  onClick={(e) => this.uploadFile(e)}
-                />
-            </ContainerBox>
+            <div className="container bg-white">
+
+                <TableHeader className="row bg-gray">
+                    <Subtitle className="col-6 col-md-4 mt-3 mb-3 offset-md-1">
+                        เอกสารที่ต้องอัปโหลด
+                    </Subtitle>
+                    <Subtitle className="col-6 col-md-6 mt-3 mb-3">
+                        <p className="text-right text-md-left">
+                            ภายในวันที่
+                        </p>
+                    </Subtitle>
+                </TableHeader>
+                <div className="row border-bottom md-2">
+                    <ImageDiv className="col-md-1 mt-auto mb-auto d-flex flex-row-reverse">
+                        <DocumentIcon src="/img/Document/doc_icon.png" alt="doc_icon"/>
+                    </ImageDiv>
+                    <div className="col-6 col-md-4 offset-md-0">
+                        <Subtitle className="mt-2 mb-2">
+                            ใบรับรองผลการศึกษา (ปพ.7)
+                        </Subtitle>
+                        <SmallConText className="mb-2">
+                            อัปโหลดไฟล์ประเภท PDF<br/>
+                            ขนาดไม่เกิน 2 MB
+                        </SmallConText>
+                    </div>
+                    <div className="col-6 col-md-3 mt-3 md-3">
+                        <p className="text-right text-md-left">
+                            12 มีนาคม 2563
+                        </p>
+                    </div>
+                    <div className="col-4 offset-8 offset-md-0 col-md-4 mt-md-3">
+                        <div className="float-right">
+                            <UploadButton className="text-center mb-2 mb-md-0" onClick={this.clickUpload}>
+                                <ButttonText>
+                                    อัพโหลด
+                                </ButttonText>
+                            </UploadButton>
+                            {this.renderDocumentButton()}
+                        </div>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="offset-md-1 mt-3 md-5">
+                        <ButtonRoute
+                            className='d-flex col-12 mb-5'
+                            buttonLeft="กลับ"
+                            displayButtonRight="none"
+                            linkBack="/menu"/>
+                    </div>
+                </div>
+                <Test
+                    type="file"
+                    id="upload"
+                    name="document"
+                    accept=".pdf"
+                    ref={this.setUpload}
+                    onChange={e => this.uploadFile(e)}/>
+            </div>
         )
     }
 }

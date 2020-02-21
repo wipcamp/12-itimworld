@@ -5,7 +5,7 @@ import { Modal, ModalBody } from 'reactstrap';
 
 import ButtonRoute from '../Core/ButtonRoute'
 import { ButtonStyle } from '../Core/ButtonStyle'
-import { HeaderText, Paragrph } from '../Core/Text'
+import { HeaderText, Paragraph } from '../Core/Text'
 
 const Hr = styled.hr`
   width: 557px;
@@ -46,7 +46,7 @@ const ConfirmModal = (props) => {
         <Body>
           <HeaderText className="mt-3">ยืนยันที่จะเลือกสาขา</HeaderText>
           <Hr/>
-          <Paragrph className="row justify-content-center">
+          <Paragraph className="row justify-content-center">
           {
             Object.values(props.showMajor).map((data,i) => (
               <React.Fragment key={i}>
@@ -56,7 +56,7 @@ const ConfirmModal = (props) => {
             )
             )
           }
-          </Paragrph>
+          </Paragraph>
         <Alret> *เมื่อเลือกสาขาแล้ว สามารถย้อนกลับมา </Alret>
         <Div className="row justify-content-around ml-5 pl-4 mr-auto pr-auto">
           <ButtonStyle onClick={toggle}>Cancel</ButtonStyle>

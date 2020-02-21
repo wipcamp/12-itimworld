@@ -2,12 +2,19 @@ import React, { Component } from 'react'
 import ButtonRoute from '../Core/ButtonRoute'
 import Question from './Question'
 import UserService from './../../services/UserService'
-import Styled from 'styled-components'
+import styled from 'styled-components'
+import CustomModal from './../Core/CustomModal'
+import { ButtonStyle } from '../Core/ButtonStyle'
+import { Redirect } from 'react-router-dom'
+import { HeaderText } from './../Core/Text'
+import Waiting from './../Core/Waiting'
 
-const Header = Styled.h2`
-  font-size: 36px;
-  line-height: 47px;
-  text-align: center;
+const ContainerDiv = styled.div`
+  max-width:1200px;
+`
+
+const NotDisplayButton = styled.button`
+  display:none;
 `
 
 let answer = {
@@ -17,125 +24,205 @@ let answer = {
   forthAnswer: ""
 };
 
-let userId = 120001;
-
+let submitButtonRef = null;
 export default class Index extends Component {
-  
-  handleAnswer=(event)=> {
+
+  handleAnswer = (event) => {
     const val = event.target.value;
     const id = event.target.name;
-    if(id == 1){
+    
+    if (id === '1') {
       answer.firstAnswer = val;
-    }else if(id == 2){
+    } else if (id === '2') {
       answer.secondAnswer = val;
-    }else if(id == 3){
+    } else if (id === '3') {
       answer.thirdAnswer = val;
-    }else{
+    } else {
       answer.forthAnswer = val;
     }
-    console.log(answer);
-    
+    this.setState(prevState => (
+      { 
+        questions: [
+          {
+            ...prevState.questions[0],
+            oldValue: answer.firstAnswer
+          },
+          {
+            ...prevState.questions[1],
+            oldValue: answer.secondAnswer
+          },
+          {
+            ...prevState.questions[2],
+            oldValue: answer.thirdAnswer
+          },
+          {
+            ...prevState.questions[3],
+            oldValue: answer.forthAnswer
+          }
+        ]
+      }));
   };
-  
+
 
   questions = [];
-  
-    state = {
-      questions: [{
-          id: 1,
-          name: 'This is general question 1',
-          oldValue: ''
-        },
-        {
-          id: 2,
-          name: 'This is general question 2',
-          oldValue: ''
 
-        },
-        {
-          id: 3,
-          name: 'This is general question 3',
-          oldValue: ''
+  state = {
+    questions: [{
+      id: 1,
+      name: 'ถ้าน้องต้องเปิดบริษัทขึ้นมาหนึ่งบริษัท น้องจะทำบริษัทเกี่ยวกับอะไร จะนำไอทีมาใช้อย่างไร และจะแบ่งการทำงานของไอทีออกเป็นกี่ส่วน อะไรบ้าง',
+      oldValue: ''
+    },
+    {
+      id: 2,
+      name: 'แต่งเรื่องจากคำที่พี่กำหนดให้อย่างน้อย 5 บรรทัด คำนั้นคือ “บะบะบิ, ดูดวง, พี่วิปโป้, ปังมากพี่นัท, จะแล้วมั้ย, ไม้เอก…ไม้โท…ไม้อะไร, โรตีดิบ, อิรัชชัยมาเสะ, เฉียบ, ตาลือตกบ้าน, ดูออก, ผัดกะเพรา”',
+      oldValue: ''
 
-        },
-        {
-          id: 4,
-          name: 'This is general question 4',
-          oldValue: ''
+    },
+    {
+      id: 3,
+      name: 'จากคลิปเสียง อยากรู้ว่าพี่ ๆ พูดอะไรกัน',
+      oldValue: ''
 
+    },
+    {
+      id: 4,
+      name: 'กาลครั้งหนึ่งนานมาแล้ว ณ จักรวาลอันยิ่งใหญ่ ได้มีการแข่งขันเกิดขึ้นระหว่างเหล่ากลุ่มดาวจักรราศี นั่นก็คือ แอรีส แคนเซอร์ ลีโอ ไพซีส สกอร์ปิโอ และเจมินาย ระหว่างการแข่งขันนั้นได้มีเหตุการณ์ไม่คาดฝันเกิดขึ้น แอรีส วิ่งผ่าน แคนเซอร์ แล้ว ลีโอ ก็วิ่งผ่าน แอรีส แต่ว่า แคนเซอร์ วิ่งช้ากว่า เจมินาย แล้ว ไพซีส ก็วิ่งนำ แคนเซอร์ แต่ว่า ลีโอ สะดุดล้มเลยวิ่งตามหลังแอรีส แล้วสกอร์ปิโอ ก็วิ่งสกัด แอรีส แล้ว ไพซีสก็หยุดพักเหนื่อยทำให้ตามหลัง เจมินาย แล้วราศีไหนมีเกณฑ์จะติดค่าย WIP CAMP #12 เพราะอะไร',
+      oldValue: ''
+
+    }
+    ],
+    modal: false,
+    finishLoad: false,
+    errorLoad: false
+  }
+
+  toggleModal = () => {
+    this.setState({ modal: !this.state.modal })
+  }
+
+  postGeneralAnswerService = async (event) => {
+    event.preventDefault();
+    await UserService.postGeneralAnswerMe(answer)
+      .then(() => { UserService.postStatusMe({ "status": "general" }) })
+      .then(() => this.setState({ redirect: true }))
+      .catch(() => this.toggleModal())
+  }
+
+  setSubmitButtonRef = e => {
+    submitButtonRef = e;
+  }
+
+  clickSubmit = (e) => {
+    submitButtonRef.click();
+  }
+
+  componentDidCatch() {
+    this.toggleModal();
+  }
+
+  resubmitAndCloseModal = () => {
+    this.toggleModal()
+    this.clickSubmit()
+  }
+
+  async componentDidMount() {
+    await this.getUser();
+  }
+
+  getUser = async () => {
+    await UserService.getMe()
+      .then(promise => {
+        const response = promise.data;
+        const responseGeneralAnswer = response.data[0].generalAnswer;
+        
+        
+        if (responseGeneralAnswer !== null && responseGeneralAnswer !== undefined && Object.keys(responseGeneralAnswer).length !== 0) {
+          
+          answer.firstAnswer = responseGeneralAnswer.firstAnswer;
+          answer.secondAnswer = responseGeneralAnswer.secondAnswer;
+          answer.thirdAnswer = responseGeneralAnswer.thirdAnswer;
+          answer.forthAnswer = responseGeneralAnswer.forthAnswer;
+          this.setState(prevState => ({
+            questions: [
+              {
+                ...prevState.questions[0],
+                oldValue: responseGeneralAnswer.firstAnswer
+              },
+              {
+                ...prevState.questions[1],
+                oldValue: responseGeneralAnswer.secondAnswer
+              },
+              {
+                ...prevState.questions[2],
+                oldValue: responseGeneralAnswer.thirdAnswer
+              },
+              {
+                ...prevState.questions[3],
+                oldValue: responseGeneralAnswer.forthAnswer
+              }
+            ]
+          })
+          )
         }
-      ]
+        this.setState({ finishLoad: true })
+      }).catch(() => this.setState({ errorLoad: true }))
+  }
+
+  render() {
+
+    const { redirect } = this.state;
+
+    if (redirect) {
+      return <Redirect to='/menu' />;
     }
 
-    getGeneralAnswerService = async() =>{
-      let promise;
-      try{
-        promise = await UserService.getUser(userId);
-        let response = promise.data;
-        if(response.success){
-          let gettedUserGeneralAnswer = this.state.questions;
-          gettedUserGeneralAnswer[0].oldValue = response.data[0].generalAnswer.firstAnswer
-          gettedUserGeneralAnswer[1].oldValue = response.data[0].generalAnswer.secondAnswer
-          gettedUserGeneralAnswer[2].oldValue = response.data[0].generalAnswer.thirdAnswer
-          gettedUserGeneralAnswer[3].oldValue = response.data[0].generalAnswer.forthAnswer
-
-          this.setState({ questions : gettedUserGeneralAnswer});
-          answer.firstAnswer = response.data[0].generalAnswer.firstAnswer===null?"":response.data[0].generalAnswer.firstAnswer;
-          answer.secondAnswer = response.data[0].generalAnswer.secondAnswer===null?"":response.data[0].generalAnswer.secondAnswer;
-          answer.thirdAnswer = response.data[0].generalAnswer.thirdAnswer===null?"":response.data[0].generalAnswer.thirdAnswer;
-          answer.forthAnswer = response.data[0].generalAnswer.forthAnswer===null?"":response.data[0].generalAnswer.forthAnswer;
-          console.log("GET general answer success")
-        }else{
-          console.log("success fail GET general answer")
-        }
-      }catch(e){
-        console.log("Error GET general answer")
-      }
-    }
-    
-    postGeneralAnswerService = async() =>{
-      let promise;
-      try{
-        promise = await UserService.postGeneralAnswer(userId,answer).then(() => {UserService.postStatus(userId,{"status":"general"})});
-
-        let response = promise.data;
-        if(response.success){
-          console.log("Post general answer success")
-        }else{
-          console.log("success fail Post general answer")
-        }
-      }catch(e){
-        console.log("Error post general answer")
-      }
-    }
-    
-    async componentDidMount(){
-      await this.getGeneralAnswerService(); 
-    }
-
-    render() {
+    if (!this.state.finishLoad || this.state.errorLoad) {
+      return <Waiting error={this.state.errorLoad} />
+    } else {
       return (
-            <div className="container bg-white"><br/>
-                <Header className="col-12 mb-5 mt-5">This is General Question page</Header>
-                <div>
-                        {this.state.questions.map((data,i) => {
-                            return <Question 
-                            questionCount={i+1}  
-                            questionName={data.name} 
-                            questionId={data.id} 
-                            handleAnswer={this.handleAnswer}
-                            oldValue={this.state.questions[i].oldValue}
-                            />
-                        })}
-                </div>
-                <ButtonRoute 
-                  buttonLeft="กลับ" 
-                  buttonRight="ยืนยัน" 
-                  linkBack ="/menu"
-                  linkNext ="/menu"
-                  onClick={this.postGeneralAnswerService}
-                />
+        <ContainerDiv className="container-fluid justify-content-center" style={{paddingBottom: '30px'}}>
+          <div className="card p-5" style={{ boxShadow: `0px 4px 4px rgba(0, 0, 0, 0.25)`, borderRadius: `4px`, backgroundColor: `rgba(255, 255, 255, 0.9)` }}>
+            <HeaderText className="col-12 mb-5 mt-5">คำถามทั่วไป</HeaderText>
+            <div>
+              <form onSubmit={e => this.postGeneralAnswerService(e)}>
+                {this.state.questions.map((data, i) => {
+                  return <Question
+                    questionCount={i + 1}
+                    questionName={data.name}
+                    questionId={data.id}
+                    handleAnswer={this.handleAnswer}
+                    oldValue={data.oldValue}
+                    key={i}
+                    required
+                  />
+                })}
+                <NotDisplayButton ref={this.setSubmitButtonRef}> asd</NotDisplayButton>
+              </form>
             </div>
-        )
+            <div class="d-flex justify-content-between">
+              <ButtonRoute
+                buttonLeft="กลับ"
+                linkBack="/menu"
+                className=""
+                displayButtonRight="none"
+              />
+              <ButtonStyle className="" onClick={() => this.clickSubmit()}>
+                บันทึกคำตอบ
+              </ButtonStyle>
+            </div>
+          </div>
+          <CustomModal
+            header="การบันทึกข้อมูลผิดพลาด"
+            paragraph="การบันทึกข้อมูลเกิดข้อผิดพลาด ไม่สามารถส่งข้อมูลได้ กรุณากดยืนยันข้อมูลใหม่อีกครั้ง"
+            secondaryButtonText="ยกเลิก"
+            primaryButtonDisplay="flex"
+            primaryButtonText="ยืนยัน"
+            primaryOnClick={() => { this.resubmitAndCloseModal() }}
+            modal={this.state.modal}
+            toggle={this.toggleModal}
+          />
+        </ContainerDiv>
+      )
     }
+  }
 }

@@ -1,56 +1,78 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
 
 const ButtonContainer = styled.div`
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  padding-top: 20px;
   max-width: 400px;
+  height: 70px;
 `
 const Button = styled.button`
-  background: #00C300;
-  color: #FFFFFF;
-  line-height: 1.5;
   height: 70px;
-  border-radius: 25px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 20px;
-  transition: all 0.4s;
   width: 100%;
-  font-weight: 500;
-
-  &:hover{
-    background: #00E000;
-  }
-
+  max-width: 400px;
+  border-radius: 20px;
+  padding:0!important;
   &:active{
-    background: #00B300;
+  border-radius: 20px;
   }
 `
 
 const LineImg = styled.img`
-  height: 50px;
-  width: 50px;
-  margin-right: 10px;
+  height:100%;
+`
+
+const Text = styled.div`
+  background: ${props => props.bgColor};
+  color: #FFFFFF;
+  border-radius: 20px;
+  height:100%;
+  font-size: 24px;
+  width:100%;
+  padding-right: 3rem;
+  @media (max-width:768px) {
+    font-size: 20px;
+  }
+  @media (max-width:360px) {
+    font-size: 18px;
+    padding-right: 1rem;
+  }
 `
 
 export default class LineLoginButton extends Component {
+  state = {
+    bgColor: '#00C300'
+  }
+
+  mouseOver = (e) => {
+    this.setState({
+      bgColor: '#00E000'
+    })
+  }
+
+  mouseOut = (e) => {
+    this.setState({
+      bgColor: '#00C300'
+    })
+  }
+
+  mouseClick = () => {
+    this.props.onClick()
+    this.setState({
+      bgColor:'#00b300'
+    })
+  }
 
   render() {
     return (
-      <ButtonContainer>
-        <Button>
-            <Link 
-            onClick={this.props.onClick}   
-            >
-              <LineImg src="/img/line_88.png" /> 
-              <span>Log in with LINE</span>
-            </Link>
+      <ButtonContainer className="mt-5" >
+        <Button onClick={() => this.mouseClick()} onMouseOver={() => this.mouseOver()} onMouseOut={() => this.mouseOut()} className="btn row" >
+          <Text className="d-flex align-items-center justify-content-between pl-2" bgColor={this.state.bgColor}>
+            <LineImg src="/img/line_88.png"/>
+            <div className="col-8">Log in with LINE</div>
+          </Text>
         </Button>
       </ButtonContainer>
     )
