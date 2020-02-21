@@ -23,8 +23,6 @@ let answer = {
   forthAnswer: ""
 };
 
-let userId = 120001;
-
 let submitButtonRef = null;
 export default class Index extends Component {
   
@@ -79,8 +77,8 @@ export default class Index extends Component {
     
     postGeneralAnswerService = async (event) =>{
       event.preventDefault();
-      await UserService.postGeneralAnswer(userId,answer)
-        .then(() => {UserService.postStatus(userId,{"status":"general"})})
+      await UserService.postGeneralAnswerMe(answer)
+        .then(() => {UserService.postStatusMe({"status":"general"})})
         .then(() => this.setState({redirect:true}))
         .catch(() => this.toggleModal())
     }

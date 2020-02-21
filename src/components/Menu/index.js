@@ -86,7 +86,7 @@ const AlertError = (props) => {
           <ErrorBox className="pt-2 pb-2 p-4">
             <div className="row">
               <div className="col-2">
-                <img src='/img/error.png' />
+                <img src='/img/error.png' alt="Error" />
               </div>
               <div className="col-10">
                 <h4>{props.title}</h4>
@@ -108,7 +108,7 @@ const SuccessAlert = (props) => {
           <SuccessBox className="pt-2 pb-2 p-4">
             <div className="row">
               <div className="col-2">
-                <img src='/img/correct.png' />
+                <img src='/img/correct.png' alt="Success" />
               </div>
               <div className="col-10">
                 <h4>{props.title}</h4>
