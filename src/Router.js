@@ -138,7 +138,16 @@ const AgreeRoute = async (props) => {
 }
 
 const TermRoute = async (props) => {
-  const check = await UserService.getMe().then((response) => response.data.data[0].userStatus.acceptedStoreData)
+    // try {
+    //   let res = await axios.get('/posts');
+    //   let posts = res.data;
+    //   // this will re render the view with new data
+    //   UserService.getMe().then((response) => response.data.data[0].userStatus.acceptedStoreData)
+    // } catch (err) {
+    //   console.log(err);
+    // }
+
+  let check = await UserService.getMe().then((response) => response.data.data[0].userStatus.acceptedStoreData)
   return (
     <React.Fragment>
       {
