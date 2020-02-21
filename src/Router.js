@@ -150,66 +150,6 @@ const TermRoute = async (props) => {
 }
 export default class Index extends React.Component {
 
-  state = {
-    major: null,
-    agree: false,
-    term:false
-  }
-
-  async componentDidMount() {
-    const cookieToken = cookies.get('token');
-    if (cookieToken !== null && cookieToken !== undefined) {
-      let promise;
-      try {
-        promise = await this.getUserService();
-        let response = promise.data;
-        if (response.success) {
-          console.log(response.data[0].major)
-          console.log(response.data[0].userStatus.accepted)
-          console.log(response.data[0].userStatus.acceptedStoreData)
-          this.setState({
-            major: response.data[0].major,
-            term: response.data[0].userStatus.accepted,
-            agree: response.data[0].userStatus.acceptedStoreData
-          });
-        } else {
-          console.log("Error get User request")
-        }
-      } catch (e) {
-        console.log("Error get User promise")
-      }
-    }
-  }
-
-  async componentDidUpdate() {
-    const cookieToken = cookies.get('token');
-    if (cookieToken !== null && cookieToken !== undefined) {
-      let promise;
-      try {
-        promise = await this.getUserService();
-        let response = promise.data;
-        if (response.success) {
-          console.log(response.data[0].major)
-          console.log(response.data[0].userStatus.accepted)
-          console.log(response.data[0].userStatus.acceptedStoreData)
-          this.setState({
-            major: response.data[0].major,
-            term: response.data[0].userStatus.accepted,
-            agree: response.data[0].userStatus.acceptedStoreData
-          });
-        } else {
-          console.log("Error get User request")
-        }
-      } catch (e) {
-        console.log("Error get User promise")
-      }
-    }
-  }
-
-  getUserService = async () => {
-    return await UserService.getMe();
-  }
-
   render() {
     return (
       <Router>
