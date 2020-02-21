@@ -665,7 +665,7 @@ export default class Index extends Component {
                   leftSide="col-12 col-md-4 col-form-label text-md-right"
                   rightSide="col-12 col-md-8"
                   labelInput="โรงเรียน"
-                  placeHolder="เลือก"
+                  placeHolder="ชื่อโรงเรียนแบบเต็ม"
                   name="schoolName"
                   value={this.state.oldUser.school.name}
                   onChange={(e) => this.handleChange(e)}
