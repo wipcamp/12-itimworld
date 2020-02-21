@@ -180,30 +180,20 @@ export default class Index extends Component {
       return <Waiting error={this.state.errorLoad} />
     } else {
       return (
-        <ContainerDiv className ="container-fluid justify-content-center">
-            <div className="card p-5" style={{boxShadow: `0px 4px 4px rgba(0, 0, 0, 0.25)`,borderRadius: `4px`,backgroundColor: `rgba(255, 255, 255, 0.9)`}}>
-                <HeaderText className="col-12 mb-5 mt-5">คำถามทั่วไป</HeaderText>
-                <div>
-                  <form onSubmit={e => this.postGeneralAnswerService(e)}>
-                        {this.state.questions.map((data,i) => {
-                          return <Question 
-                          questionCount={i+1}  
-                          questionName={data.name} 
-                          questionId={data.id} 
-                          handleAnswer={this.handleAnswer}
-                          oldValue={data.oldValue}
-                          required
-                          />
-                        })}
-                      <NotDisplayButton ref={this.setSubmitButtonRef}> asd</NotDisplayButton>
-                  </form>
-                </div>
-                <div class="d-flex justify-content-between">
-                  <ButtonRoute 
-                    buttonLeft="กลับ"  
-                    linkBack="/menu"
-                    className=""
-                    displayButtonRight="none"
+        <ContainerDiv className="container-fluid justify-content-center">
+          <div className="card p-5" style={{ boxShadow: `0px 4px 4px rgba(0, 0, 0, 0.25)`, borderRadius: `4px`, backgroundColor: `rgba(255, 255, 255, 0.9)` }}>
+            <HeaderText className="col-12 mb-5 mt-5">คำถามทั่วไป</HeaderText>
+            <div>
+              <form onSubmit={e => this.postGeneralAnswerService(e)}>
+                {this.state.questions.map((data, i) => {
+                  return <Question
+                    questionCount={i + 1}
+                    questionName={data.name}
+                    questionId={data.id}
+                    handleAnswer={this.handleAnswer}
+                    oldValue={data.oldValue}
+                    key={i}
+                    required
                   />
                 })}
                 <NotDisplayButton ref={this.setSubmitButtonRef}> asd</NotDisplayButton>
