@@ -105,6 +105,7 @@ const MenuRoute = (props) => {
 }
 
 const MenuObjRoute = (props) => {
+  console.log(props.condit)
   return (
     <React.Fragment>
       {
@@ -127,8 +128,8 @@ const MenuObjRoute = (props) => {
 export default class Index extends React.Component {
 
   state = {
-    term: true,
-    agree: true,
+    term: false,
+    agree: false,
     profile: false,
     major: null
   }
