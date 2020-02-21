@@ -174,7 +174,7 @@ export default class Index extends Component {
               modal={this.state.confirmModal}
               toggle={this.toggleConfirmModal}
               header="ยืนยันที่จะเลือกสาขา" 
-              paragraph="หากกกดยืนยันการเลือกสาขาเรียบร้อยแล้วจะไม่สามารถกกลับมาแก้ไขเป็นสาขาอื่นได้กรุณาตรวจสอบให้ชัดเจนก่อนกดยืนยัน"
+              paragraph="หากกกดยืนยันการเลือกสาขาเรียบร้อยแล้วจะไม่สามารถกกลับมาแก้ไขเป็นสาขาอื่น และไม่สามารถแก้ไขคำตอบได้กรุณาตรวจสอบให้ชัดเจนก่อนกดยืนยัน"
               dangerSubtitle="*เมื่อเลือกสาขาแล้ว ไม่สามารถย้อนกลับมา" 
               primaryButtonDisplay="flex"
               primaryOnClick={() => this.postAnswerService()}
