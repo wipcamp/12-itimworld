@@ -172,7 +172,7 @@ export default class Index extends React.Component {
               <Term />
             </Mountain>
           </MenuObjRoute>
-          <MenuObjRoute path="/agreement">
+          <MenuObjRoute path="/agreement" condit={this.state.agree}>
             <Mountain>
               <Agreement />
             </Mountain>
