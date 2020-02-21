@@ -69,7 +69,7 @@ export default class index extends Component {
 
     clickUpload = () => {
         uploadDocument.click()
-        console.log(uploadDocument.files);
+        // console.log(uploadDocument.files);
 
     }
 

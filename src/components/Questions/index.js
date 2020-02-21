@@ -74,7 +74,7 @@ export default class Index extends Component {
       majorId = params.get('major');
       
       await this.getQuestionService(majorId);
-      console.log(submitButtonRef);
+      // console.log(submitButtonRef);
       
     }
 
@@ -104,7 +104,7 @@ export default class Index extends Component {
         try {
           promise = await MajorService.getMajorFromMajorId(majorId);
           let response = promise.data;
-          console.log(response.data[0].questionList);
+          // console.log(response.data[0].questionList);
           
           if (response.success) {
             this.setState({
