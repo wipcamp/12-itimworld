@@ -23,7 +23,10 @@ import { Error } from './components/Core/Waiting'
 import Agreement from './components/Agreement'
 import Term from './components/Term'
 
+
 const locationNow = window.location.pathname
+
+let check = async () => await UserService.getMe().then((response) => response.data.data[0].userStatus.acceptedStoreData)
 
 const Mountain = styled.div`
   background-image:url('/img/mountain.png') , url('/img/Star/zodiac1.png'), url('/img/Star/zodiac2.png'), url('/img/Star/zodiac3.png') , url('/img/Star/star1.png'), url('/img/Star/star2.png'), url('/img/Star/star3.png');
@@ -138,17 +141,8 @@ const AgreeRoute = async (props) => {
 }
 
 const TermRoute = async (props) => {
-  let check = false
-    try {
-      let res = await UserService.getMe();
-      let response = res.data;
-      if (response.success) {
-        check = response.data[0].userStatus.acceptedStoreData
-      }
-      // this will re render the view with new data
-    } catch (err) {
-      console.log(err);
-    }
+  
+
 
   return (
     <React.Fragment>
