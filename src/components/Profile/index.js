@@ -355,7 +355,7 @@ export default class Index extends Component {
   }
 
   render() {
-    
+
     if (this.state.redirect) {
       return <Redirect to='/menu' />;
     }
@@ -566,7 +566,7 @@ export default class Index extends Component {
                   className="col-12 col-md-6 form-group"
                   name="schoolGpax"
                   type="number"
-                  labelInput="เกรดเฉลี่ย"
+                  labelInput="เกรดเฉลี่ยเทอมล่าสุด"
                   placeHolder=""
                   step="0.01"
                   min="1.00"

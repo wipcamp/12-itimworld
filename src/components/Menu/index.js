@@ -147,7 +147,7 @@ export default class Index extends Component {
             documentFail: 'none'
           })
         }
-        const userStatusSuccess = response.data[0].userStatus.generalAnswered === true && response.data[0].userStatus.majorAnswered === true && response.data[0].userStatus.submitted === true && response.data[0].userStatus.documentFail === false
+        const userStatusSuccess = response.data[0].userStatus.generalAnswered === true && response.data[0].userStatus.majorAnswered === true && response.data[0].userStatus.submitted === true && response.data[0].userStatus.documentFailed === false
         
         if(userStatusSuccess){
           this.setState({
