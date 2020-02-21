@@ -54,6 +54,7 @@ const Question = (props) => {
         name={props.questionId} 
         onChange={(e) => props.handleAnswer(e)}
         required={props.required}
+        value={props.oldValue}
         >
       </TextArea>
     </div>
@@ -65,6 +66,7 @@ Question.propType = {
     questionName: PropTypes.string,
     questionCount: PropTypes.number,
     handleAnswer: PropTypes.func,
+    oldValue: PropTypes.string,
     required: PropTypes.bool
 }
 

@@ -9,11 +9,7 @@ import {
 import { ButtonStyle , ButtonStyleLink } from './ButtonStyle'
 
 const Section = styled.div`
-  min-height:70vh;
-`
-
-const DSection = styled.div`
-  min-height: 30vh;
+  min-height:62vh;
 `
 
 const BackgroundBlack = styled.div`
@@ -70,7 +66,7 @@ const Wippo = styled.img`
   }
 
   @media (max-width: 576px) {
-    width:81%;
+    width:51%;
   }
 `
 
@@ -129,9 +125,7 @@ export const Loading = () => {
             </div>
           </div>
         </Section>
-        <DSection>
-          <h4 className="text-white mt-3 text-center">Loading...</h4>
-        </DSection>
+        <h4 className="text-white mt-3 text-center">Loading...</h4>
       </BackgroundBlack>
     </div>
   );

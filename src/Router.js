@@ -31,7 +31,6 @@ const Mountain = styled.div`
   background-size:contain , 5% , 8% , 5% , 14% , 25% , 15% ;
   min-height: 100vh;
   width: 100%;
-  padding-bottom: 30px;
 `
 
 const cookies = new Cookies()
