@@ -114,7 +114,6 @@ const MenuRoute = (props) => {
 }
 
 const MenuObjRoute = (props) => {
-  console.log(props.condit)
   return (
     <React.Fragment>
       {
@@ -186,48 +185,36 @@ export default class Index extends React.Component {
               <Term />
             </Mountain>
           </MenuObjRoute>
-          {/* <TermRoute path="/term"  /> */}
-            {/* <Mountain>
-              <Term />
-            </Mountain>
-          </TermRoute> */}
-          {/* <AgreeRoute path="/agreement" agree={this.state.agree} /> */}
           <MenuObjRoute path="/agreement" condit={this.state.agree }>
             <Mountain>
               <Agreement />
             </Mountain>
           </MenuObjRoute>
-            {/* <Mountain>
-              <Agreement />
-            </Mountain>
-          </AgreeRoute> */}
-          <PrivateRoute path="/profile">
+          <MenuObjRoute path="/profile" condit={!(this.state.profile)}>
             <Mountain>
               <Profile />
             </Mountain>
-          </PrivateRoute>
-          <PrivateRoute path="/general">
+          </MenuObjRoute>
+          <PrivateRoute path="/general" condit={this.state.profile}>
             <Mountain>
               <General />
             </Mountain>
           </PrivateRoute>
-          {/* <MajorRoute path="/major" major={this.state.major} /> */}
-          {/* </MajorRoute> */}
           <MenuObjRoute path="/major" condit={this.state.major !== null}>
             <Major />
           </MenuObjRoute>
-          <MenuRoute path="/menu" condit={this.state.agree} />
-          <PrivateRoute path="/document">
+          <MenuRoute path="/menu" condit={this.state.profile} />
+          <PrivateRoute path="/document" condit={this.state.profile}>
             <Mountain>
               <Document />
             </Mountain>
           </PrivateRoute>
-          <PrivateRoute path="/questions">
+          <PrivateRoute path="/questions" condit={this.state.profile}>
             <Mountain>
               <Questions />
             </Mountain>
           </PrivateRoute>
-          <PrivateRoute path="/edit">
+          <PrivateRoute path="/edit" condit={this.state.profile}>
             <Mountain>
               <Edit />
             </Mountain>
