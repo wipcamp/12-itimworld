@@ -163,7 +163,6 @@ const display = (error) => {
     return <Redirect
               to={{
                 pathname: "/error",
-                state: { from: locationNow }
               }}
             />;
   else
