@@ -22,7 +22,6 @@ const Button = styled.button`
 
 const LineImg = styled.img`
   height:100%;
-  content:url('${props => props.imgLine}');
 `
 
 const Text = styled.div`
@@ -44,20 +43,17 @@ const Text = styled.div`
 
 export default class LineLoginButton extends Component {
   state = {
-    imgLine: '/img/btn_base.png',
     bgColor: '#00C300'
   }
 
   mouseOver = (e) => {
     this.setState({
-      imgLine: '/img/btn_hover.png',
       bgColor: '#00E000'
     })
   }
 
   mouseOut = (e) => {
     this.setState({
-      imgLine: '/img/btn_base.png',
       bgColor: '#00C300'
     })
   }
@@ -65,7 +61,6 @@ export default class LineLoginButton extends Component {
   mouseClick = () => {
     this.props.onClick()
     this.setState({
-      imgLine: '/img/btn_press.png',
       bgColor:'#00b300'
     })
   }
@@ -75,7 +70,7 @@ export default class LineLoginButton extends Component {
       <ButtonContainer className="mt-5" >
         <Button onClick={() => this.mouseClick()} onMouseOver={() => this.mouseOver()} onMouseOut={() => this.mouseOut()} className="btn row" >
           <Text className="d-flex align-items-center justify-content-between pl-2" bgColor={this.state.bgColor}>
-            <LineImg src={this.state.imgLine}/>
+            <LineImg src="/img/line_88.png"/>
             <div className="col-8">Log in with LINE</div>
           </Text>
         </Button>
