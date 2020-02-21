@@ -1,5 +1,11 @@
 import React from 'react';
 import styled from 'styled-components'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import { ButtonStyle , ButtonStyleLink } from './ButtonStyle'
 
 const Section = styled.div`
@@ -129,8 +135,8 @@ export const Loading = () => {
 export const Error = () => {
   return (
     <div>
-    {/* <Mountain>
-    </Mountain> */}
+    <Mountain>
+    </Mountain>
       <Section>
         <div className="container pt-5">
           <div className="row">
@@ -148,7 +154,11 @@ export const Error = () => {
 
 const display = (error) => {
   if(error)
-    return <Error />;
+    return <Redirect
+              to={{
+                pathname: "/error",
+              }}
+            />;
   else
     return <Loading />;
 }
