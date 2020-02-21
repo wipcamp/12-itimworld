@@ -79,17 +79,7 @@ const MenuRoute = (props) => {
       {
         (cookies.get('token') !== undefined && cookies.get('token') !== null) ? (
           // true ? (
-          !(props.condit) ? (
             <Menu />
-          ) : (
-              <Redirect
-                to={{
-                  pathname: "/profile",
-                  state: { from: locationNow }
-                }}
-              />
-            )
-
         ) : (
             <Redirect
               to={{
@@ -123,6 +113,63 @@ const MenuObjRoute = (props) => {
   )
 }
 
+const ProfileRoute = (props) => {
+  console.log(props.condit)
+  return (
+    <React.Fragment>
+      {
+        (cookies.get('token') !== undefined && cookies.get('token') !== null) ?
+          !props.condit ? (
+            <Mountain>
+              <Profile />
+            </Mountain>
+          ) : (
+              <Redirect
+                to={{
+                  pathname: "/menu",
+                  state: { from: locationNow }
+                }}
+              />
+            ) : (
+            <Redirect
+              to={{
+                pathname: "/menu",
+                state: { from: locationNow }
+              }}
+            />
+          )
+      }
+    </React.Fragment>
+  )
+}
+
+const MajorRoute = (props) => {
+  console.log(props.condit)
+  return (
+    <React.Fragment>
+      {
+        (cookies.get('token') !== undefined && cookies.get('token') !== null) ?
+          props.condit === null ? (
+            <Major />
+          ) : (
+              <Redirect
+                to={{
+                  pathname: "/questions",
+                  state: { from: locationNow }
+                }}
+              />
+            ) : (
+            <Redirect
+              to={{
+                pathname: "/menu",
+                state: { from: locationNow }
+              }}
+            />
+          )
+      }
+    </React.Fragment>
+  )
+}
 
 export default class Index extends React.Component {
 
@@ -160,7 +207,7 @@ export default class Index extends React.Component {
   render() {
     return (
       <Router>
-       
+
         <Switch>
           <Route path="/login" >
             <Mountain>
@@ -177,20 +224,19 @@ export default class Index extends React.Component {
               <Agreement />
             </Mountain>
           </MenuObjRoute>
-          <PrivateRoute path="/profile" >
-            <Mountain>
+          <ProfileRoute path="/profile" condit={this.state.profile} />
+          {/* <Mountain>
               <Profile />
             </Mountain>
-          </PrivateRoute>
+          </PrivateRoute> */}
           <PrivateRoute path="/general">
             <Mountain>
               <General />
             </Mountain>
           </PrivateRoute>
-          <MenuObjRoute path="/major" condit={this.state.major !== null}>
-            <Major />
-          </MenuObjRoute>
-          <MenuRoute path="/menu" condit={this.state.profile} />
+          <MajorRoute path="/major" condit={this.state.major !== null} />
+          {/* </MajorRoute> */}
+          <MenuRoute path="/menu" />
           <PrivateRoute path="/document">
             <Mountain>
               <Document />
