@@ -16,8 +16,6 @@ import CustomModal from '../Core/CustomModal'
 import Waiting from '../Core/Waiting'
 import notStoreableFieldName from '../Core/NotStoreableFieldName'
 
-const userId = 120001;
-
 const SectionHeader = styled.h3`
   margin-top:30px;
   margin-bottom:20px;
@@ -301,7 +299,7 @@ export default class Index extends Component {
   }
 
   getUserService = async () => {
-    return await UserService.getUser(120001);
+    return await UserService.getMe();
   }
 
 
@@ -473,7 +471,7 @@ export default class Index extends Component {
   }
 
   putUser = async (data) => {
-    await UserService.putUser(userId, data)
+    await UserService.putMe(data)
       .then(() => this.setState({ redirect: true }))
       .catch(() => this.toggleAlertModal())
   }
