@@ -148,7 +148,7 @@ export default class Index extends Component {
           })
         }
 
-        if(response.data[0].userStatus.generalAnswered === true && response.data[0].userStatus.majorAnswered === true && response.data[0].userStatus.submitted === true && this.state.documentFail === false){
+        if(response.data[0].userStatus.generalAnswered === true && response.data[0].userStatus.majorAnswered === true && response.data[0].userStatus.submitted === true && response.data[0].documentFail === false){
           this.setState({
             successAlert: true
           })
