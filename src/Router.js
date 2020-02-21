@@ -77,10 +77,18 @@ const MenuRoute = (props) => {
   return (
     <React.Fragment>
       {
-        (cookies.get('token') !== undefined && cookies.get('token') !== null) ? (
-          // true ? (
-          <Menu />
-        ) : (
+        (cookies.get('token') !== undefined && cookies.get('token') !== null) ? 
+          props.condit ? (
+            <Menu />
+          )
+            : (
+              <Redirect
+                to={{
+                  pathname: "/profile",
+                  state: { from: locationNow }
+                }}
+              />
+            ) : (
             <Redirect
               to={{
                 pathname: "/login",
@@ -247,7 +255,7 @@ export default class Index extends React.Component {
           </PrivateRoute>
           <MajorRoute path="/major" condit={this.state.major !== null} majorStatus={this.state.majorStatus} />
           {/* </MajorRoute> */}
-          <MenuRoute path="/menu" />
+          <MenuRoute path="/menu" condit={this.state.profile} />
           <PrivateRoute path="/document">
             <Mountain>
               <Document />
