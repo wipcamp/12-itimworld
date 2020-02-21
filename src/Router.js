@@ -37,7 +37,7 @@ const Mountain = styled.div`
 
 const cookies = new Cookies()
 
-const PrivateRoute = ({ children, ...rest }) => {
+const PrivateRoute = ({ condit, children, ...rest }) => {
   return (
     <React.Fragment>
       <Route
@@ -51,7 +51,15 @@ const PrivateRoute = ({ children, ...rest }) => {
                   locationNow === '/general' || locationNow === '/major' ||
                   locationNow === '/document' || locationNow === '/agreement' ||
                   locationNow === '/term' ?
-                  children
+                    !(condit)  ?
+                    children
+                    :
+                      <Redirect
+                        to={{
+                          pathname: "/profile",
+                          state: { from: locationNow }
+                        }}
+                      />
                   :
                   <Redirect
                     to={{
@@ -75,13 +83,23 @@ const PrivateRoute = ({ children, ...rest }) => {
   )
 }
 
-const MenuRoute = () => {
+const MenuRoute = (props) => {
   return (
     <React.Fragment>
       {
         (cookies.get('token') !== undefined && cookies.get('token') !== null) ? (
           // true ? (
-          <Menu />
+          !(props.condit) ?(
+            <Menu />
+          ) : (
+              <Redirect
+                to={{
+                  pathname: "/profile",
+                  state: { from: locationNow }
+                }}
+              />
+            )
+
         ) : (
             <Redirect
               to={{
@@ -96,7 +114,6 @@ const MenuRoute = () => {
 }
 
 const MenuObjRoute = (props) => {
-  console.log(props.condit)
   return (
     <React.Fragment>
       {
@@ -118,8 +135,9 @@ const MenuObjRoute = (props) => {
 export default class Index extends React.Component {
 
   state = {
-    term: false,
-    agree: false,
+    term: true,
+    agree: true,
+    profile: true,
     major: null
   }
 
@@ -135,6 +153,7 @@ export default class Index extends React.Component {
           this.setState({ 
             term: response.data[0].userStatus.accepted,
             agree: response.data[0].userStatus.acceptedStoreData ,
+            profile: response.data[0].userStatus.registered ,
             major: response.data[0].major
           })
         } else {
@@ -166,49 +185,36 @@ export default class Index extends React.Component {
               <Term />
             </Mountain>
           </MenuObjRoute>
-          {/* <TermRoute path="/term"  /> */}
-            {/* <Mountain>
-              <Term />
-            </Mountain>
-          </TermRoute> */}
-          {/* <AgreeRoute path="/agreement" agree={this.state.agree} /> */}
           <MenuObjRoute path="/agreement" condit={this.state.agree }>
             <Mountain>
               <Agreement />
             </Mountain>
           </MenuObjRoute>
-            {/* <Mountain>
-              <Agreement />
-            </Mountain>
-          </AgreeRoute> */}
-          <PrivateRoute path="/profile">
+          <MenuObjRoute path="/profile" condit={!(this.state.profile)}>
             <Mountain>
               <Profile />
             </Mountain>
-          </PrivateRoute>
-          <PrivateRoute path="/general">
+          </MenuObjRoute>
+          <PrivateRoute path="/general" condit={this.state.profile}>
             <Mountain>
               <General />
             </Mountain>
           </PrivateRoute>
-          {/* <MajorRoute path="/major" major={this.state.major} /> */}
-          {/* </MajorRoute> */}
-          <MenuObjRoute path="/major" 
-            condit={this.state.major !== null}>
+          <MenuObjRoute path="/major" condit={this.state.major !== null}>
             <Major />
           </MenuObjRoute>
-          <MenuRoute path="/menu" />
-          <PrivateRoute path="/document">
+          <MenuRoute path="/menu" condit={this.state.profile} />
+          <PrivateRoute path="/document" condit={this.state.profile}>
             <Mountain>
               <Document />
             </Mountain>
           </PrivateRoute>
-          <PrivateRoute path="/questions">
+          <PrivateRoute path="/questions" condit={this.state.profile}>
             <Mountain>
               <Questions />
             </Mountain>
           </PrivateRoute>
-          <PrivateRoute path="/edit">
+          <PrivateRoute path="/edit" condit={this.state.profile}>
             <Mountain>
               <Edit />
             </Mountain>

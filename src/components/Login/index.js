@@ -154,7 +154,10 @@ class Login extends Component {
     await UserService.getMe().then(
       (response) => {
         if (response.data.data[0].userStatus.accepted === true) {
-          window.location.href = '/menu'
+          if (response.data.data[0].userStatus.registered === true) {
+            window.location.href = '/menu'
+          }
+          window.location.href = '/profile'
         } else {
           window.location.href = '/term'
         }
