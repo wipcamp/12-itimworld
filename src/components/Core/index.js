@@ -28,7 +28,7 @@ export default class Index extends Component {
   render() {
     return (
       <React.Fragment>
-        {/* {
+        {
           dateEnd.isAfter(dateNow)
           ?
             <ThisIsBackground>
@@ -42,7 +42,7 @@ export default class Index extends Component {
             </ThisIsBackground>
           :
           'ปิดรับสมัครแล้วจ้า'
-        } */}
+        }
       </React.Fragment>
     )
   }
