@@ -182,7 +182,6 @@ export default class Index extends Component {
   }
 
   componentDidCatch() {
-    this.toggleAlertModal();
     this.setState({ errorLoad: true })
   }
 

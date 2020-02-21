@@ -13,7 +13,6 @@ import Waiting from './../Core/Waiting'
 
 let answer = [];
 let majorId = 1;
-let userId = 120001;
 
 const ContainerDiv = styled.div`
   max-width:1200px;
@@ -121,8 +120,8 @@ export default class Index extends Component {
       }
     
     postAnswerService = async() =>{
-      await AnswerService.postAnswer(userId,majorId,{"answers":answer})
-        .then(() => {UserService.postStatus(userId,{"status":"major"})})
+      await AnswerService.postAnswerMe(majorId,{"answers":answer})
+        .then(() => {UserService.postStatusMe({"status":"major"})})
         .then(() => this.setState({redirect:true}))
         .catch(() => this.toggleAlertModal());
     }

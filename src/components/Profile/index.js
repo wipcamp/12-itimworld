@@ -210,7 +210,7 @@ export default class Index extends Component {
 
   putUser = async (data, event) => {
     event.preventDefault();
-    await UserService.putUser(userId, data)
+    await UserService.putMe(data)
       .then(() => UserService.postStatus(userId, { "status": "register" }))
       .then(() => this.setState({ redirect: true }))
       .catch(() => this.toggleModal())

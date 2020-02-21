@@ -133,7 +133,7 @@ export default class EditModal extends Component {
   }
     
   putUser = async (data) => {
-    await UserService.putUser(userId, data)
+    await UserService.putMe(data)
     .then(()=>this.setState({redirect:true}))
     .catch(()=>this.toggleModal())
   }
