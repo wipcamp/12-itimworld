@@ -159,6 +159,9 @@ export default class Index extends React.Component {
         promise = await this.getUserService();
         let response = promise.data;
         if (response.success) {
+          console.log(response.data[0].major)
+          console.log(response.data[0].userStatus.accepted)
+          console.log(response.data[0].userStatus.acceptedStoreData)
           this.setState({
             major: response.data[0].major,
             term: response.data[0].userStatus.accepted,
