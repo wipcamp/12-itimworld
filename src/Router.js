@@ -79,9 +79,19 @@ const MenuRoute = (props) => {
   return (
     <React.Fragment>
       {
-        (cookies.get('token') !== undefined && cookies.get('token') !== null) && !(props.condit)? (
+        (cookies.get('token') !== undefined && cookies.get('token') !== null) ? (
           // true ? (
-          <Menu />
+          !(props.condit) ?(
+            <Menu />
+          ) : (
+              <Redirect
+                to={{
+                  pathname: "/menu",
+                  state: { from: locationNow }
+                }}
+              />
+            )
+
         ) : (
             <Redirect
               to={{
