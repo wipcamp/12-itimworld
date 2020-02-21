@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import {Subtitle, SmallText} from '../Core/Text'
 import UserService from '../../services/UserService'
 import ButtonRoute from '../Core/ButtonRoute'
-import {Redirect} from 'react-router-dom'
 
 const UploadButton = styled.button `
 width: 93.33px;
@@ -61,8 +60,7 @@ let uploadDocument = null;
 export default class index extends Component {
 
     state = {
-        documentLink: "",
-        redirect: false
+        documentLink: ""
     }
 
     setUpload = e => {
