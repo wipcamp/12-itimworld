@@ -156,8 +156,9 @@ class Login extends Component {
         if (response.data.data[0].userStatus.accepted === true) {
           if (response.data.data[0].userStatus.registered === true) {
             window.location.href = '/menu'
+          }else{
+            window.location.href = '/profile'
           }
-          window.location.href = '/profile'
         } else {
           window.location.href = '/term'
         }
