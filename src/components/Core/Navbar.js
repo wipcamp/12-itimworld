@@ -25,8 +25,9 @@ const Logout = styled(Button)`
   font-weight: 500;
   font-size: 18px;
   background: #D11242!important;
-  width: 120px;
-  height: 40px;
+  max-width: 140px;
+  width: 100%;
+  height: 100%;
 `
 
 export default class Navbar extends Component {
@@ -87,16 +88,19 @@ export default class Navbar extends Component {
                 <div style={{ color: "white", textAlign: "right", fontSize: '24px' }}>
                   {
                     this.state.wipId !== null || this.state.wipId !== undefined || this.state.wipId !== '' ?
-                      <WIPId>
+                      <WIPId className="mb-3">
                         WIP ID : {this.state.wipId}
                       </WIPId>
                       :
                       <div>Error</div>
                   }
-                  <Logout onClick={() => this.handleClick()}>
-                      Log Out
-                  </Logout>
-
+                  <div className="row">
+                    <div className="offset-2 col-10 offset-sm-8 col-sm-4 offset-md-9 col-md-3">
+                      <Logout className="pt-2" onClick={() => this.handleClick()}>
+                          Log Out
+                      </Logout>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
