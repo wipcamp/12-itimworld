@@ -127,7 +127,10 @@ export default class index extends Component {
           </Subtitle>
         </TableHeader>
         <div className="row border-bottom md-2">
-          <div className="col-6 col-md-4 offset-md-1">
+          <div className="col-md-1">
+            <img src="/img/Document/doc_icon" alt="doc_icon" />>
+          </div>
+          <div className="col-6 col-md-4">
             <Subtitle className="mt-2 mb-2">
               ใบรับรองผลการศึกษา (ปพ.7)
                         </Subtitle>
