@@ -78,17 +78,8 @@ const MenuRoute = (props) => {
     <React.Fragment>
       {
         (cookies.get('token') !== undefined && cookies.get('token') !== null) ? 
-          props.condit ? (
             <Menu />
-          )
             : (
-              <Redirect
-                to={{
-                  pathname: "/profile",
-                  state: { from: locationNow }
-                }}
-              />
-            ) : (
             <Redirect
               to={{
                 pathname: "/login",
