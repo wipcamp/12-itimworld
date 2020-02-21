@@ -157,21 +157,12 @@ const MajorRoute = (props) => {
     <React.Fragment>
       {
         (cookies.get('token') !== undefined && cookies.get('token') !== null) ?
-          props.majorStatus ?
-            props.condit === null ? (
+          props.condit === null ? (
               <Major />
             ) : (
-                <Redirect
-                  to={{
-                    pathname: "/questions",
-                    state: { from: locationNow }
-                  }}
-                />
-              )
-            : (
               <Redirect
                 to={{
-                  pathname: "/major",
+                  pathname: "/questions",
                   state: { from: locationNow }
                 }}
               />
@@ -253,7 +244,7 @@ export default class Index extends React.Component {
               <General />
             </Mountain>
           </PrivateRoute>
-          <MajorRoute path="/major" condit={this.state.major !== null} majorStatus={this.state.majorStatus} />
+          <MajorRoute path="/major" condit={this.state.major !== null}/>
           {/* </MajorRoute> */}
           <MenuRoute path="/menu" condit={this.state.profile} />
           <PrivateRoute path="/document">
