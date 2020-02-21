@@ -47,7 +47,8 @@ const PrivateRoute = ({ condit, children, ...rest }) => {
               {
                 locationNow === '/menu' || locationNow === '/profile' ||
                   locationNow === '/general' || locationNow === '/major' ||
-                  locationNow === '/document' || locationNow === '/agreement' ||
+                  // locationNow === '/document' || 
+                  locationNow === '/agreement' ||
                   locationNow === '/term' || locationNow === '/edit' ?
                   children
                   :
@@ -227,11 +228,11 @@ export default class Index extends React.Component {
             <Major />
           </PrivateRoute>
           <MenuRoute path="/menu" condit={this.state.profile} />
-          <PrivateRoute path="/document">
+          {/* <PrivateRoute path="/document">
             <Mountain>
               <Document />
             </Mountain>
-          </PrivateRoute>
+          </PrivateRoute> */}
           <PrivateRoute path="/questions">
             <Mountain>
               <Questions />
