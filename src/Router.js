@@ -10,7 +10,6 @@ import styled from 'styled-components'
 
 import UserService from './services/UserService'
 
-import Navbar from './components/Core/Navbar'
 import Login from './components/Login'
 import Menu from './components/Menu'
 import Profile from './components/Profile'
@@ -51,15 +50,7 @@ const PrivateRoute = ({ condit, children, ...rest }) => {
                   locationNow === '/general' || locationNow === '/major' ||
                   locationNow === '/document' || locationNow === '/agreement' ||
                   locationNow === '/term' ?
-                    !(condit)  ?
-                    children
-                    :
-                      <Redirect
-                        to={{
-                          pathname: "/profile",
-                          state: { from: locationNow }
-                        }}
-                      />
+                  children
                   :
                   <Redirect
                     to={{
@@ -89,7 +80,7 @@ const MenuRoute = (props) => {
       {
         (cookies.get('token') !== undefined && cookies.get('token') !== null) ? (
           // true ? (
-          !(props.condit) ?(
+          !(props.condit) ? (
             <Menu />
           ) : (
               <Redirect
@@ -132,16 +123,17 @@ const MenuObjRoute = (props) => {
   )
 }
 
+
 export default class Index extends React.Component {
 
   state = {
     term: true,
     agree: true,
-    profile: true,
+    profile: false,
     major: null
   }
 
-  async componentDidMount(){
+  async componentDidMount() {
     await this.getUser();
   }
 
@@ -150,10 +142,10 @@ export default class Index extends React.Component {
       .then((promise) => {
         const response = promise.data;
         if (response.success) {
-          this.setState({ 
+          this.setState({
             term: response.data[0].userStatus.accepted,
-            agree: response.data[0].userStatus.acceptedStoreData ,
-            profile: response.data[0].userStatus.registered ,
+            agree: response.data[0].userStatus.acceptedStoreData,
+            profile: response.data[0].userStatus.registered,
             major: response.data[0].major
           })
         } else {
@@ -168,34 +160,29 @@ export default class Index extends React.Component {
   render() {
     return (
       <Router>
-        {
-          (cookies.get('token') !== undefined && cookies.get('token') !== null) && locationNow !== '/login' ?
-            // true  && locationNow !== '/login' ?
-            <Navbar /> :
-            ''
-        }
+       
         <Switch>
           <Route path="/login" >
             <Mountain>
               <Login />
             </Mountain>
           </Route>
-          <MenuObjRoute path="/term" condit={ this.state.term }>
+          <MenuObjRoute path="/term" condit={this.state.term}>
             <Mountain>
               <Term />
             </Mountain>
           </MenuObjRoute>
-          <MenuObjRoute path="/agreement" condit={this.state.agree }>
+          <MenuObjRoute path="/agreemen">
             <Mountain>
               <Agreement />
             </Mountain>
           </MenuObjRoute>
-          <MenuObjRoute path="/profile" condit={!(this.state.profile)}>
+          <PrivateRoute path="/profile" >
             <Mountain>
               <Profile />
             </Mountain>
-          </MenuObjRoute>
-          <PrivateRoute path="/general" condit={this.state.profile}>
+          </PrivateRoute>
+          <PrivateRoute path="/general">
             <Mountain>
               <General />
             </Mountain>
@@ -204,17 +191,17 @@ export default class Index extends React.Component {
             <Major />
           </MenuObjRoute>
           <MenuRoute path="/menu" condit={this.state.profile} />
-          <PrivateRoute path="/document" condit={this.state.profile}>
+          <PrivateRoute path="/document">
             <Mountain>
               <Document />
             </Mountain>
           </PrivateRoute>
-          <PrivateRoute path="/questions" condit={this.state.profile}>
+          <PrivateRoute path="/questions">
             <Mountain>
               <Questions />
             </Mountain>
           </PrivateRoute>
-          <PrivateRoute path="/edit" condit={this.state.profile}>
+          <PrivateRoute path="/edit">
             <Mountain>
               <Edit />
             </Mountain>
