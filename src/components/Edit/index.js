@@ -549,14 +549,14 @@ export default class Index extends Component {
                     </div>
                   </div>
                 </label>
-                <SelectField
+                {/* <SelectField
                   dataOptions={this.state.religionData}
                   onClickFunc={this.handleChange}
                   selectId="religion"
                   selectName="religion"
                   selectValue={this.state.oldUser.religion}
                   labelName="ศาสนา"
-                />
+                /> */}
                 {
                   this.state.profileDataSecondSection.map((data, i) => (
                     <TextField
