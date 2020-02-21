@@ -6,6 +6,11 @@ const Section = styled.div`
   min-height:50vh;
 `
 
+const BackgroundBlack = styled.div`
+  min-height: 100vh;
+  background: rgba(0, 0, 0, 0.4); 
+`
+
 const ButtonBack = styled(ButtonStyle)`
   background-color: #304151!important;
   @media (max-width: 576px){
@@ -30,6 +35,12 @@ const Mountain = styled.div`
   padding-bottom: 30px;
   transform: scaleX(-1);
   position:absolute;
+`
+
+const ThisIsBackground = styled.div`
+  min-height: 100vh;
+  height:100%;
+  background: linear-gradient(180deg, #0F0C29 0%, rgba(2, 19, 91, 0.5521) 99.99%, rgba(255, 255, 255, 0.03) 100%);
 `
 
 const Wippo = styled.img`
@@ -91,25 +102,27 @@ const Skypic = styled(Wippo)`
 `
 
 
-const Loading = () => {
+export const Loading = () => {
   return (
     <div>
-      <Section>
-        <div className="container">
-          <div className="row text-center">
-            <div className="">
-            <Sky>
-              <Skypic src='img/Loading/l_bge.png' />
-              <Wippo src='/img/Loading/l_maine.png' />
-              <WippoAnimation src='img/Loading/l_greye.png'/>
-            </Sky>
+      <BackgroundBlack>
+        <Section>
+          <div className="container">
+            <div className="row text-center">
+              <div className="">
+              <Sky>
+                <Skypic src='img/Loading/l_bge.png' />
+                <Wippo src='/img/Loading/l_maine.png' />
+                <WippoAnimation src='img/Loading/l_greye.png'/>
+              </Sky>
+              </div>
             </div>
           </div>
-        </div>
-      </Section>
-      <div>
-        <h4 className="text-white mt-3 text-center">Loading...</h4>
-      </div>
+        </Section>
+        <Section>
+          <h4 className="text-white mt-3 text-center">Loading...</h4>
+        </Section>`
+      </BackgroundBlack>
     </div>
   );
 }
@@ -118,8 +131,8 @@ const Loading = () => {
 export const Error = () => {
   return (
     <div>
-    <Mountain>
-    </Mountain>
+    {/* <Mountain>
+    </Mountain> */}
       <Section>
         <div className="container pt-5">
           <div className="row">
@@ -131,11 +144,7 @@ export const Error = () => {
           </div>
         </div>
       </Section>
-      <div>
-
-      </div>
     </div>
-
   );
 }
 
