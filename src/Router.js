@@ -77,10 +77,18 @@ const MenuRoute = (props) => {
   return (
     <React.Fragment>
       {
-        (cookies.get('token') !== undefined && cookies.get('token') !== null) ? (
-          // true ? (
+        (cookies.get('token') !== undefined && cookies.get('token') !== null) ? 
+          props.condit ? (
             <Menu />
-        ) : (
+          )
+            : (
+              <Redirect
+                to={{
+                  pathname: "/profile",
+                  state: { from: locationNow }
+                }}
+              />
+            ) : (
             <Redirect
               to={{
                 pathname: "/login",
@@ -150,8 +158,8 @@ const MajorRoute = (props) => {
       {
         (cookies.get('token') !== undefined && cookies.get('token') !== null) ?
           props.condit === null ? (
-            <Major />
-          ) : (
+              props.children
+            ) : (
               <Redirect
                 to={{
                   pathname: "/questions",
@@ -177,6 +185,7 @@ export default class Index extends React.Component {
     term: false,
     agree: false,
     profile: false,
+    majorStatus: false,
     major: null
   }
 
@@ -193,6 +202,7 @@ export default class Index extends React.Component {
             term: response.data[0].userStatus.accepted,
             agree: response.data[0].userStatus.acceptedStoreData,
             profile: response.data[0].userStatus.registered,
+            majorStatus: response.data[0].userStatus.majorAnswered,
             major: response.data[0].major
           })
         } else {
@@ -234,9 +244,10 @@ export default class Index extends React.Component {
               <General />
             </Mountain>
           </PrivateRoute>
-          <MajorRoute path="/major" condit={this.state.major !== null} />
-          {/* </MajorRoute> */}
-          <MenuRoute path="/menu" />
+          <MajorRoute path="/major" condit={this.state.major !== null}>
+            <Major />
+          </MajorRoute>
+          <MenuRoute path="/menu" condit={this.state.profile} />
           <PrivateRoute path="/document">
             <Mountain>
               <Document />
