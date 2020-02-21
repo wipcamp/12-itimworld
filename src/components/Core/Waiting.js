@@ -106,22 +106,22 @@ export const Loading = () => {
   return (
     <div>
       <BackgroundBlack>
-      <Section>
-        <div className="container">
-          <div className="row text-center">
-            <div className="">
-            <Sky>
-              <Skypic src='img/Loading/l_bge.png' />
-              <Wippo src='/img/Loading/l_maine.png' />
-              <WippoAnimation src='img/Loading/l_greye.png'/>
-            </Sky>
+        <Section>
+          <div className="container">
+            <div className="row text-center">
+              <div className="">
+              <Sky>
+                <Skypic src='img/Loading/l_bge.png' />
+                <Wippo src='/img/Loading/l_maine.png' />
+                <WippoAnimation src='img/Loading/l_greye.png'/>
+              </Sky>
+              </div>
             </div>
           </div>
-        </div>
-      </Section>
-      <div>
-        <h4 className="text-white mt-3 text-center">Loading...</h4>
-      </div>
+        </Section>
+        <Section>
+          <h4 className="text-white mt-3 text-center">Loading...</h4>
+        </Section>`
       </BackgroundBlack>
     </div>
   );
