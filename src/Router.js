@@ -37,7 +37,7 @@ const Mountain = styled.div`
 
 const cookies = new Cookies()
 
-const PrivateRoute = ({ children, ...rest }) => {
+const PrivateRoute = ({ condit, children, ...rest }) => {
   return (
     <React.Fragment>
       <Route
@@ -51,7 +51,15 @@ const PrivateRoute = ({ children, ...rest }) => {
                   locationNow === '/general' || locationNow === '/major' ||
                   locationNow === '/document' || locationNow === '/agreement' ||
                   locationNow === '/term' ?
-                  children
+                    !(condit)  ?
+                    children
+                    :
+                      <Redirect
+                        to={{
+                          pathname: "/profile",
+                          state: { from: locationNow }
+                        }}
+                      />
                   :
                   <Redirect
                     to={{
