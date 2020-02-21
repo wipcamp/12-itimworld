@@ -87,25 +87,7 @@ class Login extends Component {
 
   componentDidMount() {
     const search = window.location.search.substring(1);
-    
-    // const dataEntries = Object.entries(cookies.getAll())
-    // let waitNonce = false 
-    // let waitState = false
-    // for (const [dataArray, dataFromEntity] of dataEntries) {
-    //   console.log(dataArray)
-    //   if (dataArray === "nonce" && (dataFromEntity !== null || dataFromEntity !== undefined )){
-    //     waitNonce = true
-    //   }
-    //   if (dataArray === "state" && (dataFromEntity !== null || dataFromEntity !== undefined )){
-    //     waitState = true
-    //   }
-    // }
-    // if(waitNonce && waitState){
-    //   cookies.set('wait', "wait", { path: '/', maxAge: '2' })
-    // }else{
     cookies.set('wait', "true", { path: '/', maxAge: '10' });
-    // }
-    // console.log(search)
     if (search) {
       this.setState({
         isLoad: true
