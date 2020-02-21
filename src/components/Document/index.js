@@ -23,20 +23,18 @@ border-radius: 4px;
 `
 
 const ImageDiv = styled.div `
-padding-left:2.5vh;
   @media (max-width: 768px) {
-      display:none;
+      display:none!important;
     }
 `
 
 const DocumentIcon = styled.img `
 width: 40px;
 height: 40px;
-/* 
-  @media (max-width: 576px) {
-    width: 88.8px!important;
-    height: 33.76px!important;
-  } */
+
+  @media (max-width: 768px) {
+    display:none!important;
+  }
 `
 
 const DocumentButton = styled(UploadButton)`
@@ -143,7 +141,7 @@ export default class index extends Component {
                     </Subtitle>
                 </TableHeader>
                 <div className="row border-bottom md-2">
-                    <ImageDiv className="col-md-1 mt-auto mb-auto">
+                    <ImageDiv className="col-md-1 mt-auto mb-auto d-flex flex-row-reverse">
                         <DocumentIcon src="/img/Document/doc_icon.png" alt="doc_icon"/>
                     </ImageDiv>
                     <div className="col-6 col-md-4 offset-md-0">
