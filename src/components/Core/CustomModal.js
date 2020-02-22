@@ -27,6 +27,7 @@ const SecondaryButton = styled.div`
 const ParagraphContext = styled(Paragraph)`
   margin-bottom: auto;
   text-align: start;
+  white-space: pre-line;
 `
 
 const HeaderContext = styled(HeaderText)`
