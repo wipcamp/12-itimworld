@@ -26,7 +26,7 @@ const Logout = styled(Button)`
   font-weight: 500;
   font-size: 18px;
   background: #D11242!important;
-  border-collapse: #D11242!important;
+  border-color: #D11242!important;
   max-width: 140px;
   width: 100%;
   height: 100%;
