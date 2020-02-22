@@ -33,10 +33,10 @@ export default class Index extends Component {
   state = {
     profileDataFirstSection: [
       {
-        labelInput: 'ชื่อ', placeHolder: 'วิปโป้', name: 'firstName', additionalText: 'ไม่ต้องใส่คำนำหน้าชื่อ'
+        labelInput: 'ชื่อ', placeHolder: '', name: 'firstName', additionalText: 'ไม่ต้องใส่คำนำหน้าชื่อ'
       },
       {
-        labelInput: 'นามสกุล', placeHolder: 'ใจดี', name: 'lastName'
+        labelInput: 'นามสกุล', placeHolder: '', name: 'lastName'
       },
       {
         labelInput: 'Firstname', placeHolder: '', name: 'firstNameEn', additionalText: 'ไม่ต้องใส่คำนำหน้าชื่อ', pattern: regexPattern.eng
@@ -45,7 +45,7 @@ export default class Index extends Component {
         labelInput: 'Lastname', placeHolder: '', name: 'lastNameEn', pattern: regexPattern.eng
       },
       {
-        labelInput: 'ชื่อเล่น', placeHolder: '', name: 'nickName'
+        labelInput: 'ชื่อเล่น', placeHolder: 'กรอกเป็นภาษาไทย', name: 'nickName'
       }
     ],
     genderData: [
@@ -132,7 +132,7 @@ export default class Index extends Component {
       },
       {
         value: 'ปี.1',
-        text: 'ม.6 ขึ้น ปั.1'
+        text: 'ม.6 ขึ้น ปี.1'
       }
     ],
     data: {
