@@ -192,8 +192,6 @@ export default class Index extends Component {
   }
 
   toggleConfirmModal = () => {
-    console.log("confirm modal");
-
     this.setState({ confirmModal: !this.state.confirmModal })
   }
 
@@ -276,7 +274,6 @@ export default class Index extends Component {
   }
 
   componentDidUpdate() {
-    // console.log(this.state.newUser);
 
     if (this.state.newUser !== '') {
       if (Object.keys(this.state.newUser).length > 1) {
@@ -815,7 +812,7 @@ export default class Index extends Component {
                 paragraph="ต้องการแก้ไขข้อมูลใช่หรือไม่"
                 primaryButtonDisplay="flex"
                 primaryButtonText="ยืนยัน"
-                primaryOnClick={e => this.putUser(this.state.oldData)}
+                primaryOnClick={e => this.putUser(this.state.oldUser)}
               />
               <CustomModal
                 header="การบันทึกข้อมูลผิดพลาด"
