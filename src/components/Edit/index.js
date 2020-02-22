@@ -204,10 +204,10 @@ export default class Index extends Component {
     await this.getUserService()
       .then((promise) => {
         const response = promise.data;
-        const responseData = response.data[0];
+        let responseData = response.data[0];
 
-        if (responseData.telNo === null) {
-          this.setState({ errorLoad: true })
+        if (responseData.parent === null) {
+          responseData.parent = {telNo:"",relation:""}
         }
 
         if (response.success) {
