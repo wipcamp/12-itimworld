@@ -58,11 +58,12 @@ export default class index extends Component {
   state = {
     documentLink: "",
     modal: false,
-    modalText: ""
+    modalText: "",
+    modalLink: ""
   }
 
   toggleModal = () => {
-    this.setState({ modal: !this.state.modal, modalText: "" })
+    this.setState({ modal: !this.state.modal, modalText: "", modalLink: "" })
   }
 
   setUpload = e => {
@@ -117,7 +118,8 @@ export default class index extends Component {
         if (uploadDocument.files.length !== 0) {
           if (uploadDocument.files[0].size > 2097152) {
             this.setState({
-              modalText: "ขนาดไฟล์ที่อัปโหลดต้องไม่เกิน 2Mb\nเว็บไซต์สำหรับย่อขนาดไฟล์ที่แนะนำ\nwww.google.com",
+              modalText: "ขนาดไฟล์ที่อัปโหลดต้องไม่เกิน 2Mb\nเว็บไซต์สำหรับย่อขนาดไฟล์ที่แนะนำ",
+              modalLink: "https://www.pdfpro.co/compress-pdf",
               modal: true
             })
           } else if (uploadDocument.files[0].type !== "application/pdf") {
@@ -207,7 +209,8 @@ export default class index extends Component {
         />
         <CustomModal
           header="การบันทึกข้อมูลผิดพลาด"
-          paragraph={this.state.modalText !== "" ? this.state.modalText : `การอัปโหลดเอกสารเกิดข้อผิดพลาด ไม่สามารถส่งข้อมูลได้ กรุณาลองใหม่ภายหลัง, ติดต่อเจ้าหน้าที่ หรือตรวจสอบไฟล์ที่อัปโหลด`}
+          paragraph={this.state.modalText !== "" ? this.state.modalText : `การอัปโหลดเอกสารเกิดข้อผิดพลาด ไม่สามารถบันทึกข้อมูลได้\n\nโปรดติดต่อเจ้าหน้าที่`}
+          paragraphLink={this.state.modalLink}
           secondaryButtonText="ปิด"
           modal={this.state.modal}
           toggle={this.toggleModal}
