@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Button } from 'reactstrap'
 import Cookies from 'universal-cookie'
 import { Redirect } from 'react-router-dom'
+import CustomModal from './CustomModal'
 
 import UserService from '../../services/UserService'
 
@@ -25,6 +26,7 @@ const Logout = styled(Button)`
   font-weight: 500;
   font-size: 18px;
   background: #D11242!important;
+  border: none;
   max-width: 140px;
   width: 100%;
   height: 100%;
@@ -33,12 +35,14 @@ const Logout = styled(Button)`
 export default class Navbar extends Component {
 
   state = {
-    wipId: ''
+    wipId: '',
+    redirect: false,
+    modal: false
   }
 
   async componentDidMount() {
     const cookieToken = cookies.get('token');
-    if (cookieToken !== null && cookieToken !== undefined) {
+    if (cookieToken !== null && cookieToken !== undefined && cookieToken !== "") {
       let promise;
       try {
         promise = await this.getUserService();
@@ -48,10 +52,10 @@ export default class Navbar extends Component {
             wipId: response.data[0].wipId
           });
         } else {
-          console.log("Error get User request")
+          this.toggleModal()
         }
       } catch (e) {
-        console.log("Error get User promise")
+        this.toggleModal()
       }
     }
   }
@@ -66,6 +70,10 @@ export default class Navbar extends Component {
     cookies.remove('nonce', { path: '/' })
     cookies.remove('loginObj', { path: '/' })
     window.location.href = '/login'
+  }
+
+  toggleModal = () => {
+    this.setState({modal: !this.state.modal})
   }
 
   render() {
@@ -106,6 +114,7 @@ export default class Navbar extends Component {
             </div>
           </div>
         </div>
+        <CustomModal header="เกิดข้อผิดพลาดขึ้น" paragraph="โปรดล็อคอินใหม่" secondaryButtonText="ตกลง" modal={this.state.modal} toggle={this.handleClick} />
       </div>
     )
   }
