@@ -96,42 +96,44 @@ export default class index extends Component {
   }
 
   uploadFile = async (e) => {
-    let formData = new FormData();
-    formData.append('file', uploadDocument.files[0])
-    const config = {
-      headers: {
-        'content-type': 'multipart/form-data'
+    if (uploadDocument.files.length !== 0) {
+      let formData = new FormData();
+      formData.append('file', uploadDocument.files[0])
+      const config = {
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
       }
-    }
-    await UserService
-      .uploadDocumentMe(formData, config.headers)
-      .then((promiseDocument) => {
-        const documentResponse = promiseDocument.data;
-        if (documentResponse.success) {
-          UserService.postStatusMe({ "status": "submit" })
-        }
-      })
-      .then(() => {
-        this.getUserDocument();
-      })
-      .catch((error) => {
-        if (uploadDocument.files.length !== 0) {
-          if (uploadDocument.files[0].size > 2097152) {
-            this.setState({
-              modalText: "ขนาดไฟล์ที่อัปโหลดต้องไม่เกิน 2Mb\nเว็บไซต์สำหรับย่อขนาดไฟล์ที่แนะนำ",
-              modalLink: "https://www.pdfpro.co/compress-pdf",
-              modal: true
-            })
-          } else if (uploadDocument.files[0].type !== "application/pdf") {
-            this.setState({
-              modalText: "ไฟล์ที่อัปโหลดต้องเป็นประเภท .pdf เท่านั้น โปรดอัพโหลดเอกสารใหม่",
-              modal: true
-            })
-          } else {
-            this.toggleModal();
+      await UserService
+        .uploadDocumentMe(formData, config.headers)
+        .then((promiseDocument) => {
+          const documentResponse = promiseDocument.data;
+          if (documentResponse.success) {
+            UserService.postStatusMe({ "status": "submit" })
           }
-        }
-      });
+        })
+        .then(() => {
+          this.getUserDocument();
+        })
+        .catch((error) => {
+          if (uploadDocument.files.length !== 0) {
+            if (uploadDocument.files[0].size > 2097152) {
+              this.setState({
+                modalText: "ขนาดไฟล์ที่อัปโหลดต้องไม่เกิน 2Mb\nเว็บไซต์สำหรับย่อขนาดไฟล์ที่แนะนำ",
+                modalLink: "https://www.pdfpro.co/compress-pdf",
+                modal: true
+              })
+            } else if (uploadDocument.files[0].type !== "application/pdf") {
+              this.setState({
+                modalText: "ไฟล์ที่อัปโหลดต้องเป็นประเภท .pdf เท่านั้น โปรดอัพโหลดเอกสารใหม่",
+                modal: true
+              })
+            } else {
+              this.toggleModal();
+            }
+          }
+        });
+    }
   }
 
   renderDocumentButton = () => {
