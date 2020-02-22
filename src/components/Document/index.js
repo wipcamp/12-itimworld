@@ -130,8 +130,6 @@ export default class index extends Component {
           } else {
             this.toggleModal();
           }
-        } else {
-          this.toggleModal()
         }
       });
   }
