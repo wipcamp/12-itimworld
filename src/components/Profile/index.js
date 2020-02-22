@@ -131,6 +131,10 @@ export default class Index extends Component {
       {
         value: 'ม.6',
         text: 'ม.5 ขึ้น ม.6'
+      },
+      {
+        value: 'ปี.1',
+        text: 'ม.6 ขึ้น ปั.1'
       }
     ],
     data: {
