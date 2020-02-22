@@ -1,20 +1,29 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { MinHeightRow } from '../Core/FieldStyle'
+import styled from 'styled-components'
+
+const RedText = styled.span`
+  color: red;
+`
+const displayRequiredStar = (required) => {
+  if (required === true)
+    return <RedText> *</RedText>
+}
 
 const SelectField = (props) => {
   return (
     <label className={props.labelClassName} htmlFor={props.selectId}>
       <MinHeightRow className="row">
-        <div className={props.leftSide}>{props.labelName}</div>
+        <div className={props.leftSide}>{props.labelName}{displayRequiredStar(props.required)}</div>
         <div className={props.rightSide}>
           <div className="form-group">
-            <select 
-              className="form-control" 
-              name={props.selectName} 
-              id={props.selectId} 
-              value={props.selectValue} 
-              onChange={(e) => props.onClickFunc(e)} 
+            <select
+              className="form-control"
+              name={props.selectName}
+              id={props.selectId}
+              value={props.selectValue}
+              onChange={(e) => props.onClickFunc(e)}
               required={props.required}
               disabled={props.disabled}
             >

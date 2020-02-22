@@ -26,6 +26,10 @@ const NotDisplayButton = styled.button`
   display:none;
 `
 
+const RedText = styled.span`
+  color: red;
+`
+
 let checkBoxRef = null;
 let profileFormRef = null;
 
@@ -403,7 +407,7 @@ export default class Index extends Component {
                 />
                 <label className="col-12 col-md-6 form-group" htmlFor="birthDate">
                   <div className="row">
-                    <div className="col-12 col-md-4 col-form-label text-md-right">วันเกิด</div>
+                    <div className="col-12 col-md-4 col-form-label text-md-right">วันเกิด <RedText> *</RedText></div>
                     <div className="col-12 col-md-8">
                       <input
                         className="form-control"
