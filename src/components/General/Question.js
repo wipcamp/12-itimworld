@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import {Subtitle} from './../Core/Text'
+import { Subtitle } from './../Core/Text'
 
 const QuestionName = styled.p`
     font-weight: 500;
@@ -11,7 +11,7 @@ const QuestionName = styled.p`
 
 const TextArea = styled.textarea`
 
-    width: 935px;
+    width: 100%;
     height: 257px;
 
     background: #FFFFFF;
@@ -32,13 +32,13 @@ const DangerSubtitle = styled(Subtitle)`
 `
 
 const displayAppPlayer = (id) => {
-  if(id === 3){
+  if (id === 3) {
     return (
       <div class="col-12 justify-content-start mb-2">
-         <Media controls>
-            <source src="/audio/WIP_cut.mp3" type="audio/mp3" />
-            <DangerSubtitle>*Browser ของท่านไม่ Support Audio Player</DangerSubtitle>
-          </Media> 
+        <Media controls>
+          <source src="/audio/WIP_cut.mp3" type="audio/mp3" />
+          <DangerSubtitle>*Browser ของท่านไม่ Support Audio Player</DangerSubtitle>
+        </Media>
       </div>
     )
   }
@@ -49,25 +49,25 @@ const Question = (props) => {
     <div className="form-group">
       <QuestionName className="col-12 justify-content-center">คำถามที่ {props.questionCount} : {props.questionName}</QuestionName>
       {displayAppPlayer(props.questionId)}
-      <TextArea 
+      <TextArea
         className="col-12"
-        name={props.questionId} 
+        name={props.questionId}
         onChange={(e) => props.handleAnswer(e)}
         required={props.required}
         value={props.oldValue}
-        >
+      >
       </TextArea>
     </div>
   )
 }
 
 Question.propType = {
-    questionId: PropTypes.any,
-    questionName: PropTypes.string,
-    questionCount: PropTypes.number,
-    handleAnswer: PropTypes.func,
-    oldValue: PropTypes.string,
-    required: PropTypes.bool
+  questionId: PropTypes.any,
+  questionName: PropTypes.string,
+  questionCount: PropTypes.number,
+  handleAnswer: PropTypes.func,
+  oldValue: PropTypes.string,
+  required: PropTypes.bool
 }
 
 export default Question;

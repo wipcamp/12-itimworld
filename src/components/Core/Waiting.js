@@ -1,12 +1,7 @@
 import React from 'react';
 import styled from 'styled-components'
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
 import { ButtonStyle , ButtonStyleLink } from './ButtonStyle'
+import {Redirect} from 'react-router-dom'
 
 const Section = styled.div`
   min-height:62vh;
@@ -41,12 +36,6 @@ const Mountain = styled.div`
   padding-bottom: 30px;
   transform: scaleX(-1);
   position:absolute;
-`
-
-const ThisIsBackground = styled.div`
-  min-height: 100vh;
-  height:100%;
-  background: linear-gradient(180deg, #0F0C29 0%, rgba(2, 19, 91, 0.5521) 99.99%, rgba(255, 255, 255, 0.03) 100%);
 `
 
 const Wippo = styled.img`

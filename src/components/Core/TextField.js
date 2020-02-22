@@ -7,13 +7,21 @@ const LabelText = styled.div`
   width:auto;
   display:inline-block;
 `
+const RedText = styled.span`
+  color: red;
+`
+const displayRequiredStar = (required) => {
+  if(required === true)
+    return <RedText> *</RedText>
+}
+
 
 const TextField = (props) => {
   return (
       <label className={props.className} htmlFor={props.name} >
         <MinHeightRow className="row">
           <LabelText className={props.leftSide}>
-            {props.labelInput}
+            {props.labelInput}{displayRequiredStar(props.required && !props.disabled)}
           </LabelText>
           <div className={props.rightSide}>
             <input 

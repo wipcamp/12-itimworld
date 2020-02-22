@@ -47,7 +47,7 @@ const PrivateRoute = ({ condit, children, ...rest }) => {
               {
                 locationNow === '/menu' || locationNow === '/profile' ||
                   locationNow === '/general' || locationNow === '/major' ||
-                  // locationNow === '/document' || 
+                  locationNow === '/document' || 
                   locationNow === '/agreement' ||
                   locationNow === '/term' || locationNow === '/edit' ?
                   children
@@ -79,6 +79,7 @@ const MenuRoute = (props) => {
     <React.Fragment>
       {
         (cookies.get('token') !== undefined && cookies.get('token') !== null) ? 
+        // true ?
             <Menu />
             : (
             <Redirect
@@ -98,6 +99,7 @@ const MenuObjRoute = (props) => {
     <React.Fragment>
       {
         (cookies.get('token') !== undefined && cookies.get('token') !== null) && !(props.condit) ? (
+          // true ? (
           props.children
         ) : (
             <Redirect
@@ -117,6 +119,7 @@ const ProfileRoute = (props) => {
     <React.Fragment>
       {
         (cookies.get('token') !== undefined && cookies.get('token') !== null) ? (
+          // true ? (
             <Mountain>
               <Profile />
             </Mountain>
@@ -138,6 +141,7 @@ const MajorRoute = (props) => {
     <React.Fragment>
       {
         (cookies.get('token') !== undefined && cookies.get('token') !== null) ?
+        // true ?
           props.condit === null ? (
               props.children
             ) : (
@@ -228,11 +232,11 @@ export default class Index extends React.Component {
             <Major />
           </PrivateRoute>
           <MenuRoute path="/menu" condit={this.state.profile} />
-          {/* <PrivateRoute path="/document">
+          <PrivateRoute path="/document">
             <Mountain>
               <Document />
             </Mountain>
-          </PrivateRoute> */}
+          </PrivateRoute>
           <PrivateRoute path="/questions">
             <Mountain>
               <Questions />

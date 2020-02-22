@@ -30,7 +30,7 @@ export default class Index extends Component {
   handleAnswer = (event) => {
     const val = event.target.value;
     const id = event.target.name;
-    
+
     if (id === '1') {
       answer.firstAnswer = val;
     } else if (id === '2') {
@@ -41,7 +41,7 @@ export default class Index extends Component {
       answer.forthAnswer = val;
     }
     this.setState(prevState => (
-      { 
+      {
         questions: [
           {
             ...prevState.questions[0],
@@ -134,10 +134,10 @@ export default class Index extends Component {
       .then(promise => {
         const response = promise.data;
         const responseGeneralAnswer = response.data[0].generalAnswer;
-        
-        
+
+
         if (responseGeneralAnswer !== null && responseGeneralAnswer !== undefined && Object.keys(responseGeneralAnswer).length !== 0) {
-          
+
           answer.firstAnswer = responseGeneralAnswer.firstAnswer;
           answer.secondAnswer = responseGeneralAnswer.secondAnswer;
           answer.thirdAnswer = responseGeneralAnswer.thirdAnswer;
@@ -180,7 +180,7 @@ export default class Index extends Component {
       return <Waiting error={this.state.errorLoad} />
     } else {
       return (
-        <ContainerDiv className="container-fluid justify-content-center" style={{paddingBottom: '30px'}}>
+        <ContainerDiv className="container-fluid justify-content-center" style={{ paddingBottom: '30px' }}>
           <div className="card p-5" style={{ boxShadow: `0px 4px 4px rgba(0, 0, 0, 0.25)`, borderRadius: `4px`, backgroundColor: `rgba(255, 255, 255, 0.9)` }}>
             <HeaderText className="col-12 mb-5 mt-5">คำถามทั่วไป</HeaderText>
             <div>
@@ -199,7 +199,7 @@ export default class Index extends Component {
                 <NotDisplayButton ref={this.setSubmitButtonRef}> asd</NotDisplayButton>
               </form>
             </div>
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between mt-5 mb-auto">
               <ButtonRoute
                 buttonLeft="กลับ"
                 linkBack="/menu"

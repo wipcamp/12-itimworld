@@ -14,8 +14,6 @@ import CustomModal from '../Core/CustomModal'
 import Waiting from '../Core/Waiting'
 import notStoreableFieldName from '../Core/NotStoreableFieldName'
 
-const userId = 120001;
-
 const SectionHeader = styled.h3`
   margin-top:30px;
   margin-bottom:20px;
@@ -28,6 +26,10 @@ const NotDisplayButton = styled.button`
   display:none;
 `
 
+const RedText = styled.span`
+  color: red;
+`
+
 let checkBoxRef = null;
 let profileFormRef = null;
 
@@ -35,10 +37,10 @@ export default class Index extends Component {
   state = {
     profileDataFirstSection: [
       {
-        labelInput: 'ชื่อ', placeHolder: 'วิปโป้', name: 'firstName', additionalText: 'ไม่ต้องใส่คำนำหน้าชื่อ'
+        labelInput: 'ชื่อ', placeHolder: '', name: 'firstName', additionalText: 'ไม่ต้องใส่คำนำหน้าชื่อ'
       },
       {
-        labelInput: 'นามสกุล', placeHolder: 'ใจดี', name: 'lastName'
+        labelInput: 'นามสกุล', placeHolder: '', name: 'lastName'
       },
       {
         labelInput: 'Firstname', placeHolder: '', name: 'firstNameEn', additionalText: 'ไม่ต้องใส่คำนำหน้าชื่อ', pattern: regexPattern.eng
@@ -47,7 +49,7 @@ export default class Index extends Component {
         labelInput: 'Lastname', placeHolder: '', name: 'lastNameEn', pattern: regexPattern.eng
       },
       {
-        labelInput: 'ชื่อเล่น', placeHolder: '', name: 'nickName'
+        labelInput: 'ชื่อเล่น', placeHolder: 'กรอกเป็นภาษาไทย', name: 'nickName'
       }
     ],
     genderData: [
@@ -131,6 +133,10 @@ export default class Index extends Component {
       {
         value: 'ม.6',
         text: 'ม.5 ขึ้น ม.6'
+      },
+      {
+        value: 'ปี.1',
+        text: 'ม.6 ขึ้น ปี.1'
       }
     ],
     data: {
@@ -188,7 +194,7 @@ export default class Index extends Component {
 
   async componentDidMount() {
     await this.getUser();
-    
+
   }
 
   componentDidUpdate() {
@@ -364,9 +370,9 @@ export default class Index extends Component {
       return <Waiting error={this.state.errorLoad} />
     } else {
       return (
-        <ContainerDiv className="container-fluid justify-content-center" style={{paddingBottom:'30px'}}>
-          <form onSubmit={e => { this.putUser(this.state.data, e) }}>
-            <div className="card p-5" style={{ boxShadow: `0px 4px 4px rgba(0, 0, 0, 0.25)`, borderRadius: `4px`, backgroundColor: `rgba(255, 255, 255, 0.9)` }}>
+        <ContainerDiv className="container-fluid justify-content-center" style={{ paddingBottom: '30px' }}>
+          <div className="card p-5" style={{ boxShadow: `0px 4px 4px rgba(0, 0, 0, 0.25)`, borderRadius: `4px`, backgroundColor: `rgba(255, 255, 255, 0.9)` }}>
+            <form onSubmit={e => { this.putUser(this.state.data, e) }}>
               <h1 className="text-center">ข้อมูลส่วนตัว</h1>
               <section>
                 <SectionHeader className="col-12">ข้อมูลทั่วไป</SectionHeader>
@@ -401,7 +407,7 @@ export default class Index extends Component {
                 />
                 <label className="col-12 col-md-6 form-group" htmlFor="birthDate">
                   <div className="row">
-                    <div className="col-12 col-md-4 col-form-label text-md-right">วันเกิด</div>
+                    <div className="col-12 col-md-4 col-form-label text-md-right">วันเกิด <RedText> *</RedText></div>
                     <div className="col-12 col-md-8">
                       <input
                         className="form-control"
@@ -578,8 +584,11 @@ export default class Index extends Component {
               </section>
               <section>
                 <SectionHeader className="col-12">ช่องทางที่รู้จักค่าย</SectionHeader>
-                <MinHeightRow className="row form-group checkbox-group required">
-                  <div className="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-1">
+                <div className="row col-auto offset-0 offset-md-1 ml-1 ml-md-0 mb-2 mb-md-1">
+                  <SmallText class="pt-2">น้องสามารถเลือกได้มากกว่าหนึ่งอย่าง</SmallText>
+                </div>
+                <MinHeightRow className="row form-group checkbox-group required offset-md-1 offset-0">
+                  <div className="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0 mb-2 mb-md-0 ml-md-0">
                     <input
                       class="form-check-input"
                       type="checkbox"
@@ -591,7 +600,7 @@ export default class Index extends Component {
                     />
                     <label class="form-check-label" for="knowWhenceFacebook">Facebook</label>
                   </div>
-                  <div class="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0">
+                  <div class="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0 mb-2 mb-md-0">
                     <input
                       class="form-check-input"
                       type="checkbox"
@@ -603,7 +612,7 @@ export default class Index extends Component {
                     />
                     <label class="form-check-label" for="knowWhenceCamphub">CampHub</label>
                   </div>
-                  <div class="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0">
+                  <div class="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0 mb-2 mb-md-0">
                     <input
                       class="form-check-input"
                       type="checkbox"
@@ -615,7 +624,7 @@ export default class Index extends Component {
                     />
                     <label class="form-check-label" for="knowWhenceDek-D">Dek-D</label>
                   </div>
-                  <div class="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0">
+                  <div class="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0 mb-2 mb-md-0">
                     <input
                       class="form-check-input"
                       type="checkbox"
@@ -627,7 +636,7 @@ export default class Index extends Component {
                     />
                     <label class="form-check-label" for="knowWhenceSIT">SIT</label>
                   </div>
-                  <div class="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0">
+                  <div class="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0 mb-2 mb-md-0">
                     <input
                       class="form-check-input"
                       type="checkbox"
@@ -643,10 +652,6 @@ export default class Index extends Component {
                     {this.renderInputButton()}
                   </div>
                 </MinHeightRow>
-                <div className="row">
-                  <div className="col-1"></div>
-                  <SmallText class="col pt-2">น้องสามารถเลือกได้มากกว่าหนึ่งอย่าง</SmallText>
-                </div>
               </section>
               <section>
                 <SectionHeader className="col-12">ผลงานและทักษะทางด้านคอมพิวเตอร์</SectionHeader>
@@ -659,10 +664,10 @@ export default class Index extends Component {
                 ></textarea>
               </section>
               <NotDisplayButton ref={this.setProfileFormRef}> asd</NotDisplayButton>
+            </form>
+            <div className="d-flex justify-content-end mt-5 mb-auto">
+              <ButtonStyle onClick={(e) => this.clickSubmit(e)}>ยืนยัน</ButtonStyle>
             </div>
-          </form>
-          <div className="d-flex justify-content-end mt-3">
-            <ButtonStyle onClick={(e) => this.clickSubmit(e)}>ยืนยัน</ButtonStyle>
           </div>
           <CustomModal
             header="การบันทึกข้อมูลผิดพลาด"

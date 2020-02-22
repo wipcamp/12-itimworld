@@ -11,7 +11,7 @@ line-height: 23px;
 
 const TextArea = styled.textarea`
 
-    width: 935px;
+    width: 100%;
     height: 257px;
 
     background: #FFFFFF;
@@ -27,7 +27,7 @@ const Picture = styled.img`
 `
 
 const displayFlowchart = (id) => {
-  if(id === 5){
+  if (id === 5) {
     return (
       <div className="col-12 mb-2">
         <Picture src="/img/Question/Flowchart.png" alt="Flowchart Here*" />
@@ -52,11 +52,11 @@ const Question = (props) => {
 }
 
 Question.propTypes = {
-    questionCount: PropTypes.number,
-    questionName: PropTypes.string,
-    questionId: PropTypes.any,
-    handleAnswer: PropTypes.func,
-    required: PropTypes.bool
+  questionCount: PropTypes.number,
+  questionName: PropTypes.string,
+  questionId: PropTypes.any,
+  handleAnswer: PropTypes.func,
+  required: PropTypes.bool
 }
 
 export default Question;
