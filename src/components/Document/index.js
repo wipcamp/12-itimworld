@@ -176,7 +176,7 @@ export default class index extends Component {
           </div>
           <div className="col-6 col-md-3 mt-3 md-3">
             <p className="text-right text-md-left">
-              12 มีนาคม 2563
+              17 มีนาคม 2563
             </p>
           </div>
           <div className="col-4 offset-8 offset-md-0 col-md-4 mt-md-3">
