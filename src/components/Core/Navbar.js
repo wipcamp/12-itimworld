@@ -25,10 +25,8 @@ const WIPId = styled.div`
 const Logout = styled(Button)`
   font-weight: 500;
   font-size: 18px;
-  background: #D11242;
-  border-radius: 4px;
-  border: none!important;
-  border-color: #D11242!important;
+  background: #D11242!important;
+  border-collapse: #D11242!important;
   max-width: 140px;
   width: 100%;
   height: 100%;
@@ -76,6 +74,10 @@ export default class Navbar extends Component {
 
   toggleModal = () => {
     this.setState({modal: !this.state.modal})
+  }
+
+  redirect = () => {
+    this.setState({redirect: true})
   }
 
   render() {
