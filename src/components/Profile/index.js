@@ -14,8 +14,6 @@ import CustomModal from '../Core/CustomModal'
 import Waiting from '../Core/Waiting'
 import notStoreableFieldName from '../Core/NotStoreableFieldName'
 
-const userId = 120001;
-
 const SectionHeader = styled.h3`
   margin-top:30px;
   margin-bottom:20px;
