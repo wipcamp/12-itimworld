@@ -208,10 +208,10 @@ export default class Index extends Component {
         const response = promise.data;
         const responseData = response.data[0];
 
-        if(responseData.telNo === null){
+        if (responseData.telNo === null) {
           this.setState({ errorLoad: true })
         }
-        
+
         if (response.success) {
           this.setState({
             oldUser: responseData,
@@ -497,9 +497,9 @@ export default class Index extends Component {
       return <Waiting error={this.state.errorLoad} />
     } else {
       return (
-        <ContainerDiv className="container">
-          <form onSubmit={e => { this.submitForm(e) }}>
-            <div className="card p-5" style={{ boxShadow: `0px 4px 4px rgba(0, 0, 0, 0.25)`, borderRadius: `4px`, backgroundColor: `rgba(255, 255, 255, 0.9)` }}>
+        <ContainerDiv className="container-fluid justify-content-center" style={{ paddingBottom: '30px' }}>
+          <div className="card p-5" style={{ boxShadow: `0px 4px 4px rgba(0, 0, 0, 0.25)`, borderRadius: `4px`, backgroundColor: `rgba(255, 255, 255, 0.9)` }}>
+            <form onSubmit={e => { this.submitForm(e) }}>
               <h1 className="text-center"> แก้ไขข้อมูลส่วนตัว </h1>
               <section>
                 <SectionHeader className="col-12">ข้อมูลส่วนตัว</SectionHeader>
@@ -716,66 +716,66 @@ export default class Index extends Component {
                 <MinHeightRow className="row form-group checkbox-group required">
                   <div className="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-1">
                     <input
-                      class="form-check-input" 
-                      type="checkbox" 
-                      name="knowWhence" 
-                      id="knowWhenceFacebook" 
-                      value="facebook" 
-                      onClick={e => this.handleChange(e)} 
+                      class="form-check-input"
+                      type="checkbox"
+                      name="knowWhence"
+                      id="knowWhenceFacebook"
+                      value="facebook"
+                      onClick={e => this.handleChange(e)}
                       checked={this.state.oldUser.knowWhence.facebook}
                       disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes("knowwhence")}
                     />
                     <label class="form-check-label" for="knowWhenceFacebook">Facebook</label>
                   </div>
                   <div class="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0">
-                    <input 
-                      class="form-check-input" 
-                      type="checkbox" 
-                      name="knowWhence" 
-                      id="knowWhenceCamphub" 
-                      value="camphub" 
-                      onClick={e => this.handleChange(e)} 
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      name="knowWhence"
+                      id="knowWhenceCamphub"
+                      value="camphub"
+                      onClick={e => this.handleChange(e)}
                       checked={this.state.oldUser.knowWhence.camphub}
                       disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes("knowwhence")}
                     />
                     <label class="form-check-label" for="knowWhenceCamphub">CampHub</label>
                   </div>
                   <div class="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0">
-                    <input 
-                      class="form-check-input" 
-                      type="checkbox" 
-                      name="knowWhence" 
-                      id="knowWhenceDek-D" 
-                      value="dekd" 
-                      onClick={e => this.handleChange(e)} 
-                      checked={this.state.oldUser.knowWhence.dekd} 
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      name="knowWhence"
+                      id="knowWhenceDek-D"
+                      value="dekd"
+                      onClick={e => this.handleChange(e)}
+                      checked={this.state.oldUser.knowWhence.dekd}
                       disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes("knowwhence")}
                     />
                     <label class="form-check-label" for="knowWhenceDek-D">Dek-D</label>
                   </div>
                   <div class="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0">
-                    <input 
-                      class="form-check-input" 
-                      type="checkbox" 
-                      name="knowWhence" 
-                      id="knowWhenceSIT" 
-                      value="sit" 
-                      onClick={e => this.handleChange(e)} 
-                      checked={this.state.oldUser.knowWhence.sit} 
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      name="knowWhence"
+                      id="knowWhenceSIT"
+                      value="sit"
+                      onClick={e => this.handleChange(e)}
+                      checked={this.state.oldUser.knowWhence.sit}
                       disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes("knowwhence")}
                     />
                     <label class="form-check-label" for="knowWhenceSIT">SIT</label>
                   </div>
                   <div class="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0">
-                    <input 
-                      class="form-check-input" 
-                      type="checkbox" 
-                      name="knowWhence" 
-                      id="knowWhenceEtc" 
-                      value={null} 
-                      onClick={e => this.setEtcInput(e, !this.state.etcInput)} 
-                      ref={this.setEtcBoxRef} 
-                      checked={etcCheck} 
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      name="knowWhence"
+                      id="knowWhenceEtc"
+                      value={null}
+                      onClick={e => this.setEtcInput(e, !this.state.etcInput)}
+                      ref={this.setEtcBoxRef}
+                      checked={etcCheck}
                       required={true}
                       disabled={!this.state.isUserAcceptedData && notStoreableFieldName.includes("knowwhence")}
                     />
@@ -800,34 +800,34 @@ export default class Index extends Component {
                 ></textarea>
               </section>
               <NotDisplayButton ref={this.setProfileFormRef}> asd</NotDisplayButton>
+            </form>
+            <div className="d-flex justify-content-between mt-5 mb-auto">
+              <ButtonRoute
+                displayButtonRight="none"
+                linkBack="menu"
+                className=""
+              />
+              <ButtonStyle onClick={() => this.clickSubmit()} disabled={this.state.buttonDisable} > ยืนยัน </ButtonStyle>
+              <CustomModal
+                modal={this.state.confirmModal}
+                toggle={this.toggleConfirmModal}
+                header="ยืนยันการแก้ไขข้อมูล"
+                paragraph="ต้องการแก้ไขข้อมูลใช่หรือไม่"
+                primaryButtonDisplay="flex"
+                primaryButtonText="ยืนยัน"
+                primaryOnClick={e => this.putUser(this.state.oldData)}
+              />
+              <CustomModal
+                header="การบันทึกข้อมูลผิดพลาด"
+                paragraph="การบันทึกข้อมูลเกิดข้อผิดพลาด ไม่สามารถส่งข้อมูลได้ กรุณากดยืนยันข้อมูลใหม่อีกครั้ง"
+                secondaryButtonText="ยกเลิก"
+                primaryButtonDisplay="flex"
+                primaryButtonText="ยืนยัน"
+                primaryOnClick={() => { this.resubmitAndCloseModal() }}
+                modal={this.state.alertModal}
+                toggle={this.toggleAlertModal}
+              />
             </div>
-          </form>
-          <div className="d-flex justify-content-between mt-3 pb-5">
-            <ButtonRoute
-              displayButtonRight="none"
-              linkBack="menu"
-              className=""
-            />
-            <ButtonStyle onClick={() => this.clickSubmit()} disabled={this.state.buttonDisable} > ยืนยัน </ButtonStyle>
-            <CustomModal
-              modal={this.state.confirmModal}
-              toggle={this.toggleConfirmModal}
-              header="ยืนยันการแก้ไขข้อมูล"
-              paragraph="ต้องการแก้ไขข้อมูลใช่หรือไม่"
-              primaryButtonDisplay="flex"
-              primaryButtonText="ยืนยัน"
-              primaryOnClick={e => this.putUser(this.state.oldData)}
-            />
-            <CustomModal
-              header="การบันทึกข้อมูลผิดพลาด"
-              paragraph="การบันทึกข้อมูลเกิดข้อผิดพลาด ไม่สามารถส่งข้อมูลได้ กรุณากดยืนยันข้อมูลใหม่อีกครั้ง"
-              secondaryButtonText="ยกเลิก"
-              primaryButtonDisplay="flex"
-              primaryButtonText="ยืนยัน"
-              primaryOnClick={() => { this.resubmitAndCloseModal() }}
-              modal={this.state.alertModal}
-              toggle={this.toggleAlertModal}
-            />
           </div>
         </ContainerDiv>
       )

@@ -192,7 +192,7 @@ export default class Index extends Component {
 
   async componentDidMount() {
     await this.getUser();
-    
+
   }
 
   componentDidUpdate() {
@@ -368,9 +368,9 @@ export default class Index extends Component {
       return <Waiting error={this.state.errorLoad} />
     } else {
       return (
-        <ContainerDiv className="container-fluid justify-content-center" style={{paddingBottom:'30px'}}>
-          <form onSubmit={e => { this.putUser(this.state.data, e) }}>
-            <div className="card p-5" style={{ boxShadow: `0px 4px 4px rgba(0, 0, 0, 0.25)`, borderRadius: `4px`, backgroundColor: `rgba(255, 255, 255, 0.9)` }}>
+        <ContainerDiv className="container-fluid justify-content-center" style={{ paddingBottom: '30px' }}>
+          <div className="card p-5" style={{ boxShadow: `0px 4px 4px rgba(0, 0, 0, 0.25)`, borderRadius: `4px`, backgroundColor: `rgba(255, 255, 255, 0.9)` }}>
+            <form onSubmit={e => { this.putUser(this.state.data, e) }}>
               <h1 className="text-center">ข้อมูลส่วนตัว</h1>
               <section>
                 <SectionHeader className="col-12">ข้อมูลทั่วไป</SectionHeader>
@@ -663,10 +663,10 @@ export default class Index extends Component {
                 ></textarea>
               </section>
               <NotDisplayButton ref={this.setProfileFormRef}> asd</NotDisplayButton>
+            </form>
+            <div className="d-flex justify-content-end mt-5 mb-auto">
+              <ButtonStyle onClick={(e) => this.clickSubmit(e)}>ยืนยัน</ButtonStyle>
             </div>
-          </form>
-          <div className="d-flex justify-content-end mt-3">
-            <ButtonStyle onClick={(e) => this.clickSubmit(e)}>ยืนยัน</ButtonStyle>
           </div>
           <CustomModal
             header="การบันทึกข้อมูลผิดพลาด"
