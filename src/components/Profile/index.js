@@ -580,8 +580,11 @@ export default class Index extends Component {
               </section>
               <section>
                 <SectionHeader className="col-12">ช่องทางที่รู้จักค่าย</SectionHeader>
-                <MinHeightRow className="row form-group checkbox-group required">
-                  <div className="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-1">
+                <div className="row col-auto offset-0 offset-md-1 ml-1 ml-md-0 mb-2 mb-md-1">
+                  <SmallText class="pt-2">น้องสามารถเลือกได้มากกว่าหนึ่งอย่าง</SmallText>
+                </div>
+                <MinHeightRow className="row form-group checkbox-group required offset-md-1 offset-0">
+                  <div className="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0 mb-2 mb-md-0 ml-md-0">
                     <input
                       class="form-check-input"
                       type="checkbox"
@@ -593,7 +596,7 @@ export default class Index extends Component {
                     />
                     <label class="form-check-label" for="knowWhenceFacebook">Facebook</label>
                   </div>
-                  <div class="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0">
+                  <div class="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0 mb-2 mb-md-0">
                     <input
                       class="form-check-input"
                       type="checkbox"
@@ -605,7 +608,7 @@ export default class Index extends Component {
                     />
                     <label class="form-check-label" for="knowWhenceCamphub">CampHub</label>
                   </div>
-                  <div class="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0">
+                  <div class="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0 mb-2 mb-md-0">
                     <input
                       class="form-check-input"
                       type="checkbox"
@@ -617,7 +620,7 @@ export default class Index extends Component {
                     />
                     <label class="form-check-label" for="knowWhenceDek-D">Dek-D</label>
                   </div>
-                  <div class="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0">
+                  <div class="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0 mb-2 mb-md-0">
                     <input
                       class="form-check-input"
                       type="checkbox"
@@ -629,7 +632,7 @@ export default class Index extends Component {
                     />
                     <label class="form-check-label" for="knowWhenceSIT">SIT</label>
                   </div>
-                  <div class="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0">
+                  <div class="form-check form-check-inline col-8 offset-2 col-md-2 offset-md-0 mb-2 mb-md-0">
                     <input
                       class="form-check-input"
                       type="checkbox"
@@ -645,10 +648,6 @@ export default class Index extends Component {
                     {this.renderInputButton()}
                   </div>
                 </MinHeightRow>
-                <div className="row">
-                  <div className="col-1"></div>
-                  <SmallText class="col pt-2">น้องสามารถเลือกได้มากกว่าหนึ่งอย่าง</SmallText>
-                </div>
               </section>
               <section>
                 <SectionHeader className="col-12">ผลงานและทักษะทางด้านคอมพิวเตอร์</SectionHeader>
