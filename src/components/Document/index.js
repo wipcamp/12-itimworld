@@ -114,17 +114,21 @@ export default class index extends Component {
         this.getUserDocument();
       })
       .catch((error) => {
-        if(uploadDocument.files[0].size > 2097152){
-          this.setState({
-            modalText: "ขนาดไฟล์ที่อัปโหลดต้องไม่เกิน 2Mb\nเว็บไซต์สำหรับย่อขนาดไฟล์ที่แนะนำ\nwww.google.com",
-            modal: true
-          })
-        }else if(uploadDocument.files[0].tpye !== "application/pdf"){
-          this.setState({
-            modalText: "ไฟล์ที่อัปโหลดต้องเป็นประเภท .pdf เท่านั้น โปรดอัพโหลดเอกสารใหม่",
-            modal: true
-          })
-        }else{
+        if (uploadDocument.files.length !== 0) {
+          if (uploadDocument.files[0].size > 2097152) {
+            this.setState({
+              modalText: "ขนาดไฟล์ที่อัปโหลดต้องไม่เกิน 2Mb\nเว็บไซต์สำหรับย่อขนาดไฟล์ที่แนะนำ\nwww.google.com",
+              modal: true
+            })
+          } else if (uploadDocument.files[0].type !== "application/pdf") {
+            this.setState({
+              modalText: "ไฟล์ที่อัปโหลดต้องเป็นประเภท .pdf เท่านั้น โปรดอัพโหลดเอกสารใหม่",
+              modal: true
+            })
+          } else {
+            this.toggleModal();
+          }
+        } else {
           this.toggleModal()
         }
       });
@@ -203,7 +207,7 @@ export default class index extends Component {
         />
         <CustomModal
           header="การบันทึกข้อมูลผิดพลาด"
-          paragraph={this.state.modalText!==""?this.state.modalText:`การอัปโหลดเอกสารเกิดข้อผิดพลาด ไม่สามารถส่งข้อมูลได้ กรุณาลองใหม่ภายหลัง, ติดต่อเจ้าหน้าที่ หรือตรวจสอบไฟล์ที่อัปโหลด`}
+          paragraph={this.state.modalText !== "" ? this.state.modalText : `การอัปโหลดเอกสารเกิดข้อผิดพลาด ไม่สามารถส่งข้อมูลได้ กรุณาลองใหม่ภายหลัง, ติดต่อเจ้าหน้าที่ หรือตรวจสอบไฟล์ที่อัปโหลด`}
           secondaryButtonText="ปิด"
           modal={this.state.modal}
           toggle={this.toggleModal}
