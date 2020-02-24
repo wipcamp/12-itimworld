@@ -118,18 +118,27 @@ const ProfileRoute = (props) => {
   return (
     <React.Fragment>
       {
-        (cookies.get('token') !== undefined && cookies.get('token') !== null) ? (
-          // true ? (
-            <Mountain>
-              <Profile />
-            </Mountain>
-          ) : (
-            <Redirect
-              to={{
-                pathname: "/menu",
-                state: { from: locationNow }
-              }}
-            />
+        (cookies.get('token') !== undefined && cookies.get('token') !== null) ? 
+          // true ? 
+          !props.condit ? 
+          (
+               <Mountain>
+                 <Profile />
+               </Mountain>
+             ) : (
+               <Redirect
+                 to={{
+                   pathname: "/menu",
+                   state: { from: locationNow }
+                 }}
+               />
+             ) : (
+          <Redirect
+            to={{
+              pathname: "/menu",
+              state: { from: locationNow }
+            }}
+          />
           )
       }
     </React.Fragment>
