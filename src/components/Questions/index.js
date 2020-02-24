@@ -25,7 +25,7 @@ const NotDisplayButton = styled.button`
 let submitButtonRef = null;
 export default class Index extends Component {
 
-  handleAnswer = (event, i) => {
+  handleAnswer = (event) => {
     const val = event.target.value;
     let doneEdit = false;
 
@@ -76,10 +76,10 @@ export default class Index extends Component {
     let search = window.location.search;
     let params = new URLSearchParams(search);
     console.log(params.get('major'))
-    if (params.get('major') !== null){
+    if (params.get('major') !== null) {
       majorId = params.get('major');
       await this.getQuestionService(majorId);
-    }else{
+    } else {
       await this.getUser().then(() => this.getQuestionService(this.state.majorId))
       this.setState({
         linkBack: '/menu',
@@ -116,7 +116,7 @@ export default class Index extends Component {
     // if(this.state.success){
     //   window.location.href="/menu"
     // }else{
-      submitButtonRef.click();
+    submitButtonRef.click();
     // }
   }
 
@@ -181,16 +181,26 @@ export default class Index extends Component {
           <div className="card p-5" style={{ boxShadow: `0px 4px 4px rgba(0, 0, 0, 0.25)`, borderRadius: `4px`, backgroundColor: `rgba(255, 255, 255, 0.9)` }}>
             <form onSubmit={e => this.openConfirmModal(e)}>
               <HeaderText classname="col-12 mb-5 mt-5">คำถามสาขา</HeaderText>
-              {this.state.questions.map((data, i) => {
-                return <Question
-                  questionCount={i + 1}
-                  questionName={data.name}
-                  questionId={data.id}
-                  handleAnswer={(e) => this.handleAnswer(e, i)}
-                  value={this.state.answer[i].answerContent}
-                  required
-                />
-              })}
+              {this.state.questions.map((data, i) => (
+                this.state.success ? (
+                  <Question
+                    questionCount={i + 1}
+                    questionName={data.name}
+                    questionId={data.id}
+                    handleAnswer={this.handleAnswer}
+                    value={this.state.answer[i].answerContent}
+                    required
+                  />
+                ) : (
+                    <Question
+                      questionCount={i + 1}
+                      questionName={data.name}
+                      questionId={data.id}
+                      handleAnswer={this.handleAnswer}
+                      required
+                    />
+                  )
+              ))}
               <NotDisplayButton ref={this.setSubmitButtonRef} />
             </form>
             <div class="row mt-5 mb-auto">
