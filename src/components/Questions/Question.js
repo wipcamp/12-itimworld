@@ -45,6 +45,7 @@ const Question = (props) => {
         className="col-12"
         name={props.questionId}
         onChange={props.handleAnswer}
+        value={props.value}
         required={props.required}
       />
     </div>
