@@ -143,7 +143,7 @@ const MajorRoute = (props) => {
         (cookies.get('token') !== undefined && cookies.get('token') !== null) ?
         // true ?
           props.condit === null ? (
-              props.children
+              <Major />
             ) : (
               <Redirect
                 to={{
@@ -219,18 +219,12 @@ export default class Index extends React.Component {
             </Mountain>
           </MenuObjRoute>
           <ProfileRoute path="/profile" condit={this.state.profile} />
-          {/* <Mountain>
-              <Profile />
-            </Mountain>
-          </PrivateRoute> */}
           <PrivateRoute path="/general">
             <Mountain>
               <General />
             </Mountain>
           </PrivateRoute>
-          <PrivateRoute path="/major">
-            <Major />
-          </PrivateRoute>
+          <MajorRoute path="/major" condit={this.state.major} />
           <MenuRoute path="/menu" condit={this.state.profile} />
           <PrivateRoute path="/document">
             <Mountain>
