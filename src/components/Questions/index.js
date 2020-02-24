@@ -25,26 +25,6 @@ const NotDisplayButton = styled.button`
 let submitButtonRef = null;
 export default class Index extends Component {
 
-  handleAnswer = (event) => {
-    const val = event.target.value;
-    let doneEdit = false;
-
-    for (var i = 0; i < answer.length; i++) {
-      if (answer[i].question_id === event.target.name) {
-        answer[i].answer_content = val;
-        doneEdit = true;
-      }
-
-    }
-    if (!doneEdit) {
-      answer.push({
-        "question_id": event.target.name,
-        "answer_content": val
-      })
-    }
-  };
-
-
   questions = [];
 
   state = {
@@ -69,7 +49,7 @@ export default class Index extends Component {
     majorId: null,
     linkBack: '/major',
     success: false,
-    answer: null
+    newAnswer: null
   }
 
   async componentDidMount() {
@@ -88,8 +68,43 @@ export default class Index extends Component {
     }
     // console.log
     // console.log(submitButtonRef);
-
   }
+
+  handleAnswer = (event, index) => {
+    const val = event.target.value;
+    let doneEdit = false;
+    if (this.state.success) {
+      let newAnswer = [...this.state.newAnswer];
+      let ans = { ...newAnswer };
+      ans[index] = val;
+      newAnswer[index] = ans[index];
+      this.setState({ newAnswer });
+      for (var j = 0; j < answer.length; j++) {
+        if (answer[j].question_id === event.target.name) {
+          answer[j].answer_content = newAnswer[j];
+          doneEdit = true;
+        }
+      }
+
+    }else{
+      for (var i = 0; i < answer.length; i++) {
+        if (answer[i].question_id === event.target.name) {
+          answer[i].answer_content = val;
+          doneEdit = true;
+        }
+      }
+    }
+
+   
+
+    if (!doneEdit) {
+      answer.push({
+        "question_id": event.target.name,
+        "answer_content": val
+      })
+    }
+  };
+
   getUser = async () => {
     await UserService.getMe()
       .then((promise) => {
@@ -97,7 +112,7 @@ export default class Index extends Component {
         if (response.success) {
           this.setState({
             majorId: response.data[0].major.id,
-            answer: response.data[0].answerList
+            newAnswer: [response.data[0].answerList[0].answerContent, response.data[0].answerList[1].answerContent]
           })
         } else {
           this.setState({ errorLoad: true })
@@ -113,11 +128,14 @@ export default class Index extends Component {
   }
 
   clickSubmit = () => {
-    // if(this.state.success){
-    //   window.location.href="/menu"
-    // }else{
-    submitButtonRef.click();
-    // }
+    if(this.state.success){
+      window.location.href="/menu"
+      submitButtonRef.click();
+      this.setState({ confirmModal: false })
+      this.postAnswerService()
+    }else{
+      submitButtonRef.click();
+    }
   }
 
   toggleConfirmModal = () => {
@@ -154,6 +172,9 @@ export default class Index extends Component {
   }
 
   postAnswerService = async () => {
+    if(this.state.success){
+      majorId = this.state.majorId
+    }
     await AnswerService.postAnswerMe(majorId, { "answers": answer })
       .then(() => { UserService.postStatusMe({ "status": "major" }) })
       .then(() => this.setState({ redirect: true }))
@@ -187,8 +208,8 @@ export default class Index extends Component {
                     questionCount={i + 1}
                     questionName={data.name}
                     questionId={data.id}
-                    handleAnswer={this.handleAnswer}
-                    value={this.state.answer[i].answerContent}
+                    handleAnswer={(e) => this.handleAnswer(e, i)}
+                    value={this.state.newAnswer[i]}
                     required
                   />
                 ) : (
