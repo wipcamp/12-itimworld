@@ -25,7 +25,7 @@ const NotDisplayButton = styled.button`
 let submitButtonRef = null;
 export default class Index extends Component {
 
-  handleAnswer = (event) => {
+  handleAnswer = (event, i) => {
     const val = event.target.value;
     let doneEdit = false;
 
@@ -65,17 +65,47 @@ export default class Index extends Component {
     ],
     confirmModal: false,
     alertModal: false,
-    redirect: false
+    redirect: false,
+    majorId: null,
+    linkBack: '/major',
+    success: false,
+    answer: null
   }
 
   async componentDidMount() {
     let search = window.location.search;
     let params = new URLSearchParams(search);
-    majorId = params.get('major');
-
-    await this.getQuestionService(majorId);
+    console.log(params.get('major'))
+    if (params.get('major') !== null){
+      majorId = params.get('major');
+      await this.getQuestionService(majorId);
+    }else{
+      await this.getUser().then(() => this.getQuestionService(this.state.majorId))
+      this.setState({
+        linkBack: '/menu',
+        success: true
+      })
+    }
+    // console.log
     // console.log(submitButtonRef);
 
+  }
+  getUser = async () => {
+    await UserService.getMe()
+      .then((promise) => {
+        const response = promise.data;
+        if (response.success) {
+          this.setState({
+            majorId: response.data[0].major.id,
+            answer: response.data[0].answerList
+          })
+        } else {
+          this.setState({ errorLoad: true })
+        }
+      })
+      .catch(() => {
+        this.setState({ errorLoad: true })
+      })
   }
 
   setSubmitButtonRef = (e) => {
@@ -83,7 +113,11 @@ export default class Index extends Component {
   }
 
   clickSubmit = () => {
-    submitButtonRef.click();
+    // if(this.state.success){
+    //   window.location.href="/menu"
+    // }else{
+      submitButtonRef.click();
+    // }
   }
 
   toggleConfirmModal = () => {
@@ -152,7 +186,8 @@ export default class Index extends Component {
                   questionCount={i + 1}
                   questionName={data.name}
                   questionId={data.id}
-                  handleAnswer={this.handleAnswer}
+                  handleAnswer={(e) => this.handleAnswer(e, i)}
+                  value={this.state.answer[i].answerContent}
                   required
                 />
               })}
@@ -161,7 +196,7 @@ export default class Index extends Component {
             <div class="row mt-5 mb-auto">
               <ButtonRoute
                 buttonLeft="กลับ"
-                linkBack="/major"
+                linkBack={this.state.linkBack}
                 className="col-6 d-inline-flex"
                 displayButtonRight="none"
               />
