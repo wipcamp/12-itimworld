@@ -221,6 +221,7 @@ export default class Index extends Component {
       .then(() => UserService.postStatusMe({ "status": "register" }))
       .then(() => this.setState({ redirect: true }))
       .then(() => this.forceUpdate())
+      .then(() => window.location.href="/menu")
       .catch(() => this.toggleModal())
   }
 
