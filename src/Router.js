@@ -35,7 +35,7 @@ const Mountain = styled.div`
 
 const cookies = new Cookies()
 
-const PrivateRoute = ({ condit, children, ...rest }) => {
+const PrivateRoute = ({ condit, checkProfile, children, ...rest }) => {
   return (
     <React.Fragment>
       <Route
@@ -47,10 +47,17 @@ const PrivateRoute = ({ condit, children, ...rest }) => {
               {
                 locationNow === '/menu' || locationNow === '/profile' ||
                   locationNow === '/general' || locationNow === '/major' ||
-                  locationNow === '/document' || 
+                  locationNow === '/document' ||
                   locationNow === '/agreement' ||
                   locationNow === '/term' || locationNow === '/edit' ?
-                  children
+                  checkProfile ?
+                    children
+                    : <Redirect
+                      to={{
+                        pathname: "/profile",
+                        state: { from: locationNow }
+                      }}
+                    />
                   :
                   <Redirect
                     to={{
@@ -78,10 +85,17 @@ const MenuRoute = (props) => {
   return (
     <React.Fragment>
       {
-        (cookies.get('token') !== undefined && cookies.get('token') !== null) ? 
-        // true ?
+        (cookies.get('token') !== undefined && cookies.get('token') !== null) ?
+          // true ?
+          props.checkProfile ?
             <Menu />
-            : (
+            : <Redirect
+              to={{
+                pathname: "/profile",
+                state: { from: locationNow }
+              }}
+            />
+          : (
             <Redirect
               to={{
                 pathname: "/login",
@@ -118,27 +132,34 @@ const ProfileRoute = (props) => {
   return (
     <React.Fragment>
       {
-        (cookies.get('token') !== undefined && cookies.get('token') !== null) ? 
+        (cookies.get('token') !== undefined && cookies.get('token') !== null) ?
           // true ? 
-          !props.condit ? 
-          (
-               <Mountain>
-                 <Profile />
-               </Mountain>
-             ) : (
-               <Redirect
-                 to={{
-                   pathname: "/menu",
-                   state: { from: locationNow }
-                 }}
-               />
-             ) : (
-          <Redirect
-            to={{
-              pathname: "/menu",
-              state: { from: locationNow }
-            }}
-          />
+          props.term ?
+            !props.checkProfile ?
+              <Mountain>
+                <Profile />
+              </Mountain>
+              :
+              <Redirect
+                to={{
+                  pathname: "/menu",
+                  state: { from: locationNow }
+                }}
+              />
+            :
+            <Redirect
+              to={{
+                pathname: "/term",
+                state: { from: locationNow }
+              }}
+            />
+          : (
+            <Redirect
+              to={{
+                pathname: "/menu",
+                state: { from: locationNow }
+              }}
+            />
           )
       }
     </React.Fragment>
@@ -150,17 +171,25 @@ const MajorRoute = (props) => {
     <React.Fragment>
       {
         (cookies.get('token') !== undefined && cookies.get('token') !== null) ?
-        // true ?
-          props.condit === null ? (
+          // true ?
+          props.checkProfile ?
+            props.condit === null ? (
               <Major />
             ) : (
-              <Redirect
-                to={{
-                  pathname: "/questions",
-                  state: { from: locationNow }
-                }}
-              />
-            ) : (
+                <Redirect
+                  to={{
+                    pathname: "/questions",
+                    state: { from: locationNow }
+                  }}
+                />
+              )
+            : <Redirect
+              to={{
+                pathname: "/profile",
+                state: { from: locationNow }
+              }}
+            />
+          : (
             <Redirect
               to={{
                 pathname: "/menu",
@@ -178,7 +207,7 @@ export default class Index extends React.Component {
   state = {
     term: false,
     agree: false,
-    profile: false,
+    checkProfile: false,
     majorStatus: false,
     major: null
   }
@@ -195,7 +224,7 @@ export default class Index extends React.Component {
           this.setState({
             term: response.data[0].userStatus.accepted,
             agree: response.data[0].userStatus.acceptedStoreData,
-            profile: response.data[0].userStatus.registered,
+            checkProfile: response.data[0].userStatus.registered,
             majorStatus: response.data[0].userStatus.majorAnswered,
             major: response.data[0].major
           })
@@ -222,30 +251,30 @@ export default class Index extends React.Component {
               <Term />
             </Mountain>
           </MenuObjRoute>
-          <MenuObjRoute path="/agreement" condit={this.state.agree}>
+          <MenuObjRoute path="/agreement" condit={this.state.agree} >
             <Mountain>
               <Agreement />
             </Mountain>
           </MenuObjRoute>
-          <ProfileRoute path="/profile" condit={this.state.profile} />
-          <PrivateRoute path="/general">
+          <ProfileRoute path="/profile" checkProfile={this.state.checkProfile} term={this.state.term} />
+          <PrivateRoute path="/general" checkProfile={this.state.checkProfile}>
             <Mountain>
               <General />
             </Mountain>
           </PrivateRoute>
-          <MajorRoute path="/major" condit={this.state.major} />
-          <MenuRoute path="/menu" condit={this.state.profile} />
-          <PrivateRoute path="/document">
+          <MajorRoute path="/major" condit={this.state.major} checkProfile={this.state.checkProfile} />
+          <MenuRoute path="/menu" checkProfile={this.state.checkProfile} />
+          <PrivateRoute path="/document" checkProfile={this.state.checkProfile}>
             <Mountain>
               <Document />
             </Mountain>
           </PrivateRoute>
-          <PrivateRoute path="/questions">
+          <PrivateRoute path="/questions" checkProfile={this.state.checkProfile}>
             <Mountain>
               <Questions />
             </Mountain>
           </PrivateRoute>
-          <PrivateRoute path="/edit">
+          <PrivateRoute path="/edit" checkProfile={this.state.checkProfile}>
             <Mountain>
               <Edit />
             </Mountain>
