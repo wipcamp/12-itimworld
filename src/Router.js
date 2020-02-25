@@ -209,7 +209,8 @@ export default class Index extends React.Component {
     agree: false,
     checkProfile: false,
     majorStatus: false,
-    major: null
+    major: null,
+    newTerm: true
   }
 
   async componentDidMount() {
@@ -223,6 +224,7 @@ export default class Index extends React.Component {
         if (response.success) {
           this.setState({
             term: response.data[0].userStatus.accepted,
+            newTerm: response.data[0].userStatus.accepted,
             agree: response.data[0].userStatus.acceptedStoreData,
             checkProfile: response.data[0].userStatus.registered,
             majorStatus: response.data[0].userStatus.majorAnswered,
@@ -256,7 +258,7 @@ export default class Index extends React.Component {
               <Agreement />
             </Mountain>
           </MenuObjRoute>
-          <ProfileRoute path="/profile" checkProfile={this.state.checkProfile} term={this.state.term} />
+          <ProfileRoute path="/profile" checkProfile={this.state.checkProfile} term={this.state.newTerm} />
           <PrivateRoute path="/general" checkProfile={this.state.checkProfile}>
             <Mountain>
               <General />
