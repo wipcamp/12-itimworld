@@ -37,8 +37,7 @@ export default class Navbar extends Component {
   state = {
     wipId: '',
     redirect: false,
-    modal: false,
-    redirectProfile: false
+    modal: false
   }
 
   async componentDidMount() {
@@ -49,13 +48,9 @@ export default class Navbar extends Component {
         promise = await this.getUserService();
         let response = promise.data;
         if (response.success) {
-          if(response.data[0].userStatus.registered === false){
-            this.setState({redirectProfile:true})
-          }else{
-            this.setState({
-              wipId: response.data[0].wipId
-            });
-          }
+          this.setState({
+            wipId: response.data[0].wipId
+          });
         } else {
           this.toggleModal()
         }
@@ -86,10 +81,6 @@ export default class Navbar extends Component {
   }
 
   render() {
-
-    if(this.state.redirectProfile){
-      return <Redirect to='/profile' />
-    }
 
     const { redirect } = this.state;
 
