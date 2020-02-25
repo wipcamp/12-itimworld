@@ -52,6 +52,12 @@ export default class Index extends Component {
     newAnswer: null
   }
 
+  componentDidUpdate() {
+    console.log(this.state.newAnswer);
+    console.log(answer);
+    
+  }
+
   async componentDidMount() {
     let search = window.location.search;
     let params = new URLSearchParams(search);
@@ -60,7 +66,7 @@ export default class Index extends Component {
       majorId = params.get('major');
       await this.getQuestionService(majorId);
     } else {
-      await this.getUser().then(() => this.getQuestionService(this.state.majorId))
+      await this.getUser().then(() => this.getQuestionService(this.state.majorId)).then(() => answer = this.state.newAnswer)
       this.setState({
         linkBack: '/menu',
         success: true
@@ -110,9 +116,19 @@ export default class Index extends Component {
       .then((promise) => {
         const response = promise.data;
         if (response.success) {
+          const answerList = response.data[0].answerList;
           this.setState({
             majorId: response.data[0].major.id,
-            newAnswer: [response.data[0].answerList[0].answerContent, response.data[0].answerList[1].answerContent]
+            newAnswer: [
+              {
+                "question_id": answerList[0].question.id.toString(),
+                "answer_content":answerList[0].answerContent
+              },
+              {
+                "question_id": answerList[1].question.id.toString(),
+                "answer_content":answerList[1].answerContent
+              }
+            ]
           })
         } else {
           this.setState({ errorLoad: true })
@@ -175,6 +191,7 @@ export default class Index extends Component {
     if(this.state.success){
       majorId = this.state.majorId
     }
+
     await AnswerService.postAnswerMe(majorId, { "answers": answer })
       .then(() => { UserService.postStatusMe({ "status": "major" }) })
       .then(() => this.setState({ redirect: true }))
@@ -209,7 +226,7 @@ export default class Index extends Component {
                     questionName={data.name}
                     questionId={data.id}
                     handleAnswer={(e) => this.handleAnswer(e, i)}
-                    value={this.state.newAnswer[i]}
+                    value={this.state.newAnswer[i].answer_content}
                     required
                   />
                 ) : (
