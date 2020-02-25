@@ -52,16 +52,9 @@ export default class Index extends Component {
     newAnswer: null
   }
 
-  componentDidUpdate() {
-    console.log(this.state.newAnswer);
-    console.log(answer);
-    
-  }
-
   async componentDidMount() {
     let search = window.location.search;
     let params = new URLSearchParams(search);
-    console.log(params.get('major'))
     if (params.get('major') !== null) {
       majorId = params.get('major');
       await this.getQuestionService(majorId);
