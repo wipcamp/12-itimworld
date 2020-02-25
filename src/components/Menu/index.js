@@ -211,7 +211,7 @@ export default class Index extends Component {
   }
 
 getUserStatus = async() => {
-  userService.getMe()
+  await userService.getMe().then(() => window.location.reload())
 }
 
   state = {
